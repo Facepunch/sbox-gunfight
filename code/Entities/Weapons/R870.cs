@@ -58,7 +58,7 @@ partial class R870 : ShooterWeapon
 		// Tell the clients to play the shoot effects
 		//
 		ShootEffects();
-		PlaySound( "rust_pumpshotgun.shoot" );
+		PlaySound( "shotgun1_shoot" );
 
 		//
 		// Shoot the bullets
@@ -68,27 +68,7 @@ partial class R870 : ShooterWeapon
 
 	public override void AttackSecondary()
 	{
-		TimeSincePrimaryAttack = -0.5f;
-		TimeSinceSecondaryAttack = -0.5f;
-
-		if ( !TakeAmmo( 2 ) )
-		{
-			DryFire();
-			return;
-		}
-
-		(Owner as AnimatedEntity).SetAnimParameter( "b_attack", true );
-
 		//
-		// Tell the clients to play the shoot effects
-		//
-		DoubleShootEffects();
-		PlaySound( "rust_pumpshotgun.shootdouble" );
-
-		//
-		// Shoot the bullets
-		//
-		ShootBullet( 0.4f, 0.3f, 20.0f, 2.0f, 8 );
 	}
 
 	[ClientRpc]
@@ -97,15 +77,6 @@ partial class R870 : ShooterWeapon
 		Host.AssertClient();
 
 		ViewModelEntity?.SetAnimParameter( "fire", true );
-		CrosshairLastShoot = 0;
-	}
-
-	[ClientRpc]
-	protected virtual void DoubleShootEffects()
-	{
-		Host.AssertClient();
-
-		ViewModelEntity?.SetAnimParameter( "fire_double", true );
 		CrosshairLastShoot = 0;
 	}
 

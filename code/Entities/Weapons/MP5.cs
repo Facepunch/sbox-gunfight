@@ -45,7 +45,7 @@ partial class MP5 : ShooterWeapon
 		// Tell the clients to play the shoot effects
 		//
 		ShootEffects();
-		PlaySound( "rust_smg.shoot" );
+		PlaySound( "smg1_shoot" );
 
 		//
 		// Shoot the bullets

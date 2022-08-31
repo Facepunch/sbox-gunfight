@@ -98,7 +98,10 @@ public partial class ViewModel : BaseViewModel
 		var aim = controller.IsAiming;
 		var crouched = controller?.Duck?.IsActive ?? false;
 
-		LerpTowards( ref avoidance, avoidanceTrace.Hit ? (1f - avoidanceTrace.Fraction) : 0, 10f );
+		var avoidanceVal = avoidanceTrace.Hit ? (1f - avoidanceTrace.Fraction) : 0;
+		avoidanceVal *= 1 - ( aimLerp * 0.8f );
+
+		LerpTowards( ref avoidance, avoidanceVal, 10f );
 		LerpTowards( ref sprintLerp, sprint && !burstSprint ? 1 : 0, 10f );
 		LerpTowards( ref burstSprintLerp, burstSprint ? 1 : 0, 8f );
 

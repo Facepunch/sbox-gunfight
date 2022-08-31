@@ -24,6 +24,8 @@ public partial class ViewModel : BaseViewModel
 	Vector3 Offset => new( 0, -1, 0 );
 	Vector3 CrouchOffset => new( -80f, -50, 15 );
 	Angles CrouchAnglesOffset => new( 2f, 0, -15f );
+	Angles AvoidanceAngles => new( 2f, 0, -25f );
+
 	float OffsetLerpAmount => 10f;
 
 	float SprintRightRotation => -10f;
@@ -183,13 +185,14 @@ public partial class ViewModel : BaseViewModel
 		Rotation *= Rotation.From( AimAngleOffset * aimLerp );
 
 		Rotation *= Rotation.From( CrouchAnglesOffset * crouchLerp );
+		Rotation *= Rotation.From( AvoidanceAngles * avoidance );
 
-		Position += forward * avoidance;
+		Position += forward * avoidance * -5f;
 
 		Position += left * (velocity.y * ((sprintLerp * SprintLeftOffset) + (burstSprintLerp * BurstSprintLeftOffset)) + offsetLerp * -10f * (1 - aimLerp));
 		Position += left * ((PostSprintLeftOffset * sprintLerp) + (BurstPostSprintLeftOffset * burstSprintLerp));
 
-		Position += up * (offsetLerp * -0f + avoidance * -10 * (1 - aimLerp));
+		Position += up * (offsetLerp * -0f + avoidance * 0 * (1 - aimLerp));
 
 		//var uitx = new Sandbox.UI.PanelTransform();
 		//uitx.AddTranslateY( MathF.Sin( walkBob * 1.0f ) * speed * -8.0f );

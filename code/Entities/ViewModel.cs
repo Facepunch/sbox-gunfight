@@ -20,7 +20,7 @@ public partial class ViewModel : BaseViewModel
 	Vector3 WalkCycleOffsets => new( 0, -50f, 50f );
 	float ForwardBobbing => 50f;
 	float SideWalkOffset => 50f;
-	public Vector3 AimOffset => new( 0, 0, 0 );
+	public Vector3 AimOffset => new( -2, 2.67f, 1.9f );
 	Vector3 Offset => new( 0, -1, 0 );
 	Vector3 CrouchOffset => new( -80f, -50, 15 );
 	Angles CrouchAnglesOffset => new( 2f, 0, -15f );
@@ -30,7 +30,7 @@ public partial class ViewModel : BaseViewModel
 	float SprintUpRotation => 10f;
 	float BurstSprintRightRotation => 0;
 	float BurstSprintUpRotation => 10f;
-	Angles AimAngleOffset => new( 0, 0, 0 );
+	Angles AimAngleOffset => new( -0.3f, 0.3f, 0f );
 	float SprintLeftOffset => 0;
 	float BurstSprintLeftOffset => 0;
 	float PostSprintLeftOffset => 6f;
@@ -84,17 +84,17 @@ public partial class ViewModel : BaseViewModel
 		var up = camSetup.Rotation.Up;
 		var forward = camSetup.Rotation.Forward;
 		var owner = Owner as Player;
-		var walkController = owner.Controller as PlayerController;
+		var controller = owner.Controller as PlayerController;
 		var avoidanceTrace = Trace.Ray( camSetup.Position, camSetup.Position + forward * 50f )
 						.UseHitboxes()
 						.Ignore( Owner )
 						.Ignore( this )
 						.Run();
 
-		var sprint = walkController.IsSprinting;
+		var sprint = controller.IsSprinting;
 		var burstSprint = false;
-		var aim = false;
-		var crouched = walkController?.Duck?.IsActive ?? false;
+		var aim = controller.IsAiming;
+		var crouched = controller?.Duck?.IsActive ?? false;
 
 		LerpTowards( ref avoidance, avoidanceTrace.Hit ? (1f - avoidanceTrace.Fraction) : 0, 10f );
 		LerpTowards( ref sprintLerp, sprint && !burstSprint ? 1 : 0, 10f );
@@ -110,8 +110,6 @@ public partial class ViewModel : BaseViewModel
 
 		bobSpeed *= (1 - sprintLerp * 0.25f);
 		bobSpeed *= (1 - burstSprintLerp * 0.15f);
-
-		var controller = owner.Controller as PlayerController;
 
 		if ( Owner.GroundEntity != null && controller is not null /*&& !controller.Slide.IsActive*/ )
 		{
@@ -140,15 +138,15 @@ public partial class ViewModel : BaseViewModel
 		acceleration += -velocity * ReturnForce * DeltaTime;
 
 		// Apply horizontal offsets based on walking direction
-		var horizontalForwardBob = WalkCycle( 0.5f, 3f ) * speed * WalkCycleOffsets.x * DeltaTime;
+		var horizontalForwardBob = ( WalkCycle( 0.5f, 3f ) * speed * WalkCycleOffsets.x * ( 1 - aimLerp ) ) * DeltaTime;
 
 		acceleration += forward.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal ) * Vector3.Forward * ForwardBobbing * horizontalForwardBob;
 
 		// Apply left bobbing and up/down bobbing
-		acceleration += Vector3.Left * WalkCycle( 0.5f, 2f ) * speed * WalkCycleOffsets.y * (1 + sprintLerp) * DeltaTime;
-		acceleration += Vector3.Up * WalkCycle( 0.5f, 2f, true ) * speed * WalkCycleOffsets.z * DeltaTime;
+		acceleration += Vector3.Left * WalkCycle( 0.5f, 2f ) * speed * WalkCycleOffsets.y * (1 + sprintLerp) * (1 - aimLerp) * DeltaTime;
+		acceleration += Vector3.Up * WalkCycle( 0.5f, 2f, true ) * speed * WalkCycleOffsets.z * (1 - aimLerp) * DeltaTime;
 
-		acceleration += left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal ) * Vector3.Left * speed * SideWalkOffset * DeltaTime * (1 - aimLerp * 0.5f);
+		acceleration += left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal ) * Vector3.Left * speed * SideWalkOffset * DeltaTime * (1 - aimLerp);
 
 		velocity += acceleration * DeltaTime;
 
@@ -159,7 +157,7 @@ public partial class ViewModel : BaseViewModel
 
 		Rotation desiredRotation = Local.Pawn.EyeRotation;
 		desiredRotation *= Rotation.FromAxis( Vector3.Up, velocity.y * RotationScale * (1 - aimLerp) );
-		desiredRotation *= Rotation.FromAxis( Vector3.Forward, -velocity.y * RotationScale * (1 - aimLerp * 0.0f) - 0f * (1 - aimLerp) );
+		desiredRotation *= Rotation.FromAxis( Vector3.Forward, -velocity.y * RotationScale * (1 - aimLerp) );
 		desiredRotation *= Rotation.FromAxis( Vector3.Right, velocity.z * RotationScale * (1 - aimLerp) );
 
 		Rotation = desiredRotation;

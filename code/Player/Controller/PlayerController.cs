@@ -250,12 +250,14 @@ public partial class PlayerController : BasePlayerController
 
 	}
 
+	public virtual bool IsSprinting => Input.Down( InputButton.Run );
+
 	public virtual float GetWishSpeed()
 	{
 		var ws = Duck.GetWishSpeed();
 		if ( ws >= 0 ) return ws;
 
-		if ( Input.Down( InputButton.Run ) ) return SprintSpeed;
+		if ( IsSprinting ) return SprintSpeed;
 		if ( Input.Down( InputButton.Walk ) ) return WalkSpeed;
 
 		return DefaultSpeed;

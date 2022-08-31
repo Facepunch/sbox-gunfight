@@ -48,7 +48,7 @@ partial class M1911 : ShooterWeapon
 		// Tell the clients to play the shoot effects
 		//
 		ShootEffects();
-		PlaySound( "rust_pistol.shoot" );
+		PlaySound( "pistol_shoot" );
 
 		//
 		// Shoot the bullets

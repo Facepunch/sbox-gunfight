@@ -1,6 +1,6 @@
 ﻿namespace Facepunch.Gunfight;
 
-partial class ShooterWeapon : BaseWeapon
+partial class GunfightWeapon : BaseWeapon
 {
 	public virtual AmmoType AmmoType => AmmoType.Pistol;
 	public virtual int ClipSize => 16;

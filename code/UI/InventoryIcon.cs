@@ -4,10 +4,10 @@ namespace Facepunch.Gunfight;
 
 class InventoryIcon : Panel
 {
-	public ShooterWeapon Weapon;
+	public GunfightWeapon Weapon;
 	public Panel Icon;
 
-	public InventoryIcon( ShooterWeapon weapon )
+	public InventoryIcon( GunfightWeapon weapon )
 	{
 		Weapon = weapon;
 		Icon = Add.Panel( "icon" );
@@ -15,7 +15,7 @@ class InventoryIcon : Panel
 		AddClass( weapon.ClassName );
 	}
 
-	internal void TickSelection( ShooterWeapon selectedWeapon )
+	internal void TickSelection( GunfightWeapon selectedWeapon )
 	{
 		SetClass( "active", selectedWeapon == Weapon );
 		SetClass( "empty", !Weapon?.IsUsable() ?? true );

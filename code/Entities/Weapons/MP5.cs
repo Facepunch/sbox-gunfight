@@ -3,12 +3,12 @@
 [Library( "gunfight_mp5" ), HammerEntity]
 [EditorModel( "models/mp5/w_mp5.vmdl" )]
 [Title( "MP5" ), Category( "Weapons" )]
-partial class MP5 : ShooterWeapon
+partial class MP5 : GunfightWeapon
 {
 	public static readonly Model WorldModel = Model.Load( "models/mp5/w_mp5.vmdl" );
 	public override string ViewModelPath => "models/mp5/fp_mp5.vmdl";
 
-	public override float PrimaryRate => 13.0f;
+	public override float PrimaryRate => 12.0f;
 	public override float SecondaryRate => 1.0f;
 	public override int ClipSize => 30;
 	public override float ReloadTime => 4.0f;

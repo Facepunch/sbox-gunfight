@@ -3,15 +3,15 @@
 [Library( "gunfight_r870" ), HammerEntity]
 [EditorModel( "models/r870/w_r870.vmdl" )]
 [Title( "R870" ), Category( "Weapons" )]
-partial class R870 : ShooterWeapon
+partial class R870 : GunfightWeapon
 {
 	public static readonly Model WorldModel = Model.Load( "models/r870/w_r870.vmdl" );
 	public override string ViewModelPath => "models/r870/fp_r870.vmdl";
 	public override float PrimaryRate => 1;
 	public override float SecondaryRate => 1;
 	public override AmmoType AmmoType => AmmoType.Buckshot;
-	public override int ClipSize => 8;
-	public override float ReloadTime => 0.5f;
+	public override int ClipSize => 6;
+	public override float ReloadTime => 1.2f;
 	public override int Bucket => 2;
 	public override int BucketWeight => 200;
 

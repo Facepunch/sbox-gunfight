@@ -23,7 +23,7 @@ public class Ammo : Panel
 		var player = Local.Pawn as Player;
 		if ( player == null ) return;
 
-		var weapon = player.ActiveChild as ShooterWeapon;
+		var weapon = player.ActiveChild as GunfightWeapon;
 		SetClass( "active", weapon != null );
 
 		if ( weapon == null ) return;
@@ -42,7 +42,7 @@ public class Ammo : Panel
 		UpdateAmmoBar( weapon );
 	}
 
-	void RebuildAmmoBar( ShooterWeapon weapon )
+	void RebuildAmmoBar( GunfightWeapon weapon )
 	{
 		AmmoBar.DeleteChildren( true );
 		BulletPanels.Clear();
@@ -58,7 +58,7 @@ public class Ammo : Panel
 		}
 	}
 
-	void UpdateAmmoBar( ShooterWeapon weapon )
+	void UpdateAmmoBar( GunfightWeapon weapon )
 	{
 		for ( int i = 0; i < BulletPanels.Count; i++ )
 		{

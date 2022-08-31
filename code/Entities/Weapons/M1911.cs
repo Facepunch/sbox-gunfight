@@ -3,7 +3,7 @@
 [Library( "gunfight_m1911" ), HammerEntity]
 [EditorModel( "models/m1911/w_m1911.vmdl" )]
 [Title( "M1911" ), Category( "Weapons" )]
-partial class M1911 : ShooterWeapon
+partial class M1911 : GunfightWeapon
 {
 	public static readonly Model WorldModel = Model.Load( "models/m1911/w_m1911.vmdl" );
 	public override string ViewModelPath => "models/m1911/fp_m1911.vmdl";
@@ -37,12 +37,10 @@ partial class M1911 : ShooterWeapon
 			DryFire();
 
 			if ( AvailableAmmo() > 0 )
-			{
 				Reload();
-			}
+
 			return;
 		}
-
 
 		//
 		// Tell the clients to play the shoot effects
@@ -59,27 +57,7 @@ partial class M1911 : ShooterWeapon
 
 	public override void AttackSecondary()
 	{
-		base.AttackSecondary();
-
-		TimeSincePrimaryAttack = 0;
-		TimeSinceSecondaryAttack = 0;
-
-		if ( !TakeAmmo( 1 ) )
-		{
-			DryFire();
-			return;
-		}
-
 		//
-		// Tell the clients to play the shoot effects
-		//
-		ShootEffects();
-		PlaySound( "rust_pistol.shoot" );
-
-		//
-		// Shoot the bullets
-		//
-		ShootBullet( 0.4f, 1.5f, 8.0f, 3.0f );
 	}
 
 	public override void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload )

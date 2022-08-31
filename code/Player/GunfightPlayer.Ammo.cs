@@ -56,7 +56,7 @@ public partial class GunfightPlayer
 		var existing = Children.Where( x => x.ClassName == weaponName ).FirstOrDefault();
 		if ( existing != null ) return false;
 
-		var weapon = Entity.CreateByName<ShooterWeapon>( weaponName );
+		var weapon = Entity.CreateByName<GunfightWeapon>( weaponName );
 		if ( Inventory.Add( weapon ) )
 			return true;
 

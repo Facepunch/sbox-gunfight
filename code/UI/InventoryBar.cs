@@ -8,10 +8,10 @@ namespace Facepunch.Gunfight;
 public class InventoryBar : Panel
 {
 	List<InventoryColumn> columns = new();
-	List<ShooterWeapon> Weapons = new();
+	List<GunfightWeapon> Weapons = new();
 
 	public bool IsOpen;
-	ShooterWeapon SelectedWeapon;
+	GunfightWeapon SelectedWeapon;
 
 	public InventoryBar()
 	{
@@ -32,7 +32,7 @@ public class InventoryBar : Panel
 		if ( player == null ) return;
 
 		Weapons.Clear();
-		Weapons.AddRange( player.Children.Select( x => x as ShooterWeapon ).Where( x => x.IsValid() && x.IsUsable() ) );
+		Weapons.AddRange( player.Children.Select( x => x as GunfightWeapon ).Where( x => x.IsValid() && x.IsUsable() ) );
 
 		foreach ( var weapon in Weapons )
 		{
@@ -69,7 +69,7 @@ public class InventoryBar : Panel
 		// We're not open, but we want to be
 		if ( IsOpen != wantOpen )
 		{
-			SelectedWeapon = localPlayer?.ActiveChild as ShooterWeapon;
+			SelectedWeapon = localPlayer?.ActiveChild as GunfightWeapon;
 			IsOpen = true;
 		}
 
@@ -114,7 +114,7 @@ public class InventoryBar : Panel
 		}
 	}
 
-	int SlotPressInput( InputBuilder input, int SelectedIndex, List<ShooterWeapon> sortedWeapons )
+	int SlotPressInput( InputBuilder input, int SelectedIndex, List<GunfightWeapon> sortedWeapons )
 	{
 		var columninput = -1;
 
@@ -143,12 +143,12 @@ public class InventoryBar : Panel
 		return sortedWeapons.IndexOf( firstOfColumn );
 	}
 
-	int NextInBucket( List<ShooterWeapon> sortedWeapons )
+	int NextInBucket( List<GunfightWeapon> sortedWeapons )
 	{
 		Assert.NotNull( SelectedWeapon );
 
-		ShooterWeapon first = null;
-		ShooterWeapon prev = null;
+		GunfightWeapon first = null;
+		GunfightWeapon prev = null;
 		foreach ( var weapon in sortedWeapons.Where( x => x.Bucket == SelectedWeapon.Bucket ) )
 		{
 			if ( first == null ) first = weapon;

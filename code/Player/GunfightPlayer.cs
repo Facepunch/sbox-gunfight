@@ -139,7 +139,7 @@ public partial class GunfightPlayer : Player
 		// If the current weapon is out of ammo and we last fired it over half a second ago
 		// lets try to switch to a better wepaon
 		//
-		if ( ActiveChild is ShooterWeapon weapon && !weapon.IsUsable() && weapon.TimeSincePrimaryAttack > 0.5f && weapon.TimeSinceSecondaryAttack > 0.5f )
+		if ( ActiveChild is GunfightWeapon weapon && !weapon.IsUsable() && weapon.TimeSincePrimaryAttack > 0.5f && weapon.TimeSinceSecondaryAttack > 0.5f )
 		{
 			SwitchToBestWeapon();
 		}
@@ -159,7 +159,7 @@ public partial class GunfightPlayer : Player
 
 	public void SwitchToBestWeapon()
 	{
-		var best = Children.Select( x => x as ShooterWeapon )
+		var best = Children.Select( x => x as GunfightWeapon )
 			.Where( x => x.IsValid() && x.IsUsable() )
 			.OrderByDescending( x => x.BucketWeight )
 			.FirstOrDefault();
@@ -346,7 +346,7 @@ public partial class GunfightPlayer : Player
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		if ( ActiveChild is ShooterWeapon weapon )
+		if ( ActiveChild is GunfightWeapon weapon )
 		{
 			weapon.RenderHud( screenSize );
 		}

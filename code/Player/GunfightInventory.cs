@@ -9,7 +9,7 @@ partial class GunfightInventory : BaseInventory
 	public override bool Add( Entity ent, bool makeActive = false )
 	{
 		var player = Owner as GunfightPlayer;
-		var weapon = ent as ShooterWeapon;
+		var weapon = ent as GunfightWeapon;
 		var notices = !player.SupressPickupNotices;
 
 		if ( weapon == null )

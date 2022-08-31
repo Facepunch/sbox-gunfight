@@ -21,8 +21,9 @@ public partial class ViewModel : BaseViewModel
 	float ForwardBobbing => 10f;
 	float SideWalkOffset => 10f;
 	public Vector3 AimOffset => new( 0, 0, 0 );
-	Vector3 Offset => new( 0, 0, 0 );
-	Vector3 CrouchOffset => new( 15, -50, 15 );
+	Vector3 Offset => new( 0, -1, 0 );
+	Vector3 CrouchOffset => new( -80f, -50, 15 );
+	Angles CrouchAnglesOffset => new( 2f, 0, -15f );
 	float OffsetLerpAmount => 10f;
 
 	float SprintRightRotation => -10f;
@@ -44,6 +45,7 @@ public partial class ViewModel : BaseViewModel
 	float burstSprintLerp = 0;
 	float sprintLerp = 0;
 	float aimLerp = 0;
+	float crouchLerp = 0;
 
 	float smoothedDelta = 0;
 	float DeltaTime => smoothedDelta;
@@ -92,12 +94,15 @@ public partial class ViewModel : BaseViewModel
 		var sprint = walkController.IsSprinting;
 		var burstSprint = false;
 		var aim = false;
+		var crouched = walkController?.Duck?.IsActive ?? false;
 
 		LerpTowards( ref avoidance, avoidanceTrace.Hit ? (1f - avoidanceTrace.Fraction) : 0, 10f );
 		LerpTowards( ref sprintLerp, sprint && !burstSprint ? 1 : 0, 10f );
 		LerpTowards( ref burstSprintLerp, burstSprint ? 1 : 0, 8f );
 
 		LerpTowards( ref aimLerp, aim ? 1 : 0, 7f );
+		LerpTowards( ref crouchLerp, crouched ? 1 : 0, 7f );
+
 		//LerpTowards( ref upDownOffset, speed * -LookUpSpeedScale + camSetup.Rotation.Forward.z * -LookUpPitchScale, LookUpPitchScale );
 
 		camSetup.FieldOfView = 70f * (1 - aimLerp) + 50f * aimLerp;
@@ -120,7 +125,7 @@ public partial class ViewModel : BaseViewModel
 			walkBob += (step * 90 - walkBob) * 10f * Time.Delta;
 		}
 
-		if ( walkController?.Duck?.IsActive == true )
+		if ( crouched )
 		{
 			acceleration += CrouchOffset * DeltaTime * (1 - aimLerp);
 		}
@@ -178,6 +183,8 @@ public partial class ViewModel : BaseViewModel
 		Rotation *= Rotation.FromAxis( Vector3.Up, -1f );
 
 		Rotation *= Rotation.From( AimAngleOffset * aimLerp );
+
+		Rotation *= Rotation.From( CrouchAnglesOffset * crouchLerp );
 
 		Position += forward * avoidance;
 

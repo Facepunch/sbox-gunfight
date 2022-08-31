@@ -101,7 +101,7 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref burstSprintLerp, burstSprint ? 1 : 0, 8f );
 
 		LerpTowards( ref aimLerp, aim ? 1 : 0, 7f );
-		LerpTowards( ref crouchLerp, crouched ? 1 : 0, 7f );
+		LerpTowards( ref crouchLerp, crouched && !aim ? 1 : 0, 7f );
 
 		//LerpTowards( ref upDownOffset, speed * -LookUpSpeedScale + camSetup.Rotation.Forward.z * -LookUpPitchScale, LookUpPitchScale );
 

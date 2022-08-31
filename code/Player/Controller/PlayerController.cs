@@ -30,6 +30,7 @@ public partial class PlayerController : BasePlayerController
 	public Duck Duck;
 	public Unstuck Unstuck;
 
+	[Net, Predicted] public bool IsAiming { get; protected set; }
 
 	public PlayerController()
 	{
@@ -98,6 +99,8 @@ public partial class PlayerController : BasePlayerController
 
 		EyeLocalPosition += TraceOffset;
 		EyeRotation = Input.Rotation;
+
+		IsAiming = Input.Down( InputButton.SecondaryAttack );
 
 		RestoreGroundPos();
 
@@ -250,7 +253,8 @@ public partial class PlayerController : BasePlayerController
 
 	}
 
-	public virtual bool IsSprinting => Input.Down( InputButton.Run );
+	public virtual bool WishSprinting => Input.Down( InputButton.Run );
+	public virtual bool IsSprinting => WishSprinting && Velocity.Length > 0;
 
 	public virtual float GetWishSpeed()
 	{

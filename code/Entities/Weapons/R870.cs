@@ -1,12 +1,12 @@
 ﻿namespace Facepunch.Gunfight;
 
-[Library( "dm_shotgun" ), HammerEntity]
-[EditorModel( "weapons/rust_pumpshotgun/rust_pumpshotgun.vmdl" )]
-[Title( "Shotgun" ), Category( "Weapons" )]
-partial class Shotgun : ShooterWeapon
+[Library( "gunfight_r870" ), HammerEntity]
+[EditorModel( "models/r870/w_r870.vmdl" )]
+[Title( "R870" ), Category( "Weapons" )]
+partial class R870 : ShooterWeapon
 {
-	public static readonly Model WorldModel = Model.Load( "weapons/rust_pumpshotgun/rust_pumpshotgun.vmdl" );
-	public override string ViewModelPath => "weapons/rust_pumpshotgun/v_rust_pumpshotgun.vmdl";
+	public static readonly Model WorldModel = Model.Load( "models/r870/w_r870.vmdl" );
+	public override string ViewModelPath => "models/r870/fp_r870.vmdl";
 	public override float PrimaryRate => 1;
 	public override float SecondaryRate => 1;
 	public override AmmoType AmmoType => AmmoType.Buckshot;

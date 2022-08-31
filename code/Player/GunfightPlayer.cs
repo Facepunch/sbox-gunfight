@@ -56,9 +56,9 @@ public partial class GunfightPlayer : Player
 		GiveAmmo( AmmoType.Buckshot, 64 );
 		GiveAmmo( AmmoType.Crossbow, 16 );
 
-		Inventory.Add( new Pistol() );
-		Inventory.Add( new Shotgun() );
-		Inventory.Add( new SMG() );
+		Inventory.Add( new M1911() );
+		Inventory.Add( new R870() );
+		Inventory.Add( new MP5() );
 		Inventory.Add( new Crossbow() );
 	}
 

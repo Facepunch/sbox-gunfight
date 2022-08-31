@@ -48,8 +48,8 @@ public class Ammo : Panel
 		BulletPanels.Clear();
 
 		AmmoBar.SetClass( "is-crossbow", weapon is Crossbow );
-		AmmoBar.SetClass( "is-shotgun", weapon is Shotgun );
-		AmmoBar.SetClass( "is-smg", weapon is SMG );
+		AmmoBar.SetClass( "is-shotgun", weapon is R870 );
+		AmmoBar.SetClass( "is-smg", weapon is MP5 );
 
 		for ( int i = 0; i < weapon.ClipSize; i++ )
 		{

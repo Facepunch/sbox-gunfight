@@ -1,12 +1,12 @@
 ﻿namespace Facepunch.Gunfight;
 
-[Library( "dm_pistol" ), HammerEntity]
-[EditorModel( "weapons/rust_pistol/rust_pistol.vmdl" )]
-[Title( "Pistol" ), Category( "Weapons" )]
-partial class Pistol : ShooterWeapon
+[Library( "gunfight_m1911" ), HammerEntity]
+[EditorModel( "models/m1911/w_m1911.vmdl" )]
+[Title( "M1911" ), Category( "Weapons" )]
+partial class M1911 : ShooterWeapon
 {
-	public static readonly Model WorldModel = Model.Load( "weapons/rust_pistol/rust_pistol.vmdl" );
-	public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";
+	public static readonly Model WorldModel = Model.Load( "models/m1911/w_m1911.vmdl" );
+	public override string ViewModelPath => "models/m1911/fp_m1911.vmdl";
 
 	public override float PrimaryRate => 12.0f;
 	public override float SecondaryRate => 4.5f;

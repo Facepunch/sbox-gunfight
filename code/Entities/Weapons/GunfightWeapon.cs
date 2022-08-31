@@ -24,6 +24,12 @@ partial class GunfightWeapon : BaseWeapon
 
 	public PickupTrigger PickupTrigger { get; protected set; }
 
+	protected GunfightPlayer Player => Owner as GunfightPlayer;
+	protected PlayerController PlayerController => Player.Controller as PlayerController;
+
+	public bool IsSprinting => PlayerController.IsSprinting;
+	public bool IsAiming => PlayerController.IsAiming;
+
 	public int AvailableAmmo()
 	{
 		var owner = Owner as GunfightPlayer;
@@ -112,6 +118,13 @@ partial class GunfightWeapon : BaseWeapon
 		ViewModelEntity?.SetAnimParameter( "reload", true );
 
 		// TODO - player third person model reload
+	}
+
+	public override bool CanPrimaryAttack()
+	{
+		if ( IsSprinting ) return false;
+
+		return base.CanPrimaryAttack();
 	}
 
 	public override void AttackPrimary()

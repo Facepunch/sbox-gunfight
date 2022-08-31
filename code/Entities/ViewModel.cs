@@ -17,9 +17,9 @@ public partial class ViewModel : BaseViewModel
 	float VelocityScale => 10f;
 	float RotationScale => 0.5f;
 
-	Vector3 WalkCycleOffsets => new( 0, 15, 0 );
-	float ForwardBobbing => 10f;
-	float SideWalkOffset => 10f;
+	Vector3 WalkCycleOffsets => new( 0, -50f, 50f );
+	float ForwardBobbing => 50f;
+	float SideWalkOffset => 50f;
 	public Vector3 AimOffset => new( 0, 0, 0 );
 	Vector3 Offset => new( 0, -1, 0 );
 	Vector3 CrouchOffset => new( -80f, -50, 15 );
@@ -78,7 +78,7 @@ public partial class ViewModel : BaseViewModel
 
 		SmoothedVelocity += (Owner.Velocity - SmoothedVelocity) * 5f * DeltaTime;
 
-		var speed = Owner.Velocity.Length.LerpInverse( 0, 1000 );
+		var speed = Owner.Velocity.Length.LerpInverse( 0, 750 );
 		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -100, 500 );
 		var left = camSetup.Rotation.Left;
 		var up = camSetup.Rotation.Up;
@@ -111,18 +111,18 @@ public partial class ViewModel : BaseViewModel
 		bobSpeed *= (1 - sprintLerp * 0.25f);
 		bobSpeed *= (1 - burstSprintLerp * 0.15f);
 
-		var controller = owner.Controller as WalkController;
+		var controller = owner.Controller as PlayerController;
 
 		if ( Owner.GroundEntity != null && controller is not null /*&& !controller.Slide.IsActive*/ )
 		{
-			walkBob += Time.Delta * 30.0f * bobSpeed;
+			walkBob += DeltaTime * 30.0f * bobSpeed;
 		}
 
 		if ( Owner.Velocity.Length < 60 )
 		{
 			var step = MathF.Round( walkBob / 90 );
 
-			walkBob += (step * 90 - walkBob) * 10f * Time.Delta;
+			walkBob += (step * 90 - walkBob) * 10f * DeltaTime;
 		}
 
 		if ( crouched )

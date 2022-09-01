@@ -1,4 +1,6 @@
-﻿namespace Facepunch.Gunfight;
+﻿using Sandbox.UI;
+
+namespace Facepunch.Gunfight;
 
 public enum FireMode
 {
@@ -41,6 +43,11 @@ public partial class GunfightWeapon : BaseWeapon
 		CurrentFireMode = (FireMode)newIndex;
 
 		// TODO - Sound, animations (?)
+
+		if ( Host.IsServer )
+		{
+			ChatBox.AddInformation( To.Single( Owner ), $"Fire Mode: {CurrentFireMode}" );
+		}
 	}
 
 	public int AvailableAmmo()

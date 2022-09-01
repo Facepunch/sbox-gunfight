@@ -56,6 +56,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Setup" )]
 	public WeaponSlot Slot { get; set; } = WeaponSlot.Primary;
 
+	[Category( "Setup" )]
+	public HoldType HoldType { get; set; } = HoldType.Pistol;
+
 	[Category( "Setup" ), ResourceType( "vmdl" )]
 	public string Model { get; set; }
 
@@ -69,14 +72,19 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Setup" ), ResourceType( "jpg" )]
 	public string Icon { get; set; }
 
-	[Category( "View Model" )]
-	public ViewModelSetup ViewModelSetup { get; set; }
-
 	[Category( "Shooting" )]
 	public float BaseFireRate { get; set; } = 1f;
 
-	[Category( "General" )]
-	public HoldType HoldType { get; set; } = HoldType.Pistol;
+	[Category( "Shooting" )]
+	public FireMode DefaultFireMode { get; set; } = FireMode.FullAuto;
+
+	[ShowIf( "DefaultFireMode", FireMode.Burst )]
+	public int BurstAmount { get; set; } = 3;
+
+	[Category( "Shooting" ), ResourceType( "sound" )]
+	public string FireSound { get; set; } = "";
+
+	public ViewModelSetup ViewModelSetup { get; set; }
 
 	protected override void PostLoad()
 	{

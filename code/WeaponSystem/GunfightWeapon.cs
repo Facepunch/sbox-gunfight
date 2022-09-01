@@ -11,10 +11,6 @@ public enum FireMode
 
 public partial class GunfightWeapon : BaseWeapon
 {
-	public virtual AmmoType AmmoType => AmmoType.Pistol;
-	public virtual int ClipSize => 16;
-	public virtual float ReloadTime => 3.0f;
-
 	[Net, Predicted] public int AmmoClip { get; set; }
 	[Net, Predicted] public TimeSince TimeSinceReload { get; set; }
 	[Net, Predicted] public bool IsReloading { get; set; }
@@ -22,6 +18,7 @@ public partial class GunfightWeapon : BaseWeapon
 	[Net, Predicted] public TimeSince TimeSincePrimaryAttack { get; set; }
 	[Net, Predicted] protected int BurstCount { get; set; } = 0;
 	[Net, Predicted] public FireMode CurrentFireMode { get; set; } = FireMode.Semi;
+	[Net, Predicted] public TimeSince TimeSinceFireModeSwitch { get; set; }
 
 	public PickupTrigger PickupTrigger { get; protected set; }
 
@@ -32,9 +29,14 @@ public partial class GunfightWeapon : BaseWeapon
 	public bool IsAiming => PlayerController.IsAiming;
 	public float PrimaryFireRate => WeaponDefinition.BaseFireRate;
 	public bool IsBurst => CurrentFireMode == FireMode.Burst;
+	public int ClipSize => WeaponDefinition.ClipSize;
+	public float ReloadTime => WeaponDefinition.ReloadTime;
+	public AmmoType AmmoType => WeaponDefinition.AmmoType;
 
 	public void CycleFireMode()
 	{
+		if ( TimeSinceFireModeSwitch < 0.3f ) return;
+
 		var curIndex = (int)CurrentFireMode;
 		var length = Enum.GetNames( typeof( FireMode ) ).Length;
 		curIndex++;
@@ -43,6 +45,8 @@ public partial class GunfightWeapon : BaseWeapon
 		CurrentFireMode = (FireMode)newIndex;
 
 		// TODO - Sound, animations (?)
+
+		TimeSinceFireModeSwitch = 0;
 
 		if ( Host.IsServer )
 		{
@@ -145,6 +149,7 @@ public partial class GunfightWeapon : BaseWeapon
 	{
 		base.InitializeWeapon( def );
 
+		AmmoClip = def.StandardClip;
 		CurrentFireMode = def.DefaultFireMode;
 	}
 
@@ -173,6 +178,7 @@ public partial class GunfightWeapon : BaseWeapon
 	protected bool CanDefaultPrimaryAttack()
 	{
 		if ( IsSprinting ) return false;
+		if ( IsReloading ) return false;
 
 		return TimeSincePrimaryAttack >= PrimaryFireRate;
 	}

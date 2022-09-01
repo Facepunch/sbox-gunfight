@@ -65,10 +65,12 @@ public partial class GunfightPlayer
 	{
 		return ammo switch
 		{
-			AmmoType.Pistol => 250,
-			AmmoType.Buckshot => 100,
-			AmmoType.Crossbow => 40,
-			_ => 0
+			AmmoType.Pistol => 64,
+			AmmoType.SMG => 128,
+			AmmoType.Rifle => 96,
+			AmmoType.DMR => 60,
+			AmmoType.Sniper => 20,
+			_ => 64
 		};
 	}
 }
@@ -77,6 +79,8 @@ public enum AmmoType
 {
 	None,
 	Pistol,
-	Buckshot,
-	Crossbow
+	SMG,
+	Rifle,
+	DMR,
+	Sniper
 }

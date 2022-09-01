@@ -8,8 +8,6 @@ partial class M1911 : GunfightWeapon
 	public static readonly Model WorldModel = Model.Load( "models/m1911/w_m1911.vmdl" );
 	public override string ViewModelPath => "models/m1911/fp_m1911.vmdl";
 
-	public override float ReloadTime => 3.0f;
-
 	public override void Spawn()
 	{
 		base.Spawn();

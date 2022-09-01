@@ -87,6 +87,18 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Shooting" ), ResourceType( "sound" )]
 	public string FireSound { get; set; } = "";
 
+	[Category( "Ammo" )]
+	public AmmoType AmmoType { get; set; } = AmmoType.Pistol;
+
+	[Category( "Ammo" )]
+	public int ClipSize { get; set; }
+
+	[Category( "Ammo" )]
+	public int StandardClip { get; set; }
+
+	[Category( "Ammo" )]
+	public float ReloadTime { get; set; } = 3;
+
 	public ViewModelSetup ViewModelSetup { get; set; }
 
 	protected override void PostLoad()

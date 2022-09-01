@@ -7,9 +7,6 @@ partial class R870 : GunfightWeapon
 {
 	public static readonly Model WorldModel = Model.Load( "models/r870/w_r870.vmdl" );
 	public override string ViewModelPath => "models/r870/fp_r870.vmdl";
-	public override AmmoType AmmoType => AmmoType.Buckshot;
-	public override int ClipSize => 6;
-	public override float ReloadTime => 1.2f;
 	
 	[Net, Predicted]
 	public bool StopReloading { get; set; }

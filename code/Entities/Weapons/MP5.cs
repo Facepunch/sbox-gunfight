@@ -8,9 +8,6 @@ partial class MP5 : GunfightWeapon
 	public static readonly Model WorldModel = Model.Load( "models/mp5/w_mp5.vmdl" );
 	public override string ViewModelPath => "models/mp5/fp_mp5.vmdl";
 
-	public override int ClipSize => 30;
-	public override float ReloadTime => 4.0f;
-
 	public override void Spawn()
 	{
 		base.Spawn();

@@ -32,7 +32,7 @@ public class Ammo : Panel
 		Inventory.Text = $"{inv}";
 		Inventory.SetClass( "active", inv >= 0 );
 
-		var hash = HashCode.Combine( player, weapon );
+		var hash = HashCode.Combine( player, weapon.WeaponDefinition );
 		if ( weaponHash != hash )
 		{
 			weaponHash = hash;
@@ -46,10 +46,6 @@ public class Ammo : Panel
 	{
 		AmmoBar.DeleteChildren( true );
 		BulletPanels.Clear();
-
-		AmmoBar.SetClass( "is-crossbow", weapon is Crossbow );
-		AmmoBar.SetClass( "is-shotgun", weapon is R870 );
-		AmmoBar.SetClass( "is-smg", weapon is MP5 );
 
 		for ( int i = 0; i < weapon.ClipSize; i++ )
 		{

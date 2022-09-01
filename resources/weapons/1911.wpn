@@ -17,6 +17,10 @@
 		]
 		BurstAmount = 3
 		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
+		AmmoType = "Pistol"
+		ClipSize = 7
+		StandardClip = 7
+		ReloadTime = 2
 		ViewModelSetup = 
 		{
 			OverallWeight = 0.1

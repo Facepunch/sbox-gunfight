@@ -378,12 +378,12 @@ public partial class GunfightWeapon : BaseWeapon
 		if ( IsReloading || (AmmoClip == 0 && ClipSize > 1) )
 			CrosshairLastReload = 0;
 
-		RenderCrosshair( center, CrosshairLastShoot.Relative, CrosshairLastReload.Relative, Owner?.Velocity.Length ?? 0 );
+		RenderCrosshair( center, CrosshairLastShoot.Relative, CrosshairLastReload.Relative, Owner?.Velocity.Length ?? 0, IsAiming );
 	}
 
-	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload, float speed )
+	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
 	{
-		Crosshair?.RenderCrosshair( in center, lastAttack, lastReload, speed );
+		Crosshair?.RenderCrosshair( in center, lastAttack, lastReload, speed, ads );
 	}
 
 	public override string ToString()

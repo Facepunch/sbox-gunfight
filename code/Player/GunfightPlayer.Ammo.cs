@@ -50,20 +50,6 @@ public partial class GunfightPlayer
 		return taken;
 	}
 
-	public bool Give( string weaponName )
-	{
-		// do we already have one?
-		var existing = Children.Where( x => x.ClassName == weaponName ).FirstOrDefault();
-		if ( existing != null ) return false;
-
-		var weapon = Entity.CreateByName<GunfightWeapon>( weaponName );
-		if ( Inventory.Add( weapon ) )
-			return true;
-
-		weapon?.Delete();
-		return false;
-	}
-
 	public int TakeAmmo( AmmoType type, int amount )
 	{
 		if ( Ammo == null ) return 0;

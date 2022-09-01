@@ -26,7 +26,9 @@
         "solid": "Collide",
         "trigger": "Trigger",
         "ladder": "Ignore",
-        "water": "Trigger"
+        "water": "Trigger",
+        "ragdoll": "Trigger",
+        "weapon": "Trigger"
       },
       "Pairs": [
         {
@@ -61,8 +63,17 @@
         },
         {
           "a": "trigger",
-          "b": "water",
-          "r": "Ignore"
+          "b": "water"
+        },
+        {
+          "a": "solid",
+          "b": "ragdoll",
+          "r": "Collide"
+        },
+        {
+          "a": "solid",
+          "b": "weapon",
+          "r": "Collide"
         }
       ]
     },

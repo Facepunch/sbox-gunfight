@@ -8,8 +8,6 @@ partial class M1911 : GunfightWeapon
 	public static readonly Model WorldModel = Model.Load( "models/m1911/w_m1911.vmdl" );
 	public override string ViewModelPath => "models/m1911/fp_m1911.vmdl";
 
-	public override float PrimaryRate => 12.0f;
-	public override float SecondaryRate => 4.5f;
 	public override float ReloadTime => 3.0f;
 
 	public override int Bucket => 0;
@@ -30,7 +28,6 @@ partial class M1911 : GunfightWeapon
 	public override void AttackPrimary()
 	{
 		TimeSincePrimaryAttack = 0;
-		TimeSinceSecondaryAttack = 0;
 
 		if ( !TakeAmmo( 1 ) )
 		{
@@ -53,11 +50,6 @@ partial class M1911 : GunfightWeapon
 		//
 		ShootBullet( 0.05f, 1, 12.0f, 2.0f );
 
-	}
-
-	public override void AttackSecondary()
-	{
-		//
 	}
 
 	public override void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload )

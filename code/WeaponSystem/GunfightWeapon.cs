@@ -1,6 +1,6 @@
 ﻿namespace Facepunch.Gunfight;
 
-partial class GunfightWeapon : BaseWeapon
+public partial class GunfightWeapon : BaseWeapon
 {
 	public virtual AmmoType AmmoType => AmmoType.Pistol;
 	public virtual int ClipSize => 16;
@@ -22,6 +22,9 @@ partial class GunfightWeapon : BaseWeapon
 	[Net, Predicted]
 	public TimeSince TimeSinceDeployed { get; set; }
 
+	[Net, Predicted]
+	public TimeSince TimeSincePrimaryAttack { get; set; }
+
 	public PickupTrigger PickupTrigger { get; protected set; }
 
 	protected GunfightPlayer Player => Owner as GunfightPlayer;
@@ -29,6 +32,8 @@ partial class GunfightWeapon : BaseWeapon
 
 	public bool IsSprinting => PlayerController.IsSprinting;
 	public bool IsAiming => PlayerController.IsAiming;
+
+	public float PrimaryFireRate => WeaponDefinition.BaseFireRate;
 
 	public int AvailableAmmo()
 	{
@@ -46,20 +51,16 @@ partial class GunfightWeapon : BaseWeapon
 		IsReloading = false;
 	}
 
-	public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";
-
 	public override void Spawn()
 	{
 		base.Spawn();
-
-		SetModel( "weapons/rust_pistol/rust_pistol.vmdl" );
 
 		PickupTrigger = new PickupTrigger();
 		PickupTrigger.Parent = this;
 		PickupTrigger.Position = Position;
 	}
 
-	public override void Reload()
+	public virtual void Reload()
 	{
 		if ( IsReloading )
 			return;
@@ -120,17 +121,16 @@ partial class GunfightWeapon : BaseWeapon
 		// TODO - player third person model reload
 	}
 
-	public override bool CanPrimaryAttack()
+	public virtual bool CanPrimaryAttack()
 	{
 		if ( IsSprinting ) return false;
 
-		return base.CanPrimaryAttack();
+		return TimeSincePrimaryAttack >= PrimaryFireRate;
 	}
 
-	public override void AttackPrimary()
+	public virtual void AttackPrimary()
 	{
 		TimeSincePrimaryAttack = 0;
-		TimeSinceSecondaryAttack = 0;
 	}
 
 	[ClientRpc]
@@ -140,6 +140,45 @@ partial class GunfightWeapon : BaseWeapon
 
 		ViewModelEntity?.SetAnimParameter( "fire", true );
 		CrosshairLastShoot = 0;
+	}
+
+
+	/// <summary>
+	/// Does a trace from start to end, does bullet impact effects. Coded as an IEnumerable so you can return multiple
+	/// hits, like if you're going through layers or ricocet'ing or something.
+	/// </summary>
+	public virtual IEnumerable<TraceResult> TraceBullet( Vector3 start, Vector3 end, float radius = 2.0f )
+	{
+		bool underWater = Trace.TestPoint( start, "water" );
+
+		var trace = Trace.Ray( start, end )
+				.UseHitboxes()
+				.WithAnyTags( "solid", "player", "npc" )
+				.Ignore( this )
+				.Size( radius );
+
+		//
+		// If we're not underwater then we can hit water
+		//
+		if ( !underWater )
+			trace = trace.WithAnyTags( "water" );
+
+		var tr = trace.Run();
+
+		if ( tr.Hit )
+			yield return tr;
+
+		//
+		// Another trace, bullet going through thin material, penetrating water surface?
+		//
+	}
+
+	public override Sound PlaySound( string soundName, string attachment )
+	{
+		if ( Owner.IsValid() )
+			return Owner.PlaySound( soundName, attachment );
+
+		return base.PlaySound( soundName, attachment );
 	}
 
 	/// <summary>
@@ -194,26 +233,6 @@ partial class GunfightWeapon : BaseWeapon
 		PlaySound( "dm.dryfire" );
 	}
 
-	public override void CreateViewModel()
-	{
-		Host.AssertClient();
-
-		if ( string.IsNullOrEmpty( ViewModelPath ) )
-			return;
-
-		ViewModelEntity = new ViewModel();
-		ViewModelEntity.Position = Position;
-		ViewModelEntity.Owner = Owner;
-		ViewModelEntity.EnableViewmodelRendering = true;
-		ViewModelEntity.SetModel( ViewModelPath );
-		ViewModelEntity.SetAnimParameter( "deploy", true );
-	}
-
-	public override void CreateHudElements()
-	{
-		if ( Local.Hud == null ) return;
-	}
-
 	public bool IsUsable()
 	{
 		if ( AmmoClip > 0 ) return true;
@@ -258,5 +277,4 @@ partial class GunfightWeapon : BaseWeapon
 	{
 		var draw = Render.Draw2D;
 	}
-
 }

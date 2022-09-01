@@ -48,14 +48,17 @@ public partial class GunfightPlayer : Player
 		base.Respawn();
 	}
 
-
 	public void GiveAll()
 	{
-		GiveAmmo( AmmoType.Pistol, 256 );
+		GiveAmmo( AmmoType.Pistol, MaxAmmo( AmmoType.Pistol ) );
+		GiveAmmo( AmmoType.SMG, MaxAmmo( AmmoType.SMG ) );
+		GiveAmmo( AmmoType.Rifle, MaxAmmo( AmmoType.Rifle ) );
+		GiveAmmo( AmmoType.DMR, MaxAmmo( AmmoType.DMR ) );
+		GiveAmmo( AmmoType.Sniper, MaxAmmo( AmmoType.Sniper ) );
 
+		GiveWeapon( "knife" );
 		GiveWeapon( "1911" );
 		GiveWeapon( "mp5", true );
-
 	}
 
 	public void GiveWeapon( string name, bool makeActive = false )

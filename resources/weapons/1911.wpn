@@ -2,11 +2,11 @@
 {
 	data = 
 	{
-		WeaponName = "MP5A2"
-		WeaponShortName = "MP5"
-		Slot = "Primary"
-		Model = resource:"models/mp5/w_mp5.vmdl"
-		ViewModel = resource:"models/mp5/fp_mp5.vmdl"
+		WeaponName = "M1911"
+		WeaponShortName = "1911"
+		Slot = "Secondary"
+		Model = resource:"models/m1911/w_m1911.vmdl"
+		ViewModel = resource:"models/m1911/fp_m1911.vmdl"
 		Icon = null
 		ViewModelSetup = 
 		{
@@ -30,6 +30,6 @@
 			SprintAngleOffset = "5,25,0"
 		}
 		BaseFireRate = 1
-		HoldType = "Rifle"
+		HoldType = "Pistol"
 	}
 }

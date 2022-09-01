@@ -25,7 +25,8 @@ public partial class ViewModel : BaseViewModel
 	Angles GlobalAngleOffset => Setup.GlobalAngleOffset;
 	Vector3 CrouchPositionOffset => Setup.CrouchPositionOffset;
 	Angles CrouchAnglesOffset => Setup.CrouchAngleOffset;
-	Angles AvoidanceAngles => Setup.AvoidanceAngleOffset;
+	Angles AvoidanceAngleOffset => Setup.AvoidanceAngleOffset;
+	Vector3 AvoidancePositionOffset => Setup.AvoidancePositionOffset;
 	Angles SprintAngleOffset => Setup.SprintAngleOffset;
 	Vector3 SprintPositionOffset => Setup.SprintPositionOffset;
 
@@ -147,7 +148,7 @@ public partial class ViewModel : BaseViewModel
 		var eyePos = camSetup.Position;
 		var gunTrPos = aimPointW.Position;
 
-		DebugOverlay.Sphere( aimPointW.Position, 1f, Color.Green );
+		//DebugOverlay.Sphere( aimPointW.Position, 1f, Color.Green );
 
 		var angleDiff = aimPointW.Rotation.Angles();
 
@@ -177,8 +178,9 @@ public partial class ViewModel : BaseViewModel
 			ApplyPositionOffset( CrouchPositionOffset, crouchLerp, camSetup );
 
 			// Avoidance
-			Rotation *= Rotation.From( AvoidanceAngles * avoidance );
-			Position += forward * avoidance * -5f;
+			Rotation *= Rotation.From( AvoidanceAngleOffset * avoidance );
+			ApplyPositionOffset( AvoidancePositionOffset, avoidance, camSetup );
+			//Position += forward * avoidance * -5f;
 
 			// Sprinting
 			Rotation *= Rotation.From( SprintAngleOffset * sprintLerp );

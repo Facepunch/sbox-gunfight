@@ -5,6 +5,7 @@
 		WeaponName = "MP5A2"
 		WeaponShortName = "MP5"
 		Slot = "Primary"
+		HoldType = "Rifle"
 		Model = resource:"models/mp5/w_mp5.vmdl"
 		ViewModel = resource:"models/mp5/fp_mp5.vmdl"
 		Icon = null
@@ -24,12 +25,14 @@
 			GlobalAngleOffset = "-1,0,-2"
 			CrouchPositionOffset = "-3,1,0"
 			CrouchAngleOffset = "2,0,-15"
-			AvoidancePositionOffset = "-15,0,0"
+			AvoidancePositionOffset = "-5,0,0"
 			AvoidanceAngleOffset = "2,0,-25"
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "5,25,0"
 		}
-		BaseFireRate = 1
-		HoldType = "Rifle"
+		BaseFireRate = 0.1
+		DefaultFireMode = "FullAuto"
+		BurstAmount = 3
+		FireSound = resource:"sounds/guns/mp5/smg1_shoot.sound"
 	}
 }

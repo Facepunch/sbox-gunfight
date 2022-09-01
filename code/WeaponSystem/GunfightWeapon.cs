@@ -1,25 +1,24 @@
 ﻿namespace Facepunch.Gunfight;
 
+public enum FireMode
+{
+	Semi,
+	FullAuto,
+	Burst
+}
+
 public partial class GunfightWeapon : BaseWeapon
 {
 	public virtual AmmoType AmmoType => AmmoType.Pistol;
 	public virtual int ClipSize => 16;
 	public virtual float ReloadTime => 3.0f;
 
-	[Net, Predicted]
-	public int AmmoClip { get; set; }
-
-	[Net, Predicted]
-	public TimeSince TimeSinceReload { get; set; }
-
-	[Net, Predicted]
-	public bool IsReloading { get; set; }
-
-	[Net, Predicted]
-	public TimeSince TimeSinceDeployed { get; set; }
-
-	[Net, Predicted]
-	public TimeSince TimeSincePrimaryAttack { get; set; }
+	[Net, Predicted] public int AmmoClip { get; set; }
+	[Net, Predicted] public TimeSince TimeSinceReload { get; set; }
+	[Net, Predicted] public bool IsReloading { get; set; }
+	[Net, Predicted] public TimeSince TimeSinceDeployed { get; set; }
+	[Net, Predicted] public TimeSince TimeSincePrimaryAttack { get; set; }
+	[Net, Predicted] protected int BurstCount { get; set; } = 0;
 
 	public PickupTrigger PickupTrigger { get; protected set; }
 
@@ -30,6 +29,8 @@ public partial class GunfightWeapon : BaseWeapon
 	public bool IsAiming => PlayerController.IsAiming;
 
 	public float PrimaryFireRate => WeaponDefinition.BaseFireRate;
+
+	public bool IsBurst => WeaponDefinition.DefaultFireMode == FireMode.Burst;
 
 	public int AvailableAmmo()
 	{
@@ -79,14 +80,35 @@ public partial class GunfightWeapon : BaseWeapon
 		StartReloadEffects();
 	}
 
+	public virtual bool WantsReload()
+	{
+		return Input.Down( InputButton.Reload );
+	}
+
 	public override void Simulate( Client owner )
 	{
 		if ( TimeSinceDeployed < 0.6f )
 			return;
 
-		if ( !IsReloading )
+		if ( WantsReload() )
 		{
-			base.Simulate( owner );
+			Reload();
+			return;
+		}
+
+		//
+		// Reload could have changed our owner
+		//
+		if ( !Owner.IsValid() )
+			return;
+
+		if ( CanPrimaryAttack() )
+		{
+			using ( LagCompensation() )
+			{
+				TimeSincePrimaryAttack = 0;
+				AttackPrimary();
+			}
 		}
 
 		if ( IsReloading && TimeSinceReload > ReloadTime )
@@ -117,16 +139,76 @@ public partial class GunfightWeapon : BaseWeapon
 		// TODO - player third person model reload
 	}
 
-	public virtual bool CanPrimaryAttack()
+	protected bool CanDefaultPrimaryAttack()
 	{
 		if ( IsSprinting ) return false;
 
 		return TimeSincePrimaryAttack >= PrimaryFireRate;
 	}
 
+	protected bool CanPrimaryAttackSemi()
+	{
+		return CanDefaultPrimaryAttack() && Input.Pressed( InputButton.PrimaryAttack );
+	}
+
+	protected bool CanPrimaryAttackBurst()
+	{
+		if ( !Input.Down( InputButton.PrimaryAttack ) )
+		{
+			BurstCount = 0;
+			return false;
+		}
+
+		if ( BurstCount >= WeaponDefinition.BurstAmount )
+			return false;
+
+		return CanDefaultPrimaryAttack();
+	}
+	public virtual bool CanPrimaryAttack()
+	{
+		var fireMode = WeaponDefinition.DefaultFireMode;
+		if ( fireMode == FireMode.Semi )
+		{
+			return CanPrimaryAttackSemi();
+		}
+		else if ( fireMode == FireMode.Burst )
+		{
+			return CanPrimaryAttackBurst();
+		}
+
+		return TimeSincePrimaryAttack >= PrimaryFireRate && Input.Down( InputButton.PrimaryAttack );
+	}
+
 	public virtual void AttackPrimary()
 	{
 		TimeSincePrimaryAttack = 0;
+
+		if ( !TakeAmmo( 1 ) )
+		{
+			DryFire();
+
+			if ( AvailableAmmo() > 0 )
+			{
+				Reload();
+			}
+			return;
+		}
+
+		(Owner as AnimatedEntity).SetAnimParameter( "b_attack", true );
+
+		//
+		// Tell the clients to play the shoot effects
+		//
+		ShootEffects();
+		PlaySound( WeaponDefinition.FireSound );
+
+		//
+		// Shoot the bullets
+		//
+		ShootBullet( 0.1f, 1.5f, 12.0f, 3.0f );
+
+		if ( IsBurst )
+			BurstCount++;
 	}
 
 	[ClientRpc]

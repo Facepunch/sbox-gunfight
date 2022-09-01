@@ -21,6 +21,7 @@
 		ClipSize = 7
 		StandardClip = 7
 		ReloadTime = 2
+		Crosshair = "Default"
 		ViewModelSetup = 
 		{
 			OverallWeight = 0.1
@@ -33,7 +34,7 @@
 			WalkCycleOffset = "-2,25,0"
 			BobAmount = "25,50"
 			GlobalLerpPower = 1
-			GlobalPositionOffset = "0,0,1"
+			GlobalPositionOffset = "-5,0,1"
 			GlobalAngleOffset = "-1,0,-2"
 			CrouchPositionOffset = "-3,1,0"
 			CrouchAngleOffset = "2,0,-15"

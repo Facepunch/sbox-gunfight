@@ -1,0 +1,46 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		WeaponName = "Knife"
+		WeaponShortName = "knife"
+		Slot = "Melee"
+		HoldType = "MeleeWeapons"
+		Model = resource:"models/knife/w_knife.vmdl"
+		ViewModel = resource:"models/knife/fp_knife.vmdl"
+		Icon = null
+		BaseFireRate = 0.2
+		DefaultFireMode = "Semi"
+		SupportedFireModes = 
+		[
+			"Semi",
+		]
+		BurstAmount = 3
+		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
+		AmmoType = "None"
+		ClipSize = 7
+		StandardClip = 7
+		ReloadTime = 2
+		Crosshair = "Default"
+		ViewModelSetup = 
+		{
+			OverallWeight = 0.1
+			WeightReturnForce = 100
+			WeightDamping = 18
+			AccelerationDamping = 1
+			VelocityScale = 10
+			RotationalPivotForce = 10
+			RotationalScale = 5
+			WalkCycleOffset = "-2,25,0"
+			BobAmount = "25,50"
+			GlobalLerpPower = 1
+			GlobalPositionOffset = "0,-2,1"
+			GlobalAngleOffset = "-1,0,-2"
+			CrouchPositionOffset = "-3,1,0"
+			CrouchAngleOffset = "2,0,-15"
+			AvoidancePositionOffset = "-15,0,0"
+			AvoidanceAngleOffset = "2,0,-25"
+			SprintPositionOffset = "-1,2,-1"
+		}
+	}
+}

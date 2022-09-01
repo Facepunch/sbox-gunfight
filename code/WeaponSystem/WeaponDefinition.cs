@@ -99,6 +99,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Ammo" )]
 	public float ReloadTime { get; set; } = 3;
 
+	[Category( "UI" )]
+	public CrosshairType Crosshair { get; set; } = CrosshairType.Default;
+
 	public ViewModelSetup ViewModelSetup { get; set; }
 
 	protected override void PostLoad()

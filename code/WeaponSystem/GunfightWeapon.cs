@@ -21,6 +21,7 @@ public partial class GunfightWeapon : BaseWeapon
 	[Net, Predicted] public TimeSince TimeSinceFireModeSwitch { get; set; }
 
 	public PickupTrigger PickupTrigger { get; protected set; }
+	public CrosshairRender Crosshair { get; protected set; }
 
 	protected GunfightPlayer Player => Owner as GunfightPlayer;
 	protected PlayerController PlayerController => Player.Controller as PlayerController;
@@ -151,6 +152,7 @@ public partial class GunfightWeapon : BaseWeapon
 
 		AmmoClip = def.StandardClip;
 		CurrentFireMode = def.DefaultFireMode;
+		Crosshair = CrosshairRender.From( def.Crosshair );
 	}
 
 	public virtual void OnReloadFinish()
@@ -381,7 +383,7 @@ public partial class GunfightWeapon : BaseWeapon
 
 	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload )
 	{
-		var draw = Render.Draw2D;
+		Crosshair?.RenderCrosshair( in center, lastAttack, lastReload );
 	}
 
 	public override string ToString()

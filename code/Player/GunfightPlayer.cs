@@ -56,10 +56,12 @@ public partial class GunfightPlayer : Player
 		GiveAmmo( AmmoType.Buckshot, 64 );
 		GiveAmmo( AmmoType.Crossbow, 16 );
 
-		Inventory.Add( new M1911() );
-		Inventory.Add( new R870() );
-		Inventory.Add( new MP5() );
-		Inventory.Add( new Crossbow() );
+		GiveWeapon( "mp5", true );
+	}
+
+	public void GiveWeapon( string name, bool makeActive = false )
+	{
+		Inventory.Add( WeaponDefinition.CreateWeapon( name ), makeActive );
 	}
 
 	public override void OnKilled()
@@ -81,7 +83,7 @@ public partial class GunfightPlayer : Player
 		}
 		else
 		{
-			BecomeRagdollOnClient( LastDamage.Force, GetHitboxBone( LastDamage.HitboxIndex ) );
+			BecomeRagdollOnClient( Velocity, LastDamage.Flags, LastDamage.Position, LastDamage.Force, GetHitboxBone( LastDamage.HitboxIndex ) );
 		}
 
 		Controller = null;
@@ -139,7 +141,7 @@ public partial class GunfightPlayer : Player
 		// If the current weapon is out of ammo and we last fired it over half a second ago
 		// lets try to switch to a better wepaon
 		//
-		if ( ActiveChild is GunfightWeapon weapon && !weapon.IsUsable() && weapon.TimeSincePrimaryAttack > 0.5f && weapon.TimeSinceSecondaryAttack > 0.5f )
+		if ( ActiveChild is GunfightWeapon weapon && !weapon.IsUsable() && weapon.TimeSincePrimaryAttack > 0.5f )
 		{
 			SwitchToBestWeapon();
 		}
@@ -180,10 +182,10 @@ public partial class GunfightPlayer : Player
 	{
 		base.PostCameraSetup( ref setup );
 
-		if ( setup.Viewer != null )
-		{
-			AddCameraEffects( ref setup );
-		}
+		//if ( setup.Viewer != null )
+		//{
+		//	AddCameraEffects( ref setup );
+		//}
 	}
 
 	float walkBob = 0;

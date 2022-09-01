@@ -1,0 +1,33 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		WeaponName = "MP5A2"
+		WeaponShortName = "MP5"
+		Slot = "Primary"
+		Model = resource:"models/mp5/w_mp5.vmdl"
+		ViewModel = resource:"models/mp5/fp_mp5.vmdl"
+		Icon = null
+		ViewModelSetup = 
+		{
+			OverallWeight = 0.5
+			WeightReturnForce = 400
+			WeightDamping = 18
+			AccelerationDamping = 0.1
+			VelocityScale = 10
+			RotationalPivotForce = 10
+			RotationalScale = 0.5
+			WalkCycleOffset = "0,-50,50"
+			BobAmount = "50,50"
+			GlobalLerpPower = 10
+			GlobalPositionOffset = "0,-1,0"
+			AimPositionOffset = "-2,2.67,1.9"
+			CrouchPositionOffset = "-80,-50,15"
+			CrouchAngleOffset = "2,0,-15"
+			AvoidancePositionOffset = "-15,0,0"
+			AvoidanceAngleOffset = "2,0,-25"
+		}
+		BaseFireRate = 1
+		HoldType = "Rifle"
+	}
+}

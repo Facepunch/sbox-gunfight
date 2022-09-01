@@ -7,8 +7,6 @@ partial class R870 : GunfightWeapon
 {
 	public static readonly Model WorldModel = Model.Load( "models/r870/w_r870.vmdl" );
 	public override string ViewModelPath => "models/r870/fp_r870.vmdl";
-	public override float PrimaryRate => 1;
-	public override float SecondaryRate => 1;
 	public override AmmoType AmmoType => AmmoType.Buckshot;
 	public override int ClipSize => 6;
 	public override float ReloadTime => 1.2f;
@@ -39,7 +37,6 @@ partial class R870 : GunfightWeapon
 	public override void AttackPrimary()
 	{
 		TimeSincePrimaryAttack = 0;
-		TimeSinceSecondaryAttack = 0;
 
 		if ( !TakeAmmo( 1 ) )
 		{
@@ -66,11 +63,6 @@ partial class R870 : GunfightWeapon
 		ShootBullet( 0.2f, 0.3f, 20.0f, 2.0f, 4 );
 	}
 
-	public override void AttackSecondary()
-	{
-		//
-	}
-
 	[ClientRpc]
 	protected override void ShootEffects()
 	{
@@ -88,7 +80,6 @@ partial class R870 : GunfightWeapon
 		IsReloading = false;
 
 		TimeSincePrimaryAttack = 0;
-		TimeSinceSecondaryAttack = 0;
 
 		if ( AmmoClip >= ClipSize )
 			return;

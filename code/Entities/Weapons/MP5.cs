@@ -8,8 +8,6 @@ partial class MP5 : GunfightWeapon
 	public static readonly Model WorldModel = Model.Load( "models/mp5/w_mp5.vmdl" );
 	public override string ViewModelPath => "models/mp5/fp_mp5.vmdl";
 
-	public override float PrimaryRate => 12.0f;
-	public override float SecondaryRate => 1.0f;
 	public override int ClipSize => 30;
 	public override float ReloadTime => 4.0f;
 	public override int Bucket => 1;
@@ -26,7 +24,6 @@ partial class MP5 : GunfightWeapon
 	public override void AttackPrimary()
 	{
 		TimeSincePrimaryAttack = 0;
-		TimeSinceSecondaryAttack = 0;
 
 		if ( !TakeAmmo( 1 ) )
 		{
@@ -73,33 +70,21 @@ partial class MP5 : GunfightWeapon
 	{
 		var draw = Render.Draw2D;
 
+		var shootEase = Easing.EaseIn( lastAttack.LerpInverse( 0.2f, 0.0f ) );
 		var color = Color.Lerp( Color.Red, Color.White, lastReload.LerpInverse( 0.0f, 0.4f ) );
+
 		draw.BlendMode = BlendMode.Lighten;
-		draw.Color = color.WithAlpha( 0.2f + CrosshairLastShoot.Relative.LerpInverse( 1.2f, 0 ) * 0.5f );
+		draw.Color = color.WithAlpha( 0.2f + lastAttack.LerpInverse( 1.2f, 0 ) * 0.5f );
 
-		// center circle
-		{
-			var shootEase = Easing.EaseInOut( lastAttack.LerpInverse( 0.1f, 0.0f ) );
-			var length = 2.0f + shootEase * 2.0f;
-			draw.Circle( center, length );
-		}
+		var length = 8.0f - shootEase * 2.0f;
+		var gap = 10.0f + shootEase * 30.0f;
+		var thickness = 2.0f;
 
+		draw.Line( thickness, center + Vector2.Left * gap, center + Vector2.Left * (length + gap) );
+		draw.Line( thickness, center - Vector2.Left * gap, center - Vector2.Left * (length + gap) );
 
-		draw.Color = draw.Color.WithAlpha( draw.Color.a * 0.2f );
-
-		// outer lines
-		{
-			var shootEase = Easing.EaseInOut( lastAttack.LerpInverse( 0.2f, 0.0f ) );
-			var length = 3.0f + shootEase * 2.0f;
-			var gap = 30.0f + shootEase * 50.0f;
-			var thickness = 2.0f;
-
-			draw.Line( thickness, center + Vector2.Up * gap + Vector2.Left * length, center + Vector2.Up * gap - Vector2.Left * length );
-			draw.Line( thickness, center - Vector2.Up * gap + Vector2.Left * length, center - Vector2.Up * gap - Vector2.Left * length );
-
-			draw.Line( thickness, center + Vector2.Left * gap + Vector2.Up * length, center + Vector2.Left * gap - Vector2.Up * length );
-			draw.Line( thickness, center - Vector2.Left * gap + Vector2.Up * length, center - Vector2.Left * gap - Vector2.Up * length );
-		}
+		draw.Line( thickness, center + Vector2.Up * gap, center + Vector2.Up * (length + gap) );
+		draw.Line( thickness, center - Vector2.Up * gap, center - Vector2.Up * (length + gap) );
 	}
 
 }

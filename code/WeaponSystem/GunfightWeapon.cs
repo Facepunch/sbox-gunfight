@@ -4,7 +4,7 @@ public enum FireMode
 {
 	Semi,
 	FullAuto,
-	Burst
+	Burst 
 }
 
 public partial class GunfightWeapon : BaseWeapon
@@ -19,6 +19,7 @@ public partial class GunfightWeapon : BaseWeapon
 	[Net, Predicted] public TimeSince TimeSinceDeployed { get; set; }
 	[Net, Predicted] public TimeSince TimeSincePrimaryAttack { get; set; }
 	[Net, Predicted] protected int BurstCount { get; set; } = 0;
+	[Net, Predicted] public FireMode CurrentFireMode { get; set; } = FireMode.Semi;
 
 	public PickupTrigger PickupTrigger { get; protected set; }
 
@@ -27,10 +28,20 @@ public partial class GunfightWeapon : BaseWeapon
 
 	public bool IsSprinting => PlayerController.IsSprinting;
 	public bool IsAiming => PlayerController.IsAiming;
-
 	public float PrimaryFireRate => WeaponDefinition.BaseFireRate;
+	public bool IsBurst => CurrentFireMode == FireMode.Burst;
 
-	public bool IsBurst => WeaponDefinition.DefaultFireMode == FireMode.Burst;
+	public void CycleFireMode()
+	{
+		var curIndex = (int)CurrentFireMode;
+		var length = Enum.GetNames( typeof( FireMode ) ).Length;
+		curIndex++;
+
+		var newIndex = (curIndex + length) % length;
+		CurrentFireMode = (FireMode)newIndex;
+
+		// TODO - Sound, animations (?)
+	}
 
 	public int AvailableAmmo()
 	{
@@ -83,12 +94,18 @@ public partial class GunfightWeapon : BaseWeapon
 	public virtual bool WantsReload()
 	{
 		return Input.Down( InputButton.Reload );
+	
 	}
 
 	public override void Simulate( Client owner )
 	{
 		if ( TimeSinceDeployed < 0.6f )
 			return;
+
+		if ( Input.Pressed( InputButton.Voice ) )
+		{
+			CycleFireMode();
+		}
 
 		if ( WantsReload() )
 		{
@@ -115,6 +132,13 @@ public partial class GunfightWeapon : BaseWeapon
 		{
 			OnReloadFinish();
 		}
+	}
+
+	protected override void InitializeWeapon( WeaponDefinition def )
+	{
+		base.InitializeWeapon( def );
+
+		CurrentFireMode = def.DefaultFireMode;
 	}
 
 	public virtual void OnReloadFinish()
@@ -166,7 +190,7 @@ public partial class GunfightWeapon : BaseWeapon
 	}
 	public virtual bool CanPrimaryAttack()
 	{
-		var fireMode = WeaponDefinition.DefaultFireMode;
+		var fireMode = CurrentFireMode;
 		if ( fireMode == FireMode.Semi )
 		{
 			return CanPrimaryAttackSemi();

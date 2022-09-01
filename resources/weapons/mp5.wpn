@@ -9,6 +9,16 @@
 		Model = resource:"models/mp5/w_mp5.vmdl"
 		ViewModel = resource:"models/mp5/fp_mp5.vmdl"
 		Icon = null
+		BaseFireRate = 0.1
+		DefaultFireMode = "FullAuto"
+		SupportedFireModes = 
+		[
+			"Semi",
+			"FullAuto",
+			"Burst",
+		]
+		BurstAmount = 3
+		FireSound = resource:"sounds/guns/mp5/smg1_shoot.sound"
 		ViewModelSetup = 
 		{
 			OverallWeight = 0.1
@@ -30,9 +40,5 @@
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "5,25,0"
 		}
-		BaseFireRate = 0.1
-		DefaultFireMode = "FullAuto"
-		BurstAmount = 3
-		FireSound = resource:"sounds/guns/mp5/smg1_shoot.sound"
 	}
 }

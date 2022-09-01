@@ -78,6 +78,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Shooting" )]
 	public FireMode DefaultFireMode { get; set; } = FireMode.FullAuto;
 
+	[Category( "Shooting" )]
+	public List<FireMode> SupportedFireModes { get; set; }
+
 	[ShowIf( "DefaultFireMode", FireMode.Burst )]
 	public int BurstAmount { get; set; } = 3;
 

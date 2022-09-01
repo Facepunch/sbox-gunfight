@@ -26,7 +26,7 @@ public partial class BaseWeapon : BaseCarriable
 		InitializeWeapon( newDef );
 	}
 
-	protected void InitializeWeapon( WeaponDefinition def )
+	protected virtual void InitializeWeapon( WeaponDefinition def )
 	{
 		Log.Info( $"{Host.Name}: Set up this weapon {def}" );
 		Model = def.CachedModel;

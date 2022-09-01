@@ -233,13 +233,13 @@ public partial class GunfightWeapon : BaseWeapon
 			return;
 		}
 
-		(Owner as AnimatedEntity).SetAnimParameter( "b_attack", true );
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
 
 		//
 		// Tell the clients to play the shoot effects
 		//
 		ShootEffects();
-		PlaySound( WeaponDefinition.FireSound );
+		Owner?.PlaySound( WeaponDefinition.FireSound );
 
 		//
 		// Shoot the bullets

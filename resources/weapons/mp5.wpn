@@ -10,22 +10,26 @@
 		Icon = null
 		ViewModelSetup = 
 		{
-			OverallWeight = 0.5
-			WeightReturnForce = 400
+			OverallWeight = 0.1
+			WeightReturnForce = 100
 			WeightDamping = 18
-			AccelerationDamping = 0.1
+			AccelerationDamping = 1
 			VelocityScale = 10
 			RotationalPivotForce = 10
-			RotationalScale = 0.5
-			WalkCycleOffset = "0,-50,50"
-			BobAmount = "50,50"
-			GlobalLerpPower = 10
-			GlobalPositionOffset = "0,-1,0"
+			RotationalScale = 5
+			WalkCycleOffset = "-2,25,0"
+			BobAmount = "25,50"
+			GlobalLerpPower = 1
+			GlobalPositionOffset = "0,0,1"
+			GlobalAngleOffset = "-1,0,-2"
 			AimPositionOffset = "-2,2.67,1.9"
-			CrouchPositionOffset = "-80,-50,15"
+			AimAngleOffset = "0,45,0"
+			CrouchPositionOffset = "-3,1,0"
 			CrouchAngleOffset = "2,0,-15"
 			AvoidancePositionOffset = "-15,0,0"
 			AvoidanceAngleOffset = "2,0,-25"
+			SprintPositionOffset = "0,-2,-1"
+			SprintAngleOffset = "5,25,0"
 		}
 		BaseFireRate = 1
 		HoldType = "Rifle"

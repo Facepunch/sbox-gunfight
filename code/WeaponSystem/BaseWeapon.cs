@@ -28,7 +28,7 @@ public partial class BaseWeapon : BaseCarriable
 
 	protected void InitializeWeapon( WeaponDefinition def )
 	{
-		Log.Info( $"set up this weapon {def}" );
+		Log.Info( $"{Host.Name}: Set up this weapon {def}" );
 
 		if ( Host.IsClient )
 		{
@@ -131,8 +131,6 @@ public partial class BaseWeapon : BaseCarriable
 		{
 			EnableDrawing = false;
 		}
-
-		Log.Info( "end" );
 
 		if ( IsClient )
 		{

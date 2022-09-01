@@ -10,10 +10,7 @@ public partial class ViewModel : BaseViewModel
 	protected WeaponDefinition WeaponDef => Weapon?.WeaponDefinition;
 	protected ViewModelSetup Setup => WeaponDef?.ViewModelSetup ?? default;
 
-
-	float walkBob = 0;
-	Vector3 velocity;
-	Vector3 acceleration;
+	// Data
 	float MouseScale => Setup.OverallWeight;
 	float ReturnForce => Setup.WeightReturnForce;
 	float Damping => Setup.WeightDamping;
@@ -21,61 +18,44 @@ public partial class ViewModel : BaseViewModel
 	float PivotForce => Setup.RotationalPivotForce;
 	float VelocityScale => Setup.VelocityScale;
 	float RotationScale => Setup.RotationalScale;
-
 	Vector3 WalkCycleOffsets => Setup.WalkCycleOffset;
 	float ForwardBobbing => Setup.BobAmount.x;
 	float SideWalkOffset => Setup.BobAmount.y;
-	Vector3 AimOffset => Setup.AimPositionOffset;
-	Vector3 Offset => Setup.GlobalPositionOffset;
-	Vector3 CrouchOffset => Setup.CrouchPositionOffset;
+	Vector3 GlobalPositionOffset => Setup.GlobalPositionOffset;
+	Angles GlobalAngleOffset => Setup.GlobalAngleOffset;
+	Vector3 CrouchPositionOffset => Setup.CrouchPositionOffset;
 	Angles CrouchAnglesOffset => Setup.CrouchAngleOffset;
 	Angles AvoidanceAngles => Setup.AvoidanceAngleOffset;
+	Angles SprintAngleOffset => Setup.SprintAngleOffset;
+	Vector3 SprintPositionOffset => Setup.SprintPositionOffset;
 
-	float OffsetLerpAmount => Setup.GlobalLerpPower;
+	// Utility
+	float DeltaTime => Time.Delta;
 
-	float SprintRightRotation => -10f;
-	float SprintUpRotation => 10f;
-	float BurstSprintRightRotation => 0;
-	float BurstSprintUpRotation => 10f;
-	Angles AimAngleOffset => Setup.AimAngleOffset;
-	float SprintLeftOffset => 0;
-	float BurstSprintLeftOffset => 0;
-	float PostSprintLeftOffset => 6f;
-	float BurstPostSprintLeftOffset => 0;
-
+	// Fields
 	Vector3 SmoothedVelocity;
-	float VelocityClamp => 3f;
+	Vector3 velocity;
+	Vector3 acceleration;
 
+	float VelocityClamp => 3f;
+	float walkBob = 0;
 	float upDownOffset = 0;
 	float avoidance = 0;
-
 	float burstSprintLerp = 0;
 	float sprintLerp = 0;
 	float aimLerp = 0;
 	float crouchLerp = 0;
-
-	float smoothedDelta = 0;
-	float DeltaTime => smoothedDelta;
 
 	public override void PostCameraSetup( ref CameraSetup camSetup )
 	{
 		AddCameraEffects( ref camSetup );
 	}
 
-	private void SmoothDeltaTime()
-	{
-		var delta = (Time.Delta - smoothedDelta) * Time.Delta;
-		var clamped = MathF.Min( MathF.Abs( delta ), 1 / 60f );
-
-		smoothedDelta += clamped * MathF.Sign( delta );
-	}
 
 	protected float MouseDeltaLerpX;
 	protected float MouseDeltaLerpY;
 	private void AddCameraEffects( ref CameraSetup camSetup )
 	{
-		SmoothDeltaTime();
-
 		if ( !Owner.IsValid() )
 		{
 			Delete();
@@ -112,13 +92,8 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 7f );
 		LerpTowards( ref crouchLerp, crouched && !aim ? 1 : 0, 7f );
 
-		//LerpTowards( ref upDownOffset, speed * -LookUpSpeedScale + camSetup.Rotation.Forward.z * -LookUpPitchScale, LookUpPitchScale );
-
-//		camSetup.FieldOfView = 70f * (1 - aimLerp) + 50f * aimLerp;
-//		camSetup.FieldOfView -= burstSprintLerp * 10f;
-
-		bobSpeed *= (1 - sprintLerp * 0.25f);
-		bobSpeed *= (1 - burstSprintLerp * 0.15f);
+		bobSpeed *= 1 - sprintLerp * 0.25f;
+		bobSpeed *= 1 - burstSprintLerp * 0.15f;
 
 		if ( Owner.GroundEntity != null && controller is not null /*&& !controller.Slide.IsActive*/ )
 		{
@@ -130,11 +105,6 @@ public partial class ViewModel : BaseViewModel
 			var step = MathF.Round( walkBob / 90 );
 
 			walkBob += (step * 90 - walkBob) * 10f * DeltaTime;
-		}
-
-		if ( crouched )
-		{
-			acceleration += CrouchOffset * DeltaTime * (1 - aimLerp);
 		}
 
 		walkBob %= 360;
@@ -194,53 +164,37 @@ public partial class ViewModel : BaseViewModel
 			Position = camSetup.Position;
 			Rotation = camSetup.Rotation;
 
-			var desiredOffset = Vector3.Lerp( Offset, diff, aimLerp );
-
-			Position += forward * (velocity.x * VelocityScale + desiredOffset.x);
-			Position += left * (velocity.y * VelocityScale + desiredOffset.y);
-			Position += up * (velocity.z * VelocityScale + desiredOffset.z + upDownOffset * (1 - aimLerp));
+			// Global
+			Rotation *= Rotation.From( GlobalAngleOffset );
+			Position += forward * (velocity.x * VelocityScale + GlobalPositionOffset.x);
+			Position += left * (velocity.y * VelocityScale + GlobalPositionOffset.y);
+			Position += up * (velocity.z * VelocityScale + GlobalPositionOffset.z + upDownOffset);
 
 			Position += (desiredRotation.Forward - Owner.EyeRotation.Forward) * -PivotForce;
+
+			// Crouching
+			Rotation *= Rotation.From( CrouchAnglesOffset * crouchLerp );
+			ApplyPositionOffset( CrouchPositionOffset, crouchLerp, camSetup );
+
+			// Avoidance
+			Rotation *= Rotation.From( AvoidanceAngles * avoidance );
+			Position += forward * avoidance * -5f;
+
+			// Sprinting
+			Rotation *= Rotation.From( SprintAngleOffset * sprintLerp );
+			ApplyPositionOffset( SprintPositionOffset, sprintLerp, camSetup );
 		}
+	}
 
+	protected void ApplyPositionOffset( Vector3 offset, float delta, CameraSetup camSetup )
+	{
+		var left = camSetup.Rotation.Left;
+		var up = camSetup.Rotation.Up;
+		var forward = camSetup.Rotation.Forward;
 
-
-		// Apply sprinting / avoidance offsets
-		var offsetLerp = MathF.Max( sprintLerp, burstSprintLerp );
-
-		//Rotation *= Rotation.FromAxis( Vector3.Up, (velocity.y * ((sprintLerp * 40f) + (burstSprintLerp * 40f)) + offsetLerp * OffsetLerpAmount) * (1 - aimLerp) );
-		//Rotation *= Rotation.FromAxis( Vector3.Right, (sprintLerp * SprintRightRotation) + (burstSprintLerp * BurstSprintRightRotation) * (1 - aimLerp) );
-		//Rotation *= Rotation.FromAxis( Vector3.Up, ((sprintLerp * SprintUpRotation) + (burstSprintLerp * BurstSprintUpRotation)) * (1 - aimLerp) );
-
-		//Rotation *= Rotation.FromAxis( Vector3.Forward, -1f );
-		//Rotation *= Rotation.FromAxis( Vector3.Up, -1f );
-
-		//Rotation *= Rotation.From( AimAngleOffset * aimLerp );
-
-		//Rotation *= Rotation.From( CrouchAnglesOffset * crouchLerp );
-		//Rotation *= Rotation.From( AvoidanceAngles * avoidance );
-
-		//Position += forward * avoidance * -5f;
-
-		//Position += left * (velocity.y * ((sprintLerp * SprintLeftOffset) + (burstSprintLerp * BurstSprintLeftOffset)) + offsetLerp * -10f * (1 - aimLerp));
-		//Position += left * ((PostSprintLeftOffset * sprintLerp) + (BurstPostSprintLeftOffset * burstSprintLerp));
-
-		//Position += up * (offsetLerp * -0f + avoidance * 0 * (1 - aimLerp));
-
-		//var uitx = new Sandbox.UI.PanelTransform();
-		//uitx.AddTranslateY( MathF.Sin( walkBob * 1.0f ) * speed * -8.0f );
-		//uitx.AddTranslateX( MathF.Sin( walkBob * 0.5f ) * speed * -6.0f );
-
-		//MouseDeltaLerpX = MouseDeltaLerpX.LerpTo( mouseDeltaX, Time.Delta * 5f );
-		//MouseDeltaLerpY = MouseDeltaLerpY.LerpTo( mouseDeltaY, Time.Delta * 5f );
-
-		//uitx.AddTranslateX( MouseDeltaLerpX * 25 );
-		//uitx.AddTranslateY( MouseDeltaLerpY * 25 );
-
-		//uitx.AddRotation( MouseDeltaLerpY * -25, MouseDeltaLerpX * -2, 0f );
-
-		//PlayerHud.Current.LeftObjects.Style.Transform = uitx;
-		//PlayerHud.Current.RightObjects.Style.Transform = uitx;
+		Position += forward * offset.x * delta;
+		Position += left * offset.y * delta;
+		Position += up * offset.z * delta;
 	}
 
 	private float WalkCycle( float speed, float power, bool abs = false )

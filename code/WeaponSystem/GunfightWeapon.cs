@@ -142,7 +142,6 @@ public partial class GunfightWeapon : BaseWeapon
 		CrosshairLastShoot = 0;
 	}
 
-
 	/// <summary>
 	/// Does a trace from start to end, does bullet impact effects. Coded as an IEnumerable so you can return multiple
 	/// hits, like if you're going through layers or ricocet'ing or something.
@@ -171,14 +170,6 @@ public partial class GunfightWeapon : BaseWeapon
 		//
 		// Another trace, bullet going through thin material, penetrating water surface?
 		//
-	}
-
-	public override Sound PlaySound( string soundName, string attachment )
-	{
-		if ( Owner.IsValid() )
-			return Owner.PlaySound( soundName, attachment );
-
-		return base.PlaySound( soundName, attachment );
 	}
 
 	/// <summary>

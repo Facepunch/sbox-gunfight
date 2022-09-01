@@ -56,6 +56,7 @@ public partial class GunfightPlayer : Player
 		GiveAmmo( AmmoType.Buckshot, 64 );
 		GiveAmmo( AmmoType.Crossbow, 16 );
 
+		GiveWeapon( "1911", false );
 		GiveWeapon( "mp5", true );
 	}
 

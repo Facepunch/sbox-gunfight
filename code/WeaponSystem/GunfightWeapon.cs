@@ -5,10 +5,6 @@ public partial class GunfightWeapon : BaseWeapon
 	public virtual AmmoType AmmoType => AmmoType.Pistol;
 	public virtual int ClipSize => 16;
 	public virtual float ReloadTime => 3.0f;
-	public virtual int Bucket => 1;
-	public virtual int BucketWeight => 100;
-
-	public virtual int Order => (Bucket * 10000) + BucketWeight;
 
 	[Net, Predicted]
 	public int AmmoClip { get; set; }
@@ -267,5 +263,10 @@ public partial class GunfightWeapon : BaseWeapon
 	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload )
 	{
 		var draw = Render.Draw2D;
+	}
+
+	public override string ToString()
+	{
+		return $"GunfightWeapon[{WeaponDefinition?.WeaponName ?? "base"}]";
 	}
 }

@@ -3,7 +3,7 @@ namespace Facepunch.Gunfight;
 [Title( "Weapon" ), Icon( "luggage" )]
 public partial class BaseWeapon : BaseCarriable
 {
-	public virtual WeaponSlot Slot => WeaponSlot.Primary;
+	public virtual WeaponSlot Slot => WeaponDefinition?.Slot ?? WeaponSlot.Primary;
 
 
 	[Net, Change( nameof( OnWeaponDefinitionChanged ) )]
@@ -29,14 +29,6 @@ public partial class BaseWeapon : BaseCarriable
 	protected void InitializeWeapon( WeaponDefinition def )
 	{
 		Log.Info( $"{Host.Name}: Set up this weapon {def}" );
-
-		if ( Host.IsClient )
-		{
-			CreateViewModel();
-
-			ViewModelEntity.Model = def.CachedViewModel;
-		}
-
 		Model = def.CachedModel;
 	}
 

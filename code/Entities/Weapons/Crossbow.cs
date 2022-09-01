@@ -8,7 +8,6 @@ partial class Crossbow : GunfightWeapon
 	public static readonly Model WorldModel = Model.Load( "weapons/rust_crossbow/rust_crossbow.vmdl" );
 	public override string ViewModelPath => "weapons/rust_crossbow/v_rust_crossbow.vmdl";
 
-	public override int Bucket => 3;
 	public override AmmoType AmmoType => AmmoType.Crossbow;
 	public override int ClipSize => 5;
 

@@ -15,10 +15,8 @@ public partial class GunfightPlayer : Player
 	public int ComboKillCount { get; set; } = 0;
 	public TimeSince TimeSinceLastKill { get; set; }
 
-	public GunfightPlayer()
-	{
-		Inventory = new GunfightInventory( this );
-	}
+	[Net] public PlayerInventory PlayerInventory { get; set; }
+	public new PlayerInventory Inventory => PlayerInventory;
 
 	public override void Respawn()
 	{
@@ -27,6 +25,7 @@ public partial class GunfightPlayer : Player
 		Animator = new StandardPlayerAnimator();
 		CameraMode = new FirstPersonCamera();
 		Controller = new PlayerController();
+		PlayerInventory = new PlayerInventory( this );
 
 		EnableAllCollisions = true;
 		EnableDrawing = true;
@@ -56,8 +55,9 @@ public partial class GunfightPlayer : Player
 		GiveAmmo( AmmoType.Buckshot, 64 );
 		GiveAmmo( AmmoType.Crossbow, 16 );
 
-		GiveWeapon( "1911", false );
+		GiveWeapon( "1911" );
 		GiveWeapon( "mp5", true );
+
 	}
 
 	public void GiveWeapon( string name, bool makeActive = false )
@@ -164,7 +164,6 @@ public partial class GunfightPlayer : Player
 	{
 		var best = Children.Select( x => x as GunfightWeapon )
 			.Where( x => x.IsValid() && x.IsUsable() )
-			.OrderByDescending( x => x.BucketWeight )
 			.FirstOrDefault();
 
 		if ( best == null ) return;

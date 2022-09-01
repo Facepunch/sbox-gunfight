@@ -10,8 +10,6 @@ partial class M1911 : GunfightWeapon
 
 	public override float ReloadTime => 3.0f;
 
-	public override int Bucket => 0;
-
 	public override void Spawn()
 	{
 		base.Spawn();

@@ -10,9 +10,7 @@ partial class R870 : GunfightWeapon
 	public override AmmoType AmmoType => AmmoType.Buckshot;
 	public override int ClipSize => 6;
 	public override float ReloadTime => 1.2f;
-	public override int Bucket => 2;
-	public override int BucketWeight => 200;
-
+	
 	[Net, Predicted]
 	public bool StopReloading { get; set; }
 

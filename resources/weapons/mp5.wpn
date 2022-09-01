@@ -19,6 +19,10 @@
 		]
 		BurstAmount = 3
 		FireSound = resource:"sounds/guns/mp5/smg1_shoot.sound"
+		AmmoType = "SMG"
+		ClipSize = 30
+		StandardClip = 30
+		ReloadTime = 3
 		ViewModelSetup = 
 		{
 			OverallWeight = 0.1

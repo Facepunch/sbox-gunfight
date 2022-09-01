@@ -10,8 +10,6 @@ partial class MP5 : GunfightWeapon
 
 	public override int ClipSize => 30;
 	public override float ReloadTime => 4.0f;
-	public override int Bucket => 1;
-	public override int BucketWeight => 100;
 
 	public override void Spawn()
 	{

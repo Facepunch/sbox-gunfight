@@ -18,7 +18,6 @@ public class HudRootPanel : RootPanel
 		AddChild<DamageIndicator>();
 		AddChild<HitIndicator>();
 
-		AddChild<InventoryBar>();
 		AddChild<PickupFeed>();
 
 		AddChild<ChatBox>();

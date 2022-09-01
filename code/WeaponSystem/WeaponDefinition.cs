@@ -7,8 +7,10 @@ public partial class WeaponDefinition : GameResource
 {
 	public static GunfightWeapon CreateWeapon( WeaponDefinition def )
 	{
-		var weapon = new GunfightWeapon();
-		weapon.WeaponDefinition = def;
+		var weapon = new GunfightWeapon
+		{
+			WeaponDefinition = def
+		};
 
 		Log.Info( $"Created weapon: {def.WeaponName}" );
 

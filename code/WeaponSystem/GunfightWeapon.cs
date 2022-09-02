@@ -132,7 +132,26 @@ public partial class GunfightWeapon : BaseWeapon
 		var randX = Rand.Float( BaseRecoilMinimum.x, BaseRecoilMaximum.x );
 		var randY = Rand.Float( BaseRecoilMinimum.y, BaseRecoilMaximum.y );
 
-		Recoil += new Vector2( randX, randY );
+		// TODO - Remove magic numbers.
+		var recoilScale = 1f;
+
+		// Recoil gets decreased when aiming down the sights.
+		if ( IsAiming )
+		{
+			recoilScale *= 0.8f;
+		}
+
+		// Recoil gets decreased when ducking.
+		if ( PlayerController.Duck.IsActive )
+		{
+			recoilScale *= 0.8f;
+		}
+	
+		// If you're moving at speed, apply more recoil.
+		var speed = Player.Velocity.Length.LerpInverse( 0, 400, true );
+		recoilScale += 0.5f * speed;
+
+		Recoil += new Vector2( randX, randY ) * recoilScale;
 	}
 
 	public override void BuildInput( InputBuilder input )

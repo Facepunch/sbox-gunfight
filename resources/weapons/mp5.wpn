@@ -23,6 +23,7 @@
 		ClipSize = 30
 		StandardClip = 30
 		ReloadTime = 3
+		Crosshair = "Default"
 		ViewModelSetup = 
 		{
 			OverallWeight = 0.1
@@ -43,6 +44,12 @@
 			AvoidanceAngleOffset = "2,0,-25"
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "5,25,0"
+		}
+		Recoil = 
+		{
+			Decay = "2,3"
+			BaseRecoilMinimum = "0.1,0.3"
+			BaseRecoilMaximum = "0.1,0.4"
 		}
 	}
 }

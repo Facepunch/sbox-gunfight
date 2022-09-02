@@ -63,6 +63,12 @@ public partial class ViewModel : BaseViewModel
 			return;
 		}
 
+		var owner = Owner as Player;
+		var controller = owner.Controller as PlayerController;
+
+		if ( controller == null )
+			return;
+
 		SmoothedVelocity += (Owner.Velocity - SmoothedVelocity) * 5f * DeltaTime;
 
 		var speed = Owner.Velocity.Length.LerpInverse( 0, 750 );
@@ -70,8 +76,6 @@ public partial class ViewModel : BaseViewModel
 		var left = camSetup.Rotation.Left;
 		var up = camSetup.Rotation.Up;
 		var forward = camSetup.Rotation.Forward;
-		var owner = Owner as Player;
-		var controller = owner.Controller as PlayerController;
 		var avoidanceTrace = Trace.Ray( camSetup.Position, camSetup.Position + forward * 50f )
 						.UseHitboxes()
 						.Ignore( Owner )

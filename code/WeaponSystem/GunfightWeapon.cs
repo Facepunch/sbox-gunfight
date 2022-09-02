@@ -123,6 +123,7 @@ public partial class GunfightWeapon : BaseWeapon
 
 	protected virtual void ApplyRecoil()
 	{
+		Rand.SetSeed( Time.Tick );
 		var randX = Rand.Float( BaseRecoilMinimum.x, BaseRecoilMaximum.x );
 		var randY = Rand.Float( BaseRecoilMinimum.x, BaseRecoilMaximum.y );
 

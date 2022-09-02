@@ -53,5 +53,10 @@
 			ViewModelScale = 25
 			ViewModelRecoverySpeed = 3
 		}
+		BulletSpread = 0.1
+		BulletForce = 1.5
+		BulletDamage = 12
+		BulletSize = 3
+		BulletCount = 1
 	}
 }

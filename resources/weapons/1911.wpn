@@ -22,6 +22,11 @@
 		StandardClip = 7
 		ReloadTime = 2
 		Crosshair = "Default"
+		BulletSpread = 0
+		BulletForce = 1.5
+		BulletDamage = 18
+		BulletSize = 3
+		BulletCount = 1
 		ViewModelSetup = 
 		{
 			OverallWeight = 0.1

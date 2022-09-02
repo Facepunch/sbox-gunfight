@@ -38,6 +38,11 @@ public partial class GunfightWeapon : BaseWeapon
 	public Vector2 RecoilDecay => WeaponDefinition.Recoil.Decay;
 	public Vector2 BaseRecoilMinimum => WeaponDefinition.Recoil.BaseRecoilMinimum;
 	public Vector2 BaseRecoilMaximum => WeaponDefinition.Recoil.BaseRecoilMaximum;
+	public float BulletSpread => WeaponDefinition.BulletSpread;
+	public float BulletForce => WeaponDefinition.BulletForce;
+	public float BulletDamage => WeaponDefinition.BulletDamage;
+	public float BulletSize => WeaponDefinition.BulletSize;
+	public int BulletCount => WeaponDefinition.BulletCount;
 
 	public void CycleFireMode()
 	{
@@ -273,7 +278,7 @@ public partial class GunfightWeapon : BaseWeapon
 		//
 		// Shoot the bullets
 		//
-		ShootBullet( 0.1f, 1.5f, 12.0f, 3.0f );
+		ShootBullet( BulletSpread, BulletForce, BulletDamage, BulletSize, BulletCount );
 
 		ApplyRecoil();
 

@@ -20,6 +20,8 @@ public partial class GunfightWeapon : BaseWeapon
 	[Net, Predicted] public FireMode CurrentFireMode { get; set; } = FireMode.Semi;
 	[Net, Predicted] public TimeSince TimeSinceFireModeSwitch { get; set; }
 
+	[Net, Predicted] public Vector2 Recoil { get; set; }
+
 	public PickupTrigger PickupTrigger { get; protected set; }
 	public CrosshairRender Crosshair { get; protected set; }
 
@@ -33,6 +35,9 @@ public partial class GunfightWeapon : BaseWeapon
 	public int ClipSize => WeaponDefinition.ClipSize;
 	public float ReloadTime => WeaponDefinition.ReloadTime;
 	public AmmoType AmmoType => WeaponDefinition.AmmoType;
+	public Vector2 RecoilDecay => WeaponDefinition.Recoil.Decay;
+	public Vector2 BaseRecoilMinimum => WeaponDefinition.Recoil.BaseRecoilMinimum;
+	public Vector2 BaseRecoilMaximum => WeaponDefinition.Recoil.BaseRecoilMaximum;
 
 	public void CycleFireMode()
 	{
@@ -109,6 +114,27 @@ public partial class GunfightWeapon : BaseWeapon
 	
 	}
 
+	protected virtual void SimulateRecoil( Client owner )
+	{
+		Recoil -= RecoilDecay * Time.Delta;
+		// Clamp down to zero
+		Recoil = Recoil.Clamp( 0, float.MaxValue );
+	}
+
+	protected virtual void ApplyRecoil()
+	{
+		var randX = Rand.Float( BaseRecoilMinimum.x, BaseRecoilMaximum.x );
+		var randY = Rand.Float( BaseRecoilMinimum.x, BaseRecoilMaximum.y );
+
+		Recoil += new Vector2( randX, randY );
+	}
+
+	public override void BuildInput( InputBuilder input )
+	{
+		input.ViewAngles.pitch -= Recoil.y;
+		input.ViewAngles.yaw -= Recoil.x;
+	}
+
 	public override void Simulate( Client owner )
 	{
 		if ( TimeSinceDeployed < 0.6f )
@@ -118,6 +144,8 @@ public partial class GunfightWeapon : BaseWeapon
 		{
 			CycleFireMode();
 		}
+
+		SimulateRecoil( owner );
 
 		if ( WantsReload() )
 		{
@@ -245,6 +273,8 @@ public partial class GunfightWeapon : BaseWeapon
 		// Shoot the bullets
 		//
 		ShootBullet( 0.1f, 1.5f, 12.0f, 3.0f );
+
+		ApplyRecoil();
 
 		if ( IsBurst )
 			BurstCount++;

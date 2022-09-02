@@ -103,6 +103,7 @@ public partial class WeaponDefinition : GameResource
 	public CrosshairType Crosshair { get; set; } = CrosshairType.Default;
 
 	public ViewModelSetup ViewModelSetup { get; set; }
+	public RecoilSetup Recoil { get; internal set; }
 
 	protected override void PostLoad()
 	{

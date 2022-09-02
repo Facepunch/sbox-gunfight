@@ -100,7 +100,11 @@ public partial class PlayerController : BasePlayerController
 		EyeLocalPosition += TraceOffset;
 		EyeRotation = Input.Rotation;
 
-		IsAiming = Input.Down( InputButton.SecondaryAttack );
+		// TODO - This is shit, redo later
+		var wantsToAim = Input.Down( InputButton.SecondaryAttack );
+		var player = Pawn as GunfightPlayer;
+		var weapon = player.ActiveChild as GunfightWeapon;
+		IsAiming = wantsToAim && !IsSprinting && !(weapon?.IsReloading ?? false);
 
 		RestoreGroundPos();
 

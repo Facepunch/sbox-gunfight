@@ -125,7 +125,7 @@ public partial class GunfightWeapon : BaseWeapon
 	{
 		Rand.SetSeed( Time.Tick );
 		var randX = Rand.Float( BaseRecoilMinimum.x, BaseRecoilMaximum.x );
-		var randY = Rand.Float( BaseRecoilMinimum.x, BaseRecoilMaximum.y );
+		var randY = Rand.Float( BaseRecoilMinimum.y, BaseRecoilMaximum.y );
 
 		Recoil += new Vector2( randX, randY );
 	}

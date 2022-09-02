@@ -81,6 +81,21 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Shooting" )]
 	public List<FireMode> SupportedFireModes { get; set; }
 
+	[Category( "Shooting" )]
+	public float BulletSpread { get; set; } = 0.1f;
+
+	[Category( "Shooting" )]
+	public float BulletForce { get; set; } = 1.5f;
+
+	[Category( "Shooting" )]
+	public float BulletDamage { get; set; } = 12.0f;
+
+	[Category( "Shooting" )]
+	public float BulletSize { get; set; } = 3.0f;
+
+	[Category( "Shooting" )]
+	public int BulletCount { get; set; } = 1;
+
 	[ShowIf( "DefaultFireMode", FireMode.Burst )]
 	public int BurstAmount { get; set; } = 3;
 
@@ -103,7 +118,7 @@ public partial class WeaponDefinition : GameResource
 	public CrosshairType Crosshair { get; set; } = CrosshairType.Default;
 
 	public ViewModelSetup ViewModelSetup { get; set; }
-	public RecoilSetup Recoil { get; internal set; }
+	public RecoilSetup Recoil { get; set; }
 
 	protected override void PostLoad()
 	{

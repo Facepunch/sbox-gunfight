@@ -9,7 +9,7 @@
 		Model = resource:"models/mp5/w_mp5.vmdl"
 		ViewModel = resource:"models/mp5/fp_mp5.vmdl"
 		Icon = null
-		BaseFireRate = 0.1
+		BaseFireRate = 0.08
 		DefaultFireMode = "FullAuto"
 		SupportedFireModes = 
 		[
@@ -48,8 +48,10 @@
 		Recoil = 
 		{
 			Decay = "2,3"
-			BaseRecoilMinimum = "0.1,0.3"
-			BaseRecoilMaximum = "0.1,0.4"
+			BaseRecoilMinimum = "-0.05,0.18"
+			BaseRecoilMaximum = "0.05,0.2"
+			ViewModelScale = 25
+			ViewModelRecoverySpeed = 3
 		}
 	}
 }

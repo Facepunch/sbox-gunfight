@@ -46,8 +46,10 @@
 		Recoil = 
 		{
 			Decay = "2,3"
-			BaseRecoilMinimum = "0.1,0.4"
-			BaseRecoilMaximum = "0.1,0.5"
+			BaseRecoilMinimum = "0,0.2"
+			BaseRecoilMaximum = "0,0.3"
+			ViewModelScale = 100
+			ViewModelRecoverySpeed = 5
 		}
 	}
 }

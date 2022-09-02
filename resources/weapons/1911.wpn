@@ -47,7 +47,7 @@
 		{
 			Decay = "2,3"
 			BaseRecoilMinimum = "0.1,0.4"
-			BaseRecoilMaximum = "0.1,0.8"
+			BaseRecoilMaximum = "0.1,0.5"
 		}
 	}
 }

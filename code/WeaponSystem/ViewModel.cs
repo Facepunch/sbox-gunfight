@@ -37,6 +37,7 @@ public partial class ViewModel : BaseViewModel
 	Vector3 SmoothedVelocity;
 	Vector3 velocity;
 	Vector3 acceleration;
+	Vector2 LerpRecoil;
 
 	float VelocityClamp => 3f;
 	float walkBob = 0;
@@ -71,6 +72,7 @@ public partial class ViewModel : BaseViewModel
 
 		SmoothedVelocity += (Owner.Velocity - SmoothedVelocity) * 5f * DeltaTime;
 
+		var weapon = Weapon as GunfightWeapon;
 		var speed = Owner.Velocity.Length.LerpInverse( 0, 750 );
 		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -100, 500 );
 		var left = camSetup.Rotation.Left;
@@ -189,6 +191,10 @@ public partial class ViewModel : BaseViewModel
 			// Sprinting
 			Rotation *= Rotation.From( SprintAngleOffset * sprintLerp );
 			ApplyPositionOffset( SprintPositionOffset, sprintLerp, camSetup );
+
+			// Recoil
+			LerpRecoil = LerpRecoil.LerpTo( weapon.Recoil * WeaponDef.Recoil.ViewModelScale, Time.Delta * WeaponDef.Recoil.ViewModelRecoverySpeed );
+			Rotation *= Rotation.From( new Angles( -LerpRecoil.y, -LerpRecoil.x, 0 ) );
 		}
 	}
 

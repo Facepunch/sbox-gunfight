@@ -24,10 +24,10 @@ public partial class GunfightWeapon : BaseWeapon
 	public CrosshairRender Crosshair { get; protected set; }
 
 	protected GunfightPlayer Player => Owner as GunfightPlayer;
-	protected PlayerController PlayerController => Player.Controller as PlayerController;
+	protected PlayerController PlayerController => Player?.Controller as PlayerController;
 
-	public bool IsSprinting => PlayerController.IsSprinting;
-	public bool IsAiming => PlayerController.IsAiming;
+	public bool IsSprinting => PlayerController?.IsSprinting ?? false;
+	public bool IsAiming => PlayerController?.IsAiming ?? false;
 	public float PrimaryFireRate => WeaponDefinition.BaseFireRate;
 	public bool IsBurst => CurrentFireMode == FireMode.Burst;
 	public int ClipSize => WeaponDefinition.ClipSize;

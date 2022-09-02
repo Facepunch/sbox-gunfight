@@ -140,31 +140,18 @@ public partial class ViewModel : BaseViewModel
 		ApplyDamping( ref velocity, Damping * (1 + aimLerp) );
 
 		velocity = velocity.Normal * Math.Clamp( velocity.Length, 0, VelocityClamp );
-
-		Rotation desiredRotation = Local.Pawn.EyeRotation;
-		desiredRotation *= Rotation.FromAxis( Vector3.Up, velocity.y * RotationScale * (1 - aimLerp) );
-		desiredRotation *= Rotation.FromAxis( Vector3.Forward, -velocity.y * RotationScale * (1 - aimLerp) );
-		desiredRotation *= Rotation.FromAxis( Vector3.Right, velocity.z * RotationScale * (1 - aimLerp) );
-
-		//Rotation = desiredRotation;
-
-		Transform aimPointW = GetAttachment( "aim", true ) ?? new();
-		Transform aimPointL = GetAttachment( "aim", false ) ?? new();
+	
+		var aimPointW = GetAttachment( "aim", true ) ?? new();
+		var aimPointL = GetAttachment( "aim", false ) ?? new();
 
 		var eyePos = camSetup.Position;
-		var gunTrPos = aimPointW.Position;
-
-		//DebugOverlay.Sphere( aimPointW.Position, 1f, Color.Green );
-
-		var angleDiff = aimPointW.Rotation.Angles();
-
-		var diff = aimPointW.Position - CurrentView.Position;
-		diff += CurrentView.Rotation.Forward * -15f;
+		var diff = aimPointW.Position - eyePos;
 
 		if ( aim )
 		{
+			Rotation = camSetup.Rotation;
+			Rotation *= aimPointL.Rotation;
 			Position -= diff;
-			//Rotation = aimPointW.Rotation;
 		}
 		else
 		{
@@ -176,8 +163,6 @@ public partial class ViewModel : BaseViewModel
 			Position += forward * (velocity.x * VelocityScale + GlobalPositionOffset.x);
 			Position += left * (velocity.y * VelocityScale + GlobalPositionOffset.y);
 			Position += up * (velocity.z * VelocityScale + GlobalPositionOffset.z + upDownOffset);
-
-			Position += (desiredRotation.Forward - Owner.EyeRotation.Forward) * -PivotForce;
 
 			// Crouching
 			Rotation *= Rotation.From( CrouchAnglesOffset * crouchLerp );

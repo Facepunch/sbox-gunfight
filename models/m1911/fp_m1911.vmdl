@@ -460,8 +460,8 @@
 						_class = "Attachment"
 						name = "aim"
 						parent_bone = "Weapon"
-						relative_origin = [ -0.003497, 0.207311, -0.005269 ]
-						relative_angles = [ -0.0, 0.0, 0.0 ]
+						relative_origin = [ 0.000581, -0.073513, -0.086168 ]
+						relative_angles = [ -16.3449, 89.999809, 180.0 ]
 						weight = 1.0
 						ignore_rotation = false
 					},

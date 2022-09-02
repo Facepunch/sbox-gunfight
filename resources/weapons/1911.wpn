@@ -43,5 +43,11 @@
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "5,25,0"
 		}
+		Recoil = 
+		{
+			Decay = "2,3"
+			BaseRecoilMinimum = "0.1,0.4"
+			BaseRecoilMaximum = "0.1,0.8"
+		}
 	}
 }

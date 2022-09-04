@@ -179,6 +179,12 @@ public partial class GunfightWeapon : BaseWeapon
 			return;
 		}
 
+		if ( Input.Pressed( InputButton.PrimaryAttack ) )
+		{
+			IsReloading = false;
+			TimeSinceReload = 0;
+		}
+
 		//
 		// Reload could have changed our owner
 		//
@@ -215,12 +221,16 @@ public partial class GunfightWeapon : BaseWeapon
 
 		if ( Owner is GunfightPlayer player )
 		{
-			int amountToTake = WeaponDefinition.ReloadSingle ? 1 : ClipSize - AmmoClip;
+			var single = WeaponDefinition.ReloadSingle;
+			int amountToTake = single ? 1 : ClipSize - AmmoClip;
 			var ammo = player.TakeAmmo( AmmoType, amountToTake );
 			if ( ammo == 0 )
 				return;
 
 			AmmoClip += ammo;
+
+			if ( single )
+				Reload();
 		}
 	}
 

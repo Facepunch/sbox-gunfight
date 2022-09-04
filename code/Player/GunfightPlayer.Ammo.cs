@@ -70,6 +70,7 @@ public partial class GunfightPlayer
 			AmmoType.Rifle => 96,
 			AmmoType.DMR => 60,
 			AmmoType.Sniper => 20,
+			AmmoType.Shotgun => 40,
 			_ => 64
 		};
 	}
@@ -82,5 +83,6 @@ public enum AmmoType
 	SMG,
 	Rifle,
 	DMR,
-	Sniper
+	Sniper,
+	Shotgun
 }

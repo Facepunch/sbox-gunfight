@@ -240,7 +240,7 @@ public partial class GunfightWeapon : BaseWeapon
 
 	protected bool CanPrimaryAttackSemi()
 	{
-		return CanDefaultPrimaryAttack() && Input.Pressed( InputButton.PrimaryAttack );
+		return Input.Pressed( InputButton.PrimaryAttack );
 	}
 
 	protected bool CanPrimaryAttackBurst()
@@ -254,10 +254,12 @@ public partial class GunfightWeapon : BaseWeapon
 		if ( BurstCount >= WeaponDefinition.BurstAmount )
 			return false;
 
-		return CanDefaultPrimaryAttack();
+		return true;
 	}
 	public virtual bool CanPrimaryAttack()
 	{
+		if ( !CanDefaultPrimaryAttack() ) return false;
+
 		var fireMode = CurrentFireMode;
 		if ( fireMode == FireMode.Semi )
 		{

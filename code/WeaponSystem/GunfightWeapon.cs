@@ -249,6 +249,7 @@ public partial class GunfightWeapon : BaseWeapon
 	{
 		if ( !Input.Down( InputButton.PrimaryAttack ) )
 		{
+			DryFire();
 			BurstCount = 0;
 			return false;
 		}
@@ -307,6 +308,14 @@ public partial class GunfightWeapon : BaseWeapon
 			BurstCount++;
 	}
 
+	private void AmmoLowSound( float ammoPercent )
+	{
+		var snd = Sound.FromEntity( WeaponDefinition.DryFireSound, Owner );
+
+		var percentZero = ammoPercent.Remap( 0, 0.2f, 0, 1 );
+		snd.SetPitch( 0.8f + ( 0.2f * percentZero ) );
+	}
+
 	[ClientRpc]
 	protected virtual void ShootEffects()
 	{
@@ -314,6 +323,10 @@ public partial class GunfightWeapon : BaseWeapon
 
 		ViewModelEntity?.SetAnimParameter( "fire", true );
 		CrosshairLastShoot = 0;
+
+		var ammoPercent = AmmoClip / (float)ClipSize;
+		if ( ammoPercent < 0.2f )
+			AmmoLowSound( ammoPercent );
 	}
 
 	/// <summary>
@@ -392,10 +405,9 @@ public partial class GunfightWeapon : BaseWeapon
 		return true;
 	}
 
-	[ClientRpc]
 	public virtual void DryFire()
 	{
-		PlaySound( WeaponDefinition.DryFireSound );
+		Owner?.PlaySound( WeaponDefinition.DryFireSound );
 	}
 
 	public bool IsUsable()

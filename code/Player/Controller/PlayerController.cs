@@ -32,10 +32,15 @@ public partial class PlayerController : BasePlayerController
 
 	[Net, Predicted] public bool IsAiming { get; protected set; }
 
+	[Net, Predicted] public bool cachedSprint { get; set; }
+	[Net, Predicted] public TimeSince SinceStoppedSprinting { get; set; }
+
 	public PlayerController()
 	{
 		Duck = new Duck( this );
 		Unstuck = new Unstuck( this );
+
+		SinceStoppedSprinting = -1;
 	}
 
 	/// <summary>
@@ -90,6 +95,11 @@ public partial class PlayerController : BasePlayerController
 		base.FrameSimulate();
 
 		EyeRotation = Input.Rotation;
+	}
+
+	protected void OnStoppedSprinting()
+	{
+		SinceStoppedSprinting = 0;
 	}
 
 	public override void Simulate()
@@ -193,6 +203,16 @@ public partial class PlayerController : BasePlayerController
 		}
 
 		WishVelocity = WishVelocity.Normal * inSpeed;
+
+		var isSprintingLastFrame = cachedSprint;
+		cachedSprint = IsSprinting;
+
+		if ( isSprintingLastFrame && !IsSprinting )
+		{
+			// Just stopped sprinting, let's let the controller know this.
+			OnStoppedSprinting();
+		}
+
 		WishVelocity *= GetWishSpeed();
 
 		Duck.PreTick();

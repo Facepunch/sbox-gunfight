@@ -117,6 +117,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Ammo" )]
 	public float ReloadTime { get; set; } = 3;
 
+	[Category( "Ammo" )]
+	public bool ReloadSingle { get; set; } = false;
+
 	[Category( "UI" )]
 	public CrosshairType Crosshair { get; set; } = CrosshairType.Default;
 

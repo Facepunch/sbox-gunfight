@@ -215,7 +215,8 @@ public partial class GunfightWeapon : BaseWeapon
 
 		if ( Owner is GunfightPlayer player )
 		{
-			var ammo = player.TakeAmmo( AmmoType, ClipSize - AmmoClip );
+			int amountToTake = WeaponDefinition.ReloadSingle ? 1 : ClipSize - AmmoClip;
+			var ammo = player.TakeAmmo( AmmoType, amountToTake );
 			if ( ammo == 0 )
 				return;
 

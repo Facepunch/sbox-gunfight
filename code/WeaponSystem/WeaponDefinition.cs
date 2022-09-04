@@ -105,6 +105,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Shooting" ), ResourceType( "sound" )]
 	public string DryFireSound { get; set; } = "";
 
+	[Category( "Shooting" )]
+	public bool AimingDisabled { get; set; }
+
 	[Category( "Ammo" )]
 	public AmmoType AmmoType { get; set; } = AmmoType.Pistol;
 

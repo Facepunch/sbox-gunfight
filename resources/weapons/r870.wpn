@@ -1,0 +1,62 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		WeaponName = "R870 12-Gauge"
+		WeaponShortName = "R870"
+		Slot = "Gadget"
+		HoldType = "Shotgun"
+		Model = resource:"models/r870/w_r870.vmdl"
+		ViewModel = resource:"models/r870/fp_r870.vmdl"
+		Icon = null
+		BaseFireRate = 1
+		DefaultFireMode = "Semi"
+		SupportedFireModes = 
+		[
+			"Semi",
+			"FullAuto"
+		]
+		FireSound = resource:"sounds/guns/r870/shotgun1_shoot.sound"
+		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
+		AmmoType = "Shotgun"
+		ClipSize = 6
+		StandardClip = 6
+		ReloadTime = 1.2
+		ReloadSingle = true
+		Crosshair = "Default"
+		ViewModelSetup = 
+		{
+			OverallWeight = 0.1
+			WeightReturnForce = 100
+			WeightDamping = 18
+			AccelerationDamping = 1
+			VelocityScale = 10
+			RotationalPivotForce = 10
+			RotationalScale = 5
+			WalkCycleOffset = "-2,25,0"
+			BobAmount = "25,50"
+			GlobalLerpPower = 1
+			GlobalPositionOffset = "0,0,1"
+			GlobalAngleOffset = "-1,0,-2"
+			CrouchPositionOffset = "-3,1,0"
+			CrouchAngleOffset = "2,0,-15"
+			AvoidancePositionOffset = "-5,0,0"
+			AvoidanceAngleOffset = "2,0,-25"
+			SprintPositionOffset = "0,-2,-1"
+			SprintAngleOffset = "5,25,0"
+		}
+		Recoil = 
+		{
+			Decay = "2,3"
+			BaseRecoilMinimum = "-0.05,0.18"
+			BaseRecoilMaximum = "0.05,0.2"
+			ViewModelScale = 25
+			ViewModelRecoverySpeed = 3
+		}
+		BulletSpread = 0.2
+		BulletForce = 1.5
+		BulletDamage = 4
+		BulletSize = 3
+		BulletCount = 12
+	}
+}

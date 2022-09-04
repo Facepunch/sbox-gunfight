@@ -313,7 +313,7 @@ public partial class GunfightWeapon : BaseWeapon
 		var snd = Sound.FromEntity( WeaponDefinition.DryFireSound, Owner );
 
 		var percentZero = ammoPercent.Remap( 0, 0.2f, 0, 1 );
-		snd.SetPitch( 0.8f + ( 0.2f * percentZero ) );
+		snd.SetPitch( 1f - ( 0.05f * percentZero ) );
 	}
 
 	[ClientRpc]

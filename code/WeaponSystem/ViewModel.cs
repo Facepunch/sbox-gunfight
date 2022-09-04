@@ -179,6 +179,17 @@ public partial class ViewModel : BaseViewModel
 			// Recoil
 			LerpRecoil = LerpRecoil.LerpTo( weapon.Recoil * WeaponDef.Recoil.ViewModelScale, Time.Delta * WeaponDef.Recoil.ViewModelRecoverySpeed );
 			Rotation *= Rotation.From( new Angles( -LerpRecoil.y, -LerpRecoil.x, 0 ) );
+
+			// Vertical Look
+			var lookDownDot = camSetup.Rotation.Forward.Dot( Vector3.Down );
+			if ( MathF.Abs( lookDownDot ) > 0.5f )
+			{
+				var offset = lookDownDot < 0 ? -1 : 1;
+				var f = lookDownDot - 0.5f * offset;
+				var positionScale = f.Remap( 0f, 0.5f, 0f, 10f );
+
+				Rotation *= Rotation.From( new Angles( -positionScale, 0, -positionScale ) );
+			}
 		}
 	}
 

@@ -148,8 +148,8 @@ public partial class ViewModel : BaseViewModel
 		}
 		else
 		{
-			camSetup.Position += up * WalkCycle( 0.5f, 2f );
-			camSetup.Position += left * WalkCycle( 0.5f, 2f );
+			camSetup.Position += up * WalkCycle( 0.5f, 2f ) * speed;
+			camSetup.Position += left * WalkCycle( 0.5f, 2f ) * speed;
 
 			Position = camSetup.Position;
 			Rotation = camSetup.Rotation;

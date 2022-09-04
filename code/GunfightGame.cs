@@ -93,6 +93,8 @@ partial class GunfightGame : Game
 	{
 		base.PostCameraSetup( ref camSetup );
 
+		CameraModifier.Apply( ref camSetup );
+
 		camSetup.ZNear = 5f;
 	}
 

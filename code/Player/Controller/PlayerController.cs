@@ -132,6 +132,7 @@ public partial class PlayerController : BasePlayerController
 		// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor,
 		//  we don't slow when standing still, relative to the conveyor.
 		bool bStartOnGround = GroundEntity != null;
+		Vector3 cachedVelocity = Velocity;
 		if ( bStartOnGround )
 		{
 			Velocity = Velocity.WithZ( 0 );
@@ -166,6 +167,13 @@ public partial class PlayerController : BasePlayerController
 		}
 
 		WishVelocity *= GetWishSpeed();
+
+		if ( SinceLastFall < FallRecoveryTime )
+		{
+			float sinceFall = SinceLastFall;
+			var speedMult = sinceFall.Remap( 0, FallRecoveryTime, 0.2f, 1 );
+			WishVelocity *= speedMult;
+		}
 
 		Duck.PreTick();
 
@@ -202,6 +210,11 @@ public partial class PlayerController : BasePlayerController
 		if ( GroundEntity != null )
 		{
 			Velocity = Velocity.WithZ( 0 );
+
+			if ( !bStartOnGround )
+			{
+				OnHitGround( cachedVelocity );
+			}
 		}
 
 		if ( Debug )
@@ -219,6 +232,20 @@ public partial class PlayerController : BasePlayerController
 			DebugOverlay.ScreenText( $" SurfaceFriction: {SurfaceFriction}", lineOffset + 4 );
 			DebugOverlay.ScreenText( $"    WishVelocity: {WishVelocity}", lineOffset + 5 );
 		}
+	}
+
+	[Net, Predicted] public TimeSince SinceLastFall { get; set; }
+	[Net] public float FallRecoveryTime { get; set; } = 1f;
+
+	private void OnHitGround( Vector3 velocity )
+	{
+		var velocityLength = velocity.Length.LerpInverse( 0, 700, true );
+		var bigFall = velocityLength < 0.7f;
+		if ( bigFall ) 
+			return;
+
+		SinceLastFall = 0;
+		new ScreenShake.Pitch( 0.5f, 6 * velocityLength );
 	}
 
 	public virtual bool WishSprinting => Input.Down( InputButton.Run ) && Input.Forward >= 0f;

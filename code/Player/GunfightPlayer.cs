@@ -310,7 +310,7 @@ public partial class GunfightPlayer : Player
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		if ( timeSinceLastFootstep < 0.2f )
+		if ( timeSinceLastFootstep < 0.18f )
 			return;
 
 		volume *= FootstepVolume();
@@ -324,7 +324,7 @@ public partial class GunfightPlayer : Player
 
 		if ( !tr.Hit ) return;
 
-		tr.Surface.DoFootstep( this, tr, foot, volume * 10 );
+		tr.Surface.DoFootstep( this, tr, foot, volume * 20 );
 	}
 
 	public void RenderHud( Vector2 screenSize )

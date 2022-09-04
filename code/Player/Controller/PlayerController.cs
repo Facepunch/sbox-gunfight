@@ -245,7 +245,7 @@ public partial class PlayerController : BasePlayerController
 			return;
 
 		SinceLastFall = 0;
-		new ScreenShake.Pitch( 0.5f, 6 * velocityLength );
+		new ScreenShake.Pitch( 1f, 7f * velocityLength );
 	}
 
 	public virtual bool WishSprinting => Input.Down( InputButton.Run ) && Input.Forward >= 0f;

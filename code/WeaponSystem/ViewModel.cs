@@ -53,7 +53,6 @@ public partial class ViewModel : BaseViewModel
 		AddCameraEffects( ref camSetup );
 	}
 
-
 	protected float MouseDeltaLerpX;
 	protected float MouseDeltaLerpY;
 	private void AddCameraEffects( ref CameraSetup camSetup )

@@ -183,7 +183,7 @@ public partial class PlayerController : BasePlayerController
 		//
 		// Work out wish velocity.. just take input, rotate it to view, clamp to -1, 1
 		//
-		WishVelocity = new Vector3( Input.Forward, Input.Left, 0 );
+		WishVelocity = new Vector3( Input.Forward, Input.Left * ( IsSprinting ? 0.5f : 1f ), 0 );
 		var inSpeed = WishVelocity.Length.Clamp( 0, 1 );
 		WishVelocity *= Input.Rotation.Angles().WithPitch( 0 ).ToRotation();
 
@@ -257,8 +257,8 @@ public partial class PlayerController : BasePlayerController
 
 	}
 
-	public virtual bool WishSprinting => Input.Down( InputButton.Run );
-	public virtual bool IsSprinting => WishSprinting && Velocity.Length > 0;
+	public virtual bool WishSprinting => Input.Down( InputButton.Run ) && Input.Forward >= 0f;
+	public virtual bool IsSprinting => WishSprinting && Velocity.Length > 0 && Input.Forward > 0f;
 
 	public virtual float GetWishSpeed()
 	{

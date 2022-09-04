@@ -5,9 +5,9 @@ namespace Facepunch.Gunfight;
 public partial class PlayerController : BasePlayerController
 {
 	[Net] public float SprintSpeed { get; set; } = 350.0f;
-	[Net] public float WalkSpeed { get; set; } = 220.0f;
-	[Net] public float DefaultSpeed { get; set; } = 220.0f;
-	[Net] public float Acceleration { get; set; } = 10.0f;
+	[Net] public float WalkSpeed { get; set; } = 210.0f;
+	[Net] public float DefaultSpeed { get; set; } = 210.0f;
+	[Net] public float Acceleration { get; set; } = 8.0f;
 	[Net] public float AirAcceleration { get; set; } = 5.0f;
 	[Net] public float GroundFriction { get; set; } = 4.0f;
 	[Net] public float StopSpeed { get; set; } = 100.0f;
@@ -239,7 +239,7 @@ public partial class PlayerController : BasePlayerController
 	{
 		var wishdir = WishVelocity.Normal;
 		var wishspeed = WishVelocity.Length;
-
+		
 		WishVelocity = WishVelocity.WithZ( 0 );
 		WishVelocity = WishVelocity.Normal * wishspeed;
 

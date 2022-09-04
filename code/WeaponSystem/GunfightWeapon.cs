@@ -43,6 +43,7 @@ public partial class GunfightWeapon : BaseWeapon
 	public float BulletDamage => WeaponDefinition.BulletDamage;
 	public float BulletSize => WeaponDefinition.BulletSize;
 	public int BulletCount => WeaponDefinition.BulletCount;
+	public float PostSprintAttackDelay => 0.15f;
 
 	public void CycleFireMode()
 	{
@@ -183,7 +184,7 @@ public partial class GunfightWeapon : BaseWeapon
 		//
 		if ( !Owner.IsValid() )
 			return;
-
+		
 		if ( CanPrimaryAttack() )
 		{
 			using ( LagCompensation() )
@@ -234,6 +235,7 @@ public partial class GunfightWeapon : BaseWeapon
 	{
 		if ( IsSprinting ) return false;
 		if ( IsReloading ) return false;
+		if ( PlayerController.SinceStoppedSprinting <= PostSprintAttackDelay ) return false;
 
 		return TimeSincePrimaryAttack >= PrimaryFireRate;
 	}

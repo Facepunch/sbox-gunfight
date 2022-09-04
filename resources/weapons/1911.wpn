@@ -17,6 +17,7 @@
 		]
 		BurstAmount = 3
 		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
+		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
 		AmmoType = "Pistol"
 		ClipSize = 7
 		StandardClip = 7

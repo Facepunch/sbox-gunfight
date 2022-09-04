@@ -281,11 +281,9 @@ public partial class GunfightWeapon : BaseWeapon
 
 		if ( !TakeAmmo( 1 ) )
 		{
-			DryFire();
-
-			if ( AvailableAmmo() > 0 )
+			if ( Input.Pressed( InputButton.PrimaryAttack ) )
 			{
-				Reload();
+				DryFire();
 			}
 			return;
 		}
@@ -397,7 +395,7 @@ public partial class GunfightWeapon : BaseWeapon
 	[ClientRpc]
 	public virtual void DryFire()
 	{
-		PlaySound( "dm.dryfire" );
+		PlaySound( WeaponDefinition.DryFireSound );
 	}
 
 	public bool IsUsable()

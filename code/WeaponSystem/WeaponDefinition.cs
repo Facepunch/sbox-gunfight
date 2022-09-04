@@ -102,6 +102,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Shooting" ), ResourceType( "sound" )]
 	public string FireSound { get; set; } = "";
 
+	[Category( "Shooting" ), ResourceType( "sound" )]
+	public string DryFireSound { get; set; } = "";
+
 	[Category( "Ammo" )]
 	public AmmoType AmmoType { get; set; } = AmmoType.Pistol;
 

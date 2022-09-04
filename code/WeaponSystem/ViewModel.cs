@@ -47,6 +47,7 @@ public partial class ViewModel : BaseViewModel
 	float sprintLerp = 0;
 	float aimLerp = 0;
 	float crouchLerp = 0;
+	float airLerp = 0;
 
 	public override void PostCameraSetup( ref CameraSetup camSetup )
 	{
@@ -71,6 +72,7 @@ public partial class ViewModel : BaseViewModel
 
 		SmoothedVelocity += (Owner.Velocity - SmoothedVelocity) * 5f * DeltaTime;
 
+		var isGrounded = Owner.GroundEntity != null;
 		var weapon = Weapon as GunfightWeapon;
 		var speed = Owner.Velocity.Length.LerpInverse( 0, 750 );
 		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -100, 500 );
@@ -97,11 +99,12 @@ public partial class ViewModel : BaseViewModel
 
 		LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 7f );
 		LerpTowards( ref crouchLerp, crouched && !aim ? 1 : 0, 7f );
+		LerpTowards( ref airLerp, isGrounded ? 0 : 1, 10f );
 
 		bobSpeed *= 1 - sprintLerp * 0.25f;
 		bobSpeed *= 1 - burstSprintLerp * 0.15f;
 
-		if ( Owner.GroundEntity != null && controller is not null /*&& !controller.Slide.IsActive*/ )
+		if ( isGrounded && controller is not null /*&& !controller.Slide.IsActive*/ )
 		{
 			walkBob += DeltaTime * 30.0f * bobSpeed;
 		}
@@ -187,6 +190,10 @@ public partial class ViewModel : BaseViewModel
 
 				Rotation *= Rotation.From( new Angles( -positionScale, 0, -positionScale ) );
 			}
+
+			// In air
+			Rotation *= Rotation.From( new Angles( -2, 0, -7f ) * airLerp );
+			ApplyPositionOffset( new Vector3( 0, 0, 0.5f ), airLerp, camSetup );
 		}
 	}
 

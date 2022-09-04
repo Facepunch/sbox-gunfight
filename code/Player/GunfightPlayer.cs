@@ -55,9 +55,11 @@ public partial class GunfightPlayer : Player
 		GiveAmmo( AmmoType.Rifle, MaxAmmo( AmmoType.Rifle ) );
 		GiveAmmo( AmmoType.DMR, MaxAmmo( AmmoType.DMR ) );
 		GiveAmmo( AmmoType.Sniper, MaxAmmo( AmmoType.Sniper ) );
+		GiveAmmo( AmmoType.Shotgun, MaxAmmo( AmmoType.Shotgun ) );
 
 		GiveWeapon( "knife" );
 		GiveWeapon( "1911" );
+		GiveWeapon( "r870" );
 		GiveWeapon( "mp5", true );
 	}
 

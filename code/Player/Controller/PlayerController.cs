@@ -234,17 +234,22 @@ public partial class PlayerController : BasePlayerController
 		}
 	}
 
+	[Net, Predicted] public TimeSince SinceLastHitGround { get; set; }
 	[Net, Predicted] public TimeSince SinceLastFall { get; set; }
-	[Net] public float FallRecoveryTime { get; set; } = 1f;
+	[Net] public float FallRecoveryTime { get; set; } = 1.2f;
 
 	private void OnHitGround( Vector3 velocity )
 	{
-		var velocityLength = velocity.Length.LerpInverse( 0, 700, true );
+		var velocityLength = MathF.Abs( velocity.z ).LerpInverse( 0, 700f, true );
 		var bigFall = velocityLength < 0.7f;
+
+		SinceLastHitGround = 0;
+
 		if ( bigFall ) 
 			return;
 
 		SinceLastFall = 0;
+
 		new ScreenShake.Pitch( 1f, 7f * velocityLength );
 	}
 

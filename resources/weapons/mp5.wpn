@@ -19,7 +19,7 @@
 		]
 		BurstAmount = 3
 		FireSound = resource:"sounds/guns/mp5/smg1_shoot.sound"
-		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
+		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
 		AmmoType = "SMG"
 		ClipSize = 30
 		StandardClip = 30

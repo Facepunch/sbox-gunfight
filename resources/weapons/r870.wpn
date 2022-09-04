@@ -58,5 +58,6 @@
 		BulletDamage = 4
 		BulletSize = 3
 		BulletCount = 12
+		AimingDisabled = true
 	}
 }

@@ -107,6 +107,9 @@ public partial class PlayerController : BasePlayerController
 		var weapon = player.ActiveChild as GunfightWeapon;
 		IsAiming = wantsToAim && !IsSprinting && !(weapon?.IsReloading ?? false);
 
+		if ( weapon.WeaponDefinition.AimingDisabled )
+			IsAiming = false;
+
 		if ( Unstuck.TestAndFix() )
 			return;
 

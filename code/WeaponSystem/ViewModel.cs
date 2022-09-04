@@ -106,13 +106,7 @@ public partial class ViewModel : BaseViewModel
 			walkBob += DeltaTime * 30.0f * bobSpeed;
 		}
 
-		if ( Owner.Velocity.Length < 60 )
-		{
-			var step = MathF.Round( walkBob / 90 );
-
-			walkBob += (step * 90 - walkBob) * 10f * DeltaTime;
-		}
-
+		walkBob += sprintLerp * 0.1f;
 		walkBob %= 360;
 
 		var mouseDeltaX = -Input.MouseDelta.x * DeltaTime * MouseScale;
@@ -123,7 +117,7 @@ public partial class ViewModel : BaseViewModel
 		acceleration += -velocity * ReturnForce * DeltaTime;
 
 		// Apply horizontal offsets based on walking direction
-		var horizontalForwardBob = ( WalkCycle( 0.5f, 3f ) * speed * WalkCycleOffsets.x * ( 1 - aimLerp ) ) * DeltaTime;
+		var horizontalForwardBob = WalkCycle( 0.5f, 3f ) * speed * WalkCycleOffsets.x * DeltaTime;
 
 		acceleration += forward.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal ) * Vector3.Forward * ForwardBobbing * horizontalForwardBob;
 
@@ -154,6 +148,9 @@ public partial class ViewModel : BaseViewModel
 		}
 		else
 		{
+			camSetup.Position += up * WalkCycle( 0.5f, 2f );
+			camSetup.Position += left * WalkCycle( 0.5f, 2f );
+
 			Position = camSetup.Position;
 			Rotation = camSetup.Rotation;
 

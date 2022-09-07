@@ -6,6 +6,7 @@ namespace Facepunch.Gunfight;
 public class Ammo : Panel
 {
 	public Label Inventory;
+	public Label CurrentAmmo;
 	public Panel AmmoBar;
 
 	List<Panel> BulletPanels = new List<Panel>();
@@ -14,6 +15,7 @@ public class Ammo : Panel
 	{
 		AmmoBar = Add.Panel( "ammobar" );
 		Inventory = Add.Label( "100", "inventory" );
+		CurrentAmmo = Add.Label( "69", "currentammo" );
 	}
 
 	int weaponHash;
@@ -29,6 +31,8 @@ public class Ammo : Panel
 		if ( weapon == null ) return;
 
 		var inv = weapon.AvailableAmmo();
+		var current = weapon.AmmoClip;
+		CurrentAmmo.Text = $"{current}";
 		Inventory.Text = $"{inv}";
 		Inventory.SetClass( "active", inv >= 0 );
 

@@ -51,7 +51,7 @@ public partial class Slide : BaseNetworkable
 
 	public Vector3 WishDirOnStart { get; set; }
 
-	void Try( BasePlayerController controller )
+	void Try( PlayerController controller )
 	{
 		if ( Activated < Cooldown )
 			return;
@@ -70,7 +70,22 @@ public partial class Slide : BaseNetworkable
 		{
 			Activated = 0;
 			WishDirOnStart = controller.WishVelocity.Normal;
+
+			StartSliding( controller );
 		}
+	}
+
+	public Particles SlidingParticles { get; set; }
+
+	protected void StartSliding( PlayerController ctrl )
+	{
+		SlidingParticles?.Destroy( true );
+		SlidingParticles = Particles.Create( "particles/explosion/barrel_explosion/explosion_barrel.vpcf", ctrl.Pawn, true );
+	}
+
+	protected void StopSliding()
+	{
+		SlidingParticles?.Destroy( true );
 	}
 
 	void StopTry( PlayerController controller )
@@ -80,6 +95,7 @@ public partial class Slide : BaseNetworkable
 
 		Activated = 0;
 		IsActive = false;
+		StopSliding();
 	}
 
 	public float GetWishSpeed()

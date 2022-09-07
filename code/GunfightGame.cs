@@ -221,4 +221,40 @@ partial class GunfightGame : Game
 			localPawn.RenderHud( screenSize );
 		}
 	}
+
+	/// <summary>
+	/// An entity, which is a pawn, and has a client, has been killed.
+	/// </summary>
+	public override void OnKilled( Client client, Entity pawn )
+	{
+		Host.AssertServer();
+
+		Log.Info( $"{client.Name} was killed." );
+
+		if ( pawn.LastAttacker != null )
+		{
+			if ( pawn.LastAttacker.Client != null )
+			{
+				var wep = pawn.LastAttackerWeapon as GunfightWeapon;
+				if ( wep != null )
+				{
+					OnKilledMessage( pawn.LastAttacker.Client.PlayerId, pawn.LastAttacker.Client.Name, client.PlayerId, client.Name, wep.WeaponDefinition.ResourceName );
+				}
+				else
+				{
+					OnKilledMessage( pawn.LastAttacker.Client.PlayerId, pawn.LastAttacker.Client.Name, client.PlayerId, client.Name, pawn.LastAttackerWeapon?.ClassName );
+
+				}
+			}
+			else
+			{
+				OnKilledMessage( pawn.LastAttacker.NetworkIdent, pawn.LastAttacker.ToString(), client.PlayerId, client.Name, "killed" );
+			}
+		}
+		else
+		{
+			OnKilledMessage( 0, "", client.PlayerId, client.Name, "died" );
+		}
+	}
+
 }

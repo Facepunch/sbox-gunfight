@@ -22,7 +22,13 @@ public partial class KillFeed : Panel
 
 		e.AddClass( method );
 
-		e.Method.Text = method;
+		var gun = WeaponDefinition.Find( method );
+		if ( gun != null )
+		{
+			e.Method.Text = gun.WeaponName;
+		}
+		else
+			e.Method.Text = method;
 
 		e.Right.Text = right;
 		e.Right.SetClass( "me", rsteamid == Local.PlayerId );

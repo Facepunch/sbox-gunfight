@@ -36,9 +36,6 @@ public partial class Slide : BaseNetworkable
 		if ( controller.GroundEntity == null )
 			StopTry();
 
-		if ( Activated > TimeUntilStop )
-			StopTry();
-
 		if ( oldWish == Wish )
 			return;
 
@@ -106,12 +103,14 @@ public partial class Slide : BaseNetworkable
 		var slopeDir = Vector3.Cross( Vector3.Up, Vector3.Cross( Vector3.Up, ctrl.GroundNormal ) );
 		var dot = Vector3.Dot( ctrl.Velocity.Normal, slopeDir );
 		var slopeForward = Vector3.Cross( ctrl.GroundNormal, ctrl.Pawn.Rotation.Right );
-		var spdGain = 2000f * SlideIntensity;
+		var spdGain = 2000f;
 
 		if ( dot > 0.15f )
-			spdGain *= 0.8f;
-		if ( dot < -0.15f )
-			spdGain *= 2f;
+			spdGain *= 0.8f * SlideIntensity;
+		else if ( dot < -0.15f )
+			spdGain *= 1.5f;
+		else
+			spdGain *= SlideIntensity;
 
 		ctrl.Velocity += spdGain * slopeForward * Time.Delta;
 	}

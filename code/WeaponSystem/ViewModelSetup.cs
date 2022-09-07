@@ -30,6 +30,10 @@ public struct ViewModelSetup
 	public Vector3 CrouchPositionOffset { get; set; }
 	public Angles CrouchAngleOffset { get; set; }
 
+	//// Sliding
+	public Vector3 SlidePositionOffset { get; set; }
+	public Angles SlideAngleOffset { get; set; }
+
 	//// Avoidance
 	/// <summary>
 	/// The max position offset when avoidance comes into play.

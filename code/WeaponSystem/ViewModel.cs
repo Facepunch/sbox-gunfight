@@ -25,6 +25,8 @@ public partial class ViewModel : BaseViewModel
 	Angles GlobalAngleOffset => Setup.GlobalAngleOffset;
 	Vector3 CrouchPositionOffset => Setup.CrouchPositionOffset;
 	Angles CrouchAnglesOffset => Setup.CrouchAngleOffset;
+	Vector3 SlidePositionOffset => Setup.SlidePositionOffset;
+	Angles SlideAngleOffset => Setup.SlideAngleOffset;
 	Angles AvoidanceAngleOffset => Setup.AvoidanceAngleOffset;
 	Vector3 AvoidancePositionOffset => Setup.AvoidancePositionOffset;
 	Angles SprintAngleOffset => Setup.SprintAngleOffset;
@@ -184,8 +186,8 @@ public partial class ViewModel : BaseViewModel
 			Rotation *= Rotation.From( new Angles( -LerpRecoil.y, -LerpRecoil.x, 0 ) );
 
 			// Sliding
-			Rotation *= Rotation.From( CrouchAnglesOffset * slideLerp );
-			ApplyPositionOffset( CrouchPositionOffset, slideLerp, camSetup );
+			Rotation *= Rotation.From( SlideAngleOffset * slideLerp );
+			ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
 
 			// Vertical Look
 			var lookDownDot = camSetup.Rotation.Forward.Dot( Vector3.Down );

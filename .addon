@@ -6,7 +6,10 @@
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "ResourcePaths": [],
+  "ResourcePaths": [
+    "/ui/*",
+    "/fonts/*"
+  ],
   "HasCode": true,
   "CodePath": "/code/",
   "RootNamespace": "Sandbox",
@@ -14,9 +17,9 @@
     "MaxPlayers": 16,
     "MinPlayers": 1,
     "GameNetworkType": "Multiplayer",
-    "MapSelect": "Unrestricted",
+    "MapSelect": "Official",
     "MapList": [
-      "facepunch.flatgrass"
+      "testmap_fight"
     ],
     "RankType": "None",
     "PerMapRanking": false,
@@ -96,7 +99,8 @@
     },
     "GameCategory": "Shooter",
     "ControlModes": {
-      "Keyboard": true
+      "Keyboard": true,
+      "Gamepad": true
     }
   }
 }

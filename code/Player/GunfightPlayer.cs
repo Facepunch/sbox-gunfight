@@ -22,7 +22,7 @@ public partial class GunfightPlayer : Player
 	{
 		SetModel( "models/citizen/citizen.vmdl" );
 
-		Animator = new StandardPlayerAnimator();
+		Animator = new PlayerAnimator();
 		CameraMode = new FirstPersonCamera();
 		Controller = new PlayerController();
 		PlayerInventory = new PlayerInventory( this );

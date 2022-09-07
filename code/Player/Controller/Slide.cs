@@ -19,7 +19,7 @@ public partial class Slide : BaseNetworkable
 	{
 	}
 
-	public void PreTick( BasePlayerController controller )
+	public void PreTick( PlayerController controller )
 	{
 		IsDown = Input.Down( InputButton.Duck );
 
@@ -28,13 +28,13 @@ public partial class Slide : BaseNetworkable
 
 		if ( controller.Velocity.Length <= MinimumSpeed )
 		{
-			StopTry();
+			StopTry( controller );
 			return;
 		}
 
 		// No sliding while you're already in the sky
 		if ( controller.GroundEntity == null )
-			StopTry();
+			StopTry( controller );
 
 		if ( oldWish == Wish )
 			return;
@@ -42,7 +42,7 @@ public partial class Slide : BaseNetworkable
 		if ( IsDown != IsActive )
 		{
 			if ( IsDown ) Try( controller );
-			else StopTry();
+			else StopTry( controller );
 		}
 
 		if ( IsActive )
@@ -73,7 +73,7 @@ public partial class Slide : BaseNetworkable
 		}
 	}
 
-	void StopTry()
+	void StopTry( PlayerController controller )
 	{
 		if ( !IsActive )
 			return;
@@ -119,6 +119,8 @@ public partial class Slide : BaseNetworkable
 
 		var map = spdGain.Remap( 0, 3000f, 0, 1 );
 		_ = new ScreenShake.Perlin( 0.3f, 0.1f, 0.2f * map );
+
+		controller.SetTag( "sliding" );
 	}
 
 	public void UpdateBBox( ref Vector3 mins, ref Vector3 maxs, float scale )

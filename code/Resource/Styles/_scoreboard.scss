@@ -2,7 +2,7 @@
 	position: absolute;
 	z-index: 100;
 	flex-direction: column;
-	font-family: Roboto;
+	font-family: Quantico-Regular;
 	font-size: 23px;
 	font-weight: 500;
 	color: $theme-color;
@@ -12,67 +12,72 @@
 	justify-content: center;
 	opacity: 0;
 	transition: all 0.3s ease-out;
-	transform: scale( 1.05 );
-	transform-origin: 50% 50%;
-	background-size: 100% 100%;
+	transform: scale( 0 );
+	transform-origin: 50% 0%;
+	background-size: 100% 0%;
 	background-position: center center;
-	background-color: rgba( 10, 10, 10, 0.8 );
-	backdrop-filter: blur( 10px );
+	background-color: rgba( 10, 10, 10, 0.0 );
 
 	&.open {
 		opacity: 1;
 		transform: scale( 1 );
-		transition: all 0.1s ease-out;
+		transition: all 0.3s ease-out;
+		transform-origin: 50% 50%;
+		background-size: 100% 100%;
 	}
 
 	.name {
 		flex-grow: 1;
+		font-family: Quantico-Bold;
+		text-transform: uppercase;
+		margin-left: 20px;
 	}
 
 	.deaths, .kills, .ping, .fps {
-		width: 90px;
 		text-align: right;
+		font-family: Quantico-Bold;
+		text-transform: uppercase;
+		margin-left: 100px;
 	}
 
 	.ping, .fps {
-		opacity: 0.3;
-		width: 50px;
+		font-size: 12px;
+		opacity: .5;
+		align-items: center;
 	}
 
-	.deaths {
-		margin-right: 50px;
-	}
 
 	.header {
-		font-weight: 500;
 		border-bottom: 1px solid $theme-color;
-		min-width: 30%;
+		min-width: 50%;
 		margin-bottom: 10px;
 		padding-bottom: 5px;
 		color: $theme-color;
-		mix-blend-mode: lighten;
+		background-color: rgba(#3c3836 .75);
+		opacity: 1;
+		padding: 4px 10px;
 	}
 
 	.canvas {
 		flex-direction: column;
 		min-height: 50%;
-		min-width: 30%;
-		mix-blend-mode: lighten;
+		min-width: 50%;
 
 		.entry {
-			mix-blend-mode: lighten;
 			margin-bottom: 2px;
 			padding: 4px 10px;
 			color: $theme-color;
-			background-color: transparent;
-
+			font-size: 20px;
+			border-right: 2px solid rgba(#fbf1c7 0.5);
+			background-color: rgba(#3c3836 .7);
 
 			label {
 				//text-shadow: 0px 0px 10px #f70a;
+				font-size: 20px;
 			}
 
 			&.me {
-				background-color: transparent;
+				background-color: rgba(#fbf1c7 0.1);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿
-$theme-color: #F7F7F9;
+$theme-color: #fbf1c7;
+//$theme-color: #CECECE;
 
 @import "_damageindicator.scss";
 @import "_hitindicator.scss";
@@ -25,7 +26,7 @@ vitals
 {
     font-size: 64px;
     color: #ff0;
-    font-family: Poppins;
+    font-family: Oswald-Light;
 
     label
     {
@@ -77,45 +78,47 @@ vitals
     background-image: url( /ui/weapons/dm_tripmine.png );
 }
 
-.bottom-left
-{
-    transform: rotateZ(-2deg);
-    left: 300px;
+.bottom-left {
+    left: 150px;
+    flex-direction: row-reverse;
 }
 
 .bottom-right {
-    transform: rotateZ(2deg);
-    right: 300px;
+    right: 150px;
 }
 
 .bottom-left, .bottom-right
 {
     position: absolute;
-    bottom: 100px;
+    bottom: 50px;
 }
 
 .bottom-right {
     ammo {
-        flex-direction: row;
-        font-family: Roboto;
+        flex-direction: row-reverse;
+        font-family: Oswald-Light;
         width: 100%;
         height: 100%;
+        border-right: 2px solid rgba(#fbf1c7 0.5);
+        align-items: flex-end;
+        background-color: rgba(#3c3836 0.2);
+        min-width: 150px;
 
         .ammobar {
+            position: absolute;
             flex-direction: row-reverse;
             flex-shrink: 0;
-            align-items: center;
+            align-items: flex-start;
+            top: 80%;
 
             .bullet {
-                width: 8px;
+                width: 2px;
                 flex-shrink: 0;
-                flex-grow: 0;
-                height: 30px;
+                flex-grow: 1;
                 background-color: $theme-color;
-                border-radius: 3px 3px 2px 2px;
                 margin-left: 2px;
                 transition: all 0.1s ease-out;
-                box-shadow: 0px 0px 5px $theme-color;
+                min-height: 8px;
 
                 &.empty {
                     background-color: $theme-color;
@@ -146,29 +149,61 @@ vitals
         }
 
         label {
-            min-width: 32px;
+            min-width: 100px;
             text-align: right;
 
             &.danger {
                 color: #f00;
             }
         }
+
+        .currentammo {
+            bottom: 10px;
+            font-family: Quantico-Bold;
+            font-size: 64px;
+            font-weight: bolder;
+            color: $theme-color;
+        }
     }
 }
 
-.inventory, .ammobar, healthhud, armourhud {
-    padding: 16px;
-    margin: 5px;
+healthhud, armourhud {
+    padding: 6px;
     font-size: 32px;
     font-weight: bolder;
+    background-color: rgba(#3c3836 0.2);
     color: $theme-color;
-    text-shadow: 0px 0px 5px rgba( $theme-color, 0.2 );
-    text-stroke: 2px rgba( black, 0.35 );
-    min-width: 130px;
+    border-right: 2px solid rgba(#fbf1c7 0.5);
+    min-width: 100px;
     text-align: center;
     align-items: center;
-    border-radius: 3px;
-    font-family: Roboto;
+    border-radius: 0px;
+    font-family: Quantico-Regular;
+    font-weight: 900;
+}
+.ammobar,.currentammo {
+    padding: 6px;
+    font-size: 24px;
+    font-weight: bolder;
+    color: $theme-color;
+    min-width: 200px;
+    text-align: center;
+    align-items: center;
+    border-radius: 0px;
+    font-family: Quantico-Regular;
+    font-weight: 900;
+}
+.inventory {
+    padding: 6px;
+    font-size: 24px;
+    left: 10px;
+    bottom:25px;
+    font-weight: bolder;
+    color: $theme-color;
+    text-align: center;
+    align-items: center;
+    border-radius: 0px;
+    font-family: Quantico-Regular;
     font-weight: 900;
 }
 

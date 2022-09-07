@@ -33,6 +33,8 @@ public partial class GunfightPlayer : Player
 		EnableShadowInFirstPerson = true;
 
 		ClearAmmo();
+
+		Clothing.Deserialize( "[{\"id\":502735166},{\"id\":-1330488900},{\"id\":1558172885},{\"id\":181315396},{\"id\":-1492226718},{\"id\":930368271},{\"id\":1356410853},{\"id\":-236248938}]" );
 		Clothing.DressEntity( this );
 
 		SupressPickupNotices = true;

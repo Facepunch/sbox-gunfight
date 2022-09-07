@@ -50,10 +50,10 @@
 		}
 		Recoil = 
 		{
-			Decay = "2,3"
-			BaseRecoilMinimum = "-0.05,0.18"
-			BaseRecoilMaximum = "0.05,0.2"
-			ViewModelScale = 25
+			Decay = "30,50"
+			BaseRecoilMinimum = "-2,4"
+			BaseRecoilMaximum = "2,4"
+			ViewModelScale = 1
 			ViewModelRecoverySpeed = 3
 		}
 		BulletSpread = 0.1

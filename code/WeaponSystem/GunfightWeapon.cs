@@ -157,8 +157,8 @@ public partial class GunfightWeapon : BaseWeapon
 
 	public override void BuildInput( InputBuilder input )
 	{
-		input.ViewAngles.pitch -= Recoil.y;
-		input.ViewAngles.yaw -= Recoil.x;
+		input.ViewAngles.pitch -= Recoil.y * Time.Delta;
+		input.ViewAngles.yaw -= Recoil.x * Time.Delta;
 	}
 
 	public override void Simulate( Client owner )

@@ -283,9 +283,7 @@ public partial class GunfightPlayer : Player
 	[ClientRpc]
 	public void DidDamage( Vector3 pos, float amount, float healthinv, bool isHeadshot )
 	{
-		Sound.FromScreen( "dm.ui_attacker" )
-			.SetPitch( 1 + healthinv * 1 );
-
+		Sound.FromScreen( "ui.hit" );
 		HitIndicator.Current?.OnHit( pos, amount, isHeadshot );
 	}
 

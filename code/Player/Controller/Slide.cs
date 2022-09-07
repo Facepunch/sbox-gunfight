@@ -108,7 +108,10 @@ public partial class Slide : BaseNetworkable
 		if ( dot > 0.15f )
 			spdGain *= 0.8f * SlideIntensity;
 		else if ( dot < -0.15f )
+		{
 			spdGain *= 1.5f;
+			Activated = 0;
+		}
 		else
 			spdGain *= SlideIntensity;
 

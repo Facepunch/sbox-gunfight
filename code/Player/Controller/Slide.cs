@@ -8,28 +8,29 @@ public partial class Slide : BaseNetworkable
 	[Net, Predicted] public bool IsDown { get; set; }
 	[Net, Predicted] TimeSince Activated { get; set; } = 0;
 
-	public virtual float TimeUntilStop => 0.8f;
+	public float TimeUntilStop => 0.8f;
 	// You can only slide once every X
-	public virtual float Cooldown => 1f;
-	public virtual float MinimumSpeed => 64f;
-	public virtual float WishDirectionFactor => 1200f;
-	public virtual float SlideIntensity => 1 - (Activated / BoostTime);
+	public float Cooldown => 1f;
+	public float MinimumSpeed => 64f;
+	public float WishDirectionFactor => 1200f;
+	public float SlideIntensity => 1 - (Activated / BoostTime);
 
 	public Slide()
 	{
 	}
 
-	public virtual void PreTick( BasePlayerController controller )
+	public void PreTick( BasePlayerController controller )
 	{
-		var downBefore = IsDown;
-
 		IsDown = Input.Down( InputButton.Duck );
 
 		var oldWish = Wish;
 		Wish = IsDown;
 
 		if ( controller.Velocity.Length <= MinimumSpeed )
+		{
 			StopTry();
+			return;
+		}
 
 		// No sliding while you're already in the sky
 		if ( controller.GroundEntity == null )
@@ -59,6 +60,9 @@ public partial class Slide : BaseNetworkable
 			return;
 
 		if ( controller.GroundEntity == null )
+			return;
+
+		if ( controller.Velocity.Length <= MinimumSpeed )
 			return;
 
 		var change = IsActive != true;
@@ -110,7 +114,7 @@ public partial class Slide : BaseNetworkable
 		ctrl.Velocity += spdGain * slopeForward * Time.Delta;
 	}
 
-	public virtual void UpdateBBox( ref Vector3 mins, ref Vector3 maxs, float scale )
+	public void UpdateBBox( ref Vector3 mins, ref Vector3 maxs, float scale )
 	{
 		if ( IsActive )
 		{

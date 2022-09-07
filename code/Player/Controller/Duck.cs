@@ -2,44 +2,38 @@
 
 public partial class Duck : BaseNetworkable
 {
-	[Net, Predicted] public BasePlayerController Controller { get; set; }
+	[Net, Predicted]
+	public bool IsActive { get; set; }
 
-	[Net, Predicted] public bool IsActive { get; set; }
-
-	public Duck() { }
-
-	public Duck( BasePlayerController controller )
+	public Duck()
 	{
-		Controller = controller;
 	}
 
-	public virtual void PreTick() 
+	public void PreTick( PlayerController controller )
 	{
 		bool wants = Input.Down( InputButton.Duck );
 
-		if ( wants != IsActive ) 
+		if ( wants != IsActive )
 		{
 			if ( wants ) TryDuck();
-			else TryUnDuck();
+			else TryUnDuck( controller );
 		}
 
 		if ( IsActive )
 		{
-			Controller.SetTag( "ducked" );
-			Controller.EyeLocalPosition *= 0.5f;
+			controller.SetTag( "ducked" );
 		}
 	}
 
-	protected virtual void TryDuck()
+	protected void TryDuck()
 	{
 		IsActive = true;
 	}
 
-	protected virtual void TryUnDuck()
+	protected void TryUnDuck( BasePlayerController controller )
 	{
-		var pm = Controller.TraceBBox( Controller.Position, Controller.Position, originalMins, originalMaxs );
+		var pm = controller.TraceBBox( controller.Position, controller.Position, originalMins, originalMaxs );
 		if ( pm.StartedSolid ) return;
-		if ( !Controller.GroundEntity.IsValid() ) return;
 
 		IsActive = false;
 	}
@@ -49,21 +43,18 @@ public partial class Duck : BaseNetworkable
 	Vector3 originalMins;
 	Vector3 originalMaxs;
 
-	public virtual void UpdateBBox( ref Vector3 mins, ref Vector3 maxs, float scale )
+	public void UpdateBBox( ref Vector3 mins, ref Vector3 maxs, float scale )
 	{
 		originalMins = mins;
 		originalMaxs = maxs;
-
-		if ( IsActive )
-			maxs = maxs.WithZ( 36 * scale );
 	}
 
 	//
-	// Coudl we do this in a generic callback too?
+	// Could we do this in a generic callback too?
 	//
-	public virtual float GetWishSpeed()
+	public float GetWishSpeed()
 	{
 		if ( !IsActive ) return -1;
-		return 100.0f;
+		return 64.0f;
 	}
 }

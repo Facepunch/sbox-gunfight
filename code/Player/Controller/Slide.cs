@@ -80,7 +80,7 @@ public partial class Slide : BaseNetworkable
 	protected void StartSliding( PlayerController ctrl )
 	{
 		SlidingParticles?.Destroy( true );
-		SlidingParticles = Particles.Create( "particles/gameplay/player/slide/slide.vpcfw", ctrl.Pawn, true );
+		SlidingParticles = Particles.Create( "particles/gameplay/player/slide/slide.vpcf", ctrl.Pawn, true );
 	}
 
 	protected void StopSliding()

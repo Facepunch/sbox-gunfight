@@ -24,12 +24,15 @@ public partial class PlayerController : BasePlayerController
 	[Net, Predicted] public TimeSince SinceStoppedSprinting { get; set; }
 
 	[Net, Predicted] public Slide Slide { get; set; }
-	public Duck Duck { get; set; }
+	[Net, Predicted] public Duck Duck { get; set; }
 
 	public PlayerController()
 	{
-		Duck = new Duck( this );
-		Slide = new();
+		if ( Host.IsServer )
+		{
+			Duck = new();
+			Slide = new();
+		}
 
 		SinceStoppedSprinting = -1;
 	}
@@ -187,7 +190,7 @@ public partial class PlayerController : BasePlayerController
 			WishVelocity *= speedMult;
 		}
 
-		Duck.PreTick();
+		Duck.PreTick( this );
 		Slide.PreTick( this );
 
 		bool bStayOnGround = false;
@@ -236,7 +239,7 @@ public partial class PlayerController : BasePlayerController
 			DebugOverlay.Box( Position, mins, maxs, Color.Blue );
 
 			var lineOffset = 0;
-			if ( Host.IsServer ) lineOffset = 10;
+			if ( Host.IsServer ) lineOffset = 15;
 
 			DebugOverlay.ScreenText( $"        Position: {Position}", lineOffset + 0 );
 			DebugOverlay.ScreenText( $"        Velocity: {Velocity}", lineOffset + 1 );
@@ -244,6 +247,8 @@ public partial class PlayerController : BasePlayerController
 			DebugOverlay.ScreenText( $"    GroundEntity: {GroundEntity} [{GroundEntity?.Velocity}]", lineOffset + 3 );
 			DebugOverlay.ScreenText( $" SurfaceFriction: {SurfaceFriction}", lineOffset + 4 );
 			DebugOverlay.ScreenText( $"    WishVelocity: {WishVelocity}", lineOffset + 5 );
+			DebugOverlay.ScreenText( $"    Slide: {Slide?.IsActive ?? false}", lineOffset + 6 );
+			DebugOverlay.ScreenText( $"    Duck: {Duck?.IsActive ?? false}", lineOffset + 7 );
 		}
 	}
 

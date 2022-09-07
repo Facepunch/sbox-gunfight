@@ -109,7 +109,9 @@ public partial class Slide : BaseNetworkable
 		var spdGain = 2000f * SlideIntensity;
 
 		if ( dot > 0.15f )
-			spdGain *= -1;
+			spdGain *= 0.8f;
+		if ( dot < -0.15f )
+			spdGain *= 2f;
 
 		ctrl.Velocity += spdGain * slopeForward * Time.Delta;
 	}
@@ -119,7 +121,6 @@ public partial class Slide : BaseNetworkable
 		if ( IsActive )
 		{
 			maxs = maxs.WithZ( 36 * scale );
-			Log.Info( maxs );
 		}
 	}
 }

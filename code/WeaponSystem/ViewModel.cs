@@ -48,6 +48,7 @@ public partial class ViewModel : BaseViewModel
 	float aimLerp = 0;
 	float crouchLerp = 0;
 	float airLerp = 0;
+	float slideLerp = 0;
 
 	public override void PostCameraSetup( ref CameraSetup camSetup )
 	{
@@ -89,6 +90,7 @@ public partial class ViewModel : BaseViewModel
 		var burstSprint = false;
 		var aim = controller.IsAiming;
 		var crouched = controller?.Duck?.IsActive ?? false;
+		var sliding = controller?.Slide?.IsActive ?? false;
 
 		var avoidanceVal = avoidanceTrace.Hit ? (1f - avoidanceTrace.Fraction) : 0;
 		avoidanceVal *= 1 - ( aimLerp * 0.8f );
@@ -99,12 +101,13 @@ public partial class ViewModel : BaseViewModel
 
 		LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 7f );
 		LerpTowards( ref crouchLerp, crouched && !aim ? 1 : 0, 7f );
+		LerpTowards( ref slideLerp, sliding && !aim ? 1 : 0, 7f );
 		LerpTowards( ref airLerp, isGrounded ? 0 : 1, 10f );
 
 		bobSpeed *= 1 - sprintLerp * 0.25f;
 		bobSpeed *= 1 - burstSprintLerp * 0.15f;
 
-		if ( isGrounded && controller is not null /*&& !controller.Slide.IsActive*/ )
+		if ( isGrounded && !sliding && controller is not null /*&& !controller.Slide.IsActive*/ )
 		{
 			walkBob += DeltaTime * 30.0f * bobSpeed;
 		}
@@ -179,6 +182,10 @@ public partial class ViewModel : BaseViewModel
 			// Recoil
 			LerpRecoil = LerpRecoil.LerpTo( weapon.Recoil * WeaponDef.Recoil.ViewModelScale, Time.Delta * WeaponDef.Recoil.ViewModelRecoverySpeed );
 			Rotation *= Rotation.From( new Angles( -LerpRecoil.y, -LerpRecoil.x, 0 ) );
+
+			// Sliding
+			Rotation *= Rotation.From( CrouchAnglesOffset * slideLerp );
+			ApplyPositionOffset( CrouchPositionOffset, slideLerp, camSetup );
 
 			// Vertical Look
 			var lookDownDot = camSetup.Rotation.Forward.Dot( Vector3.Down );

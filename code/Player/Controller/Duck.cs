@@ -1,12 +1,12 @@
-﻿
-namespace Facepunch.Gunfight;
+﻿namespace Facepunch.Gunfight;
 
-[Library]
-public class Duck : BaseNetworkable
+public partial class Duck : BaseNetworkable
 {
-	public BasePlayerController Controller;
+	[Net, Predicted] public BasePlayerController Controller { get; set; }
 
-	public bool IsActive; // replicate
+	[Net, Predicted] public bool IsActive { get; set; }
+
+	public Duck() { }
 
 	public Duck( BasePlayerController controller )
 	{

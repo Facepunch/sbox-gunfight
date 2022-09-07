@@ -4,9 +4,9 @@ namespace Facepunch.Gunfight;
 [Library]
 public partial class PlayerController : BasePlayerController
 {
-	[Net] public float SprintSpeed { get; set; } = 350.0f;
-	[Net] public float WalkSpeed { get; set; } = 210.0f;
-	[Net] public float DefaultSpeed { get; set; } = 210.0f;
+	[Net] public float SprintSpeed { get; set; } = 300.0f;
+	[Net] public float WalkSpeed { get; set; } = 185.0f;
+	[Net] public float DefaultSpeed { get; set; } = 185.0f;
 	[Net] public float Acceleration { get; set; } = 8.0f;
 	[Net] public float AirAcceleration { get; set; } = 5.0f;
 	[Net] public float GroundFriction { get; set; } = 4.0f;
@@ -429,7 +429,7 @@ public partial class PlayerController : BasePlayerController
 
 		// TODO - Look at these bad boys... find out what they do and remove the magic.
 		float flGroundFactor = 1.0f;
-		float flMul = 268.3281572999747f * 1.2f;
+		float flMul = 268.3281572999747f * 1.0f;
 		float startz = Velocity.z;
 
 		if ( Duck.IsActive )

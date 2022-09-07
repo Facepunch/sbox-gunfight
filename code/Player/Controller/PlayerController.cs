@@ -8,11 +8,10 @@ public partial class PlayerController : BasePlayerController
 	[Net] public float WalkSpeed { get; set; } = 185.0f;
 	[Net] public float DefaultSpeed { get; set; } = 185.0f;
 	[Net] public float Acceleration { get; set; } = 8.0f;
-	[Net] public float AirAcceleration { get; set; } = 5.0f;
-	[Net] public float GroundFriction { get; set; } = 4.0f;
+	[Net] public float AirAcceleration { get; set; } = 4.0f;
 	[Net] public float StopSpeed { get; set; } = 100.0f;
 	[Net] public float GroundAngle { get; set; } = 46.0f;
-	[Net] public float StepSize { get; set; } = 18.0f;
+	[Net] public float StepSize { get; set; } = 32f;
 	[Net] public float MaxNonJumpVelocity { get; set; } = 140.0f;
 	[Net] public float BodyGirth { get; set; } = 32.0f;
 	[Net] public float BodyHeight { get; set; } = 72.0f;
@@ -101,6 +100,11 @@ public partial class PlayerController : BasePlayerController
 		return 64f;
 	}
 
+	protected float GetGroundFriction()
+	{
+		return 8f;
+	}
+
 	public override void Simulate()
 	{
 		EyeLocalPosition = Vector3.Up * (GetEyeHeight() * Pawn.Scale);
@@ -147,7 +151,7 @@ public partial class PlayerController : BasePlayerController
 
 			if ( GroundEntity != null )
 			{
-				ApplyFriction( GroundFriction * SurfaceFriction );
+				ApplyFriction( GetGroundFriction() * SurfaceFriction );
 			}
 		}
 

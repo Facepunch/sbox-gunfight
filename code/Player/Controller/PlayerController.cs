@@ -16,7 +16,6 @@ public partial class PlayerController : BasePlayerController
 	[Net] public float MaxNonJumpVelocity { get; set; } = 140.0f;
 	[Net] public float BodyGirth { get; set; } = 32.0f;
 	[Net] public float BodyHeight { get; set; } = 72.0f;
-	[Net] public float EyeHeight { get; set; } = 64.0f;
 	[Net] public float Gravity { get; set; } = 800.0f;
 	[Net] public float AirControl { get; set; } = 30.0f;
 
@@ -25,13 +24,13 @@ public partial class PlayerController : BasePlayerController
 	[Net, Predicted] public bool cachedSprint { get; set; }
 	[Net, Predicted] public TimeSince SinceStoppedSprinting { get; set; }
 
-	public Duck Duck;
-	public Unstuck Unstuck;
+	[Net, Predicted] public Slide Slide { get; set; }
+	public Duck Duck { get; set; }
 
 	public PlayerController()
 	{
 		Duck = new Duck( this );
-		Unstuck = new Unstuck( this );
+		Slide = new();
 
 		SinceStoppedSprinting = -1;
 	}
@@ -75,6 +74,7 @@ public partial class PlayerController : BasePlayerController
 		var maxs = new Vector3( +girth, +girth, BodyHeight ) * Pawn.Scale;
 
 		Duck.UpdateBBox( ref mins, ref maxs, Pawn.Scale );
+		Slide.UpdateBBox( ref mins, ref maxs, Pawn.Scale );
 
 		SetBBox( mins, maxs );
 	}
@@ -93,9 +93,17 @@ public partial class PlayerController : BasePlayerController
 		SinceStoppedSprinting = 0;
 	}
 
+	protected float GetEyeHeight()
+	{
+		if ( Duck.IsActive ) return 32f;
+		if ( Slide.IsActive ) return 58f;
+
+		return 64f;
+	}
+
 	public override void Simulate()
 	{
-		EyeLocalPosition = Vector3.Up * (EyeHeight * Pawn.Scale);
+		EyeLocalPosition = Vector3.Up * (GetEyeHeight() * Pawn.Scale);
 		UpdateBBox();
 
 		EyeLocalPosition += TraceOffset;
@@ -109,9 +117,6 @@ public partial class PlayerController : BasePlayerController
 
 		if ( weapon.WeaponDefinition.AimingDisabled )
 			IsAiming = false;
-
-		if ( Unstuck.TestAndFix() )
-			return;
 
 		CheckLadder();
 		Swimming = Pawn.WaterLevel > 0.6f;
@@ -179,6 +184,7 @@ public partial class PlayerController : BasePlayerController
 		}
 
 		Duck.PreTick();
+		Slide.PreTick( this );
 
 		bool bStayOnGround = false;
 		if ( Swimming )
@@ -261,6 +267,9 @@ public partial class PlayerController : BasePlayerController
 
 	public virtual float GetWishSpeed()
 	{
+		var slideSpeed = Slide.GetWishSpeed();
+		if ( slideSpeed >= 0 ) return slideSpeed;
+
 		var ws = Duck.GetWishSpeed();
 		if ( ws >= 0 ) return ws;
 
@@ -345,6 +354,12 @@ public partial class PlayerController : BasePlayerController
 	/// </summary>
 	public virtual void Accelerate( Vector3 wishdir, float wishspeed, float speedLimit, float acceleration )
 	{
+		if ( Slide.IsActive )
+		{
+			Slide.Accelerate( this, ref wishdir, ref wishspeed, ref speedLimit, ref acceleration );
+			return;
+		}
+
 		if ( speedLimit > 0 && wishspeed > speedLimit )
 			wishspeed = speedLimit;
 

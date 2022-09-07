@@ -217,7 +217,8 @@ public partial class GunfightPlayer : Player
 		LastDamage = info;
 
 		// Headshot
-		if ( GetHitboxGroup( info.HitboxIndex ) == 1 )
+		var isHeadshot = GetHitboxGroup( info.HitboxIndex ) == 1;
+		if ( isHeadshot )
 		{
 			info.Damage *= 2.0f;
 		}
@@ -261,7 +262,7 @@ public partial class GunfightPlayer : Player
 		{
 			if ( attacker != this )
 			{
-				attacker.DidDamage( To.Single( attacker ), info.Position, info.Damage, Health.LerpInverse( 100, 0 ) );
+				attacker.DidDamage( To.Single( attacker ), info.Position, info.Damage, Health.LerpInverse( 100, 0 ), isHeadshot );
 			}
 
 			TookDamage( To.Single( this ), info.Weapon.IsValid() ? info.Weapon.Position : info.Attacker.Position );
@@ -280,21 +281,21 @@ public partial class GunfightPlayer : Player
 	}
 
 	[ClientRpc]
-	public void DidDamage( Vector3 pos, float amount, float healthinv )
+	public void DidDamage( Vector3 pos, float amount, float healthinv, bool isHeadshot )
 	{
 		Sound.FromScreen( "dm.ui_attacker" )
 			.SetPitch( 1 + healthinv * 1 );
 
-		HitIndicator.Current?.OnHit( pos, amount );
+		HitIndicator.Current?.OnHit( pos, amount, isHeadshot );
 	}
 
 	public TimeSince TimeSinceDamage = 1.0f;
 
 	[ClientRpc]
-	public void TookDamage( Vector3 pos )
+	public void TookDamage( Vector3 pos, bool headshot = false )
 	{
 		TimeSinceDamage = 0;
-		DamageIndicator.Current?.OnHit( pos );
+		DamageIndicator.Current?.OnHit( pos, headshot );
 	}
 
 	[ClientRpc]

@@ -102,7 +102,7 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref burstSprintLerp, burstSprint ? 1 : 0, 8f );
 
 		LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 7f );
-		LerpTowards( ref crouchLerp, crouched && !aim ? 1 : 0, 7f );
+		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );
 		LerpTowards( ref slideLerp, sliding && !aim ? 1 : 0, 7f );
 		LerpTowards( ref airLerp, isGrounded ? 0 : 1, 10f );
 

@@ -113,6 +113,9 @@ public partial class Slide : BaseNetworkable
 			spdGain *= SlideIntensity;
 
 		ctrl.Velocity += spdGain * slopeForward * Time.Delta;
+
+		var map = spdGain.Remap( 0, 3000f, 0, 1 );
+		_ = new ScreenShake.Perlin( 0.3f, 0.1f, 0.2f * map );
 	}
 
 	public void UpdateBBox( ref Vector3 mins, ref Vector3 maxs, float scale )

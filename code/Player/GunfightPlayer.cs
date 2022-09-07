@@ -216,6 +216,7 @@ public partial class GunfightPlayer : Player
 
 		LastDamage = info;
 
+		// Headshot
 		if ( GetHitboxGroup( info.HitboxIndex ) == 1 )
 		{
 			info.Damage *= 2.0f;

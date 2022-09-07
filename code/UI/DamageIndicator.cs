@@ -10,9 +10,9 @@ public partial class DamageIndicator : Panel
 		Current = this;
 	}
 
-	public void OnHit( Vector3 pos )
+	public void OnHit( Vector3 pos, bool headshot = false )
 	{
-		var p = new HitPoint( pos );
+		var p = new HitPoint( pos, headshot );
 		p.Parent = this;
 	}
 
@@ -20,9 +20,10 @@ public partial class DamageIndicator : Panel
 	{
 		public Vector3 Position;
 
-		public HitPoint( Vector3 pos )
+		public HitPoint( Vector3 pos, bool headshot )
 		{
 			Position = pos;
+			SetClass( "headshot", headshot );
 
 			_ = Lifetime();
 		}

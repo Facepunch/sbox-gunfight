@@ -16,16 +16,17 @@ public partial class HitIndicator : Panel
 		base.Tick();
 	}
 
-	public void OnHit( Vector3 pos, float amount )
+	public void OnHit( Vector3 pos, float amount, bool isHeadshot )
 	{
-		new HitPoint( amount, pos, this );
+		new HitPoint( amount, pos, this, isHeadshot );
 	}
 
 	public class HitPoint : Panel
 	{
-		public HitPoint( float amount, Vector3 pos, Panel parent )
+		public HitPoint( float amount, Vector3 pos, Panel parent, bool isHeadshot )
 		{
 			Parent = parent;
+			SetClass( "headshot", isHeadshot );
 			_ = Lifetime();
 		}
 

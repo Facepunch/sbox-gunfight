@@ -28,6 +28,8 @@ public partial class GunfightWeapon : BaseWeapon
 	protected GunfightPlayer Player => Owner as GunfightPlayer;
 	protected PlayerController PlayerController => Player?.Controller as PlayerController;
 
+	public new string Name => WeaponDefinition?.WeaponName ?? base.Name;
+	public string ShortName => WeaponDefinition.WeaponShortName;
 	public bool IsSprinting => PlayerController?.IsSprinting ?? false;
 	public bool IsAiming => PlayerController?.IsAiming ?? false;
 	public float PrimaryFireRate => WeaponDefinition.BaseFireRate;

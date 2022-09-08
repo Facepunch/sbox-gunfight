@@ -76,16 +76,21 @@ public partial class Slide : BaseNetworkable
 	}
 
 	public Particles SlidingParticles { get; set; }
+	public Sound SlidingSound { get; set; }
 
 	protected void StartSliding( PlayerController ctrl )
 	{
 		SlidingParticles?.Destroy( true );
 		SlidingParticles = Particles.Create( "particles/gameplay/player/slide/slide.vpcf", ctrl.Pawn, true );
+
+		SlidingSound = Sound.FromEntity( "sounds/player/foley/slide/ski.loop.sound", ctrl.Pawn );
 	}
 
-	protected void StopSliding()
+	protected void StopSliding( PlayerController ctrl )
 	{
 		SlidingParticles?.Destroy( true );
+		SlidingSound.Stop();
+		Sound.FromEntity( "sounds/player/foley/slide/ski.stop.sound", ctrl.Pawn );
 	}
 
 	void StopTry( PlayerController controller )
@@ -95,7 +100,7 @@ public partial class Slide : BaseNetworkable
 
 		Activated = 0;
 		IsActive = false;
-		StopSliding();
+		StopSliding( controller );
 	}
 
 	public float GetWishSpeed()

@@ -53,7 +53,6 @@ partial class GunfightGame : Game
 		var spawnpoint = Entity.All
 								.OfType<SpawnPoint>()
 								.OrderByDescending( x => SpawnpointWeight( pawn, x ) )
-								.ThenBy( x => Guid.NewGuid() )
 								.FirstOrDefault();
 
 		//Log.Info( $"chose {spawnpoint}" );
@@ -72,7 +71,8 @@ partial class GunfightGame : Game
 	/// </summary>
 	public float SpawnpointWeight( Entity pawn, Entity spawnpoint )
 	{
-		float distance = 0;
+		// We want to find the closest player (worst weight)
+		float distance = float.MaxValue;
 
 		foreach ( var client in Client.All )
 		{
@@ -81,7 +81,7 @@ partial class GunfightGame : Game
 			if ( client.Pawn.LifeState != LifeState.Alive ) continue;
 
 			var spawnDist = (spawnpoint.Position - client.Pawn.Position).Length;
-			distance = MathF.Max( distance, spawnDist );
+			distance = MathF.Min( distance, spawnDist );
 		}
 
 		//Log.Info( $"{spawnpoint} is {distance} away from any player" );

@@ -8,7 +8,7 @@
 		HoldType = "Rifle"
 		Model = resource:"models/mp5/w_mp5.vmdl"
 		ViewModel = resource:"models/mp5/fp_mp5.vmdl"
-		Icon = null
+		Icon = resource:"ui/weapons/mp5.png"
 		BaseFireRate = 0.08
 		DefaultFireMode = "FullAuto"
 		SupportedFireModes = 
@@ -17,13 +17,20 @@
 			"FullAuto",
 			"Burst",
 		]
+		BulletSpread = 0.1
+		BulletForce = 1.5
+		BulletDamage = 12
+		BulletSize = 3
+		BulletCount = 1
 		BurstAmount = 3
 		FireSound = resource:"sounds/guns/mp5/smg1_shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
+		AimingDisabled = false
 		AmmoType = "SMG"
 		ClipSize = 30
 		StandardClip = 30
 		ReloadTime = 3
+		ReloadSingle = false
 		Crosshair = "Default"
 		ViewModelSetup = 
 		{
@@ -56,10 +63,5 @@
 			ViewModelScale = 1
 			ViewModelRecoverySpeed = 3
 		}
-		BulletSpread = 0.1
-		BulletForce = 1.5
-		BulletDamage = 12
-		BulletSize = 3
-		BulletCount = 1
 	}
 }

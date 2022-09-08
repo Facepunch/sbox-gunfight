@@ -8,16 +8,23 @@
 		HoldType = "Shotgun"
 		Model = resource:"models/r870/w_r870.vmdl"
 		ViewModel = resource:"models/r870/fp_r870.vmdl"
-		Icon = null
+		Icon = resource:"ui/weapons/pump-shotgun.png"
 		BaseFireRate = 1
 		DefaultFireMode = "Semi"
 		SupportedFireModes = 
 		[
 			"Semi",
-			"FullAuto"
+			"FullAuto",
 		]
+		BulletSpread = 0.2
+		BulletForce = 1.5
+		BulletDamage = 4
+		BulletSize = 3
+		BulletCount = 12
+		BurstAmount = 3
 		FireSound = resource:"sounds/guns/r870/shotgun1_shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
+		AimingDisabled = true
 		AmmoType = "Shotgun"
 		ClipSize = 6
 		StandardClip = 6
@@ -53,11 +60,5 @@
 			ViewModelScale = 25
 			ViewModelRecoverySpeed = 3
 		}
-		BulletSpread = 0.2
-		BulletForce = 1.5
-		BulletDamage = 4
-		BulletSize = 3
-		BulletCount = 12
-		AimingDisabled = true
 	}
 }

@@ -8,19 +8,27 @@
 		HoldType = "MeleeWeapons"
 		Model = resource:"models/knife/w_knife.vmdl"
 		ViewModel = resource:"models/knife/fp_knife.vmdl"
-		Icon = null
+		Icon = resource:"ui/weapons/knife.png"
 		BaseFireRate = 0.2
 		DefaultFireMode = "Semi"
 		SupportedFireModes = 
 		[
 			"Semi",
 		]
+		BulletSpread = 0.1
+		BulletForce = 1.5
+		BulletDamage = 12
+		BulletSize = 3
+		BulletCount = 1
 		BurstAmount = 3
 		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
+		DryFireSound = ""
+		AimingDisabled = false
 		AmmoType = "None"
 		ClipSize = 7
 		StandardClip = 7
 		ReloadTime = 2
+		ReloadSingle = false
 		Crosshair = "Default"
 		ViewModelSetup = 
 		{
@@ -41,6 +49,9 @@
 			AvoidancePositionOffset = "-15,0,0"
 			AvoidanceAngleOffset = "2,0,-25"
 			SprintPositionOffset = "-1,2,-1"
+		}
+		Recoil = 
+		{
 		}
 	}
 }

@@ -43,6 +43,7 @@ public partial class GunfightWeapon : BaseWeapon
 	public float BulletDamage => WeaponDefinition.BulletDamage;
 	public float BulletSize => WeaponDefinition.BulletSize;
 	public int BulletCount => WeaponDefinition.BulletCount;
+	public string GunIcon => WeaponDefinition.Icon;
 	public float PostSprintAttackDelay => 0.15f;
 
 	public void CycleFireMode()

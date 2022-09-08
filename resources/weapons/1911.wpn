@@ -8,26 +8,28 @@
 		HoldType = "Pistol"
 		Model = resource:"models/m1911/w_m1911.vmdl"
 		ViewModel = resource:"models/m1911/fp_m1911.vmdl"
-		Icon = null
+		Icon = resource:"ui/weapons/m1911.png"
 		BaseFireRate = 0.2
 		DefaultFireMode = "Semi"
 		SupportedFireModes = 
 		[
 			"Semi",
 		]
-		BurstAmount = 3
-		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
-		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
-		AmmoType = "Pistol"
-		ClipSize = 7
-		StandardClip = 7
-		ReloadTime = 2
-		Crosshair = "Default"
 		BulletSpread = 0
 		BulletForce = 1.5
 		BulletDamage = 18
 		BulletSize = 3
 		BulletCount = 1
+		BurstAmount = 3
+		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
+		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
+		AimingDisabled = false
+		AmmoType = "Pistol"
+		ClipSize = 7
+		StandardClip = 7
+		ReloadTime = 2
+		ReloadSingle = false
+		Crosshair = "Default"
 		ViewModelSetup = 
 		{
 			OverallWeight = 0.1

@@ -87,7 +87,7 @@ vitals {
 }
 
 .bottom-left, .bottom-right
-{
+{	mix-blend-mode: lighten;
     position: absolute;
     bottom: 50px;
 }
@@ -102,6 +102,18 @@ vitals {
         align-items: flex-end;
         background-color: rgba(#3c3836 0.2);
         min-width: 150px;
+
+
+        .icon {
+            position: absolute;
+            top: -40px;
+            right: 25px;
+            width: 150px;
+            height: 150px;
+            z-index: -1;
+            opacity: .05;
+            background-image-tint: $theme-color;
+        }
 
         .ammobar {
             position: absolute;
@@ -186,6 +198,7 @@ healthhud, armourhud {
     border-radius: 0px;
     font-family: Quantico-Regular;
     font-weight: 900;
+
 }
 .inventory {
     padding: 6px;

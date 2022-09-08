@@ -80,10 +80,12 @@ vitals {
 .bottom-left {
     left: 150px;
     flex-direction: column;
+    transform: skew(0deg, -2deg);
 }
 
 .bottom-right {
     right: 150px;
+    transform: skew(0deg, 2deg);
 }
 
 .bottom-left, .bottom-right
@@ -102,7 +104,6 @@ vitals {
         align-items: flex-end;
         background-color: rgba(#3c3836 0.2);
         min-width: 150px;
-
 
         .icon {
             position: absolute;

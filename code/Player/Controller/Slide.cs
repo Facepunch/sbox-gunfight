@@ -2,7 +2,7 @@ namespace Facepunch.Gunfight;
 
 public partial class Slide : BaseNetworkable
 {
-	[Net, Predicted] public bool IsActive { get; set; }
+	[Net, Change( "OnActiveChanged" )] public bool IsActive { get; set; }
 	[Net, Predicted] public bool Wish { get; set; }
 	[Net, Predicted] public float BoostTime { get; set; } = 1f;
 	[Net, Predicted] public bool IsDown { get; set; }
@@ -14,14 +14,26 @@ public partial class Slide : BaseNetworkable
 	public float MinimumSpeed => 64f;
 	public float WishDirectionFactor => 1200f;
 	public float SlideIntensity => 1 - (Activated / BoostTime);
+	
+	PlayerController Controller;
 
 	public Slide()
 	{
 	}
 
+	protected void OnActiveChanged( bool _, bool isSliding )
+	{
+		if ( isSliding )
+			StartSliding( Controller );
+		else
+			StopSliding( Controller );
+	}
+
 	public void PreTick( PlayerController controller )
 	{
 		IsDown = Input.Down( InputButton.Duck );
+
+		Controller = controller;
 
 		var oldWish = Wish;
 		Wish = IsDown;
@@ -70,8 +82,6 @@ public partial class Slide : BaseNetworkable
 		{
 			Activated = 0;
 			WishDirOnStart = controller.WishVelocity.Normal;
-
-			StartSliding( controller );
 		}
 	}
 
@@ -80,6 +90,8 @@ public partial class Slide : BaseNetworkable
 
 	protected void StartSliding( PlayerController ctrl )
 	{
+		Host.AssertClient();
+
 		SlidingParticles?.Destroy( true );
 		SlidingParticles = Particles.Create( "particles/gameplay/player/slide/slide.vpcf", ctrl.Pawn, true );
 
@@ -88,6 +100,8 @@ public partial class Slide : BaseNetworkable
 
 	protected void StopSliding( PlayerController ctrl )
 	{
+		Host.AssertClient();
+
 		SlidingParticles?.Destroy( true );
 		SlidingSound.Stop();
 		Sound.FromEntity( "sounds/player/foley/slide/ski.stop.sound", ctrl.Pawn );
@@ -100,7 +114,6 @@ public partial class Slide : BaseNetworkable
 
 		Activated = 0;
 		IsActive = false;
-		StopSliding( controller );
 	}
 
 	public float GetWishSpeed()

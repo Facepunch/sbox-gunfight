@@ -129,6 +129,9 @@ public partial class WeaponDefinition : GameResource
 	public ViewModelSetup ViewModelSetup { get; set; }
 	public RecoilSetup Recoil { get; set; }
 
+	[Category( "Effects" ), ResourceType( "vpcf" )]
+	public string ShootTrailParticleEffect { get; set; } = "particles/gameplay/guns/trail/trail_smoke.vpcf";
+
 	protected override void PostLoad()
 	{
 		base.PostLoad();

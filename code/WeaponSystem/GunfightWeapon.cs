@@ -186,7 +186,7 @@ public partial class GunfightWeapon : BaseWeapon
 			return;
 		}
 
-		if ( Input.Pressed( InputButton.PrimaryAttack ) )
+		if ( Input.Pressed( InputButton.PrimaryAttack ) && IsReloading )
 		{
 			IsReloading = false;
 			TimeSinceReload = 0;
@@ -472,16 +472,12 @@ public partial class GunfightWeapon : BaseWeapon
 	}
 
 	protected TimeSince CrosshairLastShoot { get; set; }
-	protected TimeSince CrosshairLastReload { get; set; }
 
 	public virtual void RenderHud( in Vector2 screensize )
 	{
 		var center = screensize * 0.5f;
 
-		if ( IsReloading || (AmmoClip == 0 && ClipSize > 1) )
-			CrosshairLastReload = 0;
-
-		RenderCrosshair( center, CrosshairLastShoot.Relative, CrosshairLastReload.Relative, Owner?.Velocity.Length ?? 0, IsAiming );
+		RenderCrosshair( center, CrosshairLastShoot.Relative, TimeSinceReload / ReloadTime, Owner?.Velocity.Length ?? 0, IsAiming );
 	}
 
 	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )

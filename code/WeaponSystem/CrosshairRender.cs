@@ -46,6 +46,20 @@ public partial class CrosshairRender
 
 		draw.Line( thickness, center + Vector2.Up * gap, center + Vector2.Up * (length + gap) );
 		draw.Line( thickness, center - Vector2.Up * gap, center - Vector2.Up * (length + gap) );
+
+		if ( lastReload <= 1f )
+		{
+			draw.BlendMode = BlendMode.Normal;
+			draw.Color = Color.Black.WithAlpha( 0.3f );
+
+			var circleSize = 34f + ( 20 * speed );
+			var startAng = -0 * 360f;
+			var finishAng = 0.75f * 360f;
+
+			draw.CircleEx( center, circleSize, circleSize - 4f, 32, startAng, finishAng );
+			draw.Color = Color.White;
+			draw.CircleEx( center, circleSize, circleSize - 4f, 32, startAng, finishAng * lastReload );
+		}
 	}
 }
 

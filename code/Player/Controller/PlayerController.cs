@@ -259,16 +259,19 @@ public partial class PlayerController : BasePlayerController
 	private void OnHitGround( Vector3 velocity )
 	{
 		var velocityLength = MathF.Abs( velocity.z ).LerpInverse( 0, 700f, true );
-		var bigFall = velocityLength < 0.7f;
+		var smallFall = velocityLength < 0.7f;
 
 		SinceLastHitGround = 0;
-
+		
 		Pawn.PlaySound( "sounds/player/foley/gear/player.walk.gear.sound" );
 
-		if ( bigFall ) 
+		if ( smallFall )
 			return;
 
 		SinceLastFall = 0;
+
+		// Play the heavy land sound, on top of the light one.
+		Pawn.PlaySound( "sounds/player/foley/gear/player.heavy_land.gear.sound" );
 
 		new ScreenShake.Pitch( 1f, 7f * velocityLength );
 	}

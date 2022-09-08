@@ -116,6 +116,17 @@ vitals {
             background-image-tint: $theme-color;
         }
 
+        .gunname {
+            position: absolute;
+            bottom: 16px;
+            left: 7px;
+            font-family: Quantico-Regular;
+            font-size: 16px;
+            font-weight: bolder;
+            text-align: left;
+            color: $theme-color;
+        }
+
         .ammobar {
             position: absolute;
             flex-direction: row-reverse;

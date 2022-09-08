@@ -322,6 +322,10 @@ public partial class GunfightPlayer : Player
 		if ( timeSinceLastFootstep < 0.18f )
 			return;
 
+		// No footsteps while sliding
+		if ( (Controller as PlayerController).Slide.IsActive )
+			return;
+
 		volume *= FootstepVolume();
 
 		timeSinceLastFootstep = 0;

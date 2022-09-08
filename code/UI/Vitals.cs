@@ -18,13 +18,14 @@ public class HealthHud : Panel
 	{
 		var player = Local.Pawn as GunfightPlayer;
 		if ( player == null ) return;
-		
 		Value.Text.Text = $"{player.Health.CeilToInt()}";
 		Value.InnerBar.Style.Width = Length.Fraction( Math.Max( player.Health / player.MaxHealth, 0.05f ) );
 		Value.InnerBar.Style.Dirty();
 
+
 		SetClass( "low", player.Health < 40.0f );
 		SetClass( "empty", player.Health <= 0.0f );
+		SetClass( "regen", player.IsRegen);
 	}
 }
 

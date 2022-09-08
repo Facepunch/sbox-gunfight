@@ -28,6 +28,9 @@ public partial class GunfightWeapon : BaseWeapon
 	protected GunfightPlayer Player => Owner as GunfightPlayer;
 	protected PlayerController PlayerController => Player?.Controller as PlayerController;
 
+	public float LowAmmoFraction => 0.2f;
+	public bool IsLowAmmo() => (AmmoClip / (float)ClipSize) <= LowAmmoFraction;
+
 	public new string Name => WeaponDefinition?.WeaponName ?? base.Name;
 	public string ShortName => WeaponDefinition.WeaponShortName;
 	public bool IsSprinting => PlayerController?.IsSprinting ?? false;
@@ -338,9 +341,8 @@ public partial class GunfightWeapon : BaseWeapon
 		ViewModelEntity?.SetAnimParameter( "fire", true );
 		CrosshairLastShoot = 0;
 
-		var ammoPercent = AmmoClip / (float)ClipSize;
-		if ( ammoPercent < 0.2f )
-			AmmoLowSound( ammoPercent );
+		if ( IsLowAmmo() )
+			AmmoLowSound( AmmoClip / (float)ClipSize );
 	}
 
 	/// <summary>

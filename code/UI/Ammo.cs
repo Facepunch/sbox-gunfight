@@ -8,6 +8,7 @@ public class Ammo : Panel
 	public Image Icon;
 	public Label Inventory;
 	public Label CurrentAmmo;
+	public Label GunName;
 	public Panel AmmoBar;
 
 	List<Panel> BulletPanels = new List<Panel>();
@@ -17,6 +18,7 @@ public class Ammo : Panel
 		AmmoBar = Add.Panel( "ammobar" );
 		Inventory = Add.Label( "100", "inventory" );
 		CurrentAmmo = Add.Label( "69", "currentammo" );
+		GunName = Add.Label( "69", "gunname" );
 		Icon = Add.Image( "", "icon" );
 	}
 
@@ -37,7 +39,9 @@ public class Ammo : Panel
 		CurrentAmmo.Text = $"{current}";
 		Inventory.Text = $"{inv}";
 		Inventory.SetClass( "active", inv >= 0 );
-		
+		GunName.Text = weapon.Name;
+
+
 		Icon.SetTexture( weapon.GunIcon.ToString() );
 
 		var hash = HashCode.Combine( player, weapon.WeaponDefinition );

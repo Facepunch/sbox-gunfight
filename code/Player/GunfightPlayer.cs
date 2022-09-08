@@ -14,7 +14,7 @@ public partial class GunfightPlayer : Player
 
 	public int ComboKillCount { get; set; } = 0;
 	public TimeSince TimeSinceLastKill { get; set; }
-
+	public bool IsRegen { get; set; }
 	[Net] public PlayerInventory PlayerInventory { get; set; }
 	public new PlayerInventory Inventory => PlayerInventory;
 
@@ -163,9 +163,21 @@ public partial class GunfightPlayer : Player
 		SimulateWeapons( cl );
 
 		if ( TimeSinceDamage > 5f )
-        {
+		{
 			PassiveHeal();
-        }
+			if ( Health != MaxHealth )
+			{
+				IsRegen = true;
+			}
+			else
+			{
+				IsRegen = false;
+			}
+		}
+		else
+		{
+			IsRegen = false;
+		}
 	}
 
 	protected void PassiveHeal()

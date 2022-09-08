@@ -181,24 +181,18 @@ vitals {
 
         &.low {
             box-shadow: none;
-            animation-name: lowammo;
-            animation-duration: 1s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
 
-            label {
+            .currentammo {
                 color: red;
+                animation-name: lowammo;
+                animation-duration: 1s;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
             }
 
             .bullet {
                 background-color: red;
             }
-
-            .icon {
-                background-image-tint: red;
-            }
-
-            border-right: 2px solid rgba(red 0.5);
         }
     }
 }
@@ -315,6 +309,26 @@ healthhud, armourhud {
 
         .innerBar {
             background-color: $theme-color;
+        }
+    }
+
+    &.regen {
+        .text {
+            color: #00eee0;
+        }
+
+        .innerBar {
+            background-color: rgba(#00eee0 1);
+        }
+    }
+
+    &.low {
+        .text {
+            color: #ff9f9f;
+        }
+
+        .innerBar {
+            background-color: rgba(255 0 0 1);
         }
     }
 

@@ -419,7 +419,7 @@ public partial class GunfightWeapon : BaseWeapon
 		// get the muzzle position on our effect entity - either viewmodel or world model
 		var pos = EffectEntity.GetAttachment( "muzzle" ) ?? Transform;
 
-		var system = Particles.Create( "particles/gameplay/guns/trail/trail_smoke.vpcf" );
+		var system = Particles.Create( WeaponDefinition.ShootTrailParticleEffect ?? "particles/gameplay/guns/trail/trail_smoke.vpcf" );
 		system?.SetPosition( 0, pos.Position );
 		system?.SetPosition( 1, hitPosition );
 		system?.SetPosition( 2, dist );

@@ -47,7 +47,8 @@ public partial class CrosshairRender
 		draw.Line( thickness, center + Vector2.Up * gap, center + Vector2.Up * (length + gap) );
 		draw.Line( thickness, center - Vector2.Up * gap, center - Vector2.Up * (length + gap) );
 
-		if ( lastReload <= 1f )
+		var reload = lastReload.Clamp( 0, 1 );
+		if ( reload < 1f && reload > 0f )
 		{
 			draw.BlendMode = BlendMode.Normal;
 			draw.Color = Color.Black.WithAlpha( 0.3f );

@@ -191,6 +191,7 @@ public partial class ViewModel : BaseViewModel
 			// Sliding
 			Rotation *= Rotation.From( SlideAngleOffset * slideLerp );
 			ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
+			camSetup.Rotation *= Rotation.From( new Angles( -1f, 0, -3f ) * slideLerp );
 
 			// Vertical Look
 			var lookDownDot = camSetup.Rotation.Forward.Dot( Vector3.Down );

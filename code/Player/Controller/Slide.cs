@@ -119,13 +119,13 @@ public partial class Slide : BaseNetworkable
 		var slopeDir = Vector3.Cross( Vector3.Up, Vector3.Cross( Vector3.Up, ctrl.GroundNormal ) );
 		var dot = Vector3.Dot( ctrl.Velocity.Normal, slopeDir );
 		var slopeForward = Vector3.Cross( ctrl.GroundNormal, ctrl.Pawn.Rotation.Right );
-		var spdGain = 2000f;
+		var spdGain = 4000f;
 
 		if ( dot > 0.15f )
 			spdGain *= 0.8f * SlideIntensity;
 		else if ( dot < -0.15f )
 		{
-			spdGain *= 1.5f;
+			spdGain *= 1.2f;
 			Activated = 0;
 		}
 		else

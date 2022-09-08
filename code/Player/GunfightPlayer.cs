@@ -5,7 +5,7 @@ public partial class GunfightPlayer : Player
 	TimeSince timeSinceDropped;
 
 	[Net]
-	public float Armour { get; set; } = 0;
+	public float Armour { get; set; } = 25;
 
 	[Net]
 	public float MaxHealth { get; set; } = 100;

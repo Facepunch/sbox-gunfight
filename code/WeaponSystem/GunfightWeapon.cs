@@ -394,6 +394,11 @@ public partial class GunfightWeapon : BaseWeapon
 			{
 				tr.Surface.DoBulletImpact( tr );
 
+				if ( tr.Distance > 200 )
+				{
+					CreateTracerEffect( tr.EndPosition, tr.Distance );
+				}
+
 				if ( !IsServer ) continue;
 				if ( !tr.Entity.IsValid() ) continue;
 
@@ -405,6 +410,18 @@ public partial class GunfightWeapon : BaseWeapon
 				tr.Entity.TakeDamage( damageInfo );
 			}
 		}
+	}
+	
+	[ClientRpc]
+	public void CreateTracerEffect( Vector3 hitPosition, float dist )
+	{
+		// get the muzzle position on our effect entity - either viewmodel or world model
+		var pos = EffectEntity.GetAttachment( "muzzle" ) ?? Transform;
+
+		var system = Particles.Create( "particles/gameplay/guns/trail/trail_smoke.vpcf" );
+		system?.SetPosition( 0, pos.Position );
+		system?.SetPosition( 1, hitPosition );
+		system?.SetPosition( 2, dist );
 	}
 
 	public bool TakeAmmo( int amount )

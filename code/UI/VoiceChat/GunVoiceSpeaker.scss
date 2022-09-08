@@ -1,0 +1,14 @@
+
+gunvoicespeaker {
+    position: absolute;
+    bottom: 2%;
+    right: 5%;
+    opacity: 0.0;
+    font-family: "material icons";
+    font-size: 48px;
+    color: #fbf1c7;
+
+    &.active {
+        opacity: 1.0;
+    }
+}

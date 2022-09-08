@@ -23,7 +23,8 @@ public class HudRootPanel : RootPanel
 		AddChild<ChatBox>();
 		AddChild<KillFeed>();
 		Scoreboard = AddChild<Scoreboard>();
-		AddChild<VoiceList>();
+		AddChild<GunVoiceList>();
+		AddChild<GunVoiceSpeaker>();
 	}
 
 	protected override void UpdateScale( Rect screenSize )

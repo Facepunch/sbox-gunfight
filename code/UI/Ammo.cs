@@ -37,11 +37,8 @@ public class Ammo : Panel
 		CurrentAmmo.Text = $"{current}";
 		Inventory.Text = $"{inv}";
 		Inventory.SetClass( "active", inv >= 0 );
-		Log.Info( weapon.GunIcon.ToString() );
 		
 		Icon.SetTexture( weapon.GunIcon.ToString() );
-
-
 
 		var hash = HashCode.Combine( player, weapon.WeaponDefinition );
 		if ( weaponHash != hash )

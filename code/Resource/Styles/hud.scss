@@ -22,21 +22,20 @@ HudRootPanel
     }
 }
 
-vitals
-{
+vitals {
     font-size: 64px;
     color: #ff0;
     font-family: Oswald-Light;
 
-    label
-    {
-        &.danger
-        {
+    label {
+
+        &.danger {
             color: #f00;
             text-shadow: 0px 0px 10px #f005;
         }
     }
 }
+
 
 .dm_pistol .icon
 {
@@ -80,7 +79,7 @@ vitals
 
 .bottom-left {
     left: 150px;
-    flex-direction: row-reverse;
+    flex-direction: column;
 }
 
 .bottom-right {
@@ -170,16 +169,11 @@ vitals
 healthhud, armourhud {
     padding: 6px;
     font-size: 32px;
-    font-weight: bolder;
-    background-color: rgba(#3c3836 0.2);
-    color: $theme-color;
-    border-right: 2px solid rgba(#fbf1c7 0.5);
     min-width: 100px;
     text-align: center;
     align-items: center;
-    border-radius: 0px;
     font-family: Quantico-Regular;
-    font-weight: 900;
+    min-width: 105px;
 }
 .ammobar,.currentammo {
     padding: 6px;
@@ -212,12 +206,59 @@ iconpanel
     font-family: "Material Icons";
 }
 
-healthhud, armourhud
-{
-    iconpanel
-    {
-        flex-grow: 1;
-        text-align: left;
+healthhud, armourhud {
+    margin-bottom: 6px;
+
+    hudbar {
+        width: 150px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0;
+    }
+
+    .outerbar {
+        background-color: rgba( $theme-color .2);
+        position: absolute;
+        border-radius: 0;
+        left: 0;
+        top: -6px;
+        right: 0;
+        width: 150px;
+        height: 6px;
+
+        .innerBar {
+            border-radius: 0;
+        }
+    }
+
+    .icon {
+        color: $theme-color;
+    }
+
+    .text {
+        min-width: 100px;
+        left: 50px;
+    }
+
+    .health {
+        background-color: rgba(#3c3836 0.2);
+        color: $theme-color;
+        border-right: 2px solid rgba(#fbf1c7 0.5);
+
+        .innerBar {
+            background-color: rgba(0 170 20 1);
+        }
+    }
+
+    .armour {
+        background-color: rgba(#3c3836 0.2);
+        color: $theme-color;
+        border-right: 2px solid rgba(#fbf1c7 0.5);
+
+        .innerBar {
+            background-color: rgba(#458588 1);
+        }
     }
 }
 

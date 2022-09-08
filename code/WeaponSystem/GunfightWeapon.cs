@@ -6,7 +6,7 @@ public enum FireMode
 {
 	Semi,
 	FullAuto,
-	Burst 
+	Burst
 }
 
 public partial class GunfightWeapon : BaseWeapon
@@ -30,6 +30,7 @@ public partial class GunfightWeapon : BaseWeapon
 
 	public float LowAmmoFraction => 0.2f;
 	public bool IsLowAmmo() => (AmmoClip / (float)ClipSize) <= LowAmmoFraction;
+	public bool IsUnlimitedAmmo() => AmmoClip == 0 && ClipSize == 0;
 
 	public new string Name => WeaponDefinition?.WeaponName ?? base.Name;
 	public string ShortName => WeaponDefinition.WeaponShortName;
@@ -48,6 +49,7 @@ public partial class GunfightWeapon : BaseWeapon
 	public float BulletDamage => WeaponDefinition.BulletDamage;
 	public float BulletSize => WeaponDefinition.BulletSize;
 	public int BulletCount => WeaponDefinition.BulletCount;
+	public float BulletRange => WeaponDefinition.BulletRange;
 	public string GunIcon => WeaponDefinition.Icon;
 	public float PostSprintAttackDelay => 0.15f;
 
@@ -99,11 +101,10 @@ public partial class GunfightWeapon : BaseWeapon
 
 	public virtual void Reload()
 	{
-		if ( IsReloading )
-			return;
+		if ( IsUnlimitedAmmo() ) return;
+		if ( IsReloading ) return;
 
-		if ( AmmoClip >= ClipSize )
-			return;
+		if ( AmmoClip >= ClipSize ) return;
 
 		TimeSinceReload = 0;
 
@@ -297,7 +298,7 @@ public partial class GunfightWeapon : BaseWeapon
 	{
 		TimeSincePrimaryAttack = 0;
 
-		if ( !TakeAmmo( 1 ) )
+		if ( !IsUnlimitedAmmo() && !TakeAmmo( 1 ) )
 		{
 			if ( Input.Pressed( InputButton.PrimaryAttack ) )
 			{
@@ -395,7 +396,7 @@ public partial class GunfightWeapon : BaseWeapon
 			// ShootBullet is coded in a way where we can have bullets pass through shit
 			// or bounce off shit, in which case it'll return multiple results
 			//
-			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * 5000, bulletSize ) )
+			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * BulletRange, bulletSize ) )
 			{
 				tr.Surface.DoBulletImpact( tr );
 

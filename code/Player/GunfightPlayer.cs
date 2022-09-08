@@ -322,8 +322,10 @@ public partial class GunfightPlayer : Player
 		if ( timeSinceLastFootstep < 0.18f )
 			return;
 
+		var ctrl = Controller as PlayerController;
+
 		// No footsteps while sliding
-		if ( (Controller as PlayerController).Slide.IsActive )
+		if ( ctrl.Slide.IsActive )
 			return;
 
 		volume *= FootstepVolume();
@@ -336,6 +338,12 @@ public partial class GunfightPlayer : Player
 			.Run();
 
 		if ( !tr.Hit ) return;
+
+		if ( ctrl.IsSprinting )
+		{
+			var sound = PlaySound( "sounds/player/foley/gear/player.walk.gear.sound" );
+			sound.SetVolume( volume * 0.5f );
+		}
 
 		tr.Surface.DoFootstep( this, tr, foot, volume * 20 );
 	}

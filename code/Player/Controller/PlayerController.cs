@@ -128,6 +128,8 @@ public partial class PlayerController : BasePlayerController
 		CheckLadder();
 		Swimming = Pawn.WaterLevel > 0.6f;
 
+		IsSprinting = Input.Down( InputButton.Run ) && Velocity.Length > 0 && Input.Forward > 0f;
+
 		//
 		// Start Gravity
 		//
@@ -277,7 +279,9 @@ public partial class PlayerController : BasePlayerController
 	}
 
 	public virtual bool WishSprinting => Input.Down( InputButton.Run ) && Input.Forward >= 0f;
-	public virtual bool IsSprinting => WishSprinting && Velocity.Length > 0 && Input.Forward > 0f;
+
+	[Net, Predicted]
+	public bool IsSprinting { get; set; }
 
 	public virtual float GetWishSpeed()
 	{

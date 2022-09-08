@@ -124,13 +124,13 @@
 					m_spline = 
 					[
 						{
-							x = 0.0
+							x = 2.894152
 							y = 0.0
-							m_flSlopeIncoming = 0.39964
-							m_flSlopeOutgoing = 0.39964
+							m_flSlopeIncoming = 0.342034
+							m_flSlopeOutgoing = 0.342034
 						},
 						{
-							x = 5.004504
+							x = 8.741521
 							y = 2.0
 							m_flSlopeIncoming = 0.0
 							m_flSlopeOutgoing = 0.0
@@ -138,8 +138,8 @@
 						{
 							x = 10.001
 							y = 0.0
-							m_flSlopeIncoming = -0.400281
-							m_flSlopeOutgoing = -0.400281
+							m_flSlopeIncoming = -1.587958
+							m_flSlopeOutgoing = -1.587958
 						},
 					]
 					m_tangents = 

@@ -67,6 +67,7 @@ public class Ammo : Panel
 		for ( int i = 0; i < BulletPanels.Count; i++ )
 		{
 			BulletPanels[i].SetClass( "empty", i >= weapon.AmmoClip );
+			BulletPanels[i].SetClass( "anim", i >= weapon.AmmoClip );
 		}
 	}
 }

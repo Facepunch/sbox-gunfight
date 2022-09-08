@@ -129,14 +129,14 @@ vitals {
                 flex-grow: 1;
                 background-color: $theme-color;
                 margin-left: 2px;
-                transition: all 0.1s ease-out;
+                transition: all 0.25s ease-out;
                 min-height: 8px;
+
 
                 &.empty {
                     background-color: $theme-color;
-                    opacity: 0.04;
+                    opacity: 0.0;
                     box-shadow: none;
-
                 }
             }
 
@@ -159,6 +159,16 @@ vitals {
                 margin-left: 5px;
                 border-radius: 2px 2px 1px 1px;
             }
+
+            .anim {
+                background-color: $theme-color;
+                opacity: 0.04;
+                box-shadow: none;
+                animation-name: spentbullet;
+                animation-duration: .5s;
+                animation-timing-function: linear;
+                animation-iteration-count: 1;
+            }
         }
 
         label {
@@ -177,6 +187,21 @@ vitals {
             font-weight: bolder;
             color: $theme-color;
         }
+    }
+}
+
+@keyframes spentbullet {
+    0% {
+        transform: scale( 1 );
+    }
+    50% {
+        transform: scale( 2 );
+        transform: rotate( -360deg ) translateY( 150 ) translateX( -10 );
+    }
+
+    100% {
+        transform: scale( 1 );
+
     }
 }
 

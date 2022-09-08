@@ -40,6 +40,8 @@ public class Ammo : Panel
 		
 		Icon.SetTexture( weapon.GunIcon.ToString() );
 
+		SetClass( "low", weapon.IsLowAmmo() );
+
 		var hash = HashCode.Combine( player, weapon.WeaponDefinition );
 		if ( weaponHash != hash )
 		{

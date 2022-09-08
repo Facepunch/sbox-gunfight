@@ -5,7 +5,7 @@ public partial class GunfightPlayer : Player
 	TimeSince timeSinceDropped;
 
 	[Net]
-	public float Armour { get; set; } = 0;
+	public float Armour { get; set; } = 25;
 
 	[Net]
 	public float MaxHealth { get; set; } = 100;
@@ -320,6 +320,10 @@ public partial class GunfightPlayer : Player
 			return;
 
 		if ( timeSinceLastFootstep < 0.18f )
+			return;
+
+		// No footsteps while sliding
+		if ( (Controller as PlayerController).Slide.IsActive )
 			return;
 
 		volume *= FootstepVolume();

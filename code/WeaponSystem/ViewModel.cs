@@ -10,6 +10,9 @@ public partial class ViewModel : BaseViewModel
 	protected WeaponDefinition WeaponDef => Weapon?.WeaponDefinition;
 	protected ViewModelSetup Setup => WeaponDef?.ViewModelSetup ?? default;
 
+	float TimeSincePrimaryAttack => ( Weapon as GunfightWeapon ).TimeSincePrimaryAttack;
+	float PrimaryAttackReturn => 0.2f;
+
 	// Data
 	float MouseScale => Setup.OverallWeight;
 	float ReturnForce => Setup.WeightReturnForce;
@@ -103,7 +106,7 @@ public partial class ViewModel : BaseViewModel
 
 		LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 7f );
 		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );
-		LerpTowards( ref slideLerp, sliding && !aim ? 1 : 0, 7f );
+		LerpTowards( ref slideLerp, sliding && !aim ? (TimeSincePrimaryAttack.Remap( 0, 0.2f, 0, 1 ).Clamp( 0, 1 )) : 0, 7f );
 		LerpTowards( ref airLerp, isGrounded ? 0 : 1, 10f );
 
 		bobSpeed *= 1 - sprintLerp * 0.25f;
@@ -188,6 +191,7 @@ public partial class ViewModel : BaseViewModel
 			// Sliding
 			Rotation *= Rotation.From( SlideAngleOffset * slideLerp );
 			ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
+			camSetup.Rotation *= Rotation.From( new Angles( -1f, 0, -3f ) * slideLerp );
 
 			// Vertical Look
 			var lookDownDot = camSetup.Rotation.Forward.Dot( Vector3.Down );

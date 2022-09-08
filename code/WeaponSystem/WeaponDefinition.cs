@@ -108,6 +108,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Shooting" )]
 	public bool AimingDisabled { get; set; }
 
+	[Category( "Shooting" )]
+	public float BulletRange { get; set; } = 5000f;
+
 	[Category( "Ammo" )]
 	public AmmoType AmmoType { get; set; } = AmmoType.Pistol;
 

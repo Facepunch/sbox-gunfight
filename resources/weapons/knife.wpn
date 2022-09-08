@@ -5,29 +5,30 @@
 		WeaponName = "Knife"
 		WeaponShortName = "knife"
 		Slot = "Melee"
-		HoldType = "MeleeWeapons"
+		HoldType = "MeleePunch"
 		Model = resource:"models/knife/w_knife.vmdl"
 		ViewModel = resource:"models/knife/fp_knife.vmdl"
 		Icon = resource:"ui/weapons/knife.png"
-		BaseFireRate = 0.2
-		DefaultFireMode = "Semi"
+		BaseFireRate = 0.5
+		DefaultFireMode = "FullAuto"
 		SupportedFireModes = 
 		[
-			"Semi",
+			"FullAuto",
 		]
 		BulletSpread = 0.1
 		BulletForce = 1.5
-		BulletDamage = 12
+		BulletDamage = 25
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
-		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
+		BulletRange = 128
+		FireSound = ""
 		DryFireSound = ""
-		AimingDisabled = false
+		AimingDisabled = true
 		AmmoType = "None"
-		ClipSize = 7
-		StandardClip = 7
-		ReloadTime = 2
+		ClipSize = 0
+		StandardClip = 0
+		ReloadTime = 0
 		ReloadSingle = false
 		Crosshair = "Default"
 		ViewModelSetup = 

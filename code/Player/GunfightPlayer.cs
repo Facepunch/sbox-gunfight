@@ -161,7 +161,18 @@ public partial class GunfightPlayer : Player
 		TickPlayerUse();
 		SimulateView();
 		SimulateWeapons( cl );
+
+		if ( TimeSinceDamage > 5f )
+        {
+			PassiveHeal();
+        }
 	}
+
+	protected void PassiveHeal()
+    {
+		Health += 10f * Time.Delta;
+		Health = Health.Clamp( 0, MaxHealth );
+    }
 
 	public void SwitchToBestWeapon()
 	{
@@ -258,6 +269,8 @@ public partial class GunfightPlayer : Player
 			}
 		}
 
+		TimeSinceDamage = 0;
+
 		if ( info.Attacker is GunfightPlayer attacker )
 		{
 			if ( attacker != this )
@@ -294,12 +307,11 @@ public partial class GunfightPlayer : Player
 		HitIndicator.Current?.OnHit( pos, amount, isHeadshot );
 	}
 
-	public TimeSince TimeSinceDamage = 1.0f;
+	[Net, Predicted] public TimeSince TimeSinceDamage { get; set; }
 
 	[ClientRpc]
 	public void TookDamage( Vector3 pos, bool headshot = false )
 	{
-		TimeSinceDamage = 0;
 		DamageIndicator.Current?.OnHit( pos, headshot );
 	}
 

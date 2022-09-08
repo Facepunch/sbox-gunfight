@@ -23,6 +23,7 @@ public partial class Slide : BaseNetworkable
 
 	protected void OnActiveChanged( bool _, bool isSliding )
 	{
+		if ( Controller == null ) return;
 		if ( isSliding )
 			StartSliding( Controller );
 		else

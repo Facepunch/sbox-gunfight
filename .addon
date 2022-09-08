@@ -17,9 +17,9 @@
     "MaxPlayers": 16,
     "MinPlayers": 1,
     "GameNetworkType": "Multiplayer",
-    "MapSelect": "Official",
+    "MapSelect": "Unrestricted",
     "MapList": [
-      "testmap_fight"
+      "baks.training_arena"
     ],
     "RankType": "None",
     "PerMapRanking": false,

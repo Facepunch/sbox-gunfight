@@ -263,6 +263,8 @@ public partial class PlayerController : BasePlayerController
 
 		SinceLastHitGround = 0;
 
+		Pawn.PlaySound( "sounds/player/foley/gear/player.walk.gear.sound" );
+
 		if ( bigFall ) 
 			return;
 
@@ -446,6 +448,8 @@ public partial class PlayerController : BasePlayerController
 
 		Velocity = Velocity.WithZ( startz + flMul * flGroundFactor );
 		Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
+		
+		Pawn.PlaySound( "sounds/player/foley/gear/player.jump.gear.sound" );
 
 		AddEvent( "jump" );
 	}

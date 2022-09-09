@@ -1,20 +1,20 @@
 $theme-color: #fbf1c7;
+
 inputhint {
     align-items: center;
     height: 32px;
-    display: flex;
 
     .glyph {
         background-size: contain;
         background-repeat: no-repeat;
-        background-image-tint: $theme-color;
     }
 
     .action {
         margin-left: 8px;
         margin-bottom: 2px;
         font-size: 16px;
-        color: #FAB002;
+        font-family: Quantico-Regular;
+        color: white;
         font-weight: bold;
         text-shadow: 0px 0px 2px black;
     }
@@ -43,9 +43,5 @@ inputhint {
         .action {
             display: none;
         }
-    }
-
-    &.hide {
-        display: none;
     }
 }

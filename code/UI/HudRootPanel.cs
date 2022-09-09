@@ -25,6 +25,7 @@ public class HudRootPanel : RootPanel
 		Scoreboard = AddChild<Scoreboard>();
 		AddChild<GunVoiceList>();
 		AddChild<GunVoiceSpeaker>();
+		AddChild<HudHints>();
 	}
 
 	protected override void UpdateScale( Rect screenSize )

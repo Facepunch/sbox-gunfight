@@ -8,7 +8,7 @@ class InventoryIcon : Panel
 	public GunfightWeapon Weapon;
 	public Image Icon;
 	public Label Value;
-	public InputHint Hint;
+	public Label Hint;
 
 	// TODO - Do this in Inventory
 	public InputButton ButtonFromSlot( WeaponSlot slot )
@@ -27,8 +27,8 @@ class InventoryIcon : Panel
 		Weapon = weapon;
 		Icon = Add.Image( "", "icon" );
 		Value = Add.Label( $"0", "ammocount");
-		Hint = AddChild<InputHint>( "hint" );
-		Hint.SetButton( ButtonFromSlot( weapon.Slot ) );
+		Hint = AddChild<Label>( "hint" );
+		Hint.Text = Input.GetButtonOrigin( ButtonFromSlot( weapon.Slot ) );
 		AddClass( weapon.ClassName );
 	}
 

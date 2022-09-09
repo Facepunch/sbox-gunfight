@@ -37,8 +37,8 @@ inventoryicon {
 		opacity: .1;
 		background-image-tint: $theme-color;
 		transform: scale( .75 );
-		bottom:10px;
-		left:5px;
+		bottom: 10px;
+		left: 5px;
 	}
 
 	.ammocount {
@@ -54,7 +54,10 @@ inventoryicon {
 
 	.hint {
 		position: absolute;
-		left: 70px;
+		left: 76px;
+		width: 30px;
+		color: rgba( $theme-color, 0.8 );
+		font-family: Quantico-Regular;
 	}
 
 

@@ -10,17 +10,15 @@ class InventoryIcon : Panel
 	public Label Value;
 	public InputHint Hint;
 
-	public InputButton FromBucket( int bucket )
+	// TODO - Do this in Inventory
+	public InputButton ButtonFromSlot( WeaponSlot slot )
 	{
-		return bucket switch
+		return slot switch
 		{
-			0 => InputButton.Slot1,
-			1 => InputButton.Slot2,
-			2 => InputButton.Slot3,
-			3 => InputButton.Slot4,
-			4 => InputButton.Slot5,
-			5 => InputButton.Slot6,
-			_ => InputButton.Slot0,
+			WeaponSlot.Primary => InputButton.Slot1,
+			WeaponSlot.Secondary => InputButton.Slot2,
+			WeaponSlot.Melee => InputButton.Slot3,
+			_ => InputButton.Slot4
 		};
 	}
 
@@ -30,8 +28,7 @@ class InventoryIcon : Panel
 		Icon = Add.Image( "", "icon" );
 		Value = Add.Label( $"0", "ammocount");
 		Hint = AddChild<InputHint>( "hint" );
-		Hint.SetButton( FromBucket( (int)weapon.Slot ) );
-
+		Hint.SetButton( ButtonFromSlot( weapon.Slot ) );
 		AddClass( weapon.ClassName );
 	}
 

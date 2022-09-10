@@ -18,35 +18,36 @@ public partial class SlideMechanic : BaseMoveMechanic
 
 	protected override void OnActiveChanged( bool before, bool after )
 	{
+		if ( Host.IsServer ) return;
 		if ( Controller == null ) return;
 
 		if ( after )
-			StartSliding( Controller );
+			StartSliding();
 		else
-			StopSliding( Controller );
+			StopSliding();
 	}
 
 	public Particles SlidingParticles { get; set; }
 	public Sound SlidingSound { get; set; }
 
-	protected void StartSliding( PlayerController ctrl )
+	protected void StartSliding()
 	{
 		Host.AssertClient();
 
 		SlidingParticles?.Destroy( true );
-		SlidingParticles = Particles.Create( "particles/gameplay/player/slide/slide.vpcf", ctrl.Pawn, true );
+		SlidingParticles = Particles.Create( "particles/gameplay/player/slide/slide.vpcf", Controller.Pawn, true );
 
 		SlidingSound.Stop();
-		SlidingSound = Sound.FromEntity( "sounds/player/foley/slide/ski.loop.sound", ctrl.Pawn );
+		SlidingSound = Sound.FromEntity( "sounds/player/foley/slide/ski.loop.sound", Controller.Pawn );
 	}
 
-	protected void StopSliding( PlayerController ctrl )
+	protected void StopSliding()
 	{
 		Host.AssertClient();
 
 		SlidingParticles?.Destroy( true );
 		SlidingSound.Stop();
-		Sound.FromEntity( "sounds/player/foley/slide/ski.stop.sound", ctrl.Pawn );
+		Sound.FromEntity( "sounds/player/foley/slide/ski.stop.sound", Controller.Pawn );
 	}
 
 	protected bool ShouldSlide()
@@ -101,6 +102,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 		Controller.Velocity += spdGain * slopeForward * Time.Delta;
 
 		var map = spdGain.Remap( 0, 3000f, 0, 1 );
+		
 		_ = new ScreenShake.Perlin( 0.3f, 0.1f, 0.2f * map );
 
 		Controller.SetTag( "sliding" );

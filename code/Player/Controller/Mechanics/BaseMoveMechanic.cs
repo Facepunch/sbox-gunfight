@@ -4,10 +4,22 @@ namespace Facepunch.Gunfight;
 
 public partial class BaseMoveMechanic : BaseNetworkable
 {
-	[Net, Change( "Net_OnActiveChanged" )] public bool IsActive { get; protected set; }
+	private bool isActive;
+	public bool IsActive
+	{
+		get => isActive;
+		set
+		{
+			var before = isActive;
+			isActive = value;
+			
+			if ( isActive != before )
+				OnActiveChanged( before, isActive );
+		}
+	}
 	public virtual bool AlwaysSimulate => false;
 	public virtual bool TakesOverControl => false;
-	[Net, Predicted] public TimeSince TimeSinceActivate { get; protected set; }
+	public TimeSince TimeSinceActivate { get; protected set; }
 
 	private PlayerController ctrl;
 	protected PlayerController Controller

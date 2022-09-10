@@ -23,18 +23,23 @@ public partial class PlayerController : BasePlayerController
 	[Net, Predicted] public bool cachedSprint { get; set; }
 	[Net, Predicted] public TimeSince SinceStoppedSprinting { get; set; }
 
-	[Net, Predicted] public Slide Slide { get; set; }
-	[Net, Predicted] public Duck Duck { get; set; }
+	public SlideMechanic Slide => GetMechanic<SlideMechanic>();
+	public DuckMechanic Duck => GetMechanic<DuckMechanic>();
+
+	[Net] public IList<BaseMoveMechanic> Mechanics { get; set; }
+	public BaseMoveMechanic CurrentMechanic => Mechanics.FirstOrDefault( x => x.IsActive );
 
 	public PlayerController()
 	{
-		if ( Host.IsServer )
-		{
-			Duck = new();
-			Slide = new();
-		}
-
 		SinceStoppedSprinting = -1;
+
+		Mechanics.Add( new SlideMechanic( this ) );
+		Mechanics.Add( new DuckMechanic( this ) );
+	}
+
+	public T GetMechanic<T>() where T : BaseMoveMechanic
+	{
+		return Mechanics.FirstOrDefault( x => x is T ) as T;
 	}
 
 	/// <summary>
@@ -75,8 +80,7 @@ public partial class PlayerController : BasePlayerController
 		var mins = new Vector3( -girth, -girth, 0 ) * Pawn.Scale;
 		var maxs = new Vector3( +girth, +girth, BodyHeight ) * Pawn.Scale;
 
-		Duck.UpdateBBox( ref mins, ref maxs, Pawn.Scale );
-		Slide.UpdateBBox( ref mins, ref maxs, Pawn.Scale );
+		CurrentMechanic?.UpdateBBox( ref mins, ref maxs, Pawn.Scale );
 
 		SetBBox( mins, maxs );
 	}
@@ -97,15 +101,12 @@ public partial class PlayerController : BasePlayerController
 
 	protected float GetEyeHeight()
 	{
-		if ( Duck.IsActive ) return 32f;
-		if ( Slide.IsActive ) return 58f;
-
-		return 64f;
+		return CurrentMechanic?.GetEyeHeight() ?? 64;
 	}
 
 	protected float GetGroundFriction()
 	{
-		return 8f;
+		return CurrentMechanic?.GetGroundFriction() ?? 8f;
 	}
 
 	public override void Simulate()
@@ -192,9 +193,6 @@ public partial class PlayerController : BasePlayerController
 			WishVelocity *= speedMult;
 		}
 
-		Duck.PreTick( this );
-		Slide.PreTick( this );
-
 		bool bStayOnGround = false;
 		if ( Swimming )
 		{
@@ -252,6 +250,46 @@ public partial class PlayerController : BasePlayerController
 			DebugOverlay.ScreenText( $"    Slide: {Slide?.IsActive ?? false}", lineOffset + 6 );
 			DebugOverlay.ScreenText( $"    Duck: {Duck?.IsActive ?? false}", lineOffset + 7 );
 		}
+
+		SimulateMechanics();
+	}
+
+	protected void SimulateMechanics()
+	{
+		foreach ( var mechanic in Mechanics )
+		{
+			if ( mechanic.IsActive || mechanic.AlwaysSimulate )
+			{
+				mechanic.PreSimulate();
+			}
+		}
+
+		var current = CurrentMechanic;
+		// Try to find a mechanic to activate
+		if ( current == null )
+		{
+			current = Mechanics.FirstOrDefault( x => x.Try() );
+		}
+
+		bool hasSimulated = false;
+		if ( current != null && current.TakesOverControl )
+		{
+			current.Simulate();
+			hasSimulated = true;
+		}
+
+		foreach ( var mechanic in Mechanics )
+		{
+			if ( mechanic.IsActive || mechanic.AlwaysSimulate )
+			{
+				if ( !hasSimulated )
+				{
+					mechanic.Simulate();
+				}
+
+				mechanic.PostSimulate();
+			}
+		}
 	}
 
 	[Net, Predicted] public TimeSince SinceLastHitGround { get; set; }
@@ -285,11 +323,8 @@ public partial class PlayerController : BasePlayerController
 
 	public virtual float GetWishSpeed()
 	{
-		var slideSpeed = Slide.GetWishSpeed();
-		if ( slideSpeed >= 0 ) return slideSpeed;
-
-		var ws = Duck.GetWishSpeed();
-		if ( ws >= 0 ) return ws;
+		var mechanicSpeed = CurrentMechanic?.GetWishSpeed();
+		if ( mechanicSpeed != null ) return mechanicSpeed.Value;
 
 		if ( IsSprinting ) return SprintSpeed;
 		if ( Input.Down( InputButton.Walk ) ) return WalkSpeed;
@@ -372,12 +407,6 @@ public partial class PlayerController : BasePlayerController
 	/// </summary>
 	public virtual void Accelerate( Vector3 wishdir, float wishspeed, float speedLimit, float acceleration )
 	{
-		if ( Slide.IsActive )
-		{
-			Slide.Accelerate( this, ref wishdir, ref wishspeed, ref speedLimit, ref acceleration );
-			return;
-		}
-
 		if ( speedLimit > 0 && wishspeed > speedLimit )
 			wishspeed = speedLimit;
 
@@ -457,7 +486,6 @@ public partial class PlayerController : BasePlayerController
 		Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
 		
 		Pawn.PlaySound( "sounds/player/foley/gear/player.jump.gear.sound" );
-
 		AddEvent( "jump" );
 	}
 

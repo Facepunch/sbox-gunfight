@@ -47,7 +47,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 			vaultingFromGround = Controller.GroundEntity != null;
 			timeSinceVault = 0;
 			vaultStart = Controller.Position;
-			vaultEnd = Controller.Position.WithZ( floorTrace.EndPosition.z + 10 ) + Controller.Rotation.Forward * Controller.BodyGirth;
+			vaultEnd = Controller.Position.WithZ( floorTrace.EndPosition.z + 10 ) + Controller.Rotation.Forward * ( Controller.BodyGirth * 0.5f );
 			Controller.Velocity = Controller.Velocity.WithZ( 0 );
 		}
 
@@ -61,8 +61,6 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 		return CanActivate( true );
 	}
 
-
-	bool reachedVertically = false;
 	public override void Simulate()
 	{
 		base.Simulate();
@@ -77,14 +75,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 		if ( timeSinceVault <= vaultTime + Time.Delta )
 		{
 			var a = timeSinceVault / vaultTime;
-			reachedVertically = Controller.Position.z.AlmostEqual( vaultEnd.z, 1 );
-
-			if ( reachedVertically )
-				Controller.Position = Vector3.Lerp( vaultStart, vaultEnd, a, false );
-			else
-				Controller.Position = Vector3.Lerp( vaultStart, vaultStart.WithZ(vaultEnd.z), a, false );
-
-
+			Controller.Position = Vector3.Lerp( vaultStart, vaultEnd, a, false );
 			Controller.Velocity = Controller.Velocity.WithZ( 0 );
 			return;
 		}

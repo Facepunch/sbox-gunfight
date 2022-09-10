@@ -1,6 +1,6 @@
 ﻿namespace Facepunch.Gunfight;
 
-public partial class GunfightPlayer : Player
+public partial class GunfightPlayer : Player, IHudMarker
 {
 	TimeSince timeSinceDropped;
 
@@ -185,10 +185,10 @@ public partial class GunfightPlayer : Player
 	}
 
 	protected void PassiveHeal()
-    {
+	{
 		Health += 10f * Time.Delta;
 		Health = Health.Clamp( 0, MaxHealth );
-    }
+	}
 
 	public void SwitchToBestWeapon()
 	{
@@ -312,7 +312,7 @@ public partial class GunfightPlayer : Player
 	[ClientRpc]
 	public void DidDamage( Vector3 pos, float amount, float healthinv, bool isHeadshot )
 	{
-		if(isHeadshot)
+		if ( isHeadshot )
 		{
 			Sound.FromScreen( "ui.hit" ).SetPitch( 1.25f );
 		}

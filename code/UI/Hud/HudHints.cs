@@ -17,6 +17,7 @@ public partial class HudHints : Panel
 		if ( !player.IsValid() ) return;
 
 		var controller = player.Controller as PlayerController;
+		if ( controller == null ) return;
 
 		VaultHint.SetClass( "show", controller.Vault.CanActivate( false ) );
 

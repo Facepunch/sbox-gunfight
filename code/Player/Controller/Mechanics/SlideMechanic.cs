@@ -12,9 +12,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 	public float SlideIntensity => 1 - (TimeSinceActivate / BoostTime);
 
 	public SlideMechanic() { }
-	public SlideMechanic( PlayerController controller ) : base( controller )
-	{
-	}
+	public SlideMechanic( PlayerController ctrl ) : base( ctrl ) { }
 
 	protected override void OnActiveChanged( bool before, bool after )
 	{

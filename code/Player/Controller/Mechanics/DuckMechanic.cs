@@ -7,9 +7,7 @@ public partial class DuckMechanic : BaseMoveMechanic
 	public override bool TakesOverControl => true;
 
 	public DuckMechanic() { }
-	public DuckMechanic( PlayerController controller ) : base( controller )
-	{
-	}
+	public DuckMechanic( PlayerController ctrl ) : base( ctrl ) { }
 
 	protected override bool TryActivate()
 	{

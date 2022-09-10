@@ -101,6 +101,9 @@ public partial class GunfightPlayer : Player
 		{
 			child.EnableDrawing = false;
 		}
+
+		// Inform the active gamemode
+		GamemodeEntity.Current?.OnPlayerKilled( this, LastDamage );
 	}
 
 	protected void SimulateView()

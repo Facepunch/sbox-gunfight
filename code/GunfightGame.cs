@@ -9,6 +9,8 @@ namespace Facepunch.Gunfight;
 
 partial class GunfightGame : Game
 {
+	public static new GunfightGame Current => Game.Current as GunfightGame;
+
 	[Net]
 	GunfightHud Hud { get; set; }
 
@@ -38,32 +40,67 @@ partial class GunfightGame : Game
 		base.PostLevelLoaded();
 	}
 
-	public override void ClientJoined( Client cl )
+	protected void CreatePawn( Client cl )
 	{
-		base.ClientJoined( cl );
+		cl.Pawn?.Delete();
 
-		var player = new GunfightPlayer();
+		var gamemode = GamemodeEntity.Current;
+		GunfightPlayer player;
+
+		if ( gamemode.IsValid() )
+			player = gamemode.GetPawn( cl );
+		else
+			player = new GunfightPlayer();
+
 		player.UpdateClothes( cl );
 		cl.Pawn = player;
 		player.Respawn();
 	}
 
-	public override void MoveToSpawnpoint( Entity pawn )
+	public override void ClientJoined( Client cl )
 	{
+		base.ClientJoined( cl );
+
+		CreatePawn( cl );
+
+		// Inform the active gamemode
+		GamemodeEntity.Current?.OnClientJoined( cl );
+	}
+
+	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+	{
+		base.ClientDisconnect( cl, reason );
+
+		// Inform the active gamemode
+		GamemodeEntity.Current?.OnClientLeft( cl, reason );
+	}
+
+	public override void MoveToSpawnpoint( Entity entity )
+	{
+		var player = entity as GunfightPlayer;
+		var gamemode = GamemodeEntity.Current;
+
+		var gamemodeTransform = gamemode?.GetSpawn( player );
+		if ( gamemodeTransform is not null )
+		{
+			player.Transform = gamemodeTransform.Value;
+			return;
+		}
+
 		var spawnpoint = Entity.All
 								.OfType<SpawnPoint>()
-								.OrderByDescending( x => SpawnpointWeight( pawn, x ) )
+								.OrderByDescending( x => SpawnpointWeight( player, x ) )
 								.FirstOrDefault();
 
 		//Log.Info( $"chose {spawnpoint}" );
 
 		if ( spawnpoint == null )
 		{
-			Log.Warning( $"Couldn't find spawnpoint for {pawn}!" );
+			Log.Warning( $"Couldn't find spawnpoint for {player}!" );
 			return;
 		}
 
-		pawn.Transform = spawnpoint.Transform;
+		player.Transform = spawnpoint.Transform;
 	}
 
 	/// <summary>
@@ -96,6 +133,14 @@ partial class GunfightGame : Game
 		CameraModifier.Apply( ref camSetup );
 
 		camSetup.ZNear = 5f;
+	}
+
+	public override void Simulate( Client cl )
+	{
+		base.Simulate( cl );
+
+		// Simulate active gamemode
+		GamemodeEntity.Current?.Simulate( cl );
 	}
 
 	public override void FrameSimulate( Client cl )
@@ -142,8 +187,13 @@ partial class GunfightGame : Game
 			postProcess.FilmGrain.Intensity += (1 - healthDelta) * 0.5f;
 
 			Audio.SetEffect( "core.player.death.muffle1", 1 - healthDelta, velocity: 2.0f );
-
 		}
+
+		// Let the gamemode control post process
+		GamemodeEntity.Current?.PostProcessTick( postProcess );
+
+		// Simulate active gamemode
+		GamemodeEntity.Current?.FrameSimulate( cl );
 	}
 
 	public static void Explosion( Entity weapon, Entity owner, Vector3 position, float radius, float damage, float forceScale )

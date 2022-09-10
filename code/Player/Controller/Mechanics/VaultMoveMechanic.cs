@@ -56,7 +56,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-		if ( !Input.Down( InputButton.Jump ) ) return false;
+		if ( !Input.Pressed( InputButton.Jump ) ) return false;
 
 		return CanActivate( true );
 	}
@@ -81,6 +81,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 		}
 
 		IsActive = false;
+		_ = new ScreenShake.Pitch( 0.2f, 1f );
 	}
 
 }

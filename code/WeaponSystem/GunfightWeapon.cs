@@ -267,7 +267,6 @@ public partial class GunfightWeapon : BaseWeapon
 	{
 		if ( !Input.Down( InputButton.PrimaryAttack ) )
 		{
-			DryFire();
 			BurstCount = 0;
 			return false;
 		}

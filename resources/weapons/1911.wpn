@@ -9,7 +9,7 @@
 		Model = resource:"models/m1911/w_m1911.vmdl"
 		ViewModel = resource:"models/m1911/fp_m1911.vmdl"
 		Icon = resource:"ui/weapons/m1911.png"
-		BaseFireRate = 0.2
+		BaseFireRate = 0.15
 		DefaultFireMode = "Semi"
 		SupportedFireModes = 
 		[
@@ -46,7 +46,7 @@
 			GlobalAngleOffset = "-1,0,-2"
 			CrouchPositionOffset = "-3,1,0"
 			CrouchAngleOffset = "2,0,-15"
-			AvoidancePositionOffset = "-15,0,0"
+			AvoidancePositionOffset = "-3,0,0"
 			AvoidanceAngleOffset = "2,0,-25"
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "5,25,0"

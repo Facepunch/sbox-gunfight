@@ -9,7 +9,7 @@
 		Model = resource:"models/mp5/w_mp5.vmdl"
 		ViewModel = resource:"models/mp5/fp_mp5.vmdl"
 		Icon = resource:"ui/weapons/mp5.png"
-		BaseFireRate = 0.08
+		BaseFireRate = 0.07
 		DefaultFireMode = "FullAuto"
 		SupportedFireModes = 
 		[
@@ -19,7 +19,7 @@
 		]
 		BulletSpread = 0.1
 		BulletForce = 1.5
-		BulletDamage = 12
+		BulletDamage = 13
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3

@@ -17,7 +17,7 @@
 			"FullAuto",
 			"Burst",
 		]
-		BulletSpread = 0.1
+		BulletSpread = 0.03
 		BulletForce = 1.5
 		BulletDamage = 13
 		BulletSize = 3
@@ -58,10 +58,10 @@
 		Recoil = 
 		{
 			Decay = "30,50"
-			BaseRecoilMinimum = "-2,4"
-			BaseRecoilMaximum = "2,4"
-			ViewModelScale = 1
-			ViewModelRecoverySpeed = 3
+			BaseRecoilMinimum = "-2.5,6"
+			BaseRecoilMaximum = "2.5,6"
+			ViewModelScale = 0.5
+			ViewModelRecoverySpeed = 5
 		}
 	}
 }

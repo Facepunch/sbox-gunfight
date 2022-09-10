@@ -112,6 +112,21 @@
 							{
 								_class = "AnimFile"
 								name = "Fire"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_PLAYSOUND_POSITION"
+										event_frame = 14
+										event_keys = 
+										{
+											name = "shotgun_pump"
+											stop_on_seq_change = false
+											use_layer_sequence = false
+											tags = ""
+										}
+									},
+								]
 								activity_name = ""
 								activity_weight = 1
 								weight_list_name = "Gun"
@@ -296,6 +311,246 @@
 								end_frame = 27
 								framerate = -1.0
 								take = 1
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "ReloadStart"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "Reload_Start"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_PLAYSOUND_POSITION"
+										event_frame = 4
+										event_keys = 
+										{
+											name = "mp5.move"
+											stop_on_seq_change = false
+											use_layer_sequence = false
+											tags = ""
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_PLAYSOUND_POSITION"
+										event_frame = 12
+										event_keys = 
+										{
+											name = "shotgun_cock"
+											stop_on_seq_change = false
+											use_layer_sequence = false
+											tags = ""
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = "Gun"
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/source/r870/fp_r870.fbx"
+								start_frame = 1
+								end_frame = 20
+								framerate = -1.0
+								take = 7
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "Arms_Reload_Start"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/source/r870/fp_arms_r870.fbx"
+								start_frame = 1
+								end_frame = 20
+								framerate = -1.0
+								take = 7
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "ReloadMid"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "Reload_Middle"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_PLAYSOUND_POSITION"
+										event_frame = 2
+										event_keys = 
+										{
+											name = "mp5.move"
+											stop_on_seq_change = false
+											use_layer_sequence = false
+											tags = ""
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_PLAYSOUND_POSITION"
+										event_frame = 6
+										event_keys = 
+										{
+											name = "shotgun_load"
+											stop_on_seq_change = false
+											use_layer_sequence = false
+											tags = ""
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_PLAYSOUND_POSITION"
+										event_frame = 9
+										event_keys = 
+										{
+											name = "m1911.reload.fow"
+											stop_on_seq_change = false
+											use_layer_sequence = false
+											tags = ""
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = "Gun"
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/source/r870/fp_r870.fbx"
+								start_frame = 1
+								end_frame = 25
+								framerate = 10.0
+								take = 8
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "Arms_Reload_Middle"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/source/r870/fp_arms_r870.fbx"
+								start_frame = 1
+								end_frame = 25
+								framerate = 10.0
+								take = 8
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "ReloadEnd"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "Reload_End"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_PLAYSOUND_POSITION"
+										event_frame = 5
+										event_keys = 
+										{
+											name = "mp5.move"
+											stop_on_seq_change = false
+											use_layer_sequence = false
+											tags = ""
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_PLAYSOUND_POSITION"
+										event_frame = 10
+										event_keys = 
+										{
+											name = "shotgun_cock"
+											stop_on_seq_change = false
+											use_layer_sequence = false
+											tags = ""
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = "Gun"
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/source/r870/fp_r870.fbx"
+								start_frame = 1
+								end_frame = 23
+								framerate = -1.0
+								take = 9
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "Arms_Reload_End"
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								source_filename = "models/source/r870/fp_arms_r870.fbx"
+								start_frame = 1
+								end_frame = 23
+								framerate = -1.0
+								take = 9
 								reverse = false
 							},
 						]

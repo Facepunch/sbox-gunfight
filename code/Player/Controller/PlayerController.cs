@@ -25,6 +25,7 @@ public partial class PlayerController : BasePlayerController
 
 	public SlideMechanic Slide => GetMechanic<SlideMechanic>();
 	public DuckMechanic Duck => GetMechanic<DuckMechanic>();
+	public VaultMoveMechanic Vault => GetMechanic<VaultMoveMechanic>();
 
 	[Net] public IList<BaseMoveMechanic> Mechanics { get; set; }
 	public BaseMoveMechanic CurrentMechanic => Mechanics.FirstOrDefault( x => x.IsActive );
@@ -33,6 +34,7 @@ public partial class PlayerController : BasePlayerController
 	{
 		SinceStoppedSprinting = -1;
 
+		Mechanics.Add( new VaultMoveMechanic( this ) );
 		Mechanics.Add( new SlideMechanic( this ) );
 		Mechanics.Add( new DuckMechanic( this ) );
 	}

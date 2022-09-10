@@ -236,8 +236,15 @@ public partial class GunfightWeapon : BaseWeapon
 
 			AmmoClip += ammo;
 
-			if ( single )
-				Reload();
+			if ( AmmoClip == ClipSize )
+			{
+				ViewModelEntity?.SetAnimParameter( "reload_finished", true );
+			}
+			else
+			{
+				if ( single )
+					Reload();
+			}
 		}
 	}
 

@@ -86,6 +86,7 @@ public partial class GunfightWeapon : BaseWeapon
 		base.ActiveStart( ent );
 
 		TimeSinceDeployed = 0;
+		TimeSinceReload = ReloadTime;
 
 		IsReloading = false;
 	}

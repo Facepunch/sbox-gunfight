@@ -241,7 +241,7 @@ public partial class PlayerController : BasePlayerController
 			var lineOffset = 0;
 			if ( Host.IsServer ) lineOffset = 15;
 
-			DebugOverlay.ScreenText( $"        Position: {Position}", lineOffset + 0 );
+			DebugOverlay.ScreenText( $"        Host: {Host.Name}", lineOffset + 0 );
 			DebugOverlay.ScreenText( $"        Velocity: {Velocity}", lineOffset + 1 );
 			DebugOverlay.ScreenText( $"    BaseVelocity: {BaseVelocity}", lineOffset + 2 );
 			DebugOverlay.ScreenText( $"    GroundEntity: {GroundEntity} [{GroundEntity?.Velocity}]", lineOffset + 3 );

@@ -77,6 +77,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 			var a = timeSinceVault / vaultTime;
 			Controller.Position = Vector3.Lerp( vaultStart, vaultEnd, a, false );
 			Controller.Velocity = Controller.Velocity.WithZ( 0 );
+			Controller.SetTag( "ducked" );
 			return;
 		}
 

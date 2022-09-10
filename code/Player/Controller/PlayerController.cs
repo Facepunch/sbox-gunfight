@@ -122,7 +122,7 @@ public partial class PlayerController : BasePlayerController
 		var weapon = player.ActiveChild as GunfightWeapon;
 		IsAiming = wantsToAim && !IsSprinting && !(weapon?.IsReloading ?? false);
 
-		if ( weapon.WeaponDefinition.AimingDisabled )
+		if ( weapon.IsValid() && weapon.WeaponDefinition.AimingDisabled )
 			IsAiming = false;
 
 		CheckLadder();

@@ -42,8 +42,9 @@ public partial class GunfightPlayer : Player
 		GiveAll();
 
 		SupressPickupNotices = false;
+
 		Health = 100;
-		Armour = 0;
+		Armour = 25;
 
 		base.Respawn();
 	}

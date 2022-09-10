@@ -18,7 +18,7 @@
 		]
 		BulletSpread = 0.2
 		BulletForce = 1.5
-		BulletDamage = 4
+		BulletDamage = 6
 		BulletSize = 3
 		BulletCount = 12
 		BurstAmount = 3
@@ -54,10 +54,10 @@
 		}
 		Recoil = 
 		{
-			Decay = "2,3"
-			BaseRecoilMinimum = "-0.05,0.18"
-			BaseRecoilMaximum = "0.05,0.2"
-			ViewModelScale = 25
+			Decay = "50, 50"
+			BaseRecoilMinimum = "-0.05,20"
+			BaseRecoilMaximum = "0.05,20"
+			ViewModelScale = 2
 			ViewModelRecoverySpeed = 3
 		}
 	}

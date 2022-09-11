@@ -54,7 +54,7 @@
 		}
 		Recoil = 
 		{
-			Decay = "50, 50"
+			Decay = "60, 100"
 			BaseRecoilMinimum = "-0.05,20"
 			BaseRecoilMaximum = "0.05,20"
 			ViewModelScale = 2

@@ -124,19 +124,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 	protected void SimulateWeapons( Client cl )
 	{
-		if ( Input.Pressed( InputButton.Drop ) )
-		{
-			var dropped = Inventory.DropActive();
-			if ( dropped != null )
-			{
-				if ( dropped.PhysicsGroup != null )
-					dropped.PhysicsGroup.Velocity = Velocity + (EyeRotation.Forward + EyeRotation.Up) * 300;
-
-				timeSinceDropped = 0;
-				SwitchToBestWeapon();
-			}
-		}
-
 		//
 		// Input requested a weapon switch
 		//

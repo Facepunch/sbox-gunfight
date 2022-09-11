@@ -187,10 +187,10 @@ public partial class GunfightWeapon : BaseWeapon
 			return;
 		}
 
-		if ( Input.Pressed( InputButton.PrimaryAttack ) && IsReloading )
+		if ( IsReloading && Input.Pressed( InputButton.PrimaryAttack ) )
 		{
 			IsReloading = false;
-			TimeSinceReload = 0;
+			TimeSinceReload = ReloadTime;
 		}
 
 		//

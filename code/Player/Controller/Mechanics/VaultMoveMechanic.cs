@@ -24,12 +24,12 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 		var wall = GetWallInfo( Controller.Rotation.Forward );
 
 		if ( wall == null ) return false;
-		if ( wall.Value.Height == 0 ) return false;
-		if ( wall.Value.Distance > Controller.BodyGirth * 2 ) return false;
-		if ( Vector3.Dot( Controller.EyeRotation.Forward, wall.Value.Normal ) > -.5f ) return false;
+		if ( wall.Height == 0 ) return false;
+		if ( wall.Distance > Controller.BodyGirth * 2 ) return false;
+		if ( Vector3.Dot( Controller.EyeRotation.Forward, wall.Normal ) > -.5f ) return false;
 
-		var posFwd = Controller.Position - wall.Value.Normal * (Controller.BodyGirth + wall.Value.Distance);
-		var floorTraceStart = posFwd.WithZ( wall.Value.Height );
+		var posFwd = Controller.Position - wall.Normal * (Controller.BodyGirth + wall.Distance);
+		var floorTraceStart = posFwd.WithZ( wall.Height );
 		var floorTraceEnd = posFwd.WithZ( Controller.Position.z );
 
 		var floorTrace = Controller.TraceBBox( floorTraceStart, floorTraceEnd );
@@ -42,7 +42,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 		if ( assignValues )
 		{
-			this.wall = wall.Value;
+			this.wall = wall;
 			this.vaultHeight = vaultHeight;
 			vaultingFromGround = Controller.GroundEntity != null;
 			timeSinceVault = 0;

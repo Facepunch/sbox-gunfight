@@ -92,7 +92,7 @@ public partial class BaseMoveMechanic : BaseNetworkable
 	public virtual float GetWishSpeed() { return -1f; }
 	protected virtual bool TryActivate() { return false; }
 
-	protected WallInfo? GetWallInfo( Vector3 direction )
+	protected WallInfo GetWallInfo( Vector3 direction )
 	{
 		var trace = Controller.TraceBBox( Controller.Position, Controller.Position + direction * 100 );
 		if ( !trace.Hit ) return null;
@@ -142,7 +142,7 @@ public partial class BaseMoveMechanic : BaseNetworkable
 	}
 }
 
-public struct WallInfo
+public class WallInfo
 {
 	public float Distance;
 	public Vector3 Normal;

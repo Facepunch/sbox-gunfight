@@ -34,6 +34,7 @@ public partial class PlayerController : BasePlayerController
 	{
 		SinceStoppedSprinting = -1;
 
+		Mechanics.Add( new CoverAimMechanic( this ) );
 		Mechanics.Add( new VaultMoveMechanic( this ) );
 		Mechanics.Add( new SlideMechanic( this ) );
 		Mechanics.Add( new DuckMechanic( this ) );

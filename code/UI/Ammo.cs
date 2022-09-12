@@ -36,9 +36,18 @@ public class Ammo : Panel
 
 		var inv = weapon.AvailableAmmo();
 		var current = weapon.AmmoClip;
-		CurrentAmmo.Text = $"{current}";
-		Inventory.Text = $"{inv}";
-		Inventory.SetClass( "active", inv >= 0 );
+		if ( weapon.WeaponDefinition.AmmoType == AmmoType.None )
+		{
+			CurrentAmmo.Text = "";
+			Inventory.Text = "";
+			Inventory.SetClass( "active", inv >= 0 );
+		}
+		else
+		{
+			CurrentAmmo.Text = $"{current}";
+			Inventory.Text = $"{inv}";
+			Inventory.SetClass( "active", inv >= 0 );
+		}
 		GunName.Text = weapon.Name;
 
 

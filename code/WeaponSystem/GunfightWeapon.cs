@@ -326,7 +326,7 @@ public partial class GunfightWeapon : BaseWeapon
 		//
 		// Shoot the bullets
 		//
-		ShootBullet( BulletSpread, BulletForce, BulletDamage, BulletSize, BulletCount );
+		ShootBullet( BulletSpread, BulletForce, BulletDamage, BulletSize, BulletCount, BulletRange );
 
 		ApplyRecoil();
 
@@ -389,6 +389,9 @@ public partial class GunfightWeapon : BaseWeapon
 
 			if ( !ShouldBulletContinue( tr, angle, ref damage ) )
 			{
+				if ( !WeaponDefinition.DamageFlags.HasFlag( DamageFlags.Bullet ) ) 
+					break;
+
 				// Look for penetration
 				var forwardStep = 0f;
 				var shouldContinue = false;
@@ -479,11 +482,13 @@ public partial class GunfightWeapon : BaseWeapon
 				var damageInfo = DamageInfo.FromBullet( tr.EndPosition, forward * 100 * force, damage )
 					.UsingTraceResult( tr )
 					.WithAttacker( Owner )
+					.WithFlag( WeaponDefinition.DamageFlags )
 					.WithWeapon( this );
 
 				tr.Entity.TakeDamage( damageInfo );
 
-				DoTracer( tr.StartPosition, tr.EndPosition, tr.Distance );
+				if ( WeaponDefinition.DamageFlags.HasFlag( DamageFlags.Bullet ) )
+					DoTracer( tr.StartPosition, tr.EndPosition, tr.Distance );
 			}
 		}
 	}

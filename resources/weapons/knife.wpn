@@ -11,6 +11,7 @@
 		Icon = resource:"ui/weapons/knife.png"
 		BaseFireRate = 0.5
 		DefaultFireMode = "FullAuto"
+		DamageFlags = "Slash"
 		SupportedFireModes = 
 		[
 			"FullAuto",
@@ -23,8 +24,8 @@
 		BurstAmount = 3
 		FireSound = ""
 		DryFireSound = ""
-		AimingDisabled = false
-		BulletRange = 128
+		AimingDisabled = true
+		BulletRange = 50
 		AmmoType = "None"
 		ClipSize = 0
 		StandardClip = 0

@@ -353,40 +353,71 @@ public partial class GunfightWeapon : BaseWeapon
 			AmmoLowSound( AmmoClip / (float)ClipSize );
 	}
 
-	/// <summary>
-	/// Does a trace from start to end, does bullet impact effects. Coded as an IEnumerable so you can return multiple
-	/// hits, like if you're going through layers or ricocet'ing or something.
-	/// </summary>
 	public virtual IEnumerable<TraceResult> TraceBullet( Vector3 start, Vector3 end, float radius = 2.0f )
 	{
-		bool underWater = Trace.TestPoint( start, "water" );
+		float curHits = 0;
+		var hits = new List<TraceResult>();
 
-		var trace = Trace.Ray( start, end )
-				.UseHitboxes()
-				.WithAnyTags( "solid", "player", "npc" )
-				.Ignore( this )
-				.Size( radius );
+		while ( curHits < MaxAmtOfHits )
+		{
+			curHits++;
 
-		//
-		// If we're not underwater then we can hit water
-		//
-		if ( !underWater )
-			trace = trace.WithAnyTags( "water" );
+			var tr = Trace.Ray( start, end )
+			.UseHitboxes()
+			.WithAnyTags( "solid", "player", "glass" )
+			.Ignore( this )
+			.Size( radius )
+			.Run();
 
-		var tr = trace.Run();
+			if ( tr.Hit )
+				hits.Add( tr );
 
-		if ( tr.Hit )
-			yield return tr;
+			var reflectDir = CalculateRicochetDirection( tr, ref curHits );
+			var angle = reflectDir.Angle( tr.Direction );
 
-		//
-		// Another trace, bullet going through thin material, penetrating water surface?
-		//
+			start = tr.EndPosition;
+			end = tr.EndPosition + ( reflectDir * 5000 );
+
+			if ( !ShouldBulletContinue( tr, angle ) )
+				break;
+		}
+
+		return hits;
 	}
 
 	/// <summary>
-	/// Shoot a single bullet
+	/// How many ricochet hits until we stop traversing
 	/// </summary>
-	public virtual void ShootBullet( float spread, float force, float damage, float bulletSize, int bulletCount = 1 )
+	protected virtual float MaxAmtOfHits => 2f;
+	
+	/// <summary>
+	/// Maximum angle in degrees for ricochet to be possible
+	/// </summary>
+	protected virtual float MaxRicochetAngle => 45f;
+
+	protected virtual bool ShouldBulletContinue( TraceResult tr, float angle = 0f )
+	{
+		float maxAngle = MaxRicochetAngle;
+
+		if ( angle > maxAngle )
+			return false;
+
+		return true;
+	}
+
+	protected virtual Vector3 CalculateRicochetDirection( TraceResult tr, ref float hits )
+	{
+		if ( tr.Entity is GlassShard )
+		{
+			// Allow us to do another hit
+			hits--;
+			return tr.Direction;
+		}
+
+		return Vector3.Reflect( tr.Direction, tr.Normal ).Normal;
+	}
+
+	public virtual void ShootBullet( float spread, float force, float damage, float bulletSize, int bulletCount = 1, float bulletRange = 5000f )
 	{
 		//
 		// Seed rand using the tick, so bullet cones match on client and server
@@ -399,18 +430,9 @@ public partial class GunfightWeapon : BaseWeapon
 			forward += (Vector3.Random + Vector3.Random + Vector3.Random + Vector3.Random) * spread * 0.25f;
 			forward = forward.Normal;
 
-			//
-			// ShootBullet is coded in a way where we can have bullets pass through shit
-			// or bounce off shit, in which case it'll return multiple results
-			//
-			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * BulletRange, bulletSize ) )
+			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * bulletRange, bulletSize ) )
 			{
 				tr.Surface.DoBulletImpact( tr );
-
-				if ( tr.Distance > 200 )
-				{
-					CreateTracerEffect( tr.EndPosition, tr.Distance );
-				}
 
 				if ( !IsServer ) continue;
 				if ( !tr.Entity.IsValid() ) continue;
@@ -421,19 +443,18 @@ public partial class GunfightWeapon : BaseWeapon
 					.WithWeapon( this );
 
 				tr.Entity.TakeDamage( damageInfo );
+
+				DoTracer( tr.StartPosition, tr.EndPosition, tr.Distance );
 			}
 		}
 	}
-	
-	[ClientRpc]
-	public void CreateTracerEffect( Vector3 hitPosition, float dist )
-	{
-		// get the muzzle position on our effect entity - either viewmodel or world model
-		var pos = EffectEntity.GetAttachment( "muzzle" ) ?? Transform;
 
+	[ClientRpc]
+	public void DoTracer( Vector3 from, Vector3 to, float dist )
+	{
 		var system = Particles.Create( WeaponDefinition.ShootTrailParticleEffect ?? "particles/gameplay/guns/trail/trail_smoke.vpcf" );
-		system?.SetPosition( 0, pos.Position );
-		system?.SetPosition( 1, hitPosition );
+		system?.SetPosition( 0, from );
+		system?.SetPosition( 1, to );
 		system?.SetPosition( 2, dist );
 	}
 

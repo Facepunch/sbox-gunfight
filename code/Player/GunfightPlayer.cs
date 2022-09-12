@@ -66,7 +66,13 @@ public partial class GunfightPlayer : Player, IHudMarker
 	{
 		base.OnKilled();
 
-		Inventory.Drop( Inventory.PrimaryWeapon );
+		var primary = Inventory.PrimaryWeapon;
+		if ( Inventory.Drop( primary ) )
+		{	
+			// delete weapon after 30 seconds
+			primary.DeleteAsync( 30f );
+		}
+
 		Inventory.DeleteContents();
 
 		if ( LastDamage.Flags.HasFlag( DamageFlags.Blast ) )
@@ -187,6 +193,17 @@ public partial class GunfightPlayer : Player, IHudMarker
 		if ( TimeSinceDropped < 1f ) return;
 
 		base.StartTouch( other );
+
+		if ( other is GunfightWeapon weapon )
+		{
+			var ammoType = weapon.AmmoType;
+			var taken = GiveAmmo( ammoType, weapon.AmmoClip );
+
+			weapon.AmmoClip -= taken;
+
+			if ( weapon.AmmoClip <= 0 )
+				weapon.Delete();
+		}
 	}
 
 	private bool OverrideViewAngles = false;

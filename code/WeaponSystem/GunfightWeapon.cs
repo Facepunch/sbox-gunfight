@@ -505,7 +505,7 @@ public partial class GunfightWeapon : BaseWeapon
 	{
 		var center = screensize * 0.5f;
 
-		RenderCrosshair( center, CrosshairLastShoot.Relative, TimeSinceReload / ReloadTime, Owner?.Velocity.Length ?? 0, IsAiming );
+		RenderCrosshair( center, CrosshairLastShoot.Relative, IsReloading ? TimeSinceReload / ReloadTime : 0, Owner?.Velocity.Length ?? 0, IsAiming );
 	}
 
 	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )

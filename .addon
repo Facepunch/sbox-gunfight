@@ -101,6 +101,24 @@
     "ControlModes": {
       "Keyboard": true,
       "Gamepad": true
+    },
+    "GameSettings": {
+      "gunfight_gamemode": {
+        "DisplayType": "Choice",
+        "Choices": [
+          {
+            "Value": "",
+            "Name": "No gamemode"
+          },
+          {
+            "Value": "GunfightGamemode",
+            "Name": "Gunfight (3v3)"
+          }
+        ],
+        "ConVarName": "gunfight_gamemode",
+        "DisplayName": "Gamemode",
+        "DefaultValue": ""
+      }
     }
   }
 }

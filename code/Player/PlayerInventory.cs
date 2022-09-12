@@ -20,6 +20,23 @@ public partial class PlayerInventory : BaseNetworkable
 	// 3-♾️
 	[Net] public IList<GunfightWeapon> Gadgets { get; set; }
 
+	public IEnumerable<GunfightWeapon> GetAll()
+	{
+		yield return PrimaryWeapon;
+		yield return SecondaryWeapon;
+		yield return MeleeWeapon;
+		
+		foreach( var gadget in Gadgets )
+		{
+			yield return gadget;
+		}
+	}
+
+	public bool HasWeaponWithAmmoType( AmmoType type )
+	{
+		return GetAll().Any( x => x.AmmoType == type );
+	}
+
 	public PlayerInventory() { }
 	public PlayerInventory( Player player )
 	{

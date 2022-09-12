@@ -77,7 +77,7 @@ public partial class BaseMoveMechanic : BaseNetworkable
 		return IsActive;
 	}
 
-	public void StopTry()
+	public virtual void StopTry()
 	{
 		if ( !IsActive ) return;
 

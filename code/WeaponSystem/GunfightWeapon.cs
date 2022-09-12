@@ -25,6 +25,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	[Net, Predicted] public Vector2 Recoil { get; set; }
 
 	public CrosshairRender Crosshair { get; protected set; }
+	public PickupTrigger PickupTrigger { get; protected set; }
 
 	protected GunfightPlayer Player => Owner as GunfightPlayer;
 	protected PlayerController PlayerController => Player?.Controller as PlayerController;
@@ -94,6 +95,35 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		BurstCount = 0;
 
 		IsReloading = false;
+	}
+
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		PickupTrigger = new PickupTrigger();
+		PickupTrigger.Parent = this;
+		PickupTrigger.Position = Position;
+	}
+
+	public override void OnCarryStart( Entity carrier )
+	{
+		base.OnCarryStart( carrier );
+
+		if ( PickupTrigger.IsValid() )
+		{
+			PickupTrigger.EnableTouch = false;
+		}
+	}
+
+	public override void OnCarryDrop( Entity carrier )
+	{
+		base.OnCarryDrop( carrier );
+
+		if ( PickupTrigger.IsValid() )
+		{
+			PickupTrigger.EnableTouch = true;
+		}
 	}
 
 	public virtual void Reload()

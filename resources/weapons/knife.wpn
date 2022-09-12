@@ -19,7 +19,7 @@
 		BulletSpread = 0.1
 		BulletForce = 1.5
 		BulletDamage = 25
-		BulletSize = 3
+		BulletSize = 10
 		BulletCount = 1
 		BurstAmount = 3
 		FireSound = ""

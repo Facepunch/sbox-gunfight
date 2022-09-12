@@ -4,7 +4,7 @@
 	{
 		WeaponName = "R870 12-Gauge"
 		WeaponShortName = "R870"
-		Slot = "Gadget"
+		Slot = "Primary"
 		HoldType = "Shotgun"
 		Model = resource:"models/r870/w_r870.vmdl"
 		ViewModel = resource:"models/r870/fp_r870.vmdl"

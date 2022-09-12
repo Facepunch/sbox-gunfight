@@ -5,7 +5,23 @@ public partial class GamemodeSystem
 	[ConVar.Server( "gunfight_gamemode" )]
 	public static string SelectedGamemode { get; set; } = "";
 
-	public static GamemodeEntity Current { get; set; }
+	private static GamemodeEntity current;
+	public static GamemodeEntity Current
+	{
+		get
+		{
+			if ( Host.IsServer ) return current;
+
+			if ( !current.IsValid() )
+				current = Entity.All.FirstOrDefault( x => x is GamemodeEntity ) as GamemodeEntity;
+
+			return current;
+		}
+		set
+		{
+			current = value;
+		}
+	}
 
 	protected static GamemodeEntity FetchGamemodeEntity()
 	{

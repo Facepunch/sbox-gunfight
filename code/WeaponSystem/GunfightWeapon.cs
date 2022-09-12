@@ -354,6 +354,19 @@ public partial class GunfightWeapon : BaseWeapon
 			AmmoLowSound( AmmoClip / (float)ClipSize );
 	}
 
+	protected TraceResult DoTraceBullet( Vector3 start, Vector3 end, float radius )
+	{
+		return Trace.Ray( start, end )
+			.UseHitboxes()
+			.WithAnyTags( "solid", "player", "glass" )
+			.Ignore( this )
+			.Size( radius )
+			.Run();
+	}
+
+	protected float PenetrationIncrementAmount => 10f;
+	protected int PenetrationMaxSteps => 2;
+
 	public virtual IEnumerable<TraceResult> TraceBullet( Vector3 start, Vector3 end, float radius, ref float damage )
 	{
 		float curHits = 0;
@@ -363,12 +376,7 @@ public partial class GunfightWeapon : BaseWeapon
 		{
 			curHits++;
 
-			var tr = Trace.Ray( start, end )
-			.UseHitboxes()
-			.WithAnyTags( "solid", "player", "glass" )
-			.Ignore( this )
-			.Size( radius )
-			.Run();
+			var tr = DoTraceBullet( start, end, radius );
 
 			if ( tr.Hit )
 				hits.Add( tr );
@@ -380,7 +388,33 @@ public partial class GunfightWeapon : BaseWeapon
 			end = tr.EndPosition + ( reflectDir * 5000 );
 
 			if ( !ShouldBulletContinue( tr, angle, ref damage ) )
-				break;
+			{
+				// Look for penetration
+				var forwardStep = 0f;
+				var shouldContinue = false;
+
+				while ( forwardStep < PenetrationMaxSteps )
+				{
+					forwardStep++;
+
+					var penStart = tr.EndPosition + tr.Direction * (forwardStep * PenetrationIncrementAmount);
+					var penEnd = tr.EndPosition + tr.Direction * (forwardStep + 1 * PenetrationIncrementAmount);
+
+					var penTrace = DoTraceBullet( penStart, penEnd, radius );
+					if ( !penTrace.StartedSolid )
+					{
+						var newStart = penTrace.EndPosition;
+						shouldContinue = true;
+						var newTrace = DoTraceBullet( newStart, newStart + tr.Direction * 5000f, radius );
+						hits.Add( newTrace );
+
+						break;
+					}
+				}
+
+				if ( !shouldContinue )
+					break;
+			}
 		}
 
 		return hits;

@@ -19,6 +19,7 @@ public class Stance : Panel
 	{
 		var player = Local.Pawn as GunfightPlayer;
 		if ( player == null ) return;
+		if ( PlayerController == null ) return;
 		if ( PlayerController.Duck.IsActive )
 		{
 			Icon.SetTexture( "ui/stance/duck.png" );

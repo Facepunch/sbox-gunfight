@@ -11,7 +11,6 @@ public class GunVoiceEntry : Panel
 	readonly Label Speaker;
 	readonly Image Avatar;
 
-	private float VoiceLevel = 0.0f;
 	private float TargetVoiceLevel = 0;
 
 	RealTimeSince timeSincePlayed;

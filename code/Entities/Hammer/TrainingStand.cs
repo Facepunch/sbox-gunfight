@@ -15,12 +15,6 @@ namespace Facepunch.Gunfight.Entities.Hammer
 	public partial class TrainingStand : AnimatedEntity
 	{
 		/// <summary>
-		/// Health of Dummy.
-		/// </summary>
-		[Net,Property]
-		public float Health { get; set; } = 100;
-
-		/// <summary>
 		/// Name of Dummy.
 		/// </summary>
 		[Net, Property]

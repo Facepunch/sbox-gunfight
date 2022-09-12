@@ -15,11 +15,11 @@ public class Grenades : Panel
 		Icon = Add.Image( "ui/weapons/grenade.png", "icon" );
 	}
 
-	int weaponHash;
-
 	public override void Tick()
 	{
 		var player = Local.Pawn as Player;
 		if ( player == null ) return;
+
+		// TODO - Setup
 	}
 }

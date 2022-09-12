@@ -385,7 +385,7 @@ public partial class GunfightWeapon : BaseWeapon
 			var angle = reflectDir.Angle( tr.Direction );
 
 			start = tr.EndPosition;
-			end = tr.EndPosition + ( reflectDir * 5000 );
+			end = tr.EndPosition + ( reflectDir * BulletRange );
 
 			if ( !ShouldBulletContinue( tr, angle, ref damage ) )
 			{
@@ -405,7 +405,7 @@ public partial class GunfightWeapon : BaseWeapon
 					{
 						var newStart = penTrace.EndPosition;
 						shouldContinue = true;
-						var newTrace = DoTraceBullet( newStart, newStart + tr.Direction * 5000f, radius );
+						var newTrace = DoTraceBullet( newStart, newStart + tr.Direction * BulletRange, radius );
 						hits.Add( newTrace );
 
 						break;

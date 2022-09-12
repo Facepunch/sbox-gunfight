@@ -17,6 +17,26 @@ public partial class WeaponDefinition : GameResource
 		return weapon;
 	}
 
+	[ConCmd.Admin( "gunfight_createweapon" )]
+	public static void Cmd_CreateWeapon( string weaponId )
+	{
+		Host.AssertServer();
+
+		var player = ConsoleSystem.Caller.Pawn as GunfightPlayer;
+
+		var wpn = CreateWeapon( weaponId );
+		if ( wpn.IsValid() )
+		{
+			var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 100000f )
+				.WorldAndEntities()
+				.WithAnyTags( "solid" )
+				.Run();
+
+			wpn.Position = tr.EndPosition + Vector3.Up * 10f;
+			wpn.Rotation = Rotation.From( tr.Normal.EulerAngles );
+		}
+	}
+
 	public static WeaponDefinition Find( string search )
 	{
 		if ( Index.TryGetValue( search, out var weaponDef ) )

@@ -21,10 +21,10 @@
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
-		BulletRange = 128
 		FireSound = ""
 		DryFireSound = ""
-		AimingDisabled = true
+		AimingDisabled = false
+		BulletRange = 128
 		AmmoType = "None"
 		ClipSize = 0
 		StandardClip = 0
@@ -54,5 +54,6 @@
 		Recoil = 
 		{
 		}
+		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
 	}
 }

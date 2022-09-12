@@ -369,6 +369,15 @@
 						weight = 1.0
 						ignore_rotation = false
 					},
+					{
+						_class = "Attachment"
+						name = "aim"
+						parent_bone = "Bolt1"
+						relative_origin = [ 0.000716, -0.206094, -0.087424 ]
+						relative_angles = [ -3.200892, 97.162003, 175.740433 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
 				]
 			},
 		]

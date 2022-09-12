@@ -4,8 +4,6 @@ namespace Facepunch.Gunfight;
 
 public abstract partial class GamemodeEntity : Entity
 {
-	public static GamemodeEntity Current { get; set; }
-
 	/// <summary>
 	/// A quick accessor to get how many people are in the game
 	/// </summary>
@@ -28,7 +26,7 @@ public abstract partial class GamemodeEntity : Entity
 	{
 		cl.Pawn?.Delete();
 
-		var pawn = Current?.GetPawn( cl );
+		var pawn = GetPawn( cl );
 		cl.Pawn = pawn;
 		pawn.Respawn();
 	}
@@ -38,23 +36,6 @@ public abstract partial class GamemodeEntity : Entity
 		base.Spawn();
 
 		Transmit = TransmitType.Always;
-
-		// There can be only one gamemode running at a time.
-		if ( Current.IsValid() && Current != this )
-		{
-			Delete();
-			Log.Warning( "There can be only one gamemode running at one time. Please make sure there's only 1 gamemode entity on a level." );
-
-			return;
-		}
-
-		Current = this;
-	}
-
-	public override void ClientSpawn()
-	{
-		base.ClientSpawn();
-		Current = this;
 	}
 
 	/// <summary>
@@ -64,6 +45,10 @@ public abstract partial class GamemodeEntity : Entity
 	public virtual void OnClientJoined( Client cl )
 	{
 		PlayerCount++;
+	}
+
+	public virtual void Initialize()
+	{
 	}
 
 	/// <summary>

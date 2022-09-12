@@ -102,6 +102,9 @@ public partial class WeaponDefinition : GameResource
 	[ShowIf( "DefaultFireMode", FireMode.Burst )]
 	public int BurstAmount { get; set; } = 3;
 
+	[ShowIf( "DefaultFireMode", FireMode.Burst )]
+	public float BurstCooldown { get; set; } = 0.3f;
+
 	[Category( "Shooting" ), ResourceType( "sound" )]
 	public string FireSound { get; set; } = "";
 

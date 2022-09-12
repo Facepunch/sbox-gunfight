@@ -5,16 +5,14 @@ public partial class GunfightPlayer : Player, IHudMarker
 	TimeSince timeSinceDropped;
 
 	[Net]
-	public float Armour { get; set; } = 25;
+	public float Armour { get; set; }
 
 	[Net]
-	public float MaxHealth { get; set; } = 100;
+	public float MaxHealth { get; set; }
 
 	public bool SupressPickupNotices { get; private set; }
-
-	public int ComboKillCount { get; set; } = 0;
-	public TimeSince TimeSinceLastKill { get; set; }
 	public bool IsRegen { get; set; }
+
 	[Net] public PlayerInventory PlayerInventory { get; set; }
 	public new PlayerInventory Inventory => PlayerInventory;
 
@@ -43,8 +41,9 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		SupressPickupNotices = false;
 
+		MaxHealth = 100;
 		Health = 100;
-		Armour = 25;
+		Armour = 0;
 
 		base.Respawn();
 	}

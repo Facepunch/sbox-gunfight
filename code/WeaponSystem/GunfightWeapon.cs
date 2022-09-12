@@ -19,6 +19,8 @@ public partial class GunfightWeapon : BaseWeapon
 	[Net, Predicted] protected int BurstCount { get; set; } = 0;
 	[Net, Predicted] public FireMode CurrentFireMode { get; set; } = FireMode.Semi;
 	[Net, Predicted] public TimeSince TimeSinceFireModeSwitch { get; set; }
+	[Net, Predicted] public TimeSince TimeSinceBurstFinished { get; set; }
+	[Net, Predicted] public bool IsBurstFiring { get; set; }
 
 	[Net, Predicted] public Vector2 Recoil { get; set; }
 
@@ -88,6 +90,9 @@ public partial class GunfightWeapon : BaseWeapon
 		TimeSinceDeployed = 0;
 		TimeSinceReload = ReloadTime;
 		Recoil = 0;
+		TimeSinceBurstFinished = WeaponDefinition.BurstCooldown;
+		IsBurstFiring = false;
+		BurstCount = 0;
 
 		IsReloading = false;
 	}
@@ -178,6 +183,13 @@ public partial class GunfightWeapon : BaseWeapon
 		if ( Input.Pressed( InputButton.Menu ) )
 		{
 			CycleFireMode();
+		}
+
+		if ( IsBurst && BurstCount >= WeaponDefinition.BurstAmount )
+		{
+			TimeSinceBurstFinished = 0;
+			IsBurstFiring = false;
+			BurstCount = 0;
 		}
 
 		SimulateRecoil( owner );
@@ -274,11 +286,11 @@ public partial class GunfightWeapon : BaseWeapon
 
 	protected bool CanPrimaryAttackBurst()
 	{
-		if ( !Input.Down( InputButton.PrimaryAttack ) )
-		{
-			BurstCount = 0;
-			return false;
-		}
+		if ( Input.Down( InputButton.PrimaryAttack ) && TimeSinceBurstFinished >= WeaponDefinition.BurstCooldown )
+			IsBurstFiring = true;
+
+		if ( !IsBurstFiring ) return false;
+		if ( TimeSinceBurstFinished < WeaponDefinition.BurstCooldown ) return false;
 
 		if ( BurstCount >= WeaponDefinition.BurstAmount )
 			return false;

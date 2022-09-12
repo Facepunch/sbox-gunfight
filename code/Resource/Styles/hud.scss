@@ -225,6 +225,59 @@ vitals {
         transform: scale( 1 );
     }
 }
+Grenades {
+    position: absolute;
+    font-family: Teko-SemiBold;
+    transition: all 0.2s ease-out;
+    opacity: 1;
+    justify-content: left;
+    height: 50%;
+    bottom: 103px;
+    border-right: 2px solid rgba(#fbf1c7 0.25);
+    align-items: flex-start;
+    background-color: rgba(#3c3836 0.2);
+    min-width: 50px;
+    border-bottom: 2px solid rgba(#fbf1c7 0.25);
+
+    .icon {
+        position: absolute;
+        right: 0px;
+        top: 5px;
+        width: 50px;
+        height: 50px;
+        z-index: -1;
+        opacity: .1;
+        background-image-tint: $theme-color;
+    }
+
+    .inventory {
+        left: 0px;
+        bottom: 8px;
+        font-family: Quantico-Bold;
+        font-size: 16px;
+        font-weight: bolder;
+        color: $theme-color;
+        opacity: .5;
+    }
+}
+
+Stance {
+    position: absolute;
+    bottom: 50px;
+    left: -50px;
+    min-width: 50px;
+    transition: all 0.2s ease-in-out;
+
+    .icon {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        opacity: .1;
+        background-image-tint: $theme-color;
+        border-right: 2px solid rgba(#fbf1c7 1);
+        background-color: rgba(#3c3836 1);
+    }
+}
 
 healthhud, armourhud {
     padding: 6px;
@@ -261,7 +314,6 @@ healthhud, armourhud {
     font-family: Quantico-Regular;
     font-weight: 900;
 }
-
 iconpanel
 {
     font-family: "Material Icons";

@@ -61,7 +61,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		GiveWeapon( "knife" );
 		GiveWeapon( "1911" );
 		GiveWeapon( "r870" );
-		GiveWeapon( "mp5", true );
+		GiveWeapon( "famas", true );
 	}
 
 	public void GiveWeapon( string name, bool makeActive = false )

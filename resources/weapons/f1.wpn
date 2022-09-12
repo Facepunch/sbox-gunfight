@@ -1,0 +1,70 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		WeaponName = "FAMAS"
+		WeaponShortName = "famas"
+		Slot = "Primary"
+		HoldType = "Rifle"
+		Model = resource:"models/f1/w_f1.vmdl"
+		ViewModel = resource:"models/f1/fp_f1.vmdl"
+		Icon = resource:"ui/weapons/famas.png"
+		BaseFireRate = 0.05
+		DefaultFireMode = "Burst"
+		SupportedFireModes = 
+		[
+			"Burst",
+			"Semi",
+		]
+		BulletSpread = 0.02
+		BulletForce = 1.5
+		BulletDamage = 12
+		BulletSize = 3
+		BulletCount = 1
+		BurstAmount = 3
+		FireSound = resource:"sounds/guns/f1/ar2_shoot.sound"
+		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
+		AimingDisabled = false
+		BulletRange = 5000
+		AmmoType = "Rifle"
+		ClipSize = 27
+		StandardClip = 27
+		ReloadTime = 3
+		ReloadSingle = false
+		Crosshair = "Default"
+		ViewModelSetup = 
+		{
+			OverallWeight = 0.1
+			WeightReturnForce = 100
+			WeightDamping = 18
+			AccelerationDamping = 1
+			VelocityScale = 10
+			RotationalPivotForce = 10
+			RotationalScale = 5
+			WalkCycleOffset = "-2,25,0"
+			BobAmount = "25,50"
+			GlobalLerpPower = 1
+			GlobalPositionOffset = "0,0,1"
+			GlobalAngleOffset = "-1,0,-2"
+			AimPositionOffset = "0,50,0"
+			AimAngleOffset = "50,0,0"
+			CrouchPositionOffset = "-3,1,0"
+			CrouchAngleOffset = "2,0,-15"
+			SlidePositionOffset = "-2,0,-1"
+			SlideAngleOffset = "10,25,-35"
+			AvoidancePositionOffset = "-5,0,0"
+			AvoidanceAngleOffset = "2,0,-25"
+			SprintPositionOffset = "0,-2,-1"
+			SprintAngleOffset = "5,25,0"
+		}
+		Recoil = 
+		{
+			Decay = "30,50"
+			BaseRecoilMinimum = "-2.5,4"
+			BaseRecoilMaximum = "2.5,6"
+			ViewModelScale = 0.5
+			ViewModelRecoverySpeed = 5
+		}
+		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
+	}
+}

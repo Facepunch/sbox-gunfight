@@ -11,14 +11,28 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 	protected float WallHeight { get; set; }
 	protected bool Wish { get; set; }
 
+	private WallInfo CachedWallInfo;
+
 	protected bool CanMountWall()
 	{
 		var wall = GetWallInfo( Controller.Rotation.Forward );
 
+		CachedWallInfo = wall;
+
 		if ( wall == null ) return false;
 		if ( wall.Distance > MaxWallMountDistance ) return false;
 
+
 		return wall.Height <= 80f && wall.Height >= 40f;
+	}
+
+	protected void DoVisualEffects( bool inverted = false )
+	{
+
+		var size = (CachedWallInfo.Height > 60f ? 1 : -1);
+		if ( inverted ) size *= -1;
+
+		_ = new ScreenShake.Pitch( .2f, size );
 	}
 
 	protected override bool TryActivate()
@@ -32,6 +46,8 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 
 		TimeSinceActivate = 0;
 
+		DoVisualEffects();
+
 		return true;
 	}
 
@@ -39,11 +55,18 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 	{
 		if ( !Input.Down( InputButton.SecondaryAttack ) ) StopTry();
 	}
+
+	public override void StopTry()
+	{
+		base.StopTry();
+		DoVisualEffects( true );
+	}
+
 	public override void Simulate()
 	{
 		if ( !CanMountWall() ) return;
 
-		var wall = GetWallInfo( Controller.Rotation.Forward );
+		var wall = CachedWallInfo;
 		var wallHeight = wall.Height;
 
 		WallHeight = wallHeight - 5f;

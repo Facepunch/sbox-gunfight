@@ -9,6 +9,8 @@ public partial class HudHints : Panel
 	public Panel ReloadHint { get; set; }
 	// @ref
 	public Panel VaultHint { get; set; }
+	// @ref
+	public Panel CoverAimHint { get; set; }
 
 
 	public override void Tick()
@@ -19,11 +21,13 @@ public partial class HudHints : Panel
 		var controller = player.Controller as PlayerController;
 		if ( controller == null ) return;
 
-		VaultHint.SetClass( "show", controller.Vault.CanActivate( false ) );
+		VaultHint.SetClass( "show", controller.Vault.CanActivate( false ) && !controller.Vault.IsActive );
 
 		var weapon = player.ActiveChild as GunfightWeapon;
 		if ( !weapon.IsValid() ) return;
 
 		ReloadHint.SetClass( "show", weapon.IsLowAmmo() && !weapon.IsReloading );
+
+		CoverAimHint.SetClass( "show", controller.CoverAim.CanMountWall() && !controller.CoverAim.IsActive );
 	}
 }

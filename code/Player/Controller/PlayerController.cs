@@ -26,6 +26,7 @@ public partial class PlayerController : BasePlayerController
 	public SlideMechanic Slide => GetMechanic<SlideMechanic>();
 	public DuckMechanic Duck => GetMechanic<DuckMechanic>();
 	public VaultMoveMechanic Vault => GetMechanic<VaultMoveMechanic>();
+	public CoverAimMechanic CoverAim => GetMechanic<CoverAimMechanic>();
 
 	[Net] public IList<BaseMoveMechanic> Mechanics { get; set; }
 	public BaseMoveMechanic CurrentMechanic => Mechanics.FirstOrDefault( x => x.IsActive );

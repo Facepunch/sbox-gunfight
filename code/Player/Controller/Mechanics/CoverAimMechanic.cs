@@ -13,7 +13,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 
 	private WallInfo CachedWallInfo;
 
-	protected bool CanMountWall()
+	public bool CanMountWall()
 	{
 		var wall = GetWallInfo( Controller.Rotation.Forward );
 
@@ -21,7 +21,6 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 
 		if ( wall == null ) return false;
 		if ( wall.Distance > MaxWallMountDistance ) return false;
-
 
 		return wall.Height <= 80f && wall.Height >= 40f;
 	}

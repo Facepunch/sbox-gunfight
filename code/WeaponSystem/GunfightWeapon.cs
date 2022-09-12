@@ -397,6 +397,9 @@ public partial class GunfightWeapon : BaseWeapon
 				if ( !ShouldPenetrate() )
 					break;
 
+				// Start killing the damage 
+				damage *= 0.5f;
+
 				// Look for penetration
 				var forwardStep = 0f;
 				var shouldContinue = false;
@@ -444,10 +447,6 @@ public partial class GunfightWeapon : BaseWeapon
 
 		if ( angle > maxAngle )
 			return false;
-
-		// Half the damage when ricocheting
-		// TODO - Data setup
-		damage *= 0.5f;
 
 		return true;
 	}

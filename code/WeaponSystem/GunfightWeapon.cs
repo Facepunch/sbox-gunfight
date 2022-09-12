@@ -326,7 +326,7 @@ public partial class GunfightWeapon : BaseWeapon
 		//
 		// Shoot the bullets
 		//
-		ShootBullet( BulletSpread, BulletForce, BulletDamage, BulletSize, BulletCount, BulletRange );
+		ShootBullet( BulletSpread, BulletForce, BulletSize, BulletCount, BulletRange );
 
 		ApplyRecoil();
 
@@ -463,7 +463,7 @@ public partial class GunfightWeapon : BaseWeapon
 		return Vector3.Reflect( tr.Direction, tr.Normal ).Normal;
 	}
 
-	public virtual void ShootBullet( float spread, float force, float damage, float bulletSize, int bulletCount = 1, float bulletRange = 5000f )
+	public virtual void ShootBullet( float spread, float force, float bulletSize, int bulletCount = 1, float bulletRange = 5000f )
 	{
 		//
 		// Seed rand using the tick, so bullet cones match on client and server
@@ -475,6 +475,8 @@ public partial class GunfightWeapon : BaseWeapon
 			var forward = Owner.EyeRotation.Forward;
 			forward += (Vector3.Random + Vector3.Random + Vector3.Random + Vector3.Random) * spread * 0.25f;
 			forward = forward.Normal;
+
+			var damage = BulletDamage;
 
 			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * bulletRange, bulletSize, ref damage ) )
 			{

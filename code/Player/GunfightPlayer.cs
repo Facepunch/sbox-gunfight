@@ -54,7 +54,16 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		GiveWeapon( "knife" );
 		GiveWeapon( "1911" );
-		GiveWeapon( "famas", true );
+
+		Rand.SetSeed( Time.Tick );
+		var rand = Rand.Int( 0, 2 );
+
+		if ( rand == 0 )
+			GiveWeapon( "mp5", true );
+		else if ( rand == 1 )
+			GiveWeapon( "r870", true );
+		else
+			GiveWeapon( "famas", true );
 	}
 
 	public void GiveWeapon( string name, bool makeActive = false )

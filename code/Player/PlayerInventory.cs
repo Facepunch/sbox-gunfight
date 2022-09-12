@@ -150,6 +150,13 @@ public partial class PlayerInventory : BaseNetworkable
 
 		carriable?.OnCarryDrop( Owner );
 
+		if ( ent == PrimaryWeapon )
+			PrimaryWeapon = null;
+		if ( ent == SecondaryWeapon )
+			SecondaryWeapon = null;
+		if ( ent == MeleeWeapon )
+			MeleeWeapon = null;
+
 		return ent.Parent == null;
 	}
 

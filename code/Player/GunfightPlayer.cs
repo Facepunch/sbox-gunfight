@@ -66,6 +66,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 	{
 		base.OnKilled();
 
+		Inventory.Drop( Inventory.PrimaryWeapon );
 		Inventory.DeleteContents();
 
 		if ( LastDamage.Flags.HasFlag( DamageFlags.Blast ) )

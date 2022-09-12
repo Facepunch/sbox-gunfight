@@ -69,8 +69,6 @@ public partial class BaseWeapon : BaseCarriable
 	{
 		if ( IsClient ) return;
 
-		Log.Info( "Drop" );
-
 		SetParent( null );
 		Owner = null;
 		EnableDrawing = true;

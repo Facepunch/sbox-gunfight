@@ -2,8 +2,8 @@
 {
 	data = 
 	{
-		WeaponName = "FAMAS"
-		WeaponShortName = "famas"
+		WeaponName = "F1 FAMAS"
+		WeaponShortName = "FAMAS"
 		Slot = "Primary"
 		HoldType = "Rifle"
 		Model = resource:"models/f1/w_f1.vmdl"
@@ -59,9 +59,9 @@
 		}
 		Recoil = 
 		{
-			Decay = "30,50"
-			BaseRecoilMinimum = "-2.5,4"
-			BaseRecoilMaximum = "2.5,6"
+			Decay = "50,70"
+			BaseRecoilMinimum = "-2.5,5"
+			BaseRecoilMaximum = "2.5,7"
 			ViewModelScale = 0.5
 			ViewModelRecoverySpeed = 5
 		}

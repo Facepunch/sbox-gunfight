@@ -28,12 +28,19 @@ public partial class GunfightPlayer
 
 	public override void BuildInput( InputBuilder input )
 	{
-		base.BuildInput( input );
 
 		TrySlotFromInput( input, InputButton.Slot1 );
 		TrySlotFromInput( input, InputButton.Slot2 );
 		TrySlotFromInput( input, InputButton.Slot3 );
 		TrySlotFromInput( input, InputButton.Slot4 );
 		TrySlotFromInput( input, InputButton.Slot5 );
+
+		if ( OverrideViewAngles )
+		{
+			OverrideViewAngles = false;
+			input.ViewAngles = NewViewAngles;
+		}
+		
+		base.BuildInput( input );
 	}
 }

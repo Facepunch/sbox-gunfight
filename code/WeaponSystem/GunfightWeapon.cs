@@ -87,6 +87,7 @@ public partial class GunfightWeapon : BaseWeapon
 
 		TimeSinceDeployed = 0;
 		TimeSinceReload = ReloadTime;
+		Recoil = 0;
 
 		IsReloading = false;
 	}

@@ -197,6 +197,11 @@ public partial class GunfightPlayer : Player, IHudMarker
 		if ( other is GunfightWeapon weapon )
 		{
 			var ammoType = weapon.AmmoType;
+
+			// Must have a weapon with the correct ammo type in inventory
+			if ( !Inventory.HasWeaponWithAmmoType( ammoType ) )
+				return;
+
 			var taken = GiveAmmo( ammoType, weapon.AmmoClip );
 
 			weapon.AmmoClip -= taken;

@@ -195,6 +195,15 @@ public partial class GunfightPlayer : Player, IHudMarker
 		base.StartTouch( other );
 	}
 
+	private bool OverrideViewAngles = false;
+	private Angles NewViewAngles;
+	[ClientRpc]
+	public void SetViewAngles( Angles angles )
+	{
+		OverrideViewAngles = true;
+		NewViewAngles = angles;
+	}
+
 	public override void PostCameraSetup( ref CameraSetup setup )
 	{
 		base.PostCameraSetup( ref setup );

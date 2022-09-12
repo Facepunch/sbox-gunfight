@@ -101,6 +101,11 @@ partial class GunfightGame : Game
 		}
 
 		player.Transform = spawnpoint.Transform;
+
+		if ( entity is GunfightPlayer pl )
+		{
+			pl.SetViewAngles( entity.Rotation.Angles() );
+		}
 	}
 
 	/// <summary>

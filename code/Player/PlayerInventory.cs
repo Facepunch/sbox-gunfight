@@ -33,7 +33,7 @@ public partial class PlayerInventory : BaseNetworkable
 	/// </summary>
 	public virtual bool CanAdd( Entity ent )
 	{
-		if ( ent is GunfightWeapon bc && bc.CanCarry( Owner ) )
+		if ( ent is GunfightWeapon bc )
 			return true;
 
 		return false;
@@ -48,12 +48,6 @@ public partial class PlayerInventory : BaseNetworkable
 		if ( !CanAdd( ent ) )
 			return false;
 
-		//
-		// Let the entity reject the inventory
-		//
-		if ( !carriable.CanCarry( Owner ) )
-			return false;
-
 		var weapon = ent as GunfightWeapon;
 
 		switch ( weapon.Slot )
@@ -61,7 +55,7 @@ public partial class PlayerInventory : BaseNetworkable
 			case WeaponSlot.Primary:
 				{
 					if ( PrimaryWeapon.IsValid() )
-						return false;
+						Drop( PrimaryWeapon );
 
 					PrimaryWeapon = weapon;
 					break;
@@ -69,7 +63,7 @@ public partial class PlayerInventory : BaseNetworkable
 			case WeaponSlot.Secondary:
 				{
 					if ( SecondaryWeapon.IsValid() )
-						return false;
+						Drop( SecondaryWeapon );
 
 					SecondaryWeapon = weapon;
 					break;
@@ -77,7 +71,7 @@ public partial class PlayerInventory : BaseNetworkable
 			case WeaponSlot.Melee:
 				{
 					if ( MeleeWeapon.IsValid() )
-						return false;
+						Drop( MeleeWeapon );
 
 					MeleeWeapon = weapon;
 					break;

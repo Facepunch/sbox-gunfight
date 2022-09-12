@@ -9,7 +9,7 @@ public enum FireMode
 	Burst
 }
 
-public partial class GunfightWeapon : BaseWeapon
+public partial class GunfightWeapon : BaseWeapon, IUse
 {
 	[Net, Predicted] public int AmmoClip { get; set; }
 	[Net, Predicted] public TimeSince TimeSinceReload { get; set; }
@@ -24,7 +24,6 @@ public partial class GunfightWeapon : BaseWeapon
 
 	[Net, Predicted] public Vector2 Recoil { get; set; }
 
-	public PickupTrigger PickupTrigger { get; protected set; }
 	public CrosshairRender Crosshair { get; protected set; }
 
 	protected GunfightPlayer Player => Owner as GunfightPlayer;
@@ -97,15 +96,6 @@ public partial class GunfightWeapon : BaseWeapon
 		IsReloading = false;
 	}
 
-	public override void Spawn()
-	{
-		base.Spawn();
-
-		PickupTrigger = new PickupTrigger();
-		PickupTrigger.Parent = this;
-		PickupTrigger.Position = Position;
-	}
-
 	public virtual void Reload()
 	{
 		if ( IsUnlimitedAmmo() ) return;
@@ -131,7 +121,6 @@ public partial class GunfightWeapon : BaseWeapon
 	public virtual bool WantsReload()
 	{
 		return Input.Down( InputButton.Reload );
-	
 	}
 
 	protected virtual void SimulateRecoil( Client owner )
@@ -539,25 +528,21 @@ public partial class GunfightWeapon : BaseWeapon
 		return AvailableAmmo() > 0;
 	}
 
-	public override void OnCarryStart( Entity carrier )
-	{
-		base.OnCarryStart( carrier );
 
-		if ( PickupTrigger.IsValid() )
+	public bool OnUse( Entity user )
+	{
+		var player = user as GunfightPlayer;
+		if ( !player.IsValid() ) return false;
+
+		if ( !player.Inventory.Add( this, true ) )
 		{
-			PickupTrigger.EnableTouch = false;
+			Log.Info( "can't add to inventory" );
 		}
+
+		return false;
 	}
 
-	public override void OnCarryDrop( Entity dropper )
-	{
-		base.OnCarryDrop( dropper );
-
-		if ( PickupTrigger.IsValid() )
-		{
-			PickupTrigger.EnableTouch = true;
-		}
-	}
+	public bool IsUsable( Entity user ) => IsUsable();
 
 	protected TimeSince CrosshairLastShoot { get; set; }
 

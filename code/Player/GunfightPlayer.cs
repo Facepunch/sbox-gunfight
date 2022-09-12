@@ -2,18 +2,13 @@
 
 public partial class GunfightPlayer : Player, IHudMarker
 {
-	TimeSince timeSinceDropped;
-
-	[Net]
-	public float Armour { get; set; }
-
-	[Net]
-	public float MaxHealth { get; set; }
+	[Net] public float Armour { get; set; }
+	[Net] public float MaxHealth { get; set; }
+	[Net] public PlayerInventory PlayerInventory { get; set; }
+	[Net, Predicted] public TimeSince TimeSinceDropped { get; set; }
 
 	public bool SupressPickupNotices { get; private set; }
 	public bool IsRegen { get; set; }
-
-	[Net] public PlayerInventory PlayerInventory { get; set; }
 	public new PlayerInventory Inventory => PlayerInventory;
 
 	public override void Respawn()
@@ -59,7 +54,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		GiveWeapon( "knife" );
 		GiveWeapon( "1911" );
-		GiveWeapon( "r870" );
 		GiveWeapon( "famas", true );
 	}
 
@@ -189,7 +183,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 	public override void StartTouch( Entity other )
 	{
-		if ( timeSinceDropped < 1 ) return;
+		if ( TimeSinceDropped < 1f ) return;
 
 		base.StartTouch( other );
 	}

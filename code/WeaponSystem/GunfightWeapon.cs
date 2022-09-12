@@ -367,6 +367,14 @@ public partial class GunfightWeapon : BaseWeapon
 	protected float PenetrationIncrementAmount => 10f;
 	protected int PenetrationMaxSteps => 2;
 
+	protected bool ShouldPenetrate()
+	{
+		if ( !WeaponDefinition.DamageFlags.HasFlag( DamageFlags.Bullet ) )
+			return false;
+
+		return true;
+	}
+
 	public virtual IEnumerable<TraceResult> TraceBullet( Vector3 start, Vector3 end, float radius, ref float damage )
 	{
 		float curHits = 0;
@@ -384,12 +392,9 @@ public partial class GunfightWeapon : BaseWeapon
 			var reflectDir = CalculateRicochetDirection( tr, ref curHits );
 			var angle = reflectDir.Angle( tr.Direction );
 
-			start = tr.EndPosition;
-			end = tr.EndPosition + ( reflectDir * BulletRange );
-
 			if ( !ShouldBulletContinue( tr, angle, ref damage ) )
 			{
-				if ( !WeaponDefinition.DamageFlags.HasFlag( DamageFlags.Bullet ) ) 
+				if ( !ShouldPenetrate() )
 					break;
 
 				// Look for penetration

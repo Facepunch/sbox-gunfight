@@ -79,6 +79,9 @@ public partial class WeaponDefinition : GameResource
 	public FireMode DefaultFireMode { get; set; } = FireMode.FullAuto;
 
 	[Category( "Shooting" )]
+	public DamageFlags DamageFlags { get; set; } = DamageFlags.Bullet;
+
+	[Category( "Shooting" )]
 	public List<FireMode> SupportedFireModes { get; set; }
 
 	[Category( "Shooting" )]

@@ -113,7 +113,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		}
 
 		// Inform the active gamemode
-		GamemodeEntity.Current?.OnPlayerKilled( this, LastDamage );
+		GamemodeSystem.Current?.OnPlayerKilled( this, LastDamage );
 	}
 
 	protected void SimulateView()

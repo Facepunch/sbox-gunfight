@@ -35,16 +35,18 @@ partial class GunfightGame : Game
 		}
 	}
 
-	public override void PostLevelLoaded()
+	[Event.Entity.PostSpawn]
+	public void PostEntitySpawn()
 	{
-		base.PostLevelLoaded();
+		// Try to set up the active gamemode
+		GamemodeSystem.SetupGamemode();
 	}
 
 	protected void CreatePawn( Client cl )
 	{
 		cl.Pawn?.Delete();
 
-		var gamemode = GamemodeEntity.Current;
+		var gamemode = GamemodeSystem.Current;
 		GunfightPlayer player;
 
 		if ( gamemode.IsValid() )
@@ -64,7 +66,7 @@ partial class GunfightGame : Game
 		CreatePawn( cl );
 
 		// Inform the active gamemode
-		GamemodeEntity.Current?.OnClientJoined( cl );
+		GamemodeSystem.Current?.OnClientJoined( cl );
 	}
 
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
@@ -72,13 +74,13 @@ partial class GunfightGame : Game
 		base.ClientDisconnect( cl, reason );
 
 		// Inform the active gamemode
-		GamemodeEntity.Current?.OnClientLeft( cl, reason );
+		GamemodeSystem.Current?.OnClientLeft( cl, reason );
 	}
 
 	public override void MoveToSpawnpoint( Entity entity )
 	{
 		var player = entity as GunfightPlayer;
-		var gamemode = GamemodeEntity.Current;
+		var gamemode = GamemodeSystem.Current;
 
 		var gamemodeTransform = gamemode?.GetSpawn( player );
 		if ( gamemodeTransform is not null )
@@ -145,7 +147,7 @@ partial class GunfightGame : Game
 		base.Simulate( cl );
 
 		// Simulate active gamemode
-		GamemodeEntity.Current?.Simulate( cl );
+		GamemodeSystem.Current?.Simulate( cl );
 	}
 
 	public override void FrameSimulate( Client cl )
@@ -195,10 +197,10 @@ partial class GunfightGame : Game
 		}
 
 		// Let the gamemode control post process
-		GamemodeEntity.Current?.PostProcessTick( postProcess );
+		GamemodeSystem.Current?.PostProcessTick( postProcess );
 
 		// Simulate active gamemode
-		GamemodeEntity.Current?.FrameSimulate( cl );
+		GamemodeSystem.Current?.FrameSimulate( cl );
 	}
 
 	public static void Explosion( Entity weapon, Entity owner, Vector3 position, float radius, float damage, float forceScale )

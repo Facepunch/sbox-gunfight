@@ -385,24 +385,26 @@ public partial class GunfightWeapon : BaseWeapon
 			curHits++;
 
 			var tr = DoTraceBullet( start, end, radius );
-
 			if ( tr.Hit )
+			{
+				if ( curHits > 1 )
+					damage *= 0.5f;
 				hits.Add( tr );
+			}
 
 			var reflectDir = CalculateRicochetDirection( tr, ref curHits );
 			var angle = reflectDir.Angle( tr.Direction );
+
+			start = tr.EndPosition;
+			end = tr.EndPosition + (reflectDir * BulletRange);
 
 			if ( !ShouldBulletContinue( tr, angle, ref damage ) )
 			{
 				if ( !ShouldPenetrate() )
 					break;
 
-				// Start killing the damage 
-				damage *= 0.5f;
-
 				// Look for penetration
 				var forwardStep = 0f;
-				var shouldContinue = false;
 
 				while ( forwardStep < PenetrationMaxSteps )
 				{
@@ -415,16 +417,13 @@ public partial class GunfightWeapon : BaseWeapon
 					if ( !penTrace.StartedSolid )
 					{
 						var newStart = penTrace.EndPosition;
-						shouldContinue = true;
 						var newTrace = DoTraceBullet( newStart, newStart + tr.Direction * BulletRange, radius );
 						hits.Add( newTrace );
-
 						break;
 					}
 				}
 
-				if ( !shouldContinue )
-					break;
+				break;
 			}
 		}
 
@@ -477,7 +476,6 @@ public partial class GunfightWeapon : BaseWeapon
 			forward = forward.Normal;
 
 			var damage = BulletDamage;
-
 			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * bulletRange, bulletSize, ref damage ) )
 			{
 				tr.Surface.DoBulletImpact( tr );

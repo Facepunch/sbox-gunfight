@@ -28,7 +28,7 @@ public partial class CrosshairRender
 		alpha = alpha.LerpTo( ads ? 0 : 1, Time.Delta * 20f );
 
 		var shootEase = Easing.EaseIn( lastAttack.LerpInverse( 0.2f, 0.0f ) );
-		var color = Color.Lerp( DisabledColor, StandardColor, lastReload.LerpInverse( 0.0f, 0.4f ) );
+		var color = Color.Lerp( DisabledColor, StandardColor, lastAttack.LerpInverse( 0.0f, 0.4f ) );
 
 		draw.BlendMode = BlendMode.Lighten;
 		draw.Color = color.WithAlpha( ( 0.4f + lastAttack.LerpInverse( 1.2f, 0 ) * 0.5f ) * alpha );

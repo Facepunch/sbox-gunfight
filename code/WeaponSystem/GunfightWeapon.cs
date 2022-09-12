@@ -354,7 +354,7 @@ public partial class GunfightWeapon : BaseWeapon
 			AmmoLowSound( AmmoClip / (float)ClipSize );
 	}
 
-	public virtual IEnumerable<TraceResult> TraceBullet( Vector3 start, Vector3 end, float radius = 2.0f )
+	public virtual IEnumerable<TraceResult> TraceBullet( Vector3 start, Vector3 end, float radius, ref float damage )
 	{
 		float curHits = 0;
 		var hits = new List<TraceResult>();
@@ -379,7 +379,7 @@ public partial class GunfightWeapon : BaseWeapon
 			start = tr.EndPosition;
 			end = tr.EndPosition + ( reflectDir * 5000 );
 
-			if ( !ShouldBulletContinue( tr, angle ) )
+			if ( !ShouldBulletContinue( tr, angle, ref damage ) )
 				break;
 		}
 
@@ -396,12 +396,16 @@ public partial class GunfightWeapon : BaseWeapon
 	/// </summary>
 	protected virtual float MaxRicochetAngle => 45f;
 
-	protected virtual bool ShouldBulletContinue( TraceResult tr, float angle = 0f )
+	protected virtual bool ShouldBulletContinue( TraceResult tr, float angle, ref float damage )
 	{
 		float maxAngle = MaxRicochetAngle;
 
 		if ( angle > maxAngle )
 			return false;
+
+		// Half the damage when ricocheting
+		// TODO - Data setup
+		damage *= 0.5f;
 
 		return true;
 	}
@@ -431,7 +435,7 @@ public partial class GunfightWeapon : BaseWeapon
 			forward += (Vector3.Random + Vector3.Random + Vector3.Random + Vector3.Random) * spread * 0.25f;
 			forward = forward.Normal;
 
-			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * bulletRange, bulletSize ) )
+			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * bulletRange, bulletSize, ref damage ) )
 			{
 				tr.Surface.DoBulletImpact( tr );
 

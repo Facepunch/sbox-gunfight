@@ -150,6 +150,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		{
 			PickupTrigger.EnableTouch = true;
 		}
+
+		StartDecaying();
 	}
 
 	public virtual void Reload()

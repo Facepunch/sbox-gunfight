@@ -120,6 +120,20 @@ public partial class GunfightGamemode : GamemodeEntity
 		}
 	}
 
+	public override void PostProcessTick( StandardPostProcess postProcess )
+	{
+		postProcess.ColorOverlay.Enabled = State == GameState.RoundCountdown;
+		postProcess.ChromaticAberration.Enabled = State == GameState.RoundCountdown;
+		if ( State == GameState.RoundCountdown )
+		{
+			postProcess.ColorOverlay.Color = new Color( 0, 0, 0.3f );
+			postProcess.ColorOverlay.Mode = StandardPostProcess.ColorOverlaySettings.OverlayMode.Mix;
+			postProcess.ColorOverlay.Amount = 0.1f;
+
+			postProcess.ChromaticAberration.Offset = new Vector3( -0.0007f, -0.0007f, 0f );
+		}
+	}
+
 	public enum GameState
 	{
 		WaitingForPlayers, // to round countdown

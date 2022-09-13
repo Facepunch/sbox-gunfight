@@ -1,0 +1,71 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		WeaponName = "AKM"
+		WeaponShortName = "AKM"
+		Slot = "Primary"
+		HoldType = "Rifle"
+		Model = resource:"models/akm/w_akm.vmdl"
+		ViewModel = resource:"models/akm/fp_akm.vmdl"
+		Icon = resource:"ui/weapons/mp5.png"
+		BaseFireRate = 0.12
+		DefaultFireMode = "FullAuto"
+		DamageFlags = "Bullet"
+		SupportedFireModes = 
+		[
+			"Semi",
+			"FullAuto",
+			"Burst",
+		]
+		BulletSpread = 0.03
+		BulletForce = 2
+		BulletDamage = 18
+		BulletSize = 3
+		BulletCount = 1
+		BurstAmount = 3
+		BurstCooldown = 0.3
+		FireSound = resource:"sounds/guns/f1/ar2_shoot.sound"
+		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
+		AimingDisabled = false
+		BulletRange = 5000
+		AmmoType = "SMG"
+		ClipSize = 30
+		StandardClip = 30
+		ReloadTime = 3
+		ReloadSingle = false
+		Crosshair = "Default"
+		ViewModelSetup = 
+		{
+			OverallWeight = 0.1
+			WeightReturnForce = 100
+			WeightDamping = 18
+			AccelerationDamping = 1
+			VelocityScale = 10
+			RotationalPivotForce = 10
+			RotationalScale = 5
+			WalkCycleOffset = "-2,25,0"
+			BobAmount = "25,50"
+			GlobalLerpPower = 1
+			GlobalPositionOffset = "1,-0.5,0.8"
+			GlobalAngleOffset = "0,0,2"
+			CrouchPositionOffset = "-3,1,0"
+			CrouchAngleOffset = "2,0,-15"
+			SlidePositionOffset = "-2,0,-1"
+			SlideAngleOffset = "10,25,-35"
+			AvoidancePositionOffset = "-5,0,0"
+			AvoidanceAngleOffset = "2,0,-25"
+			SprintPositionOffset = "0,-2,-1"
+			SprintAngleOffset = "5,25,0"
+		}
+		Recoil = 
+		{
+			Decay = "60,100"
+			BaseRecoilMinimum = "-2.5,7"
+			BaseRecoilMaximum = "2.5,8"
+			ViewModelScale = 1
+			ViewModelRecoverySpeed = 5
+		}
+		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
+	}
+}

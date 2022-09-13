@@ -71,12 +71,17 @@ public abstract partial class GamemodeEntity : Entity
 	}
 
 	/// <summary>
-	/// Called when a player takes damage
+	/// Called when a player dies.
+	/// Gamemodes can define the life state a player will move to upon death. 
+	/// <see cref="LifeState.Respawning"/> is the default behavior, which will automatically respawn the player in a few seconds. See <see cref="GunfightPlayer.Simulate(Client)"/>
+	/// <see cref="LifeState.Dead"/> means the gamemode has to respawn the player.
 	/// </summary>
 	/// <param name="player"></param>
 	/// <param name="damageInfo"></param>
-	public virtual void OnPlayerKilled( GunfightPlayer player, DamageInfo damageInfo )
+	/// <param name="lifeState"></param>
+	public virtual void OnPlayerKilled( GunfightPlayer player, DamageInfo damageInfo, out LifeState lifeState )
 	{
+		lifeState = LifeState.Respawning;
 	}
 
 	/// <summary>

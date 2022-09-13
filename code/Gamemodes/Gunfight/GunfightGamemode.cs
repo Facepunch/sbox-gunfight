@@ -134,6 +134,12 @@ public partial class GunfightGamemode : GamemodeEntity
 		}
 	}
 
+	public override void OnPlayerKilled( GunfightPlayer player, DamageInfo damageInfo, out LifeState lifeState )
+	{
+		// Do not allow automatic respawning
+		lifeState = LifeState.Dead;
+	}
+
 	public enum GameState
 	{
 		WaitingForPlayers, // to round countdown

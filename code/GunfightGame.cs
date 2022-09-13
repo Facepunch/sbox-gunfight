@@ -302,7 +302,7 @@ partial class GunfightGame : Game
 				var wep = pawn.LastAttackerWeapon as GunfightWeapon;
 				if ( wep != null )
 				{
-					OnKilledMessage( pawn.LastAttacker.Client.PlayerId, pawn.LastAttacker.Client.Name, client.PlayerId, client.Name, wep.WeaponDefinition.ResourceName );
+					OnKilledMessage( pawn.LastAttacker.Client.PlayerId, pawn.LastAttacker.Client.Name, client.PlayerId, client.Name, wep.WeaponDefinition.WeaponShortName );
 				}
 				else
 				{

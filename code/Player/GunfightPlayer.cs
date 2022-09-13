@@ -77,9 +77,8 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		var primary = Inventory.PrimaryWeapon;
 		if ( Inventory.Drop( primary ) )
-		{	
-			// delete weapon after 30 seconds
-			primary.DeleteAsync( 30f );
+		{
+			primary.StartDecaying();
 		}
 
 		Inventory.DeleteContents();

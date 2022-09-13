@@ -28,6 +28,11 @@ public static class TeamExtensions
 	{
 		return AllClients( team ).Select( x => x.Pawn as GunfightPlayer );
 	}
+
+	public static Team GetTeam( this Client cl )
+	{
+		return TeamSystem.GetTeam( cl );
+	}
 }
 
 public static class TeamSystem
@@ -55,6 +60,19 @@ public static class TeamSystem
 			return FriendlyStatus.Hostile;
 
 		return FriendlyStatus.Friendly;
+	}
+
+	public static FriendlyStatus GetFriendState( Client one, Client two )
+	{
+		var teamOne = one.GetTeam();
+		var teamTwo = two.GetTeam();
+
+		return GetFriendState( teamOne, teamTwo );
+	}
+
+	public static FriendlyStatus GetFriendState( Client client, Team team )
+	{
+		return GetFriendState( GetTeam( client ), team );
 	}
 
 	public static Team GetLowestCount()

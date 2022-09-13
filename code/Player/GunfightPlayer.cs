@@ -60,14 +60,16 @@ public partial class GunfightPlayer : Player, IHudMarker
 		GiveWeapon( "1911" );
 
 		Rand.SetSeed( Time.Tick );
-		var rand = Rand.Int( 0, 2 );
+		var rand = Rand.Int( 0, 3 );
 
 		if ( rand == 0 )
 			GiveWeapon( "mp5", true );
 		else if ( rand == 1 )
 			GiveWeapon( "r870", true );
-		else
+		else if ( rand == 2 )
 			GiveWeapon( "famas", true );
+		else
+			GiveWeapon( "akm", true );
 	}
 
 	public void GiveWeapon( string name, bool makeActive = false )

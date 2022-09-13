@@ -7,6 +7,8 @@ public partial class GunfightScorePanel : Panel
 {
 	// @ref
 	public Panel BoxLayout { get; set; }
+	// @text
+	public string GameState => (GamemodeSystem.Current as GunfightGamemode)?.GetGameStateLabel() ?? "";
 
 	protected List<Panel> Boxes { get; set; } = new();
 

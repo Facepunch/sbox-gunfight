@@ -77,7 +77,18 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 	public override void OnKilled()
 	{
-		base.OnKilled();
+		Game.Current?.OnKilled( this );
+
+		// Default life state is Respawning, this means the player will handle respawning after a few seconds
+		LifeState newLifeState = LifeState.Respawning;
+
+		// Inform the active gamemode
+		GamemodeSystem.Current?.OnPlayerKilled( this, LastDamage, out newLifeState );
+
+		TimeSinceKilled = 0;
+		LifeState = newLifeState;
+		StopUsing();
+		Client?.AddInt( "deaths", 1 );
 
 		var primary = Inventory.PrimaryWeapon;
 		if ( Inventory.Drop( primary ) )
@@ -114,9 +125,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 		{
 			child.EnableDrawing = false;
 		}
-
-		// Inform the active gamemode
-		GamemodeSystem.Current?.OnPlayerKilled( this, LastDamage );
 	}
 
 	protected void SimulateView()
@@ -154,9 +162,21 @@ public partial class GunfightPlayer : Player, IHudMarker
 		}
 	}
 
+	TimeSince TimeSinceKilled;
 	public override void Simulate( Client cl )
 	{
-		base.Simulate( cl );
+		if ( LifeState == LifeState.Respawning )
+		{
+			if ( TimeSinceKilled > 3 && IsServer )
+			{
+				Respawn();
+			}
+
+			return;
+		}
+
+		var controller = GetActiveController();
+		controller?.Simulate( cl, this, GetActiveAnimator() );
 
 		if ( LifeState != LifeState.Alive )
 			return;
@@ -262,7 +282,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 	public override void TakeDamage( DamageInfo info )
 	{
-		if ( LifeState == LifeState.Dead )
+		if ( LifeState != LifeState.Alive )
 			return;
 
 		if ( !GamemodeSystem.Current?.AllowDamage() ?? true )
@@ -327,7 +347,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		//
 		// Add a score to the killer
 		//
-		if ( LifeState == LifeState.Dead && info.Attacker != null )
+		if ( LifeState != LifeState.Alive && info.Attacker != null )
 		{
 			if ( info.Attacker.Client != null && info.Attacker != this )
 			{

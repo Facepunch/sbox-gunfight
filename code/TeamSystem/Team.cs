@@ -29,6 +29,11 @@ public static class TeamExtensions
 		return AllClients( team ).Select( x => x.Pawn as GunfightPlayer );
 	}
 
+	public static IEnumerable<GunfightPlayer> AlivePlayers( this Team team )
+	{
+		return team.AllPlayers().Where( x => x.LifeState == LifeState.Alive );
+	}
+
 	public static Team GetTeam( this Client cl )
 	{
 		return TeamSystem.GetTeam( cl );

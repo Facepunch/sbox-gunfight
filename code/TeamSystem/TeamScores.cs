@@ -5,20 +5,17 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 	public TeamScores()
 	{
 		Scores = new int[ArraySize];
-		OldScores = new int[ArraySize];
+		MaximumScore = 3;
 
 		Reset();
 	}
 
 	public virtual int MinimumScore => 0;
 
-	[ConVar.Replicated( "gunfight_score_max" )]
-	public static int MaximumScore { get; set; } = 5;
+	[Net] public int MaximumScore { get; set; } = 3;
 
 	protected static int ArraySize => Enum.GetNames( typeof( Team ) ).Length;
 	protected int[] Scores { get; set; }
-
-	protected int[] OldScores { get; set; }
 
 	public Team GetHighestTeam()
 	{
@@ -66,8 +63,6 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 		WriteNetworkData();
 	}
 
-	public int? GetOldScore( Team team ) => OldScores?[(int)team];
-
 	public int GetScore( Team team )
 	{
 		return Scores[(int)team];
@@ -85,13 +80,13 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 
 	public void Read( ref NetRead read )
 	{
-		OldScores = Scores?.ToArray();
-
 		Scores = new int[ArraySize];
 
 		int count = read.Read<int>();
 		for ( int i = 0; i < count; i++ )
 			Scores[i] = read.Read<int>();
+
+		Event.Run( "gunfight.scores.changed" );
 	}
 
 	public void Write( NetWrite write )
@@ -105,7 +100,7 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 	public void Reset()
 	{
 		// Set initializing scores.
-		SetScore( Team.BLUFOR, MaximumScore );
-		SetScore( Team.OPFOR, MaximumScore );
+		SetScore( Team.BLUFOR, 3 );
+		SetScore( Team.OPFOR, 1 );
 	}
 }

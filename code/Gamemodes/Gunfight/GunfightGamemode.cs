@@ -14,7 +14,7 @@ public partial class GunfightGamemode : GamemodeEntity
 	public string FormattedTimeRemaining => TimeRemaining.ToString( @"mm\:ss" );
 
 	// Stats
-	protected int MinimumPlayers => 2;
+	protected int MinimumPlayers => 4;
 	protected float RoundCountdownLength => 10f;
 	protected float RoundLength => 120f;
 	protected float FlagActiveLength => 30f;
@@ -41,6 +41,21 @@ public partial class GunfightGamemode : GamemodeEntity
 		}
 	}
 
+	public override bool AllowMovement()
+	{
+		return State != GameState.RoundCountdown;
+	}
+
+	public override bool AllowDamage()
+	{
+		return State != GameState.RoundCountdown;
+	}
+
+	public override void PreSpawn( GunfightPlayer player )
+	{
+		player.SpawnPointTag = player.Team == Team.BLUFOR ? "one" : "two";
+	}
+
 	public void SetGameState( GameState newState )
 	{
 		var old = State;
@@ -48,7 +63,7 @@ public partial class GunfightGamemode : GamemodeEntity
 
 		Log.Info( $"Game State Changed to {newState}" );
 
-		OnGameStateChanged( old, State );
+		OnGameStateChanged( old, newState );
 	}
 
 	public string GetGameStateLabel()
@@ -70,7 +85,10 @@ public partial class GunfightGamemode : GamemodeEntity
 		TimeSinceStateChanged = 0;
 
 		if ( after == GameState.RoundCountdown )
+		{
 			TimeUntilNextState = RoundCountdownLength;
+			RespawnAllPlayers();
+		}
 		else if ( after == GameState.RoundActive )
 			TimeUntilNextState = RoundLength;
 		else if ( after == GameState.RoundFlagActive )
@@ -83,6 +101,8 @@ public partial class GunfightGamemode : GamemodeEntity
 
 	public override void Simulate( Client cl )
 	{
+		if ( !IsServer ) return;
+
 		if ( TimeUntilNextState )
 		{
 			// If the round counts down to 0, start the round

@@ -62,6 +62,15 @@ public abstract partial class GamemodeEntity : Entity
 	}
 
 	/// <summary>
+	/// Called when the score changes for any team
+	/// </summary>
+	/// <param name="team"></param>
+	/// <param name="score"></param>
+	public virtual void OnScoreChanged( Team team, int score )
+	{
+	}
+
+	/// <summary>
 	/// Called when a player takes damage
 	/// </summary>
 	/// <param name="player"></param>

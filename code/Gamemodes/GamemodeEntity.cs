@@ -89,6 +89,16 @@ public abstract partial class GamemodeEntity : Entity
 		return null;
 	}
 
+	public virtual void PreSpawn( GunfightPlayer player )
+	{
+		//
+	}
+
+	public virtual void RespawnAllPlayers()
+	{
+		All.OfType<GunfightPlayer>().ToList().ForEach( x => x.Respawn() );
+	}
+
 	/// <summary>
 	/// Decides whether or not players can move
 	/// </summary>
@@ -127,5 +137,18 @@ public abstract partial class GamemodeEntity : Entity
 	public virtual void CleanupMap()
 	{
 		//
+	}
+
+	public override void BuildInput( InputBuilder input )
+	{
+		if ( !AllowMovement() )
+		{
+			input.InputDirection = Vector3.Zero;
+			input.ClearButton( InputButton.Jump );
+			input.ClearButton( InputButton.Duck );
+			input.ClearButton( InputButton.PrimaryAttack );
+
+			input.StopProcessing = true;
+		}
 	}
 }

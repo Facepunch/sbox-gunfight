@@ -30,16 +30,22 @@ public partial class GunfightPlayer
 		if ( LifeState != LifeState.Alive )
 			return false;
 
-		//if ( !Client.IsFriend( Local.Client ) )
-		//	return false;
-
-		if ( !CalculateVisibility() )
-			return false;
+		var friendState = TeamSystem.GetFriendState( Team, TeamSystem.MyTeam );
+		var isEnemy = friendState == TeamSystem.FriendlyStatus.Hostile;
+		if ( isEnemy )
+		{
+			if ( !CalculateVisibility() )
+				return false;
+		}
 
 		builder.Text = $"{Client.Name}";
-		builder.MaxDistance = 1000000f;
+		builder.MaxDistance = isEnemy ? 1000000f : 10000000f;
 		builder.DistanceScale = 0.5f;
 		builder.Position = EyePosition + Vector3.Up * 15f;
+
+		// Classes
+		builder.Classes["friendly"] = friendState == TeamSystem.FriendlyStatus.Friendly;
+		builder.Classes["enemy"] = friendState == TeamSystem.FriendlyStatus.Hostile;
 
 		return true;
 	}

@@ -2,6 +2,9 @@
 $theme-color: #fbf1c7;
 //$theme-color: #CECECE;
 
+$friendly: cyan;
+$enemy: red;
+
 @import "_damageindicator.scss";
 @import "_hitindicator.scss";
 @import "_inventory.scss";

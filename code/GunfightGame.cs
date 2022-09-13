@@ -11,8 +11,9 @@ partial class GunfightGame : Game
 {
 	public static new GunfightGame Current => Game.Current as GunfightGame;
 
-	[Net]
-	GunfightHud Hud { get; set; }
+	[Net] public GunfightHud Hud { get; set; }
+	[Net] public TeamScores Scores { get; set; }
+
 
 	StandardPostProcess postProcess;
 
@@ -25,6 +26,8 @@ partial class GunfightGame : Game
 		if ( IsServer )
 		{
 			Hud = new GunfightHud();
+			Scores = new();
+
 			Global.TickRate = 30;
 		}
 

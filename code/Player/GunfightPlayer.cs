@@ -20,6 +20,8 @@ public partial class GunfightPlayer : Player, IHudMarker
 		Animator = new PlayerAnimator();
 		CameraMode = new FirstPersonCamera();
 		Controller = new PlayerController();
+
+		PlayerInventory?.DeleteContents();
 		PlayerInventory = new PlayerInventory( this );
 
 		EnableAllCollisions = true;

@@ -28,16 +28,6 @@ public static class TeamExtensions
 	{
 		return AllClients( team ).Select( x => x.Pawn as GunfightPlayer );
 	}
-	public static Team GetLowestCount( this Team team )
-	{
-		var bluforCount = Count( Team.BLUFOR );
-		var opforCount = Count( Team.OPFOR );
-
-		if ( opforCount < bluforCount )
-			return Team.OPFOR;
-
-		return Team.BLUFOR;
-	}
 }
 
 public static class TeamSystem
@@ -65,6 +55,17 @@ public static class TeamSystem
 			return FriendlyStatus.Hostile;
 
 		return FriendlyStatus.Friendly;
+	}
+
+	public static Team GetLowestCount()
+	{
+		var bluforCount = Team.BLUFOR.Count();
+		var opforCount = Team.OPFOR.Count();
+
+		if ( opforCount < bluforCount )
+			return Team.OPFOR;
+
+		return Team.BLUFOR;
 	}
 
 	public static bool IsFriendly( Team one, Team two )

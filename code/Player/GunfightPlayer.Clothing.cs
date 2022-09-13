@@ -12,7 +12,7 @@ public partial class GunfightPlayer
 	/// </summary>
 	public void UpdateClothes( Client cl )
 	{
-		Clothing ??= new();
+		Clothing = new();
 
 		var outfit = Client.All.Count() % 2 == 0 ? armyOutfitJson : terrorOutfitJson;
 		Clothing.Deserialize( outfit );

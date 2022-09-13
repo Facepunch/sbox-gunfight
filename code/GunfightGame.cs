@@ -45,7 +45,7 @@ partial class GunfightGame : Game
 		GamemodeSystem.SetupGamemode();
 	}
 
-	protected void CreatePawn( Client cl )
+	protected Player CreatePawn( Client cl )
 	{
 		cl.Pawn?.Delete();
 
@@ -59,17 +59,20 @@ partial class GunfightGame : Game
 
 		player.UpdateClothes( cl );
 		cl.Pawn = player;
-		player.Respawn();
+
+		return player;
 	}
 
 	public override void ClientJoined( Client cl )
 	{
 		base.ClientJoined( cl );
 
-		CreatePawn( cl );
+		var player = CreatePawn( cl );
 
 		// Inform the active gamemode
 		GamemodeSystem.Current?.OnClientJoined( cl );
+
+		player.Respawn();
 	}
 
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
@@ -92,12 +95,13 @@ partial class GunfightGame : Game
 			return;
 		}
 
-		var spawnpoint = Entity.All
-								.OfType<SpawnPoint>()
-								.OrderByDescending( x => SpawnpointWeight( player, x ) )
-								.FirstOrDefault();
+		gamemode?.PreSpawn( player );
 
-		//Log.Info( $"chose {spawnpoint}" );
+		var query = Entity.All.OfType<SpawnPoint>();
+		if ( player.SpawnPointTag != null )
+			query = query.Where( x => x.Tags.Has( player.SpawnPointTag ) );
+
+		var spawnpoint = query.OrderByDescending( x => SpawnpointWeight( player, x ) ).FirstOrDefault();
 
 		if ( spawnpoint == null )
 		{
@@ -317,4 +321,12 @@ partial class GunfightGame : Game
 		}
 	}
 
+	public override void BuildInput( InputBuilder input )
+	{
+		base.BuildInput( input );
+		
+		if ( input.StopProcessing ) return;
+
+		GamemodeSystem.Current?.BuildInput( input );
+	}
 }

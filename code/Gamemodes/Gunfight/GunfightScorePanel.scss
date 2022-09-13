@@ -1,0 +1,72 @@
+@import "/Resource/Styles/hud.scss";
+
+GunfightScorePanel {
+    position: absolute;
+    margin-top: 64px;
+    width: 25%;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+
+    label {
+        color: $theme-color;
+        font-family: Quantico-Regular;
+        font-size: 16px;
+    }
+
+    .gamestatus {
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        align-items: center;
+        height: 40px;
+
+        label {
+            font-size: 24px;
+        }
+    }
+
+    .scoreboxes {
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        height: 80px;
+
+        .box {
+            width: 48px;
+            height: 48px;
+            border-radius: 100px;
+            border: 2px solid white;
+            background-color: rgba( white, 0.05 );
+            backdrop-filter: blur(5px);
+
+            &:not( :first-child ) {
+                margin-left: 4px;
+            }
+
+            background-size: 60%;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            &.winning {
+                width: 64px;
+                height: 64px;
+                border: 2px solid white;
+            }
+
+            &.friendly {
+                border: 2px solid $friendly;
+                background-color: rgba( $friendly, 0.05 );
+                background-image-tint: $friendly;
+                background-image: url( /ui/crown.png );
+            }
+
+            &.enemy {
+                border: 2px solid $enemy;
+                background-color: rgba( $enemy, 0.05 );
+                background-image-tint: $enemy;
+                background-image: url( /ui/crown.png );
+            }
+        }
+    }
+}

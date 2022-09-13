@@ -100,7 +100,7 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 	public void Reset()
 	{
 		// Set initializing scores.
-		SetScore( Team.BLUFOR, 3 );
-		SetScore( Team.OPFOR, 1 );
+		SetScore( Team.BLUFOR, MinimumScore );
+		SetScore( Team.OPFOR, MinimumScore );
 	}
 }

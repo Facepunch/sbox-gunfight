@@ -85,9 +85,9 @@
 							exclude_by_default = false
 							exception_list = 
 							[
+								"Arm_Standard_Gloves_r",
 								"Arm_Standard_l",
 								"Arm_Standard_r",
-								"Arm_Standard_Gloves_r",
 								"Arm_Standard_Gloves_l",
 								"Arm_Standard_Shirt_l",
 								"Arm_Standard_Shirt_r",

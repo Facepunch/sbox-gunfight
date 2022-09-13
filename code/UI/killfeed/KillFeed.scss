@@ -1,4 +1,6 @@
-﻿killfeed
+﻿@import "/Resource/Styles/hud.scss";
+
+killfeed
 {
 	position: absolute;
 	top: 100px;
@@ -61,6 +63,14 @@ KillFeedEntry
 		&.me
 		{
 			color: #b6ff00;
+		}
+
+		&.friendly {
+			color: $friendly;
+		}
+
+		&.enemy {
+			color: $enemy;
 		}
 	}
 

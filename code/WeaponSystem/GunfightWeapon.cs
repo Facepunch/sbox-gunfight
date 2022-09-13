@@ -30,6 +30,9 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	protected GunfightPlayer Player => Owner as GunfightPlayer;
 	protected PlayerController PlayerController => Player?.Controller as PlayerController;
 
+	public bool IsDecaying { get; set; } = false;
+	public TimeUntil TimeUntilDecay { get; set; } = 0;
+
 	public float LowAmmoFraction => 0.2f;
 	public bool IsLowAmmo() => (AmmoClip / (float)ClipSize) <= LowAmmoFraction;
 	public bool IsUnlimitedAmmo() => AmmoClip == 0 && ClipSize == 0;
@@ -54,6 +57,29 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public float BulletRange => WeaponDefinition.BulletRange;
 	public string GunIcon => WeaponDefinition.Icon;
 	public float PostSprintAttackDelay => 0.15f;
+
+	public void StartDecaying()
+	{
+		TimeUntilDecay = 30f;
+		IsDecaying = true;
+	}
+
+	public void StopDecaying()
+	{
+		IsDecaying = false;
+		TimeUntilDecay = 0f;
+	}
+	
+	[Event.Tick.Server]
+	protected void TickServer()
+	{
+		if ( !IsDecaying ) return;
+
+		if ( TimeUntilDecay )
+		{
+			Delete();
+		}
+	}
 
 	public void CycleFireMode()
 	{
@@ -93,8 +119,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		TimeSinceBurstFinished = WeaponDefinition.BurstCooldown;
 		IsBurstFiring = false;
 		BurstCount = 0;
-
 		IsReloading = false;
+		StopDecaying();
 	}
 
 	public override void Spawn()
@@ -395,7 +421,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			.Run();
 	}
 
-	protected float PenetrationIncrementAmount => 10f;
+	protected float PenetrationIncrementAmount => 15f;
 	protected int PenetrationMaxSteps => 2;
 
 	protected bool ShouldPenetrate()
@@ -428,12 +454,10 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 			start = tr.EndPosition;
 			end = tr.EndPosition + (reflectDir * BulletRange);
-
-			if ( !ShouldBulletContinue( tr, angle, ref damage ) )
+			
+			var didPenetrate = false;
+			if ( ShouldPenetrate() )
 			{
-				if ( !ShouldPenetrate() )
-					break;
-
 				// Look for penetration
 				var forwardStep = 0f;
 
@@ -450,12 +474,14 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 						var newStart = penTrace.EndPosition;
 						var newTrace = DoTraceBullet( newStart, newStart + tr.Direction * BulletRange, radius );
 						hits.Add( newTrace );
+						didPenetrate = true;
 						break;
 					}
 				}
-
-				break;
 			}
+
+			if ( didPenetrate || !ShouldBulletContinue( tr, angle, ref damage ) )
+				break;
 		}
 
 		return hits;
@@ -575,6 +601,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public bool IsUsable( Entity user ) => IsUsable();
 
 	protected TimeSince CrosshairLastShoot { get; set; }
+
+	public Task DeleteTask { get; set; }
 
 	public virtual void RenderHud( in Vector2 screensize )
 	{

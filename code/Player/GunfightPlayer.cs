@@ -7,6 +7,8 @@ public partial class GunfightPlayer : Player, IHudMarker
 	[Net] public PlayerInventory PlayerInventory { get; set; }
 	[Net, Predicted] public TimeSince TimeSinceDropped { get; set; }
 
+	public string SpawnPointTag { get; set; } = null;
+
 	public bool SupressPickupNotices { get; private set; }
 	public bool IsRegen { get; set; }
 	public new PlayerInventory Inventory => PlayerInventory;
@@ -259,6 +261,9 @@ public partial class GunfightPlayer : Player, IHudMarker
 	public override void TakeDamage( DamageInfo info )
 	{
 		if ( LifeState == LifeState.Dead )
+			return;
+
+		if ( !GamemodeSystem.Current?.AllowDamage() ?? true )
 			return;
 
 		LastDamage = info;

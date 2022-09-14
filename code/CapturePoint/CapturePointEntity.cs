@@ -9,13 +9,6 @@ namespace Facepunch.Gunfight;
 [Solid]
 public partial class CapturePointEntity : BaseTrigger, IHudMarker
 {
-	public enum CaptureState
-	{
-		None,
-		Contested,
-		Capturing
-	}
-
 	protected static int ArraySize => Enum.GetNames( typeof( Team ) ).Length - 1;
 	public Team Team { get => TeamComponent.Team; set => TeamComponent.Team = value; }
 
@@ -37,7 +30,6 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 	{
 		TimeSinceStateChanged = 0;
 	}
-
 
 	// @Server
 	public Dictionary<Team, HashSet<Player>> Occupants { get; protected set; } = new();
@@ -156,7 +148,6 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 		if ( Occupants.Count == 0 || OccupantCounts.Count == 0 )
 			return;
 
-
 		var lastCount = 0;
 		var highest = Team.Unassigned;
 		var contested = false;
@@ -240,13 +231,9 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 	}
 
 	string IHudMarker.GetClass() => "capturepoint";
-
 	bool IHudMarker.UpdateMarker( ref HudMarkerBuilder info )
 	{
 		if ( !this.IsValid() )
-			return false;
-
-		if ( Local.Pawn is GunfightPlayer player && player.CapturePoint == this )
 			return false;
 
 		info.Text = Identity;
@@ -254,5 +241,12 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 		info.StayOnScreen = true;
 
 		return true;
+	}
+
+	public enum CaptureState
+	{
+		None,
+		Contested,
+		Capturing
 	}
 }

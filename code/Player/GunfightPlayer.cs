@@ -36,7 +36,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		Inventory.DeleteContents();
 
-		PlayerLoadout();
+		GiveAll();
 
 		SupressPickupNotices = false;
 
@@ -47,7 +47,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		base.Respawn();
 	}
 
-	public void PlayerLoadout()
+	public void GiveAll()
 	{
 		var overrideLoadout = GamemodeSystem.Current?.PlayerLoadout( this ) ?? false;
 		// Use a default loadout
@@ -87,6 +87,38 @@ public partial class GunfightPlayer : Player, IHudMarker
 		Inventory.Add( WeaponDefinition.CreateWeapon( def ), makeActive );
 	}
 
+	[ClientRpc]
+	public void ClearEffects()
+	{
+		StopSlidingEffects();
+	}
+
+	public Particles SlidingParticles { get; set; }
+	public Sound SlidingSound { get; set; }
+	bool SlidingEffectsActive { get; set; } = false;
+
+	public void StartSlidingEffects()
+	{
+		if ( SlidingEffectsActive ) return;
+
+		SlidingEffectsActive = true;
+		SlidingParticles?.Destroy( true );
+		SlidingParticles = Particles.Create( "particles/gameplay/player/slide/slide.vpcf", this, true );
+
+		SlidingSound.Stop();
+		SlidingSound = Sound.FromEntity( "sounds/player/foley/slide/ski.loop.sound", this );
+	}
+
+	public void StopSlidingEffects( bool stopSound = true )
+	{
+		SlidingEffectsActive = false;
+		SlidingParticles?.Destroy( true );
+		SlidingSound.Stop();
+
+		if ( stopSound )
+			Sound.FromEntity( "sounds/player/foley/slide/ski.stop.sound", this );
+	}
+
 	public override void OnKilled()
 	{
 		Game.Current?.OnKilled( this );
@@ -103,7 +135,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		Client?.AddInt( "deaths", 1 );
 
 		var primary = Inventory.PrimaryWeapon;
-		if ( Inventory.Drop( primary ) )
+		if ( primary.IsValid() && Inventory.Drop( primary ) )
 		{
 			primary.StartDecaying();
 		}
@@ -125,6 +157,8 @@ public partial class GunfightPlayer : Player, IHudMarker
 		{
 			BecomeRagdollOnClient( Velocity, LastDamage.Flags, LastDamage.Position, LastDamage.Force, GetHitboxBone( LastDamage.HitboxIndex ) );
 		}
+
+		ClearEffects();
 
 		Controller = null;
 

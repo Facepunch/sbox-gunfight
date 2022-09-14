@@ -32,20 +32,16 @@ public partial class SlideMechanic : BaseMoveMechanic
 	{
 		Host.AssertClient();
 
-		SlidingParticles?.Destroy( true );
-		SlidingParticles = Particles.Create( "particles/gameplay/player/slide/slide.vpcf", Controller.Pawn, true );
-
-		SlidingSound.Stop();
-		SlidingSound = Sound.FromEntity( "sounds/player/foley/slide/ski.loop.sound", Controller.Pawn );
+		var player = Controller.Pawn as GunfightPlayer;
+		player.StartSlidingEffects();
 	}
 
 	protected void StopSliding()
 	{
 		Host.AssertClient();
 
-		SlidingParticles?.Destroy( true );
-		SlidingSound.Stop();
-		Sound.FromEntity( "sounds/player/foley/slide/ski.stop.sound", Controller.Pawn );
+		var player = Controller.Pawn as GunfightPlayer;
+		player.StopSlidingEffects();
 	}
 
 	protected bool ShouldSlide()

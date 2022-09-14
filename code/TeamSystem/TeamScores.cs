@@ -68,14 +68,18 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 		return Scores[(int)team];
 	}
 
-	public void AddScore( Team team, int score )
+	public int AddScore( Team team, int score )
 	{
-		SetScore( team, GetScore( team ) + score );
+		var newScore = GetScore( team ) + score;
+		SetScore( team, newScore );
+		return newScore;
 	}
 
-	public void RemoveScore( Team team, int score )
+	public int RemoveScore( Team team, int score )
 	{
-		SetScore( team, GetScore( team ) - score );
+		var newScore = GetScore( team ) - score;
+		SetScore( team, newScore );
+		return newScore;
 	}
 
 	public void Read( ref NetRead read )

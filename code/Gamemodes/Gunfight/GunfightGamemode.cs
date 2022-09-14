@@ -13,17 +13,18 @@ public partial class GunfightGamemode : GamemodeEntity
 
 	public Loadout CurrentLoadout { get; set; }
 
+	[Net] public CapturePointEntity ActiveFlag { get; set; }
+
 	public TimeSpan TimeRemaining => TimeSpan.FromSeconds( TimeUntilNextState );
 	public string FormattedTimeRemaining => TimeRemaining.ToString( @"mm\:ss" );
 
 	// Stats
 	protected int MinimumPlayers => 4;
-	protected float RoundCountdownLength => 10f;
-	protected float RoundLength => 120f;
-	protected float FlagActiveLength => 30f;
-	protected float FlagCaptureTime => 5f;
-	protected float RoundOverLength => 10f;
-	protected float GameWonLength => 30f;
+	protected float RoundCountdownLength => 5f;
+	protected float RoundLength => 40f;
+	protected float FlagActiveLength => 10f;
+	protected float RoundOverLength => 5f;
+	protected float GameWonLength => 15f;
 
 	public override Panel GetHudPanel() => new GunfightGamemodePanel();
 
@@ -109,7 +110,21 @@ public partial class GunfightGamemode : GamemodeEntity
 		};
 	}
 
-	public string GetTimeLeftLabel() => FormattedTimeRemaining;
+	string GetFlagActiveTime()
+	{
+		if ( ActiveFlag.CurrentState == CapturePointEntity.CaptureState.None )
+			return FormattedTimeRemaining;
+		return "";
+	}
+
+	public string GetTimeLeftLabel()
+	{
+		return State switch
+		{
+			GameState.RoundFlagActive => GetFlagActiveTime(),
+			_ => FormattedTimeRemaining
+		};
+	}
 
 	public void CreateFlag()
 	{
@@ -120,7 +135,7 @@ public partial class GunfightGamemode : GamemodeEntity
 			var marker = markers[rand];
 
 			// Make the flag
-			_ = new CapturePointEntity
+			ActiveFlag = new CapturePointEntity
 			{
 				Transform = marker.Transform,
 				Identity = "Capture the flag"
@@ -160,7 +175,10 @@ public partial class GunfightGamemode : GamemodeEntity
 			TimeUntilNextState = FlagActiveLength;
 		}
 		else if ( after == GameState.RoundOver )
+		{
+			CleanupMap();
 			TimeUntilNextState = RoundOverLength;
+		}
 		else if ( after == GameState.GameWon )
 		{
 			TimeUntilNextState = GameWonLength;
@@ -184,7 +202,11 @@ public partial class GunfightGamemode : GamemodeEntity
 				SetGameState( GameState.RoundFlagActive );
 			// If the flag has been active for too long, end the round anyway without a winner.
 			else if ( State == GameState.RoundFlagActive )
-				SetGameState( GameState.RoundOver );
+			{
+				// Only end the round if there's nobody on the flag
+				if ( ActiveFlag.CurrentState == CapturePointEntity.CaptureState.None )
+					SetGameState( GameState.RoundOver );
+			}
 			// After the round ends, go back to countdown.
 			else if ( State == GameState.RoundOver )
 				SetGameState( GameState.RoundCountdown );
@@ -265,10 +287,8 @@ public partial class GunfightGamemode : GamemodeEntity
 
 	public override void CleanupMap()
 	{
-		// delete all cap points
-		Entity.All.OfType<CapturePointEntity>()
-			.ToList()
-			.ForEach( x => x.Delete() );
+		// Delete the flag if it exists.
+		ActiveFlag?.Delete();
 	}
 
 	public override void OnFlagCaptured( CapturePointEntity flag, Team team )

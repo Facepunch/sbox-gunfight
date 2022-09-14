@@ -37,6 +37,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		Inventory.DeleteContents();
 
 		GiveAll();
+		ClearEffects();
 
 		SupressPickupNotices = false;
 

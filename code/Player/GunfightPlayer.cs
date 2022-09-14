@@ -345,7 +345,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		var isHeadshot = GetHitboxGroup( info.HitboxIndex ) == 1;
 		if ( isHeadshot )
 		{
-			info.Damage *= 2.0f;
+			info.Damage *= 2.5f;
 		}
 
 		this.ProceduralHitReaction( info );

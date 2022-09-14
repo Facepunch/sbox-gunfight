@@ -127,6 +127,9 @@ public partial class GunfightPlayer : Player, IHudMarker
 		{
 			child.EnableDrawing = false;
 		}
+
+		// Inform the active gamemode
+		GamemodeSystem.Current?.PostPlayerKilled( this, LastDamage );
 	}
 
 	protected void SimulateView()

@@ -216,6 +216,12 @@ public partial class GunfightGamemode : GamemodeEntity
 
 	public override void OnPlayerKilled( GunfightPlayer player, DamageInfo damageInfo, out LifeState lifeState )
 	{
+		if ( State == GameState.WaitingForPlayers )
+		{
+			lifeState = LifeState.Respawning;
+			return;
+		}
+
 		// Do not allow automatic respawning
 		lifeState = LifeState.Dead;
 	}

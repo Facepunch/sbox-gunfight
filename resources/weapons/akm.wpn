@@ -29,7 +29,7 @@
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
 		AimingDisabled = false
 		BulletRange = 5000
-		AmmoType = "SMG"
+		AmmoType = "Rifle"
 		ClipSize = 30
 		StandardClip = 30
 		ReloadTime = 3

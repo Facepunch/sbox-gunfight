@@ -181,4 +181,9 @@ public abstract partial class GamemodeEntity : Entity
 			client.SetInt( "deaths", 0 );
 		}
 	}
+
+	public virtual void OnFlagCaptured( CapturePointEntity flag, Team team )
+	{
+		//
+	}
 }

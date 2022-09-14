@@ -227,7 +227,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 			{
 				if ( last != Captured )
 				{
-					// CAPTURE JUST HAPPENED, AWARD PLAYERS?
+					GamemodeSystem.Current?.OnFlagCaptured( this, highest );
 				}
 				Team = highest;
 			}

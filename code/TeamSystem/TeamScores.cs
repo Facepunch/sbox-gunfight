@@ -58,7 +58,7 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 		var newScore = Math.Clamp( score, MinimumScore, MaximumScore );
 		Scores[(int)team] = newScore;
 
-		GamemodeSystem.Current?.OnScoreChanged( team, score );
+		GamemodeSystem.Current?.OnScoreChanged( team, newScore, newScore == MaximumScore );
 
 		WriteNetworkData();
 	}

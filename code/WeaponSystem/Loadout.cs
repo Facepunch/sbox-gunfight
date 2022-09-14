@@ -15,7 +15,7 @@ public partial class Loadout : GameResource
 	public WeaponDefinition SecondaryWeapon { get; set; }
 	public WeaponDefinition MeleeWeapon { get; set; }
 	public List<WeaponDefinition> Gadgets { get; set; }
-	public Dictionary<AmmoType, int> Ammo { get; set; }
+	public Dictionary<AmmoType, int> Ammo { get; set; } = new();
 
 	protected override void PostLoad()
 	{

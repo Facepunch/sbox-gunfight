@@ -6,6 +6,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 	[Net] public float MaxHealth { get; set; }
 	[Net] public PlayerInventory PlayerInventory { get; set; }
 	[Net, Predicted] public TimeSince TimeSinceDropped { get; set; }
+	[Net] public CapturePointEntity CapturePoint { get; set; }
 
 	public string SpawnPointTag { get; set; } = null;
 

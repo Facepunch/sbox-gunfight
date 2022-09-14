@@ -111,6 +111,27 @@ public partial class GunfightGamemode : GamemodeEntity
 
 	public string GetTimeLeftLabel() => FormattedTimeRemaining;
 
+	public void CreateFlag()
+	{
+		var markers = GamemodeMarker.WithTag( "capturepoint" ).ToList();
+		if ( markers.Count > 0 )
+		{
+			var rand = Rand.Int( 0, markers.Count - 1 );
+			var marker = markers[rand];
+
+			// Make the flag
+			_ = new CapturePointEntity
+			{
+				Transform = marker.Transform,
+				Identity = "Capture the flag"
+			};
+		}
+		else
+		{
+			Log.Error( "Map doesn't seem to have capture points for Gunfight mode." );
+		}
+	}
+
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{
 		TimeSinceStateChanged = 0;
@@ -126,6 +147,7 @@ public partial class GunfightGamemode : GamemodeEntity
 		}
 		if ( after == GameState.RoundCountdown )
 		{
+			CleanupMap();
 			TimeUntilNextState = RoundCountdownLength;
 			RandomizeLoadout();
 			RespawnAllPlayers();
@@ -133,7 +155,10 @@ public partial class GunfightGamemode : GamemodeEntity
 		else if ( after == GameState.RoundActive )
 			TimeUntilNextState = RoundLength;
 		else if ( after == GameState.RoundFlagActive )
+		{
+			CreateFlag();
 			TimeUntilNextState = FlagActiveLength;
+		}
 		else if ( after == GameState.RoundOver )
 			TimeUntilNextState = RoundOverLength;
 		else if ( after == GameState.GameWon )
@@ -236,6 +261,14 @@ public partial class GunfightGamemode : GamemodeEntity
 		{
 			CheckDeadPlayers();
 		}
+	}
+
+	public override void CleanupMap()
+	{
+		// delete all cap points
+		Entity.All.OfType<CapturePointEntity>()
+			.ToList()
+			.ForEach( x => x.Delete() );
 	}
 
 	public enum GameState

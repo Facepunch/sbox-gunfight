@@ -8,7 +8,7 @@
 		HoldType = "Rifle"
 		Model = resource:"models/akm/w_akm.vmdl"
 		ViewModel = resource:"models/akm/fp_akm.vmdl"
-		Icon = resource:"ui/weapons/mp5.png"
+		Icon = resource:"ui/weapons/akm.png"
 		BaseFireRate = 0.12
 		DefaultFireMode = "FullAuto"
 		DamageFlags = "Bullet"

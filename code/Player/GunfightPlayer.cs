@@ -336,7 +336,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		if ( !GamemodeSystem.Current?.AllowDamage() ?? true )
+		if ( GamemodeSystem.Current.IsValid() && !GamemodeSystem.Current.AllowDamage() )
 			return;
 
 		LastDamage = info;

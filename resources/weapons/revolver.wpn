@@ -1,0 +1,67 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		WeaponName = "Revolver"
+		WeaponShortName = "Revolver"
+		Slot = "Secondary"
+		HoldType = "Pistol"
+		Model = resource:"models/revolver/w_revolver.vmdl"
+		ViewModel = resource:"models/revolver/fp_revolver.vmdl"
+		Icon = resource:"ui/weapons/m1911.png"
+		BaseFireRate = 0.2
+		DefaultFireMode = "Semi"
+		DamageFlags = "Bullet"
+		SupportedFireModes = 
+		[
+			"Semi",
+		]
+		BulletSpread = 0
+		BulletForce = 1.5
+		BulletDamage = 25
+		BulletSize = 3
+		BulletCount = 1
+		BurstAmount = 3
+		BurstCooldown = 0.3
+		FireSound = resource:"sounds/guns/revolver/revolver_shoot.sound"
+		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
+		AimingDisabled = false
+		BulletRange = 5000
+		AmmoType = "Pistol"
+		ClipSize = 6
+		StandardClip = 6
+		ReloadTime = 3
+		ReloadSingle = false
+		Crosshair = "Default"
+		ViewModelSetup = 
+		{
+			OverallWeight = 0.1
+			WeightReturnForce = 100
+			WeightDamping = 18
+			AccelerationDamping = 1
+			VelocityScale = 10
+			RotationalPivotForce = 10
+			RotationalScale = 5
+			WalkCycleOffset = "-2,25,0"
+			BobAmount = "25,50"
+			GlobalLerpPower = 1
+			GlobalPositionOffset = "0,0,1"
+			GlobalAngleOffset = "-1,0,-2"
+			CrouchPositionOffset = "-3,1,0"
+			CrouchAngleOffset = "2,0,-15"
+			AvoidancePositionOffset = "-3,0,0"
+			AvoidanceAngleOffset = "2,0,-25"
+			SprintPositionOffset = "0,-2,-1"
+			SprintAngleOffset = "5,25,0"
+		}
+		Recoil = 
+		{
+			Decay = "30,50"
+			BaseRecoilMinimum = "-8,8"
+			BaseRecoilMaximum = "8,16"
+			ViewModelScale = 1
+			ViewModelRecoverySpeed = 3
+		}
+		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
+	}
+}

@@ -104,7 +104,7 @@ public partial class GunfightGamemode : GamemodeEntity
 			GameState.RoundActive => $"Eliminate: {FormattedTimeRemaining}",
 			GameState.RoundFlagActive => $"Capture the flag: {FormattedTimeRemaining}",
 			GameState.RoundOver => "Round over",
-			GameState.GameWon => "Game over",
+			GameState.GameWon => $"{WinningTeam.GetName()} won the match!",
 			_ => "Gunfight"
 		};
 	}

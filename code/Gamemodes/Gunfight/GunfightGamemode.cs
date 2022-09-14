@@ -271,6 +271,14 @@ public partial class GunfightGamemode : GamemodeEntity
 			.ForEach( x => x.Delete() );
 	}
 
+	public override void OnFlagCaptured( CapturePointEntity flag, Team team )
+	{
+		// Might not even need this, tbh
+		if ( State != GameState.RoundFlagActive ) return;
+
+		WinRound( team );
+	}
+
 	public enum GameState
 	{
 		WaitingForPlayers, // to round countdown

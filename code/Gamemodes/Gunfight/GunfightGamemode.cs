@@ -10,6 +10,8 @@ public partial class GunfightGamemode : GamemodeEntity
 	[Net] public TimeSince TimeSinceStateChanged { get; protected set; }
 	[Net] public TimeUntil TimeUntilNextState { get; protected set; }
 
+	public Loadout CurrentLoadout { get; set; }
+
 	public TimeSpan TimeRemaining => TimeSpan.FromSeconds( TimeUntilNextState );
 	public string FormattedTimeRemaining => TimeRemaining.ToString( @"mm\:ss" );
 
@@ -39,6 +41,26 @@ public partial class GunfightGamemode : GamemodeEntity
 				SetGameState( GameState.RoundCountdown );
 			}
 		}
+	}
+
+	protected void RandomizeLoadout()
+	{
+		var loadouts = Loadout.WithTag( "gunfight" ).ToList();
+		var index = Rand.Int( 1, loadouts.Count() ) - 1;
+		var loadout = loadouts[index];
+
+		CurrentLoadout = loadout;
+	}
+
+	public override bool PlayerLoadout( GunfightPlayer player )
+	{
+		bool loadoutChosen = CurrentLoadout != null;
+		if ( loadoutChosen )
+		{
+			CurrentLoadout.Give( player );
+		}
+
+		return loadoutChosen;
 	}
 
 	public override bool AllowMovement()
@@ -87,6 +109,7 @@ public partial class GunfightGamemode : GamemodeEntity
 		if ( after == GameState.RoundCountdown )
 		{
 			TimeUntilNextState = RoundCountdownLength;
+			RandomizeLoadout();
 			RespawnAllPlayers();
 		}
 		else if ( after == GameState.RoundActive )

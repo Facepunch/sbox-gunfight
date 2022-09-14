@@ -36,7 +36,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		Inventory.DeleteContents();
 
-		GiveAll();
+		PlayerLoadout();
 
 		SupressPickupNotices = false;
 
@@ -47,34 +47,44 @@ public partial class GunfightPlayer : Player, IHudMarker
 		base.Respawn();
 	}
 
-	public void GiveAll()
+	public void PlayerLoadout()
 	{
-		GiveAmmo( AmmoType.Pistol, MaxAmmo( AmmoType.Pistol ) );
-		GiveAmmo( AmmoType.SMG, MaxAmmo( AmmoType.SMG ) );
-		GiveAmmo( AmmoType.Rifle, MaxAmmo( AmmoType.Rifle ) );
-		GiveAmmo( AmmoType.DMR, MaxAmmo( AmmoType.DMR ) );
-		GiveAmmo( AmmoType.Sniper, MaxAmmo( AmmoType.Sniper ) );
-		GiveAmmo( AmmoType.Shotgun, MaxAmmo( AmmoType.Shotgun ) );
+		var overrideLoadout = GamemodeSystem.Current?.PlayerLoadout( this ) ?? false;
+		// Use a default loadout
+		if ( !overrideLoadout )
+		{
+			GiveAmmo( AmmoType.Pistol, MaxAmmo( AmmoType.Pistol ) );
+			GiveAmmo( AmmoType.SMG, MaxAmmo( AmmoType.SMG ) );
+			GiveAmmo( AmmoType.Rifle, MaxAmmo( AmmoType.Rifle ) );
+			GiveAmmo( AmmoType.DMR, MaxAmmo( AmmoType.DMR ) );
+			GiveAmmo( AmmoType.Sniper, MaxAmmo( AmmoType.Sniper ) );
+			GiveAmmo( AmmoType.Shotgun, MaxAmmo( AmmoType.Shotgun ) );
 
-		GiveWeapon( "knife" );
-		GiveWeapon( "1911" );
+			GiveWeapon( "knife" );
+			GiveWeapon( "1911" );
 
-		Rand.SetSeed( Time.Tick );
-		var rand = Rand.Int( 0, 3 );
+			Rand.SetSeed( Time.Tick );
+			var rand = Rand.Int( 0, 3 );
 
-		if ( rand == 0 )
-			GiveWeapon( "mp5", true );
-		else if ( rand == 1 )
-			GiveWeapon( "r870", true );
-		else if ( rand == 2 )
-			GiveWeapon( "famas", true );
-		else
-			GiveWeapon( "akm", true );
+			if ( rand == 0 )
+				GiveWeapon( "mp5", true );
+			else if ( rand == 1 )
+				GiveWeapon( "r870", true );
+			else if ( rand == 2 )
+				GiveWeapon( "famas", true );
+			else
+				GiveWeapon( "akm", true );
+		}
 	}
 
 	public void GiveWeapon( string name, bool makeActive = false )
 	{
 		Inventory.Add( WeaponDefinition.CreateWeapon( name ), makeActive );
+	}
+
+	public void GiveWeapon( WeaponDefinition def, bool makeActive = false )
+	{
+		Inventory.Add( WeaponDefinition.CreateWeapon( def ), makeActive );
 	}
 
 	public override void OnKilled()

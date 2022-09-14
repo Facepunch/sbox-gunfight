@@ -22,9 +22,12 @@ public partial class PlayerInventory : BaseNetworkable
 
 	public IEnumerable<GunfightWeapon> GetAll()
 	{
-		yield return PrimaryWeapon;
-		yield return SecondaryWeapon;
-		yield return MeleeWeapon;
+		if ( PrimaryWeapon.IsValid() )
+			yield return PrimaryWeapon;
+		if ( SecondaryWeapon.IsValid() )
+			yield return SecondaryWeapon;
+		if ( MeleeWeapon.IsValid() )
+			yield return MeleeWeapon;
 		
 		foreach( var gadget in Gadgets )
 		{

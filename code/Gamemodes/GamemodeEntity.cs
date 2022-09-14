@@ -76,7 +76,8 @@ public abstract partial class GamemodeEntity : Entity
 	/// </summary>
 	/// <param name="team"></param>
 	/// <param name="score"></param>
-	public virtual void OnScoreChanged( Team team, int score )
+	/// <param name="maxReached"></param>
+	public virtual void OnScoreChanged( Team team, int score, bool maxReached = false )
 	{
 	}
 

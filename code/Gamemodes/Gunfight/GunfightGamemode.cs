@@ -9,6 +9,7 @@ public partial class GunfightGamemode : GamemodeEntity
 	[Net] public GameState State { get; protected set; }
 	[Net] public TimeSince TimeSinceStateChanged { get; protected set; }
 	[Net] public TimeUntil TimeUntilNextState { get; protected set; }
+	[Net] public Team WinningTeam { get; protected set; }
 
 	public Loadout CurrentLoadout { get; set; }
 
@@ -22,6 +23,7 @@ public partial class GunfightGamemode : GamemodeEntity
 	protected float FlagActiveLength => 30f;
 	protected float FlagCaptureTime => 5f;
 	protected float RoundOverLength => 10f;
+	protected float GameWonLength => 30f;
 
 	public override Panel GetHudPanel() => new GunfightGamemodePanel();
 
@@ -34,6 +36,11 @@ public partial class GunfightGamemode : GamemodeEntity
 
 		ChatBox.AddInformation( ToExtensions.Team( teamComponent.Team ), $"{cl.Name} joined {teamComponent.Team.GetName()}" );
 
+		VerifyEnoughPlayers();
+	}
+
+	protected void VerifyEnoughPlayers()
+	{
 		if ( State == GameState.WaitingForPlayers )
 		{
 			if ( PlayerCount >= MinimumPlayers )
@@ -106,6 +113,13 @@ public partial class GunfightGamemode : GamemodeEntity
 	{
 		TimeSinceStateChanged = 0;
 
+		if ( after == GameState.WaitingForPlayers )
+		{
+			WinningTeam = Team.Unassigned;
+			var scores = GunfightGame.Current.Scores;
+			scores.Reset();
+			VerifyEnoughPlayers();
+		}
 		if ( after == GameState.RoundCountdown )
 		{
 			TimeUntilNextState = RoundCountdownLength;
@@ -118,6 +132,11 @@ public partial class GunfightGamemode : GamemodeEntity
 			TimeUntilNextState = FlagActiveLength;
 		else if ( after == GameState.RoundOver )
 			TimeUntilNextState = RoundOverLength;
+		else if ( after == GameState.GameWon )
+		{
+			TimeUntilNextState = GameWonLength;
+			ChatBox.AddInformation( To.Everyone, $"{WinningTeam.GetName()} won the match!" );
+		}
 
 		Event.Run( "gunfight.gamestate.changed", before, after );
 	}
@@ -140,6 +159,8 @@ public partial class GunfightGamemode : GamemodeEntity
 			// After the round ends, go back to countdown.
 			else if ( State == GameState.RoundOver )
 				SetGameState( GameState.RoundCountdown );
+			else if ( State == GameState.GameWon )
+				SetGameState( GameState.WaitingForPlayers );
 		}
 	}
 
@@ -166,6 +187,15 @@ public partial class GunfightGamemode : GamemodeEntity
 
 		// Round ends!
 		SetGameState( GameState.RoundOver );
+	}
+
+	public override void OnScoreChanged( Team team, int score, bool maxReached = false )
+	{
+		if ( maxReached )
+		{
+			WinningTeam = team;
+			SetGameState( GameState.GameWon );
+		}
 	}
 
 	protected void CheckDeadPlayers()

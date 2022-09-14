@@ -181,12 +181,13 @@ public partial class GunfightGamemode : GamemodeEntity
 	protected void WinRound( Team team )
 	{
 		var scores = GunfightGame.Current.Scores;
-		scores.AddScore( team, 1 );
+		var newScore = scores.AddScore( team, 1 );
 
 		ChatBox.AddInformation( To.Everyone, $"{team.GetName()} won the round!" );
 
 		// Round ends!
-		SetGameState( GameState.RoundOver );
+		if ( newScore < scores.MaximumScore )
+			SetGameState( GameState.RoundOver );
 	}
 
 	public override void OnScoreChanged( Team team, int score, bool maxReached = false )

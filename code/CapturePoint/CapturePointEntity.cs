@@ -62,6 +62,8 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 
 				Occupants[team] = new();
 			}
+
+			SetModel( "models/gameplay/flag_pole_base/flag_pole_base.vmdl" );
 		}
 	}
 	public override void Spawn()

@@ -177,6 +177,7 @@ public partial class GunfightGamemode : GamemodeEntity
 		else if ( after == GameState.RoundOver )
 		{
 			CleanupMap();
+			RpcRoundWonMessage( To.Everyone );
 			TimeUntilNextState = RoundOverLength;
 		}
 		else if ( after == GameState.GameWon )
@@ -186,6 +187,13 @@ public partial class GunfightGamemode : GamemodeEntity
 		}
 
 		Event.Run( "gunfight.gamestate.changed", before, after );
+	}
+
+	[ClientRpc]
+	public void RpcRoundWonMessage()
+	{
+		// Show the round won panel.
+		GunfightRoundWonPanel.Show();
 	}
 
 	public override void Simulate( Client cl )

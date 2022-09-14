@@ -62,6 +62,16 @@ public abstract partial class GamemodeEntity : Entity
 	}
 
 	/// <summary>
+	/// Used to apply a loadout to a player
+	/// </summary>
+	/// <param name="player"></param>
+	/// <returns></returns>
+	public virtual bool PlayerLoadout( GunfightPlayer player )
+	{
+		return false;
+	}
+
+	/// <summary>
 	/// Called when the score changes for any team
 	/// </summary>
 	/// <param name="team"></param>

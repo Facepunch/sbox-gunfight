@@ -15,6 +15,7 @@ public partial class Loadout : GameResource
 	public WeaponDefinition SecondaryWeapon { get; set; }
 	public WeaponDefinition MeleeWeapon { get; set; }
 	public List<WeaponDefinition> Gadgets { get; set; }
+	public Dictionary<AmmoType, int> Ammo { get; set; }
 
 	protected override void PostLoad()
 	{
@@ -48,6 +49,11 @@ public partial class Loadout : GameResource
 			player.GiveWeapon( SecondaryWeapon );
 		if ( MeleeWeapon != null )
 			player.GiveWeapon( MeleeWeapon );
+
+		foreach( var kv in Ammo )
+		{
+			player.GiveAmmo( kv.Key, kv.Value );
+		}
 	}
 
 	public override string ToString() =>  $"GunfightLoadout[{ResourceName}]";

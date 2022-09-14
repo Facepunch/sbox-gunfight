@@ -100,14 +100,16 @@ public partial class GunfightGamemode : GamemodeEntity
 		return State switch
 		{
 			GameState.WaitingForPlayers => $"Waiting for players",
-			GameState.RoundCountdown => $"Get ready: {FormattedTimeRemaining}",
-			GameState.RoundActive => $"Eliminate: {FormattedTimeRemaining}",
-			GameState.RoundFlagActive => $"Capture the flag: {FormattedTimeRemaining}",
+			GameState.RoundCountdown => $"Prepare to fight",
+			GameState.RoundActive => $"Eliminate the enemies",
+			GameState.RoundFlagActive => $"Capture the flag",
 			GameState.RoundOver => "Round over",
 			GameState.GameWon => $"{WinningTeam.GetName()} won the match!",
 			_ => "Gunfight"
 		};
 	}
+
+	public string GetTimeLeftLabel() => FormattedTimeRemaining;
 
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{

@@ -84,6 +84,11 @@ public abstract partial class GamemodeEntity : Entity
 		lifeState = LifeState.Respawning;
 	}
 
+	public virtual void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )
+	{
+		//
+	}
+
 	/// <summary>
 	/// Allows gamemodes to override player spawn locations
 	/// </summary>

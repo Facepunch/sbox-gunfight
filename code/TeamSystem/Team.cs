@@ -38,6 +38,11 @@ public static class TeamExtensions
 	{
 		return TeamSystem.GetTeam( cl );
 	}
+
+	public static string GetName( this Team team )
+	{
+		return TeamSystem.GetTeamName( team );
+	}
 }
 
 public static class TeamSystem

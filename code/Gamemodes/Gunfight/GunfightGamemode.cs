@@ -30,7 +30,7 @@ public partial class GunfightGamemode : GamemodeEntity
 		var teamComponent = cl.Components.GetOrCreate<TeamComponent>();
 		teamComponent.Team = TeamSystem.GetLowestCount();
 
-		ChatBox.AddInformation( ToExtensions.Team( teamComponent.Team ), $"{cl.Name} joined {TeamSystem.GetTeamName( teamComponent.Team )}" );
+		ChatBox.AddInformation( ToExtensions.Team( teamComponent.Team ), $"{cl.Name} joined {teamComponent.Team.GetName()}" );
 
 		if ( State == GameState.WaitingForPlayers )
 		{
@@ -134,10 +134,44 @@ public partial class GunfightGamemode : GamemodeEntity
 		}
 	}
 
+	protected void WinRound( Team team )
+	{
+		var scores = GunfightGame.Current.Scores;
+		scores.AddScore( team, 1 );
+
+		ChatBox.AddInformation( To.Everyone, $"{team.GetName()} won the round!" );
+
+		// Round ends!
+		SetGameState( GameState.RoundOver );
+	}
+
+	protected void CheckDeadPlayers()
+	{
+		var aliveBluePlayers = Team.BLUFOR.AlivePlayers();
+		var aliveRedPlayers = Team.OPFOR.AlivePlayers();
+
+		if ( aliveBluePlayers.Count() == 0 )
+		{
+			WinRound( Team.OPFOR );
+		}
+		else if ( aliveRedPlayers.Count() == 0 )
+		{
+			WinRound( Team.BLUFOR );
+		}
+	}
+
 	public override void OnPlayerKilled( GunfightPlayer player, DamageInfo damageInfo, out LifeState lifeState )
 	{
 		// Do not allow automatic respawning
 		lifeState = LifeState.Dead;
+	}
+
+	public override void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )
+	{
+		if ( State == GameState.RoundActive || State == GameState.RoundFlagActive )
+		{
+			CheckDeadPlayers();
+		}
 	}
 
 	public enum GameState

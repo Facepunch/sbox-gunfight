@@ -236,6 +236,9 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 		if ( !this.IsValid() )
 			return false;
 
+		if ( Local.Pawn is GunfightPlayer player && player.CapturePoint == this )
+			return false;
+
 		info.Text = Identity;
 		info.Position = Position + Rotation.Up * 150f;
 		info.StayOnScreen = true;

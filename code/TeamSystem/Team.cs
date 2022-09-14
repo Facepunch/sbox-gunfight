@@ -43,6 +43,17 @@ public static class TeamExtensions
 	{
 		return TeamSystem.GetTeamName( team );
 	}
+
+	public static Team GetOpponent( this Team team )
+	{
+		if ( team == Team.BLUFOR )
+			return Team.OPFOR;
+
+		if ( team == Team.OPFOR )
+			return Team.BLUFOR;
+
+		return Team.Unassigned;
+	}
 }
 
 public static class TeamSystem

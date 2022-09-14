@@ -5,14 +5,14 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 	public TeamScores()
 	{
 		Scores = new int[ArraySize];
-		MaximumScore = 3;
+		MaximumScore = 4;
 
 		Reset();
 	}
 
 	public virtual int MinimumScore => 0;
 
-	[Net] public int MaximumScore { get; set; } = 3;
+	[Net] public int MaximumScore { get; set; } = 4;
 
 	protected static int ArraySize => Enum.GetNames( typeof( Team ) ).Length;
 	protected int[] Scores { get; set; }
@@ -40,17 +40,6 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 		}
 
 		return highest;
-	}
-
-	public static Team GetOpposingTeam( Team team )
-	{
-		if ( team == Team.BLUFOR )
-			return Team.OPFOR;
-
-		if ( team == Team.OPFOR )
-			return Team.BLUFOR;
-
-		return Team.Unassigned;
 	}
 
 	public void SetScore( Team team, int score )

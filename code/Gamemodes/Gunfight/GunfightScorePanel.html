@@ -1,10 +1,22 @@
 <link rel="stylesheet" href="GunfightScorePanel.scss"/>
 
 <div>
-    <div class="gamestatus">
-        <label @text="GameState">
-            Gunfight
+    <div class="time">
+        <label @text="TimeLabel">
+            00:00
         </label>
+    </div>
+
+    <div class="counts">
+        <div class="count friendly">
+            <label class="icon">person</label>
+            <label @text="FriendlyCount">2</label>
+        </div>
+        <div class="spacer"></div>
+        <div class="count enemy">
+            <label @text="EnemyCount">2</label>
+            <label class="icon">person</label>
+        </div>
     </div>
     <div class="scoreboxes" @ref="BoxLayout">
         <!--<div class="box friendly"></div>
@@ -12,5 +24,11 @@
         <div class="box winning"></div>
         <div class="box enemy"></div>
         <div class="box enemy"></div>-->
+    </div>
+
+    <div class="gamestatus">
+        <label @text="GameState">
+            Gunfight
+        </label>
     </div>
 </div>

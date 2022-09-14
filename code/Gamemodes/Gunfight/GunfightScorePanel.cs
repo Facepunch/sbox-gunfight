@@ -9,6 +9,11 @@ public partial class GunfightScorePanel : Panel
 	public Panel BoxLayout { get; set; }
 	// @text
 	public string GameState => (GamemodeSystem.Current as GunfightGamemode)?.GetGameStateLabel() ?? "";
+	// @text
+	public string TimeLabel => (GamemodeSystem.Current as GunfightGamemode)?.GetTimeLeftLabel() ?? "00:00";
+	// @text
+	public string FriendlyCount => $"{TeamSystem.MyTeam.AlivePlayers().Count()}";
+	public string EnemyCount => $"{TeamSystem.MyTeam.GetOpponent().AlivePlayers().Count()}";
 
 	protected List<Panel> Boxes { get; set; } = new();
 

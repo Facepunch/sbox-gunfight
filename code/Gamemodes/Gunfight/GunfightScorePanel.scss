@@ -3,7 +3,7 @@
 GunfightScorePanel {
     position: absolute;
     margin-top: 64px;
-    width: 25%;
+    width: 18%;
     justify-content: center;
     align-content: center;
     flex-direction: column;
@@ -14,6 +14,46 @@ GunfightScorePanel {
         font-size: 16px;
     }
 
+    .counts {
+        position: absolute;
+        width: 100%;
+        top: 4px;
+        height: 24px;
+        align-content: center;
+        justify-content: center;
+
+        label {
+            font-size: 24px;
+        }
+
+        .count {
+            font-family: Quantico-Bold;
+
+            > .icon {
+                margin-top: 4px;
+                font-family: Material Icons;
+            }
+
+            &.enemy {
+                > .icon {
+                    color: $enemy;
+                    margin-left: 4px;
+                }
+            }
+
+            &.friendly {
+                > .icon {
+                    color: $friendly;
+                    margin-right: 4px;
+                }
+            }
+        }
+
+        .spacer {
+            width: 100%;
+        }
+    }
+
     .gamestatus {
         justify-content: center;
         align-content: center;
@@ -21,8 +61,21 @@ GunfightScorePanel {
         align-items: center;
         height: 40px;
 
-        label {
+        > label {
             font-size: 24px;
+        }
+    }
+
+    .time {
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        align-items: center;
+        height: 40px;
+
+        > label {
+            font-size: 32px;
+            font-family: Quantico-Bold;
         }
     }
 
@@ -35,9 +88,8 @@ GunfightScorePanel {
         .box {
             width: 48px;
             height: 48px;
-            border-radius: 100px;
-            border: 2px solid white;
-            background-color: rgba( white, 0.05 );
+            border: 2px solid rgba( $theme-color, 0.1 );
+            background-color: rgba( $theme-color, 0.05 );
             backdrop-filter: blur(5px);
 
             &:not( :first-child ) {
@@ -51,7 +103,6 @@ GunfightScorePanel {
             &.winning {
                 width: 64px;
                 height: 64px;
-                border: 2px solid white;
             }
 
             &.friendly {

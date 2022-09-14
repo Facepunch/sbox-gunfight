@@ -103,7 +103,7 @@ public partial class GunfightGamemode : GamemodeEntity
 			GameState.WaitingForPlayers => $"Waiting for players",
 			GameState.RoundCountdown => $"Prepare to fight",
 			GameState.RoundActive => $"Eliminate the enemies",
-			GameState.RoundFlagActive => $"Capture the flag",
+			GameState.RoundFlagActive => $"",
 			GameState.RoundOver => "Round over",
 			GameState.GameWon => $"{WinningTeam.GetName()} won the match!",
 			_ => "Gunfight"

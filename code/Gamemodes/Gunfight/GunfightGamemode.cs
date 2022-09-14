@@ -118,6 +118,8 @@ public partial class GunfightGamemode : GamemodeEntity
 			WinningTeam = Team.Unassigned;
 			var scores = GunfightGame.Current.Scores;
 			scores.Reset();
+
+			ResetStats();
 			VerifyEnoughPlayers();
 		}
 		if ( after == GameState.RoundCountdown )

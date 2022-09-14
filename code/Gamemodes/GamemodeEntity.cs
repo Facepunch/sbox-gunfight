@@ -172,4 +172,13 @@ public abstract partial class GamemodeEntity : Entity
 			input.StopProcessing = true;
 		}
 	}
+
+	public virtual void ResetStats()
+	{
+		foreach( var client in Client.All )
+		{
+			client.SetInt( "kills", 0 );
+			client.SetInt( "deaths", 0 );
+		}
+	}
 }

@@ -2,27 +2,24 @@
 
 <div>
     <div class="reload" @ref="ReloadHint">
-        <label>Press</label>
         <InputHint btn="Reload" />
-        <label>to reload</label>
+        <label>RELOAD</label>
     </div>
 
     <div class="vault" @ref="VaultHint">
-        <label>Press</label>
         <InputHint btn="Jump" />
-        <label>to climb</label>
+        <label>to</label>
+        <img class="icon" src="ui/hints/climb_arrow.png" />
     </div>
 
     <div class="coveraim" @ref="CoverAimHint">
-        <label>Press</label>
         <InputHint btn="SecondaryAttack" />
-        <label>to mount</label>
+        <label>MOUNT</label>
+
     </div>
 
     <div class="pickup" @ref="PickupHint">
-        <label>Press</label>
         <InputHint btn="Use" />
-        <label>to pick up </label>
         <label class="name" @ref="PickupLabel">object</label>
     </div>
 </div>

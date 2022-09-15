@@ -7,8 +7,9 @@ hudhints {
 
     label {
         color: $theme-color;
-        font-family: Quantico-Regular;
-        font-size: 16px;
+        font-family: Quantico-Bold;
+        font-size: 24px;
+        top: -6px;
     }
 
     InputHint {
@@ -19,11 +20,12 @@ hudhints {
 
     .reload {
         position: absolute;
-        height: 16px;
+        height: 12px;
         opacity: 0;
         transition: all 0.1s ease;
         transform-origin: 0% 50%;
         transform: scaleX( 0 );
+
 
         &.show {
             transform: scaleX( 1 );
@@ -42,6 +44,13 @@ hudhints {
         opacity: 0;
         transition: all 0.1s ease;
         transform: translateX(-50%);
+
+        .icon {
+            height: 40px;
+            width: 40px;
+            background-image-tint: $theme-color;
+            bottom: 10px;
+        }
 
         &.show {
             opacity: 0.8;

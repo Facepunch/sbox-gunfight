@@ -18,12 +18,14 @@ public partial class GunfightGamemode : GamemodeEntity
 	public TimeSpan TimeRemaining => TimeSpan.FromSeconds( TimeUntilNextState );
 	public string FormattedTimeRemaining => TimeRemaining.ToString( @"mm\:ss" );
 
+	protected string CachedTimeRemaining { get; set; }
+
 	// Stats
 	protected int MinimumPlayers => 4;
-	protected float RoundCountdownLength => 5f;
+	protected float RoundCountdownLength => 10f;
 	protected float RoundLength => 40f;
 	protected float FlagActiveLength => 10f;
-	protected float RoundOverLength => 5f;
+	protected float RoundOverLength => 10f;
 	protected float GameWonLength => 15f;
 
 	public override Panel GetHudPanel() => new GunfightGamemodePanel();
@@ -194,6 +196,38 @@ public partial class GunfightGamemode : GamemodeEntity
 	{
 		// Show the round won panel.
 		GunfightRoundWonPanel.Show();
+	}
+	
+	protected void OnSecond()
+	{
+		CachedTimeRemaining = FormattedTimeRemaining;
+		OnSecondElapsed();
+	}
+
+	protected virtual void OnSecondElapsed()
+	{
+		if ( State != GameState.RoundCountdown ) return;
+
+		if ( TimeUntilNextState <= 6f && TimeUntilNextState >= 0f )
+		{
+			if ( TimeUntilNextState <= 1f )
+			{
+				Sound.FromScreen( "countdown.start" );
+			}
+			else
+			{
+				Sound.FromScreen( "countdown.beep" );
+			}
+		}
+	}
+
+	[Event.Frame]
+	protected void Frame()
+	{
+		if ( CachedTimeRemaining != FormattedTimeRemaining )
+		{
+			OnSecond();
+		}
 	}
 
 	public override void Simulate( Client cl )

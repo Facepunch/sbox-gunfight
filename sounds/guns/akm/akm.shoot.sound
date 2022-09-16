@@ -6,7 +6,7 @@
 		Volume = 1
 		VolumeRandom = 0
 		Pitch = 1
-		PitchRandom = 0.11
+		PitchRandom = 0.03
 		Decibels = 140
 		Sounds = 
 		[

@@ -47,7 +47,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 			vaultingFromGround = Controller.GroundEntity != null;
 			timeSinceVault = 0;
 			vaultStart = Controller.Position;
-			vaultEnd = Controller.Position.WithZ( floorTrace.EndPosition.z + 10 ) + Controller.Rotation.Forward * ( Controller.BodyGirth * 0.5f );
+			vaultEnd = floorTrace.EndPosition.WithZ( floorTrace.EndPosition.z + 10f );
 			Controller.Velocity = Controller.Velocity.WithZ( 0 );
 		}
 
@@ -61,28 +61,64 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 		return CanActivate( true );
 	}
 
+	protected bool CloseEnough()
+	{
+		if ( Controller.Position.Distance( vaultEnd ) < 10f )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	protected bool ReachedZ()
+	{
+		return vaultEnd.z.AlmostEqual( Controller.Position.z, 10f );
+	}
+
+	protected bool IsStuck( Vector3 testpos )
+	{
+		var result = Controller.TraceBBox( testpos, testpos );
+		return result.StartedSolid;
+	}
+
+	protected void Stop()
+	{
+		IsActive = false;
+		_ = new ScreenShake.Pitch( 0.2f, 1f );
+	}
+
+	public Vector3 GetNextStepPos()
+	{
+		if ( !ReachedZ() )
+			return Controller.Position.LerpTo( Controller.Position.WithZ( vaultEnd.z ), Time.Delta * 10f );
+
+		return Controller.Position.LerpTo( vaultEnd, Time.Delta * 7f );
+	}
+
 	public override void Simulate()
 	{
 		base.Simulate();
 
-		var vaultTime = MinVaultTime.LerpTo( MaxVaultTime, vaultHeight / MaxVaultHeight );
+		if ( timeSinceVault > 1f )
+			Stop();
 
-		if ( !vaultingFromGround )
+		if ( !CloseEnough() )
 		{
-			vaultTime *= ClimbVaultMultiplier;
-		}
+			var nextPos = GetNextStepPos();
+			if ( IsStuck( nextPos ) )
+			{
+				Stop();
+				return;
+			}
 
-		if ( timeSinceVault <= vaultTime + Time.Delta )
-		{
-			var a = timeSinceVault / vaultTime;
-			Controller.Position = Vector3.Lerp( vaultStart, vaultEnd, a, false );
-			Controller.Velocity = Controller.Velocity.WithZ( 0 );
+			Controller.Position = nextPos;
+			Controller.Velocity = Vector3.Zero;
 			Controller.SetTag( "ducked" );
+
 			return;
 		}
 
-		IsActive = false;
-		_ = new ScreenShake.Pitch( 0.2f, 1f );
+		Stop();
 	}
 
 }

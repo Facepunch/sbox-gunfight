@@ -97,19 +97,23 @@ public partial class BaseMoveMechanic : BaseNetworkable
 		var trace = Controller.TraceBBox( Controller.Position, Controller.Position + direction * 100 );
 		if ( !trace.Hit ) return null;
 
-		var height = ApproximateWallHeight( Controller.Position, trace.Normal, 500f, 100f, 32 );
+		Vector3 tracePos;
+		var height = ApproximateWallHeight( Controller.Position, trace.Normal, 500f, 100f, 100, out tracePos );
 
 		return new WallInfo()
 		{
 			Height = height,
 			Distance = trace.Distance,
 			Normal = trace.Normal,
-			Trace = trace
+			Trace = trace,
+			TracePos = tracePos,
 		};
 	}
 
-	private static float ApproximateWallHeight( Vector3 startPos, Vector3 wallNormal, float maxHeight, float maxDist, int precision = 16 )
+	private static float ApproximateWallHeight( Vector3 startPos, Vector3 wallNormal, float maxHeight, float maxDist, int precision, out Vector3 tracePos )
 	{
+		tracePos = Vector3.Zero;
+
 		var step = maxHeight / precision;
 		var wallFoudn = false;
 		for ( int i = 0; i < precision; i++ )
@@ -119,13 +123,16 @@ public partial class BaseMoveMechanic : BaseNetworkable
 				.WorldOnly()
 				.Run();
 
+			// DebugOverlay.TraceResult( trace, 0f );
+
 			if ( !trace.Hit && !wallFoudn ) continue;
 			if ( trace.Hit )
 			{
+				tracePos = trace.HitPosition;
+
 				wallFoudn = true;
 				continue;
 			}
-
 			return startPos.z;
 		}
 		return 0f;
@@ -148,4 +155,5 @@ public class WallInfo
 	public Vector3 Normal;
 	public float Height;
 	public TraceResult Trace;
+	public Vector3 TracePos;
 }

@@ -33,6 +33,11 @@ public partial class HudHints : Panel
 
 		CoverAimHint.SetClass( "show", controller.CoverAim.CanMountWall() && !controller.CoverAim.IsActive );
 
+		var cover = CoverAimHint;
+		var screenPos = controller.CoverAim.MountWorldPosition.ToScreen();
+		cover.Style.Left = Length.Fraction( screenPos.x );
+		cover.Style.Top = Length.Fraction( screenPos.y );
+
 		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 100000f )
 			.WorldAndEntities()
 			.WithAnyTags( "solid", "weapon" )

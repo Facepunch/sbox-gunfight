@@ -6,13 +6,14 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 	public CoverAimMechanic( PlayerController ctrl ) : base( ctrl ) { }
 
 	public override bool TakesOverControl => true;
-	public float MaxWallMountDistance => 5f;
+	public float MaxWallMountDistance => 10f;
 
 	protected float WallHeight { get; set; }
 	protected bool Wish { get; set; }
 
 	private WallInfo CachedWallInfo;
 
+	public Vector3 MountWorldPosition { get; set; }
 	public bool CanMountWall()
 	{
 		var wall = GetWallInfo( Controller.Rotation.Forward );
@@ -22,6 +23,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 		if ( wall == null ) return false;
 		if ( wall.Distance > MaxWallMountDistance ) return false;
 
+		MountWorldPosition = wall.TracePos;
 		return wall.Height <= 80f && wall.Height >= 40f;
 	}
 
@@ -66,9 +68,9 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 		if ( !CanMountWall() ) return;
 
 		var wall = CachedWallInfo;
-		var wallHeight = wall.Height;
+		var wallHeight = wall.Height + 4f;
 
-		WallHeight = wallHeight - 5f;
+		WallHeight = wallHeight;
 	}
 
 	public override float? GetEyeHeight()

@@ -57,18 +57,18 @@ hudhints {
         }
 
         left: 50%;
-        bottom: 20%;
+        bottom: 15%;
     }
 
     .coveraim {
         position: absolute;
         height: 16px;
         opacity: 0;
-        transition: all 0.1s ease;
+        transition: opacity 0.1s ease;
         transform: translateX(-50%);
 
         &.show {
-            opacity: 0.8;
+            opacity: 0.4;
         }
 
         left: 50%;

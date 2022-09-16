@@ -25,7 +25,7 @@
 		BulletCount = 1
 		BurstAmount = 3
 		BurstCooldown = 0.3
-		FireSound = resource:"sounds/guns/f1/ar2_shoot.sound"
+		FireSound = resource:"sounds/guns/akm/akm.shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
 		AimingDisabled = false
 		BulletRange = 5000

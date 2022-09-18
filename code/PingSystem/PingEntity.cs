@@ -45,9 +45,13 @@ public partial class PingEntity : ModelEntity, IHudMarker
 		if ( !this.IsValid() )
 			return false;
 
+		// Parent in this case is the entity we tagged
+		if ( Parent.IsValid() && Parent.Parent.IsValid() ) return false;
+
 		info.Text = "";
 		info.Position = Position + Vector3.Up * 20f;
 		info.Classes[Type.ToString()] = true;
+
 
 		return true;
 	}

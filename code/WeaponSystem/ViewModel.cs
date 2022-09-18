@@ -124,7 +124,6 @@ public partial class ViewModel : BaseViewModel
 			walkBob += DeltaTime * 30.0f * bobSpeed;
 		}
 
-		walkBob += sprintLerp * 0.1f;
 		walkBob %= 360;
 
 		var mouseDeltaX = -Input.MouseDelta.x * DeltaTime * MouseScale;

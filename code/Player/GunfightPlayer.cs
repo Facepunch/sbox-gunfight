@@ -67,9 +67,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 			var secondary = WeaponDefinition.Random( WeaponDefinition.FindFromSlot( WeaponSlot.Secondary ) );
 			GiveWeapon( secondary );
-
-			var melee = WeaponDefinition.Random( WeaponDefinition.FindFromSlot( WeaponSlot.Melee ) );
-			GiveWeapon( melee );
 		}
 	}
 

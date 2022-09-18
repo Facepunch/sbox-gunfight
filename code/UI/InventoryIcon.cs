@@ -17,7 +17,6 @@ class InventoryIcon : Panel
 		{
 			WeaponSlot.Primary => InputButton.Slot1,
 			WeaponSlot.Secondary => InputButton.Slot2,
-			WeaponSlot.Melee => InputButton.Slot3,
 			_ => InputButton.Slot4
 		};
 	}

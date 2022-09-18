@@ -138,6 +138,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		if ( PickupTrigger.IsValid() )
 		{
+			PickupTrigger.PhysicsEnabled = false;
 			PickupTrigger.EnableTouch = false;
 		}
 	}
@@ -148,6 +149,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		if ( PickupTrigger.IsValid() )
 		{
+			PickupTrigger.PhysicsEnabled = true;
 			PickupTrigger.EnableTouch = true;
 		}
 

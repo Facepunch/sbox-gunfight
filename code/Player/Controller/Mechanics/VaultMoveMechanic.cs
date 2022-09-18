@@ -4,17 +4,11 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 {
 	public float MinVaultHeight => 30f;
 	public float MaxVaultHeight => 80f;
-	public float MinVaultTime => .1f;
-	public float MaxVaultTime => .25f;
-	public float ClimbVaultMultiplier => 1.5f;
 
 	public override bool TakesOverControl => true;
 
-	private bool vaultingFromGround;
-	private float vaultHeight;
 	private TimeSince timeSinceVault;
-	private Vector3 vaultStart, vaultEnd;
-	private WallInfo wall;
+	private Vector3 vaultEnd;
 
 	public VaultMoveMechanic() { }
 	public VaultMoveMechanic( PlayerController ctrl ) : base( ctrl ) { }
@@ -25,7 +19,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 		if ( wall == null ) return false;
 		if ( wall.Height == 0 ) return false;
-		if ( wall.Distance > Controller.BodyGirth * 2 ) return false;
+		if ( wall.Distance > Controller.BodyGirth * 1 ) return false;
 		if ( Vector3.Dot( Controller.EyeRotation.Forward, wall.Normal ) > -.5f ) return false;
 
 		var posFwd = Controller.Position - wall.Normal * (Controller.BodyGirth + wall.Distance);
@@ -42,11 +36,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 		if ( assignValues )
 		{
-			this.wall = wall;
-			this.vaultHeight = vaultHeight;
-			vaultingFromGround = Controller.GroundEntity != null;
 			timeSinceVault = 0;
-			vaultStart = Controller.Position;
 			vaultEnd = floorTrace.EndPosition.WithZ( floorTrace.EndPosition.z + 10f );
 			Controller.Velocity = Controller.Velocity.WithZ( 0 );
 		}

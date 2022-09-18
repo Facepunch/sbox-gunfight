@@ -577,6 +577,15 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( bullet > 0 )
 		{
 			path = "particles/gameplay/guns/trail/rico_trail_smoke.vpcf";
+
+			// Project backward
+			Vector3 dir = (from - to).Normal;
+			var tr = Trace.Ray( to, from + (dir * 50f) )
+				.Radius( 1f )
+				.Ignore( this )
+				.Run();
+
+			tr.Surface.DoBulletImpact( tr );
 		}
 
 		var system = Particles.Create( path );

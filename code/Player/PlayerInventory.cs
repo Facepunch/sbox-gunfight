@@ -14,9 +14,6 @@ public partial class PlayerInventory : BaseNetworkable
 	// 1
 	[Net] public GunfightWeapon SecondaryWeapon { get; set; }
 
-	// 2
-	[Net] public GunfightWeapon MeleeWeapon { get; set; }
-
 	// 3-♾️
 	[Net] public IList<GunfightWeapon> Gadgets { get; set; }
 
@@ -26,8 +23,6 @@ public partial class PlayerInventory : BaseNetworkable
 			yield return PrimaryWeapon;
 		if ( SecondaryWeapon.IsValid() )
 			yield return SecondaryWeapon;
-		if ( MeleeWeapon.IsValid() )
-			yield return MeleeWeapon;
 		
 		foreach( var gadget in Gadgets )
 		{
@@ -88,14 +83,6 @@ public partial class PlayerInventory : BaseNetworkable
 					SecondaryWeapon = weapon;
 					break;
 				};
-			case WeaponSlot.Melee:
-				{
-					if ( MeleeWeapon.IsValid() )
-						Drop( MeleeWeapon );
-
-					MeleeWeapon = weapon;
-					break;
-				};
 			case WeaponSlot.Gadget:
 				{
 					if ( Gadgets.Count >= MaxGadgets )
@@ -120,8 +107,6 @@ public partial class PlayerInventory : BaseNetworkable
 			return true;
 		if ( ent == SecondaryWeapon )
 			return true;
-		if ( ent == MeleeWeapon )
-			return true;
 		if ( Gadgets.Contains( ent ) )
 			return true;
 
@@ -136,8 +121,6 @@ public partial class PlayerInventory : BaseNetworkable
 			++count;
 		if ( SecondaryWeapon is not null )
 			++count;
-		if ( MeleeWeapon is not null )
-			++count;
 
 		count += Gadgets.Count;
 
@@ -150,7 +133,6 @@ public partial class PlayerInventory : BaseNetworkable
 
 		PrimaryWeapon?.Delete();
 		SecondaryWeapon?.Delete();
-		MeleeWeapon?.Delete();
 
 		for ( int i = Gadgets.Count - 1; i >= 0; i-- )
 		{
@@ -174,8 +156,6 @@ public partial class PlayerInventory : BaseNetworkable
 			PrimaryWeapon = null;
 		if ( ent == SecondaryWeapon )
 			SecondaryWeapon = null;
-		if ( ent == MeleeWeapon )
-			MeleeWeapon = null;
 
 		return ent.Parent == null;
 	}
@@ -202,8 +182,6 @@ public partial class PlayerInventory : BaseNetworkable
 			return (int)WeaponSlot.Primary;
 		if ( Active == SecondaryWeapon )
 			return (int)WeaponSlot.Secondary;
-		if ( Active == MeleeWeapon )
-			return (int)WeaponSlot.Melee;
 
 		for ( int i = 0; i < Gadgets.Count; i++ )
 		{
@@ -231,7 +209,6 @@ public partial class PlayerInventory : BaseNetworkable
 		{
 			0 => PrimaryWeapon,
 			1 => SecondaryWeapon,
-			2 => MeleeWeapon,
 			_ => GetGadget( i )
 		};
 	}
@@ -253,11 +230,6 @@ public partial class PlayerInventory : BaseNetworkable
 			case WeaponSlot.Secondary:
 				{
 					SecondaryWeapon = weapon;
-					break;
-				};
-			case WeaponSlot.Melee:
-				{
-					MeleeWeapon = weapon;
 					break;
 				};
 			case WeaponSlot.Gadget:
@@ -285,11 +257,6 @@ public partial class PlayerInventory : BaseNetworkable
 				{
 					SecondaryWeapon = null;
 					Log.Info( "Ssecondary Weapon made null" );
-					break;
-				};
-			case WeaponSlot.Melee:
-				{
-					MeleeWeapon = null;
 					break;
 				};
 			case WeaponSlot.Gadget:

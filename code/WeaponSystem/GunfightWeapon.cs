@@ -538,6 +538,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 			var damage = BulletDamage;
 
+			Vector3 LastImpact = Vector3.Zero;
 			int count = 0;
 			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * bulletRange, bulletSize, ref damage ) )
 			{
@@ -557,6 +558,12 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 				if ( WeaponDefinition.DamageFlags.HasFlag( DamageFlags.Bullet ) )
 					DoTracer( tr.StartPosition, tr.EndPosition, tr.Distance, count );
 
+				if ( count == 1 )
+				{
+					Particles.Create( "particles/gameplay/guns/trail/rico_trail_impact_spark.vpcf", LastImpact );
+				}
+
+				LastImpact = tr.EndPosition;
 				count++;
 			}
 		}
@@ -565,9 +572,16 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	[ClientRpc]
 	public void DoTracer( Vector3 from, Vector3 to, float dist, int bullet )
 	{
-		var system = Particles.Create( WeaponDefinition.ShootTrailParticleEffect ?? "particles/gameplay/guns/trail/trail_smoke.vpcf" );
+		var path = WeaponDefinition.ShootTrailParticleEffect ?? "particles/gameplay/guns/trail/trail_smoke.vpcf";
 
-		system?.SetPosition( 0, bullet == 0 ? ViewModelEntity.GetAttachment( "muzzle" )?.Position ?? from : from );
+		if ( bullet > 0 )
+		{
+			path = "particles/gameplay/guns/trail/rico_trail_smoke.vpcf";
+		}
+
+		var system = Particles.Create( path );
+
+		system?.SetPosition( 0, bullet == 0 ? EffectEntity.GetAttachment( "muzzle" )?.Position ?? from : from );
 		system?.SetPosition( 1, to );
 		system?.SetPosition( 2, dist );
 	}

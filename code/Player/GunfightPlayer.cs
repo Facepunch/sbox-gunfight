@@ -226,6 +226,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		TickPlayerUse();
 		SimulateView();
 		SimulateWeapons( cl );
+		SimulatePing( cl );
 
 		if ( TimeSinceDamage > 5f )
 		{

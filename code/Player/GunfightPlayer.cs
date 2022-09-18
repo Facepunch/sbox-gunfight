@@ -127,6 +127,11 @@ public partial class GunfightPlayer : Player, IHudMarker
 		StopUsing();
 		Client?.AddInt( "deaths", 1 );
 
+		if ( CapturePoint.IsValid() )
+		{
+			CapturePoint.RemovePlayer( this );
+		}
+
 		var primary = Inventory.PrimaryWeapon;
 		if ( primary.IsValid() && Inventory.Drop( primary ) )
 		{

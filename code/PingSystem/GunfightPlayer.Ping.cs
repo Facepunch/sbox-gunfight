@@ -27,7 +27,14 @@ public partial class GunfightPlayer
 		Vector3 position = tr.EndPosition;
 		Entity taggedEntity = null;
 
-		if ( tr.Entity is GunfightPlayer enemy )
+		var entityTrace = tr.Entity;
+
+		if ( entityTrace is PickupTrigger trigger )
+		{
+			entityTrace = trigger.Parent;
+		}
+
+		if ( entityTrace is GunfightPlayer enemy )
 		{
 			if ( TeamSystem.IsHostile( Team, enemy.Team ) )
 			{
@@ -37,19 +44,28 @@ public partial class GunfightPlayer
 			}
 		}
 
+		if ( entityTrace is GunfightWeapon weapon )
+		{
+			pingType = PingType.Resource;
+			taggedEntity = weapon;
+			position = tr.Entity.Position;
+		}
+
 		if ( tr.Hit )
 			ClientRpcPing( ToExtensions.Team( Client.GetTeam() ), position, pingType, taggedEntity, Client );
 	}
 
 	protected TraceResult GetPingTrace()
 	{
-		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 10000f ).WorldAndEntities().Ignore( this ).WithAnyTags( "solid", "player" ).Radius( 10f ).Run();
+		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 10000f ).WorldAndEntities().Ignore( this ).WithAnyTags( "solid", "player", "weapon", "trigger" ).Radius( 10f ).Run();
 
 		return tr;
 	}
 
 	public void SimulatePing( Client cl )
 	{
+		if ( !IsServer ) return;
+
 		if ( Input.Pressed( InputButton.Flashlight ) )
 		{
 			Ping();

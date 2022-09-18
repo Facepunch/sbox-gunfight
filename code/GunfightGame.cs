@@ -28,7 +28,7 @@ partial class GunfightGame : Game
 			Hud = new GunfightHud();
 			Scores = new();
 
-			Global.TickRate = 20;
+			Global.TickRate = 30;
 		}
 
 		if ( IsClient )

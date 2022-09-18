@@ -11,6 +11,7 @@
 		Icon = resource:"ui/weapons/mp5.png"
 		BaseFireRate = 0.07
 		DefaultFireMode = "FullAuto"
+		DamageFlags = "Bullet"
 		SupportedFireModes = 
 		[
 			"Semi",
@@ -23,9 +24,11 @@
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
+		BurstCooldown = 0.3
 		FireSound = resource:"sounds/guns/mp5/smg1_shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
 		AimingDisabled = false
+		BulletRange = 5000
 		AmmoType = "SMG"
 		ClipSize = 30
 		StandardClip = 30
@@ -37,7 +40,7 @@
 			OverallWeight = 0.1
 			WeightReturnForce = 100
 			WeightDamping = 18
-			AccelerationDamping = 1
+			AccelerationDamping = 20
 			VelocityScale = 10
 			RotationalPivotForce = 10
 			RotationalScale = 5
@@ -63,5 +66,6 @@
 			ViewModelScale = 0.5
 			ViewModelRecoverySpeed = 5
 		}
+		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
 	}
 }

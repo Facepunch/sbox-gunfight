@@ -45,7 +45,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public bool IsBurst => CurrentFireMode == FireMode.Burst;
 	public int ClipSize => WeaponDefinition.ClipSize;
 	public float ReloadTime => WeaponDefinition.ReloadTime;
-	public AmmoType AmmoType => WeaponDefinition.AmmoType;
+	public AmmoType AmmoType => WeaponDefinition?.AmmoType ?? AmmoType.None;
 	public Vector2 RecoilDecay => WeaponDefinition.Recoil.Decay;
 	public Vector2 BaseRecoilMinimum => WeaponDefinition.Recoil.BaseRecoilMinimum;
 	public Vector2 BaseRecoilMaximum => WeaponDefinition.Recoil.BaseRecoilMaximum;

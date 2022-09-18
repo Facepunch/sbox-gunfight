@@ -11,6 +11,7 @@
 		Icon = resource:"ui/weapons/famas.png"
 		BaseFireRate = 0.05
 		DefaultFireMode = "Burst"
+		DamageFlags = "Bullet"
 		SupportedFireModes = 
 		[
 			"Burst",
@@ -22,6 +23,7 @@
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
+		BurstCooldown = 0.3
 		FireSound = resource:"sounds/guns/f1/ar2_shoot.sound"
 		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
 		AimingDisabled = false
@@ -37,7 +39,7 @@
 			OverallWeight = 0.1
 			WeightReturnForce = 100
 			WeightDamping = 18
-			AccelerationDamping = 1
+			AccelerationDamping = 15
 			VelocityScale = 10
 			RotationalPivotForce = 10
 			RotationalScale = 5

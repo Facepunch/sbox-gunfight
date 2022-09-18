@@ -11,6 +11,7 @@
 		Icon = resource:"ui/weapons/pump-shotgun.png"
 		BaseFireRate = 1
 		DefaultFireMode = "Semi"
+		DamageFlags = "Bullet"
 		SupportedFireModes = 
 		[
 			"Semi",
@@ -22,9 +23,11 @@
 		BulletSize = 3
 		BulletCount = 12
 		BurstAmount = 3
+		BurstCooldown = 0.3
 		FireSound = resource:"sounds/guns/r870/shotgun1_shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
 		AimingDisabled = true
+		BulletRange = 5000
 		AmmoType = "Shotgun"
 		ClipSize = 6
 		StandardClip = 6
@@ -36,7 +39,7 @@
 			OverallWeight = 0.1
 			WeightReturnForce = 100
 			WeightDamping = 18
-			AccelerationDamping = 1
+			AccelerationDamping = 15
 			VelocityScale = 10
 			RotationalPivotForce = 10
 			RotationalScale = 5
@@ -54,11 +57,12 @@
 		}
 		Recoil = 
 		{
-			Decay = "60, 100"
+			Decay = "60,100"
 			BaseRecoilMinimum = "-0.05,20"
 			BaseRecoilMaximum = "0.05,20"
 			ViewModelScale = 2
 			ViewModelRecoverySpeed = 3
 		}
+		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
 	}
 }

@@ -40,7 +40,7 @@
 			OverallWeight = 0.1
 			WeightReturnForce = 100
 			WeightDamping = 18
-			AccelerationDamping = 1
+			AccelerationDamping = 15
 			VelocityScale = 10
 			RotationalPivotForce = 10
 			RotationalScale = 5

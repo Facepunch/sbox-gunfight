@@ -47,6 +47,8 @@ public partial class CrosshairRender
 		draw.Line( thickness, center + Vector2.Up * gap, center + Vector2.Up * (length + gap) );
 		draw.Line( thickness, center - Vector2.Up * gap, center - Vector2.Up * (length + gap) );
 
+		draw.Circle( center, thickness, 32 );
+
 		var reload = lastReload.Clamp( 0, 1 );
 		if ( reload < 1f && reload > 0f )
 		{

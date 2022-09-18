@@ -97,7 +97,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 
 		var map = spdGain.Remap( 0, 3000f, 0, 1 );
 		
-		_ = new ScreenShake.Perlin( 0.3f, 0.1f, 0.2f * map );
+		//_ = new ScreenShake.Perlin( 0.3f, 0.1f, 0.2f * map );
 
 		Controller.SetTag( "sliding" );
 	}

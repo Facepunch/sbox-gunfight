@@ -57,7 +57,7 @@ public partial class GunfightPlayer
 
 	protected TraceResult GetPingTrace()
 	{
-		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 10000f ).WorldAndEntities().Ignore( this ).WithAnyTags( "solid", "player", "weapon", "trigger" ).Radius( 10f ).Run();
+		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 10000f ).WorldAndEntities().Ignore( this ).WithAnyTags( "solid", "player", "weapon", "trigger" ).Radius( 3f ).Run();
 
 		return tr;
 	}

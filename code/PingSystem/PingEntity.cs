@@ -10,7 +10,7 @@ public partial class PingEntity : ModelEntity, IHudMarker
 
 	public async Task DeferredDeletion()
 	{
-		await GameTask.DelayRealtimeSeconds( 10f );
+		await GameTask.DelayRealtimeSeconds( PingSystem.GetLifetime( Type ) );
 
 		Delete();
 	}

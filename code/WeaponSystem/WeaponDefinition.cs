@@ -37,6 +37,19 @@ public partial class WeaponDefinition : GameResource
 		}
 	}
 
+	public static IList<WeaponDefinition> FindFromSlot( WeaponSlot slot )
+	{
+		return All.Where( x => x.Slot == slot ).ToList();
+	}
+
+	public static WeaponDefinition Random( IList<WeaponDefinition> weapons )
+	{
+		if ( weapons.Count() == 0 ) return null;
+		Rand.SetSeed( Time.Tick );
+		var index = Rand.Int( 0, weapons.Count() - 1 );
+		return weapons[index];
+	}
+
 	public static WeaponDefinition Find( string search )
 	{
 		if ( Index.TryGetValue( search, out var weaponDef ) )

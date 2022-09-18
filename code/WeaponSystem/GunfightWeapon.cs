@@ -535,6 +535,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			forward = forward.Normal;
 
 			var damage = BulletDamage;
+
+			int count = 0;
 			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * bulletRange, bulletSize, ref damage ) )
 			{
 				tr.Surface.DoBulletImpact( tr );
@@ -551,16 +553,19 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 				tr.Entity.TakeDamage( damageInfo );
 
 				if ( WeaponDefinition.DamageFlags.HasFlag( DamageFlags.Bullet ) )
-					DoTracer( tr.StartPosition, tr.EndPosition, tr.Distance );
+					DoTracer( tr.StartPosition, tr.EndPosition, tr.Distance, count );
+
+				count++;
 			}
 		}
 	}
 
 	[ClientRpc]
-	public void DoTracer( Vector3 from, Vector3 to, float dist )
+	public void DoTracer( Vector3 from, Vector3 to, float dist, int bullet )
 	{
 		var system = Particles.Create( WeaponDefinition.ShootTrailParticleEffect ?? "particles/gameplay/guns/trail/trail_smoke.vpcf" );
-		system?.SetPosition( 0, from );
+
+		system?.SetPosition( 0, bullet == 0 ? ViewModelEntity.GetAttachment( "muzzle" )?.Position ?? from : from );
 		system?.SetPosition( 1, to );
 		system?.SetPosition( 2, dist );
 	}

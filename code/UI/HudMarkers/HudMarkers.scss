@@ -72,7 +72,12 @@ hudmarker {
             background-image-tint: rgba( 252, 35, 35, 1 );
             box-shadow: 0px 0px 20px rgba( $enemy, 0.1 );
             background-image: url( ui/target.png );
+        }
 
+        &.resource {
+            box-shadow: 0px 0px 20px rgba( $theme-color, 0.1 );
+            background-image-tint: $theme-color;
+            background-image: url( ui/resource.png );
         }
 
         label {

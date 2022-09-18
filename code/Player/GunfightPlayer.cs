@@ -7,7 +7,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 	[Net] public PlayerInventory PlayerInventory { get; set; }
 	[Net, Predicted] public TimeSince TimeSinceDropped { get; set; }
 	[Net] public CapturePointEntity CapturePoint { get; set; }
-
+	[Net] public string PlayerLocation { get; set; } = "";
 	public string SpawnPointTag { get; set; } = null;
 
 	public bool SupressPickupNotices { get; private set; }

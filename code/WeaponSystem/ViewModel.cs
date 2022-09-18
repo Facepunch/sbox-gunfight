@@ -216,6 +216,10 @@ public partial class ViewModel : BaseViewModel
 
 		Rotation *= realRotationOffset;
 		Position += realPositionOffset;
+
+		camSetup.FieldOfView -= 10f * aimLerp;
+		// TODO - Set this up in the viewmodel itself
+		camSetup.ViewModel.FieldOfView = 75f;
 	}
 
 	protected void ApplyPositionOffset( Vector3 offset, float delta, CameraSetup camSetup )

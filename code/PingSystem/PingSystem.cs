@@ -15,10 +15,10 @@ public class PingSystem
 	{
 		return type switch
 		{
-			PingType.Generic => 10f,
+			PingType.Generic => 5f,
 			PingType.Enemy => 4f,
 			PingType.Resource => 30f,
-			_ => 10f
+			_ => 5f
 		};
 	}
 }

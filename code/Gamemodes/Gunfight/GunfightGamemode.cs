@@ -331,6 +331,14 @@ public partial class GunfightGamemode : GamemodeEntity
 	{
 		// Delete the flag if it exists.
 		ActiveFlag?.Delete();
+
+		foreach( var weapon in Entity.All.OfType<GunfightWeapon>() )
+		{
+			if ( !weapon.Parent.IsValid() )
+			{
+				weapon.Delete();
+			}
+		}
 	}
 
 	public override void OnFlagCaptured( CapturePointEntity flag, Team team )

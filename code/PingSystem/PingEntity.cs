@@ -40,18 +40,27 @@ public partial class PingEntity : ModelEntity, IHudMarker
 
 	string IHudMarker.GetClass() => "ping";
 
+	protected bool DestroyMe()
+	{
+		Delete();
+		return false;
+	}
+
 	bool IHudMarker.UpdateMarker( ref HudMarkerBuilder info )
 	{
 		if ( !this.IsValid() )
-			return false;
+			return DestroyMe();
+	
+		if ( Parent.IsValid() && Parent.LifeState != LifeState.Alive )
+			return DestroyMe();
 
 		// Parent in this case is the entity we tagged
-		if ( Parent.IsValid() && Parent.Parent.IsValid() ) return false;
+		if ( Parent.IsValid() && Parent.Parent.IsValid() )
+			return DestroyMe();
 
 		info.Text = "";
 		info.Position = Position + Vector3.Up * 20f;
 		info.Classes[Type.ToString()] = true;
-
 
 		return true;
 	}

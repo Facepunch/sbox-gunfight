@@ -203,7 +203,7 @@ public partial class ViewModel : BaseViewModel
 		camSetup.Rotation *= Rotation.From( new Angles( -1f, 0, -3f ) * slideLerp );
 
 		// Recoil
-		LerpRecoil = LerpRecoil.LerpTo( weapon.Recoil * WeaponDef.Recoil.ViewModelScale, Time.Delta * WeaponDef.Recoil.ViewModelRecoverySpeed );
+		LerpRecoil = LerpRecoil.LerpTo( weapon.WeaponSpreadRecoil, Time.Delta * 5f );
 		rotationOffsetTarget *= Rotation.From( new Angles( -LerpRecoil.y, -LerpRecoil.x, 0 ) );
 
 		// In air

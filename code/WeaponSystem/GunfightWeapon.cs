@@ -22,7 +22,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	[Net, Predicted] public TimeSince TimeSinceBurstFinished { get; set; }
 	[Net, Predicted] public bool IsBurstFiring { get; set; }
 
-	[Net, Predicted] public Vector2 Recoil { get; set; }
+	[Net, Predicted] public Vector2 CameraRecoil { get; set; }
+	[Net, Predicted] public Vector2 WeaponSpreadRecoil { get; set; }
 
 	public CrosshairRender Crosshair { get; protected set; }
 	public PickupTrigger PickupTrigger { get; protected set; }
@@ -47,8 +48,6 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public float ReloadTime => WeaponDefinition.ReloadTime;
 	public AmmoType AmmoType => WeaponDefinition?.AmmoType ?? AmmoType.None;
 	public Vector2 RecoilDecay => WeaponDefinition.Recoil.Decay;
-	public Vector2 BaseRecoilMinimum => WeaponDefinition.Recoil.BaseRecoilMinimum;
-	public Vector2 BaseRecoilMaximum => WeaponDefinition.Recoil.BaseRecoilMaximum;
 	public float BulletSpread => WeaponDefinition.BulletSpread;
 	public float BulletForce => WeaponDefinition.BulletForce;
 	public float BulletDamage => WeaponDefinition.BulletDamage;
@@ -115,7 +114,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		TimeSinceDeployed = 0;
 		TimeSinceReload = ReloadTime;
-		Recoil = 0;
+		CameraRecoil = 0;
+		WeaponSpreadRecoil = 0;
 		TimeSinceBurstFinished = WeaponDefinition.BurstCooldown;
 		IsBurstFiring = false;
 		BurstCount = 0;
@@ -185,16 +185,21 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	protected virtual void SimulateRecoil( Client owner )
 	{
-		Recoil -= RecoilDecay * Time.Delta;
+		CameraRecoil -= RecoilDecay * Time.Delta;
 		// Clamp down to zero
-		Recoil = Recoil.Clamp( 0, float.MaxValue );
+		CameraRecoil = CameraRecoil.Clamp( 0, float.MaxValue );
+
+		WeaponSpreadRecoil -= WeaponDefinition.Recoil.SpreadDecay * Time.Delta;
+		// Clamp down to zero
+		WeaponSpreadRecoil = WeaponSpreadRecoil.Clamp( 0, float.MaxValue );
 	}
 
 	protected virtual void ApplyRecoil()
 	{
-		Rand.SetSeed( Time.Tick );
-		var randX = Rand.Float( BaseRecoilMinimum.x, BaseRecoilMaximum.x );
-		var randY = Rand.Float( BaseRecoilMinimum.y, BaseRecoilMaximum.y );
+		var randX = Rand.Float( WeaponDefinition.Recoil.BaseRecoilMinimum.x, WeaponDefinition.Recoil.BaseRecoilMaximum.x );
+		var randY = Rand.Float( WeaponDefinition.Recoil.BaseRecoilMinimum.y, WeaponDefinition.Recoil.BaseRecoilMaximum.y );
+		var randSpreadX = Rand.Float( WeaponDefinition.Recoil.MinimumSpread.x, WeaponDefinition.Recoil.MaximumSpread.x );
+		var randSpreadY = Rand.Float( WeaponDefinition.Recoil.MinimumSpread.y, WeaponDefinition.Recoil.MaximumSpread.y );
 
 		// TODO - Remove magic numbers.
 		var recoilScale = 1f;
@@ -215,13 +220,15 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		var speed = Player.Velocity.Length.LerpInverse( 0, 400, true );
 		recoilScale += 0.5f * speed;
 
-		Recoil += new Vector2( randX, randY ) * recoilScale;
+		CameraRecoil += new Vector2( randX, randY ) * recoilScale;
+		// Apply spread too
+		WeaponSpreadRecoil += new Vector2( randSpreadX, randSpreadY ) * recoilScale;
 	}
 
 	public override void BuildInput( InputBuilder input )
 	{
-		input.ViewAngles.pitch -= Recoil.y * Time.Delta;
-		input.ViewAngles.yaw -= Recoil.x * Time.Delta;
+		input.ViewAngles.pitch -= CameraRecoil.y * Time.Delta;
+		input.ViewAngles.yaw -= CameraRecoil.x * Time.Delta;
 	}
 
 	public override void Simulate( Client owner )
@@ -532,7 +539,11 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		for ( int i = 0; i < bulletCount; i++ )
 		{
-			var forward = Owner.EyeRotation.Forward;
+			var rot = Owner.EyeRotation;
+			var weaponRecoil = WeaponSpreadRecoil;
+			rot *= Rotation.From( new Angles( -weaponRecoil.y, -weaponRecoil.x, 0 ) );
+
+			var forward = rot.Forward;
 			forward += (Vector3.Random + Vector3.Random + Vector3.Random + Vector3.Random) * spread * 0.25f;
 			forward = forward.Normal;
 

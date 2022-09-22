@@ -63,8 +63,9 @@
 			Decay = "60,100"
 			BaseRecoilMinimum = "-2.5,7"
 			BaseRecoilMaximum = "2.5,8"
-			ViewModelScale = 1
-			ViewModelRecoverySpeed = 5
+			SpreadDecay = "10,10"
+			MinimumSpread = "-4,-4"
+			MaximumSpread = "4,4"
 		}
 		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
 	}

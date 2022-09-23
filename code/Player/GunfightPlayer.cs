@@ -177,6 +177,21 @@ public partial class GunfightPlayer : Player, IHudMarker
 		GamemodeSystem.Current?.PostPlayerKilled( this, LastDamage );
 	}
 
+	public GunfightWeapon CurrentWeapon => ActiveChild as GunfightWeapon;
+
+	public bool CanChangeWeapon( Client cl )
+	{
+		if ( IsHolstering ) return false;
+
+		var wpn = CurrentWeapon;
+		if ( wpn != null )
+		{
+			if ( wpn.IsReloading ) return false;
+			if ( wpn.IsBurstFiring ) return false;
+		}
+
+		return true;
+	}
 
 	protected Entity QueuedActiveChild;
 	protected void SimulateWeapons( Client cl )
@@ -184,12 +199,16 @@ public partial class GunfightPlayer : Player, IHudMarker
 		//
 		// Input requested a weapon switch
 		//
-		if ( Input.ActiveChild != null && Input.ActiveChild != ActiveChild )
+		if ( Input.ActiveChild != null && ActiveChild != Input.ActiveChild )
+		{
+			QueuedActiveChild = Input.ActiveChild;
+		}
+
+		if ( QueuedActiveChild.IsValid() && CanChangeWeapon( cl ) )
 		{
 			// Perform holster on weapon
 			IsHolstering = true;
 			TimeUntilHolstered = 0.5f;
-			QueuedActiveChild = Input.ActiveChild;
 			var wpn = ActiveChild as GunfightWeapon;
 			wpn?.Holster();
 		}
@@ -200,6 +219,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 			{
 				IsHolstering = false;
 				ActiveChild = QueuedActiveChild;
+				QueuedActiveChild = null;
 			}
 		}
 

@@ -10,6 +10,9 @@ public partial class GunfightPlayer : Player, IHudMarker
 	[Net] public string PlayerLocation { get; set; } = "";
 	public string SpawnPointTag { get; set; } = null;
 
+	[Net, Predicted] public TimeUntil TimeUntilHolstered { get; set; } = -1;
+	[Net, Predicted] public bool IsHolstering { get; set; } = false;
+
 	public bool SupressPickupNotices { get; private set; }
 	public bool IsRegen { get; set; }
 	public new PlayerInventory Inventory => PlayerInventory;
@@ -174,13 +177,31 @@ public partial class GunfightPlayer : Player, IHudMarker
 		GamemodeSystem.Current?.PostPlayerKilled( this, LastDamage );
 	}
 
+
+	protected Entity QueuedActiveChild;
 	protected void SimulateWeapons( Client cl )
 	{
 		//
 		// Input requested a weapon switch
 		//
-		if ( Input.ActiveChild != null )
-			ActiveChild = Input.ActiveChild;
+		if ( Input.ActiveChild != null && Input.ActiveChild != ActiveChild )
+		{
+			// Perform holster on weapon
+			IsHolstering = true;
+			TimeUntilHolstered = 0.5f;
+			QueuedActiveChild = Input.ActiveChild;
+			var wpn = ActiveChild as GunfightWeapon;
+			wpn?.Holster();
+		}
+
+		if ( IsHolstering )
+		{
+			if ( TimeUntilHolstered )
+			{
+				IsHolstering = false;
+				ActiveChild = QueuedActiveChild;
+			}
+		}
 
 		SimulateActiveChild( cl, ActiveChild );
 	}

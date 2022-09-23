@@ -292,6 +292,19 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		Crosshair = CrosshairRender.From( def.Crosshair );
 	}
 
+
+	[ClientRpc]
+	protected virtual void RpcHolster()
+	{
+		Log.Info( "Holster!" );
+		ViewModelEntity?.SetAnimParameter( "holster", true );
+	}
+
+	public void Holster()
+	{
+		RpcHolster();
+	}
+
 	public virtual void OnReloadFinish()
 	{
 		IsReloading = false;

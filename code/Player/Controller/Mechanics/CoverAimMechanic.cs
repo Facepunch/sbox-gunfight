@@ -24,7 +24,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 		if ( wall.Distance > MaxWallMountDistance ) return false;
 
 		MountWorldPosition = wall.TracePos;
-		return wall.Height <= 80f && wall.Height >= 40f;
+		return wall.Height <= 80f && wall.Height >= 30f;
 	}
 
 	protected void DoVisualEffects( bool inverted = false )
@@ -71,6 +71,12 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 		var wallHeight = wall.Height + 4f;
 
 		WallHeight = wallHeight;
+
+		// Duck the player
+		if ( WallHeight < 50f )
+		{
+			Controller.SetTag( "ducked" );
+		}
 	}
 
 	public override float? GetEyeHeight()

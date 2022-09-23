@@ -110,27 +110,28 @@ public partial class BaseMoveMechanic : BaseNetworkable
 		};
 	}
 
+	private static int MaxWallTraceIterations => 20;
 	private static float ApproximateWallHeight( Vector3 startPos, Vector3 wallNormal, float maxHeight, float maxDist, int precision, out Vector3 tracePos )
 	{
 		tracePos = Vector3.Zero;
 
 		var step = maxHeight / precision;
-		var wallFoudn = false;
-		for ( int i = 0; i < precision; i++ )
+		var foundWall = false;
+		for ( int i = 0; i < Math.Min( precision, MaxWallTraceIterations ); i++ )
 		{
 			startPos.z += step;
 			var trace = Trace.Ray( startPos, startPos - wallNormal * maxDist )
 				.WorldOnly()
 				.Run();
 
-			// DebugOverlay.TraceResult( trace, 0f );
+			DebugOverlay.TraceResult( trace );
 
-			if ( !trace.Hit && !wallFoudn ) continue;
+			if ( !trace.Hit && !foundWall ) continue;
 			if ( trace.Hit )
 			{
 				tracePos = trace.HitPosition;
 
-				wallFoudn = true;
+				foundWall = true;
 				continue;
 			}
 			return startPos.z;

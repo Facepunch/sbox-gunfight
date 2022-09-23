@@ -296,13 +296,14 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	[ClientRpc]
 	protected virtual void RpcHolster()
 	{
-		Log.Info( "Holster!" );
+		//Log.Info( $"{Host.Name} Holster {ViewModelEntity}" );
 		ViewModelEntity?.SetAnimParameter( "holster", true );
 	}
 
 	public void Holster()
 	{
-		RpcHolster();
+		if ( IsServer )
+			RpcHolster( To.Single( Owner ) );
 	}
 
 	public virtual void OnReloadFinish()

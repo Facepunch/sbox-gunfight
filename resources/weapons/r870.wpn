@@ -31,7 +31,7 @@
 		AmmoType = "Shotgun"
 		ClipSize = 6
 		StandardClip = 6
-		ReloadTime = 1.2
+		ReloadTime = 0.6
 		ReloadSingle = true
 		Crosshair = "Default"
 		ViewModelSetup = 
@@ -60,8 +60,6 @@
 			Decay = "60,100"
 			BaseRecoilMinimum = "-0.05,20"
 			BaseRecoilMaximum = "0.05,20"
-			ViewModelScale = 2
-			ViewModelRecoverySpeed = 3
 		}
 		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
 	}

@@ -174,21 +174,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 		GamemodeSystem.Current?.PostPlayerKilled( this, LastDamage );
 	}
 
-	protected void SimulateView()
-	{
-		if ( Input.Pressed( InputButton.View ) )
-		{
-			if ( CameraMode is ThirdPersonCamera )
-			{
-				CameraMode = new FirstPersonCamera();
-			}
-			else
-			{
-				CameraMode = new ThirdPersonCamera();
-			}
-		}
-	}
-
 	protected void SimulateWeapons( Client cl )
 	{
 		//
@@ -229,7 +214,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 			return;
 
 		TickPlayerUse();
-		SimulateView();
 		SimulateWeapons( cl );
 		SimulatePing( cl );
 

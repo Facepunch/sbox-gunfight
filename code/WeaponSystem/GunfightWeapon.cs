@@ -215,10 +215,10 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		{
 			recoilScale *= 0.8f;
 		}
-	
+
 		// If you're moving at speed, apply more recoil.
 		var speed = Player.Velocity.Length.LerpInverse( 0, 400, true );
-		recoilScale += 0.5f * speed;
+		recoilScale += 1f * speed;
 
 		CameraRecoil += new Vector2( randX, randY ) * recoilScale;
 		// Apply spread too

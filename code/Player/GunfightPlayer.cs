@@ -183,15 +183,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 			ActiveChild = Input.ActiveChild;
 
 		SimulateActiveChild( cl, ActiveChild );
-
-		//
-		// If the current weapon is out of ammo and we last fired it over half a second ago
-		// lets try to switch to a better wepaon
-		//
-		if ( ActiveChild is GunfightWeapon weapon && !weapon.IsUsable() && weapon.TimeSincePrimaryAttack > 0.5f )
-		{
-			SwitchToBestWeapon();
-		}
 	}
 
 	TimeSince TimeSinceKilled;

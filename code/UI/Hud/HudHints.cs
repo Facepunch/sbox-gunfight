@@ -53,6 +53,8 @@ public partial class HudHints : Panel
 
 			if ( tr.Entity.IsValid() && tr.Entity is GunfightWeapon wpn )
 				PickupLabel.Text = wpn.Name;
+			else
+				PickupLabel.Text = "Use";
 		}
 	}
 }

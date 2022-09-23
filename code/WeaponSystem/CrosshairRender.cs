@@ -7,7 +7,7 @@ public enum CrosshairType
 
 public partial class CrosshairRender
 {
-	public Color StandardColor => Color.White;
+	public Color StandardColor => ThemeColor;
 	public Color DisabledColor => Color.Red;
 
 	public static CrosshairRender From( CrosshairType type )
@@ -20,6 +20,8 @@ public partial class CrosshairRender
 	}
 
 	float alpha = 0;
+
+	public Color ThemeColor => Color.Parse( "#ffffda" ) ?? Color.Red;
 	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
 	{
 		var draw = Render.Draw2D;
@@ -33,8 +35,8 @@ public partial class CrosshairRender
 		draw.BlendMode = BlendMode.Lighten;
 		draw.Color = color.WithAlpha( ( 0.4f + lastAttack.LerpInverse( 1.2f, 0 ) * 0.5f ) * alpha );
 
-		var length = 8.0f - shootEase * 2.0f;
-		var gap = 10.0f + shootEase * 30.0f;
+		var length = 12.0f - shootEase * 2.0f;
+		var gap = 20.0f + shootEase * 30.0f;
 
 		gap += 50 * speed;
 		length += 8 * speed;
@@ -47,22 +49,27 @@ public partial class CrosshairRender
 		draw.Line( thickness, center + Vector2.Up * gap, center + Vector2.Up * (length + gap) );
 		draw.Line( thickness, center - Vector2.Up * gap, center - Vector2.Up * (length + gap) );
 
-		draw.Circle( center, thickness, 32 );
-
 		var reload = lastReload.Clamp( 0, 1 );
 		if ( reload < 1f && reload > 0f )
 		{
 			draw.BlendMode = BlendMode.Normal;
 			draw.Color = Color.Black.WithAlpha( 0.3f );
 
-			var circleSize = 34f + ( 60 * speed );
+			var circleSize = 13f;
 			var startAng = -0 * 360f;
 			var finishAng = 1f * 360f;
 
-			draw.CircleEx( center, circleSize, circleSize - 6f, 32, startAng, finishAng );
-			draw.Color = Color.White;
-			draw.CircleEx( center, circleSize, circleSize - 6f, 32, startAng, finishAng * lastReload );
+			var offset = 30f + (30f * speed);
+			var circleCenter = center + Vector2.Up * offset + Vector2.Left * offset;
+
+			draw.Color = ThemeColor.WithAlpha( 0.01f );
+			draw.Circle( circleCenter, circleSize, 32 );
+			draw.Color = ThemeColor.WithAlpha( 1f );
+			draw.CircleEx( circleCenter, circleSize, 0, 32, startAng, finishAng * lastReload );
+
 		}
+
+		draw.Circle( center, thickness, 32 );
 	}
 }
 

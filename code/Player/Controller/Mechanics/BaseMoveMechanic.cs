@@ -127,7 +127,8 @@ public partial class BaseMoveMechanic : BaseNetworkable
 				.WorldOnly()
 				.Run();
 
-			DebugOverlay.TraceResult( trace );
+			if ( BasePlayerController.Debug )
+				DebugOverlay.TraceResult( trace );
 
 			if ( !trace.Hit && !foundWall ) continue;
 			if ( trace.Hit )

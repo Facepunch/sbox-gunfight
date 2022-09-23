@@ -23,7 +23,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 		if ( Vector3.Dot( Controller.EyeRotation.Forward, wall.Normal ) > -.5f ) return false;
 
 		var posFwd = Controller.Position - wall.Normal * (Controller.BodyGirth + wall.Distance);
-		var floorTraceStart = posFwd.WithZ( wall.Height );
+		var floorTraceStart = posFwd.WithZ( wall.AbsoluteHeight );
 		var floorTraceEnd = posFwd.WithZ( Controller.Position.z );
 
 		var floorTrace = Controller.TraceBBox( floorTraceStart, floorTraceEnd );

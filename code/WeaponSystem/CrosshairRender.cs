@@ -36,8 +36,8 @@ public partial class CrosshairRender
 		var length = 8.0f - shootEase * 2.0f;
 		var gap = 10.0f + shootEase * 30.0f;
 
-		gap += 20 * speed;
-		length += 4 * speed;
+		gap += 50 * speed;
+		length += 8 * speed;
 
 		var thickness = 2.0f;
 
@@ -55,13 +55,13 @@ public partial class CrosshairRender
 			draw.BlendMode = BlendMode.Normal;
 			draw.Color = Color.Black.WithAlpha( 0.3f );
 
-			var circleSize = 34f + ( 20 * speed );
+			var circleSize = 34f + ( 60 * speed );
 			var startAng = -0 * 360f;
-			var finishAng = 0.75f * 360f;
+			var finishAng = 1f * 360f;
 
-			draw.CircleEx( center, circleSize, circleSize - 4f, 32, startAng, finishAng );
+			draw.CircleEx( center, circleSize, circleSize - 6f, 32, startAng, finishAng );
 			draw.Color = Color.White;
-			draw.CircleEx( center, circleSize, circleSize - 4f, 32, startAng, finishAng * lastReload );
+			draw.CircleEx( center, circleSize, circleSize - 6f, 32, startAng, finishAng * lastReload );
 		}
 	}
 }

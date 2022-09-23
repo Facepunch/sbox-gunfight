@@ -29,6 +29,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 
 	protected void DoVisualEffects( bool inverted = false )
 	{
+		if ( CachedWallInfo == null ) return;
 
 		var size = (CachedWallInfo.Height > 60f ? 1 : -1);
 		if ( inverted ) size *= -1;

@@ -52,8 +52,11 @@ public partial class GunfightWeapon
 	{
 		Attachments.Remove( attachment );
 
-		// Delete the attachment as we no longer care about it.
-		attachment.Delete();
+		if ( IsServer )
+		{
+			// Delete the attachment as we no longer care about it.
+			attachment.Delete();
+		}
 	}
 
 	// Entity Virtuals

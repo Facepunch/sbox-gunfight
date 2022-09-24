@@ -9,6 +9,7 @@
 		]
 		PrimaryWeapon = 
 		{
+			Attachments = [  ]
 		}
 		SecondaryWeapon = 
 		{

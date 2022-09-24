@@ -45,6 +45,11 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 			var position = attachment.Value.Position;
 			var rotation = Weapon.Owner.EyeRotation;
 
+			if ( Weapon.IsReloading )
+			{
+				rotation = attachment.Value.Rotation;
+			}
+
 			var trace = Trace.Ray( position, position + rotation.Forward * 4096f )
 				.UseHitboxes()
 				.Radius( 2f )

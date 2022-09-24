@@ -15,10 +15,7 @@
 		{
 			IsSet = true
 			Definition = resource:"resources/weapons/revolver.wpn"
-			Attachments = 
-			[
-				"laser",
-			]
+			Attachments = [  ]
 		}
 		Ammo = 
 		{

@@ -11,10 +11,7 @@
 		{
 			IsSet = true
 			Definition = resource:"resources/weapons/mp5.wpn"
-			Attachments = 
-			[
-				"laser",
-			]
+			Attachments = [  ]
 		}
 		SecondaryWeapon = 
 		{

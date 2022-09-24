@@ -114,8 +114,8 @@
 						_class = "Attachment"
 						name = "barrel"
 						parent_bone = ""
-						relative_origin = [ 7.411956, 1.176033, 0.0 ]
-						relative_angles = [ -0.0, 0.0, 0.0 ]
+						relative_origin = [ 7.411956, 1.176033, 1.442216 ]
+						relative_angles = [ 90.0, -90.000015, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
 					},

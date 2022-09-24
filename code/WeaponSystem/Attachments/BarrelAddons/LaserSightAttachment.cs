@@ -46,7 +46,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 			var rotation = attachment.Value.Rotation;
 
 			var player = Weapon.Owner as GunfightPlayer;
-			if ( !player.IsValid() )
+			if ( !player.IsValid() || player != Local.Pawn )
 			{
 				// Do nothing
 			}
@@ -55,7 +55,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 				rotation = player.EyeRotation;
 
 				var ctrl = player.Controller as PlayerController;
-				if ( Weapon.IsReloading || ctrl.IsSprinting || ctrl.Slide.IsActive )
+				if ( ctrl != null && Weapon.IsValid() && Weapon.IsReloading || ctrl.IsSprinting || ctrl.Slide.IsActive )
 				{
 					rotation = attachment.Value.Rotation;
 				}

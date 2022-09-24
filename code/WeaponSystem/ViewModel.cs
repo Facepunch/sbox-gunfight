@@ -72,17 +72,20 @@ public partial class ViewModel : BaseViewModel
 	public Transform GetAimAttachment( bool worldspace = true )
 	{
 		var wpn = Weapon as GunfightWeapon;
-		AnimatedEntity chosenEntity = wpn;
 
 		foreach( var attachment in wpn.Attachments )
 		{
 			if ( !string.IsNullOrEmpty( attachment.AimAttachment ) )
 			{
-				chosenEntity = attachment;
+				var style = attachment.AimAttachmentStyle;
+				if ( style == AimAttachmentStyle.OnViewModel )
+					return GetAttachment( attachment.AimAttachment, worldspace ) ?? new();
+				else
+					return attachment.GetAttachment( attachment.AimAttachment, worldspace ) ?? new();
 			}
 		}
 
-		return chosenEntity.GetAttachment( "aim", worldspace ) ?? new();
+		return wpn.GetAttachment( "aim", worldspace ) ?? new();
 	}
 
 	private void AddCameraEffects( ref CameraSetup camSetup )

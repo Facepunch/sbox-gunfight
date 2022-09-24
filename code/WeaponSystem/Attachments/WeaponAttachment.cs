@@ -1,5 +1,11 @@
 namespace Facepunch.Gunfight;
 
+public enum AimAttachmentStyle
+{
+	OnViewModel,
+	OnAttachment
+}
+
 public partial class WeaponAttachment : AnimatedEntity
 {
 	/// <summary>
@@ -17,10 +23,17 @@ public partial class WeaponAttachment : AnimatedEntity
 	/// </summary>
 	public virtual AttachmentType AttachmentType => AttachmentType.Default;
 
+	public AnimatedEntity EffectEntity => ViewModelEntity.IsValid() ? ViewModelEntity : this;
+
 	/// <summary>
 	/// Attachments can override the current aim attachment
 	/// </summary>
 	public virtual string AimAttachment => "";
+
+	/// <summary>
+	/// Informs the aiming system on which entity to find an attachment
+	/// </summary>
+	public virtual AimAttachmentStyle AimAttachmentStyle => AimAttachmentStyle.OnAttachment;
 
 	/// <summary>
 	/// Attach this attachment onto a weapon.
@@ -50,7 +63,7 @@ public partial class WeaponAttachment : AnimatedEntity
 		return $"GunfightAttachment[{DisplayInfo.For( this ).ClassName}]";
 	}
 
-	protected AnimatedEntity ViewModelEntity;
+	protected AnimatedEntity ViewModelEntity { get; set; }
 	public void Mirror( ViewModel viewModel )
 	{
 		var mdl = new AnimatedEntity();
@@ -59,5 +72,7 @@ public partial class WeaponAttachment : AnimatedEntity
 		mdl.EnableViewmodelRendering = true;
 
 		Log.Info( $"Created ViewModel Mirror for {this}" );
+
+		ViewModelEntity = mdl;
 	}
 }

@@ -66,6 +66,10 @@ public partial class GunfightWeapon
 			return;
 
 		AddAttachment( attachment );
+
+		var vm = ViewModelEntity as ViewModel;
+		if ( vm.IsValid() )
+			vm.OnAttachmentAdded( attachment );
 	}
 
 	public override void OnChildRemoved( Entity child )
@@ -74,6 +78,10 @@ public partial class GunfightWeapon
 			return;
 
 		RemoveAttachment( attachment );
+
+		var vm = ViewModelEntity as ViewModel;
+		if ( vm.IsValid() )
+			vm.OnAttachmentRemoved( attachment );
 	}
 
 	public void SimulateAttachments( Client cl )

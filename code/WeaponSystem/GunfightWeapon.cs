@@ -233,7 +233,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	public override void FrameSimulate( Client cl )
 	{
-		SimulateAttachments( cl );
+		FrameSimulateAttachments( cl );
 	}
 
 	public override void Simulate( Client cl )

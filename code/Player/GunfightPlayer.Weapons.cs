@@ -66,4 +66,11 @@ public partial class GunfightPlayer
 		// Run this after everything, as we could've changed ActiveChild above
 		SimulateActiveChild( cl, ActiveChild );
 	}
+
+	public override void FrameSimulate( Client cl )
+	{
+		base.FrameSimulate( cl );
+
+		ActiveChild?.FrameSimulate( cl );
+	}
 }

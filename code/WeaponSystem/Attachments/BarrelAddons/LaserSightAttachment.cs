@@ -43,11 +43,22 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 			if ( !attachment.HasValue ) return;
 
 			var position = attachment.Value.Position;
-			var rotation = Weapon.Owner.EyeRotation;
+			var rotation = attachment.Value.Rotation;
 
-			if ( Weapon.IsReloading )
+			var player = Weapon.Owner as GunfightPlayer;
+			if ( !player.IsValid() )
 			{
-				rotation = attachment.Value.Rotation;
+				// Do nothing
+			}
+			else
+			{
+				rotation = player.EyeRotation;
+
+				var ctrl = player.Controller as PlayerController;
+				if ( Weapon.IsReloading || ctrl.IsSprinting || ctrl.Slide.IsActive )
+				{
+					rotation = attachment.Value.Rotation;
+				}
 			}
 
 			var trace = Trace.Ray( position, position + rotation.Forward * 4096f )
@@ -64,7 +75,6 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 			DotParticles.SetPosition( 2, LaserColor * 255f );
 
 			DotParticles.SetPosition( 0, end );
-
 			LaserParticles.SetPosition( 0, start );
 			LaserParticles.SetPosition( 1, end );
 		}

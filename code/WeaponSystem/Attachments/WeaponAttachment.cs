@@ -29,12 +29,7 @@ public partial class WeaponAttachment : AnimatedEntity
 	/// <param name="weapon"></param>
 	public void Attach( GunfightWeapon weapon )
 	{
-		SetParent( weapon, AttachmentSystem.GetModelAttachment( AttachmentType ), new Transform()
-		{
-			Position = Vector3.Zero,
-			Rotation = Rotation.Identity,
-			Scale = 1,
-		} );
+		SetParent( weapon, AttachmentSystem.GetModelAttachment( AttachmentType ), new Transform().WithScale( 1f ) );
 	}
 
 	public override void Spawn()
@@ -53,5 +48,16 @@ public partial class WeaponAttachment : AnimatedEntity
 	public override string ToString()
 	{
 		return $"GunfightAttachment[{DisplayInfo.For( this ).ClassName}]";
+	}
+
+	protected AnimatedEntity ViewModelEntity;
+	public void Mirror( ViewModel viewModel )
+	{
+		var mdl = new AnimatedEntity();
+		mdl.CopyFrom( this );
+		mdl.SetParent( viewModel, AttachmentSystem.GetModelAttachment( AttachmentType ), new Transform().WithScale( 1f ) );
+		mdl.EnableViewmodelRendering = true;
+
+		Log.Info( $"Created ViewModel Mirror for {this}" );
 	}
 }

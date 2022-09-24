@@ -11,12 +11,6 @@
 			m_name = "preview"
 		},
 	]
-	m_PreEmissionOperators = 
-	[
-		{
-			_class = "C_OP_SetParentControlPointsToChildCP"
-		},
-	]
 	m_Emitters = 
 	[
 		{

@@ -19,8 +19,6 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 		if ( IsClient )
 		{
 			DotParticles = Particles.Create( "particles/laserdot.vpcf" );
-			DotParticles.SetEntity( 0, this, true );
-
 			LaserParticles = Particles.Create( "particles/laserline.vpcf" );
 		}
 	}
@@ -65,9 +63,10 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 
 			var trace = Trace.Ray( position, position + rotation.Forward * 4096f )
 				.UseHitboxes()
+				.WithAnyTags( "solid", "player" )
 				.Radius( 2f )
 				.Ignore( Weapon )
-				.Ignore( this )
+				.Ignore( EffectEntity )
 				.Run();
 
 			var start = attachment.Value.Position;
@@ -77,6 +76,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 			DotParticles.SetPosition( 2, LaserColor * 255f );
 
 			DotParticles.SetPosition( 0, end );
+
 			LaserParticles.SetPosition( 0, start );
 			LaserParticles.SetPosition( 1, end );
 		}

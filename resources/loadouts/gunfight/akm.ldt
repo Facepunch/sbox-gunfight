@@ -11,10 +11,7 @@
 		{
 			IsSet = true
 			Definition = resource:"resources/weapons/akm.wpn"
-			Attachments = 
-			[
-				"laser",
-			]
+			Attachments = [  ]
 		}
 		SecondaryWeapon = 
 		{

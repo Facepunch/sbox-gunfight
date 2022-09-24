@@ -36,6 +36,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 		}
 	}
 
+	[Event.Frame]
 	protected void Update()
 	{
 		if ( IsClient )
@@ -79,10 +80,5 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 			LaserParticles.SetPosition( 0, start );
 			LaserParticles.SetPosition( 1, end );
 		}
-	}
-
-	public override void FrameSimulate( Client cl )
-	{
-		Update();
 	}
 }

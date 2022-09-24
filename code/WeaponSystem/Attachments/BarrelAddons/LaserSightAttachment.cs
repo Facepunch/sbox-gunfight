@@ -64,7 +64,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 			var trace = Trace.Ray( position, position + rotation.Forward * 4096f )
 				.UseHitboxes()
 				.WithAnyTags( "solid", "player" )
-				.Radius( 2f )
+				.Radius( 1 )
 				.Ignore( Weapon )
 				.Ignore( EffectEntity )
 				.Run();

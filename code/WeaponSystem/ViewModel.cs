@@ -237,6 +237,11 @@ public partial class ViewModel : BaseViewModel
 		camSetup.ViewModel.FieldOfView = 75f;
 	}
 
+	public void Initialize()
+	{
+		SetupAttachments();
+	}
+
 	protected void ApplyPositionOffset( Vector3 offset, float delta, CameraSetup camSetup )
 	{
 		var left = camSetup.Rotation.Left;
@@ -290,5 +295,24 @@ public partial class ViewModel : BaseViewModel
 			var drop = magnitude * damping * DeltaTime;
 			value *= Math.Max( magnitude - drop, 0 ) / magnitude;
 		}
+	}
+
+	public void SetupAttachments()
+	{
+		var wpn = Weapon as GunfightWeapon;
+		foreach( var attachment in wpn.Attachments )
+		{
+			OnAttachmentAdded( attachment );
+		}
+	}
+
+	public void OnAttachmentAdded( WeaponAttachment attachment )
+	{
+		Log.Info( $"[ViewModel] Recognized Attachment added: {attachment}" );
+	}
+
+	public void OnAttachmentRemoved( WeaponAttachment attachment )
+	{
+		Log.Info( $"[ViewModel] Recognized Attachment removed: {attachment}" );
 	}
 }

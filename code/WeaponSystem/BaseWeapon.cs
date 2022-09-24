@@ -160,6 +160,8 @@ public partial class BaseWeapon : BaseCarriable
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;
 		ViewModelEntity.EnableViewmodelRendering = true;
+
+		vm.Initialize();
 	}
 
 	/// <summary>

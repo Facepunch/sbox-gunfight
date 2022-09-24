@@ -309,6 +309,7 @@ public partial class ViewModel : BaseViewModel
 	public void OnAttachmentAdded( WeaponAttachment attachment )
 	{
 		Log.Info( $"[ViewModel] Recognized Attachment added: {attachment}" );
+		attachment.Mirror( this );
 	}
 
 	public void OnAttachmentRemoved( WeaponAttachment attachment )

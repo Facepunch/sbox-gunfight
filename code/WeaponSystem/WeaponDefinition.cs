@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Facepunch.Gunfight;
 
-[GameResource( "Weapon Definition", "wpn", "" )]
+[GameResource( "Weapon Definition", "wpn", "", Icon = "build_circle", IconBgColor = "#4953a7", IconFgColor = "#2a3060" )]
 public partial class WeaponDefinition : GameResource
 {
 	public static GunfightWeapon CreateWeapon( WeaponDefinition def )

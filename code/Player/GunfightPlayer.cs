@@ -73,14 +73,26 @@ public partial class GunfightPlayer : Player, IHudMarker
 		}
 	}
 
-	public void GiveWeapon( string name, bool makeActive = false )
+	public GunfightWeapon GiveWeapon( string name, bool makeActive = false, params string[] attachments )
 	{
-		Inventory.Add( WeaponDefinition.CreateWeapon( name ), makeActive );
+		var wpn = WeaponDefinition.CreateWeapon( name );
+		Inventory.Add( wpn, makeActive );
+
+		foreach ( var str in attachments )
+			wpn.CreateAttachment( str );
+
+		return wpn;
 	}
 
-	public void GiveWeapon( WeaponDefinition def, bool makeActive = false )
+	public GunfightWeapon GiveWeapon( WeaponDefinition def, bool makeActive = false, params string[] attachments )
 	{
-		Inventory.Add( WeaponDefinition.CreateWeapon( def ), makeActive );
+		var wpn = WeaponDefinition.CreateWeapon( def );
+		Inventory.Add( wpn, makeActive );
+
+		foreach( var str in attachments )
+			wpn.CreateAttachment( str );
+
+		return wpn;
 	}
 
 	[ClientRpc]

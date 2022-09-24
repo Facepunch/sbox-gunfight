@@ -2,17 +2,26 @@
 {
 	data = 
 	{
+		LoadoutName = "Crazy Cowboy"
 		Tags = 
 		[
 			"gunfight",
 		]
-		PrimaryWeapon = resource:"resources/weapons/revolver.wpn"
-		SecondaryWeapon = null
-		MeleeWeapon = resource:"resources/weapons/knife.wpn"
-		Gadgets = null
+		PrimaryWeapon = 
+		{
+		}
+		SecondaryWeapon = 
+		{
+			IsSet = true
+			Definition = resource:"resources/weapons/revolver.wpn"
+			Attachments = 
+			[
+				"laser",
+			]
+		}
 		Ammo = 
 		{
-			Pistol = 32
+			Pistol = 12
 		}
 	}
 }

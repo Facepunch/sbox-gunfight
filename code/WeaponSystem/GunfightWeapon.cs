@@ -231,8 +231,15 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		input.ViewAngles.yaw -= CameraRecoil.x * Time.Delta;
 	}
 
-	public override void Simulate( Client owner )
+	public override void FrameSimulate( Client cl )
 	{
+		SimulateAttachments( cl );
+	}
+
+	public override void Simulate( Client cl )
+	{
+		SimulateAttachments( cl );
+
 		if ( TimeSinceDeployed < 0.6f )
 			return;
 
@@ -248,7 +255,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			BurstCount = 0;
 		}
 
-		SimulateRecoil( owner );
+		SimulateRecoil( cl );
 
 		if ( WantsReload() )
 		{

@@ -2,14 +2,23 @@
 {
 	data = 
 	{
+		LoadoutName = "AKM"
 		Tags = 
 		[
 			"gunfight",
 		]
-		PrimaryWeapon = resource:"resources/weapons/akm.wpn"
-		SecondaryWeapon = null
-		MeleeWeapon = resource:"resources/weapons/knife.wpn"
-		Gadgets = null
+		PrimaryWeapon = 
+		{
+			IsSet = true
+			Definition = resource:"resources/weapons/akm.wpn"
+			Attachments = 
+			[
+				"laser",
+			]
+		}
+		SecondaryWeapon = 
+		{
+		}
 		Ammo = 
 		{
 			Rifle = 60

@@ -59,9 +59,9 @@ public partial class Loadout : GameResource
 	public void Give( GunfightPlayer player )
 	{
 		if ( PrimaryWeapon.IsSet )
-			player.GiveWeapon( PrimaryWeapon.Definition, true );
+			player.GiveWeapon( PrimaryWeapon.Definition, true, PrimaryWeapon.Attachments.ToArray() );
 		if ( SecondaryWeapon.IsSet )
-			player.GiveWeapon( SecondaryWeapon.Definition );
+			player.GiveWeapon( SecondaryWeapon.Definition, false, SecondaryWeapon.Attachments.ToArray() );
 
 		foreach( var kv in Ammo )
 			player.GiveAmmo( kv.Key, kv.Value );

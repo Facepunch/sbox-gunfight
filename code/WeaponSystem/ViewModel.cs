@@ -69,6 +69,22 @@ public partial class ViewModel : BaseViewModel
 	Vector3 realPositionOffset;
 	Rotation realRotationOffset;
 
+	public Transform GetAimAttachment( bool worldspace = true )
+	{
+		var wpn = Weapon as GunfightWeapon;
+		AnimatedEntity chosenEntity = wpn;
+
+		foreach( var attachment in wpn.Attachments )
+		{
+			if ( !string.IsNullOrEmpty( attachment.AimAttachment ) )
+			{
+				chosenEntity = attachment;
+			}
+		}
+
+		return chosenEntity.GetAttachment( "aim", worldspace ) ?? new();
+	}
+
 	private void AddCameraEffects( ref CameraSetup camSetup )
 	{
 		if ( !Owner.IsValid() )
@@ -150,9 +166,9 @@ public partial class ViewModel : BaseViewModel
 		ApplyDamping( ref velocity, Damping * (1 + aimLerp) );
 
 		velocity = velocity.Normal * Math.Clamp( velocity.Length, 0, VelocityClamp );
-	
-		var aimPointW = GetAttachment( "aim", true ) ?? new();
-		var aimPointL = GetAttachment( "aim", false ) ?? new();
+
+		var aimPointW = GetAimAttachment( true );
+		var aimPointL = GetAimAttachment( false );
 
 		var eyePos = camSetup.Position;
 		var diff = aimPointW.Position - eyePos;

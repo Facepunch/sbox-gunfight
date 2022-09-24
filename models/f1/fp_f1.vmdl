@@ -378,6 +378,15 @@
 						weight = 1.0
 						ignore_rotation = false
 					},
+					{
+						_class = "Attachment"
+						name = "barrel"
+						parent_bone = ""
+						relative_origin = [ 0.488446, 0.0, -0.129379 ]
+						relative_angles = [ -0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
 				]
 			},
 		]

@@ -11,6 +11,10 @@
 		{
 			IsSet = true
 			Definition = resource:"resources/weapons/r870.wpn"
+			Attachments = 
+			[
+				"laser",
+			]
 		}
 		SecondaryWeapon = 
 		{

@@ -18,13 +18,23 @@ public partial class WeaponAttachment : AnimatedEntity
 	public virtual AttachmentType AttachmentType => AttachmentType.Default;
 
 	/// <summary>
+	/// Attachments can override the current aim attachment
+	/// </summary>
+	public virtual string AimAttachment => "";
+
+	/// <summary>
 	/// Attach this attachment onto a weapon.
 	/// This is the best place to attach an attachment onto a weapon.
 	/// </summary>
 	/// <param name="weapon"></param>
 	public void Attach( GunfightWeapon weapon )
 	{
-		SetParent( weapon, AttachmentSystem.GetModelAttachment( AttachmentType ) );
+		SetParent( weapon, AttachmentSystem.GetModelAttachment( AttachmentType ), new Transform()
+		{
+			Position = Vector3.Zero,
+			Rotation = Rotation.Identity,
+			Scale = 1,
+		} );
 	}
 
 	public override void Spawn()
@@ -35,6 +45,9 @@ public partial class WeaponAttachment : AnimatedEntity
 		{
 			Model = AttachmentModel;
 		}
+
+		EnableHideInFirstPerson = true;
+		EnableShadowInFirstPerson = true;
 	}
 
 	public override string ToString()

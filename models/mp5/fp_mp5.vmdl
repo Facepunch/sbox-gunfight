@@ -413,15 +413,6 @@
 					},
 					{
 						_class = "Attachment"
-						name = "laser"
-						parent_bone = "Weapon"
-						relative_origin = [ -0.001911, 0.493311, 0.029264 ]
-						relative_angles = [ 1.862867, 87.846817, -1.900986 ]
-						weight = 1.0
-						ignore_rotation = false
-					},
-					{
-						_class = "Attachment"
 						name = "aim"
 						parent_bone = "Bolt1"
 						relative_origin = [ -0.000048, -0.262335, -0.027611 ]
@@ -432,9 +423,9 @@
 					{
 						_class = "Attachment"
 						name = "barrel"
-						parent_bone = ""
-						relative_origin = [ 0.398686, -0.02285, -0.104012 ]
-						relative_angles = [ -0.0, 0.0, 0.0 ]
+						parent_bone = "Weapon"
+						relative_origin = [ -0.005706, 0.212185, -0.043888 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
 					},

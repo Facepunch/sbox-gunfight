@@ -4,7 +4,8 @@ namespace Facepunch.Gunfight;
 public partial class LaserSightAttachment : BarrelAddonAttachment
 {
 	public override Model AttachmentModel => Model.Load( "models/attachments/laser/laser_sight.vmdl" );
-	public override string AimAttachment => "aim";
+	public override string AimAttachment => "laser_aim";
+	public override AimAttachmentStyle AimAttachmentStyle => AimAttachmentStyle.OnViewModel;
 
 	public Particles LaserParticles { get; private set; }
 	public Particles DotParticles { get; private set; }
@@ -39,7 +40,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 	{
 		if ( IsClient )
 		{
-			var attachment = Weapon.EffectEntity.GetAttachment( "laser" );
+			var attachment = EffectEntity.GetAttachment( "laser", true );
 			if ( !attachment.HasValue ) return;
 
 			var position = attachment.Value.Position;

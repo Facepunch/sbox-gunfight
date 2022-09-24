@@ -13,7 +13,7 @@
 						_class = "RenderMeshFile"
 						filename = "models\\attachments\\laser\\dmx\\mesh\\laser_sight.dmx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
-						import_rotation = [ -90.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 1.0
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
@@ -35,8 +35,17 @@
 						_class = "Attachment"
 						name = "aim"
 						parent_bone = ""
-						relative_origin = [ 7.335567, 0.0, 0.0 ]
-						relative_angles = [ 0.0, 90.0, 0.0 ]
+						relative_origin = [ 4.622068, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, -15.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "laser"
+						parent_bone = ""
+						relative_origin = [ 0.0, 2.061141, 0.0 ]
+						relative_angles = [ -0.0, 90.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
 					},

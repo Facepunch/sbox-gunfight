@@ -2,17 +2,27 @@
 {
 	data = 
 	{
+		LoadoutName = "1911"
 		Tags = 
 		[
 			"gunfight",
 		]
-		PrimaryWeapon = resource:"resources/weapons/1911.wpn"
-		SecondaryWeapon = null
-		MeleeWeapon = resource:"resources/weapons/knife.wpn"
-		Gadgets = null
+		PrimaryWeapon = 
+		{
+			Attachments = [  ]
+		}
+		SecondaryWeapon = 
+		{
+			IsSet = true
+			Definition = resource:"resources/weapons/1911.wpn"
+			Attachments = 
+			[
+				"laser",
+			]
+		}
 		Ammo = 
 		{
-			Pistol = 32
+			Pistol = 35
 		}
 	}
 }

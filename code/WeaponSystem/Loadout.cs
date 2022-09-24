@@ -1,20 +1,35 @@
 namespace Facepunch.Gunfight;
 
-[GameResource( "Gunfight Loadout", "ldt", "A loadout resource for Gunfight" )]
+public struct LoadoutSlot
+{
+	[HideInEditor] public bool IsSet => Definition != null;
+
+	public WeaponDefinition Definition { get; set; }
+	public List<string> Attachments { get; set; }
+}
+
+[GameResource( "Gunfight Loadout", "ldt", "A loadout resource for Gunfight", Icon = "checklist", IconBgColor = "#62945c", IconFgColor = "#335c2e" )]
 public partial class Loadout : GameResource
 {
 	public static List<Loadout> All = new();
 
 	/// <summary>
+	/// A nice name for the loadout. Shown in UI.
+	/// </summary>
+	[Category( "Setup" )]
+	public string LoadoutName { get; set; } = "My Loadout";
+
+	/// <summary>
 	/// Loadouts can have tags on them, which can be queried by gamemodes.
 	/// </summary>
+	[Category( "Setup" )]
 	public List<string> Tags { get; set; }
 
 	// Data
-	public WeaponDefinition PrimaryWeapon { get; set; }
-	public WeaponDefinition SecondaryWeapon { get; set; }
-	public WeaponDefinition MeleeWeapon { get; set; }
-	public List<WeaponDefinition> Gadgets { get; set; }
+	public LoadoutSlot PrimaryWeapon { get; set; }
+	public LoadoutSlot SecondaryWeapon { get; set; }
+
+	[Category( "Setup" )]
 	public Dictionary<AmmoType, int> Ammo { get; set; } = new();
 
 	protected override void PostLoad()
@@ -43,17 +58,13 @@ public partial class Loadout : GameResource
 	/// <param name="player"></param>
 	public void Give( GunfightPlayer player )
 	{
-		if ( PrimaryWeapon != null )
-			player.GiveWeapon( PrimaryWeapon, true );
-		if ( SecondaryWeapon != null )
-			player.GiveWeapon( SecondaryWeapon );
-		if ( MeleeWeapon != null )
-			player.GiveWeapon( MeleeWeapon );
+		if ( PrimaryWeapon.IsSet )
+			player.GiveWeapon( PrimaryWeapon.Definition, true );
+		if ( SecondaryWeapon.IsSet )
+			player.GiveWeapon( SecondaryWeapon.Definition );
 
 		foreach( var kv in Ammo )
-		{
 			player.GiveAmmo( kv.Key, kv.Value );
-		}
 	}
 
 	public override string ToString() =>  $"GunfightLoadout[{ResourceName}]";

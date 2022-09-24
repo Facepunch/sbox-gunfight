@@ -2,14 +2,19 @@
 {
 	data = 
 	{
+		LoadoutName = "MP5"
 		Tags = 
 		[
 			"gunfight",
 		]
-		PrimaryWeapon = resource:"resources/weapons/mp5.wpn"
-		SecondaryWeapon = null
-		MeleeWeapon = resource:"resources/weapons/knife.wpn"
-		Gadgets = null
+		PrimaryWeapon = 
+		{
+			IsSet = true
+			Definition = resource:"resources/weapons/mp5.wpn"
+		}
+		SecondaryWeapon = 
+		{
+		}
 		Ammo = 
 		{
 			SMG = 60

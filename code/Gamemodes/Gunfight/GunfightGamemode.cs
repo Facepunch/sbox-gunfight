@@ -53,24 +53,26 @@ public partial class GunfightGamemode : GamemodeEntity
 		}
 	}
 
-	protected void RandomizeLoadout()
+	protected static Loadout GetRandomLoadout()
 	{
 		var loadouts = Loadout.WithTag( "gunfight" ).ToList();
 		var index = Rand.Int( 1, loadouts.Count() ) - 1;
 		var loadout = loadouts[index];
 
-		CurrentLoadout = loadout;
+		return loadout;
+	}
+
+	protected void RandomizeLoadout()
+	{
+		var randomLoadout = GetRandomLoadout();
+		CurrentLoadout = randomLoadout;
 	}
 
 	public override bool PlayerLoadout( GunfightPlayer player )
 	{
-		bool loadoutChosen = CurrentLoadout != null;
-		if ( loadoutChosen )
-		{
-			CurrentLoadout.Give( player );
-		}
+		GetRandomLoadout()?.Give( player );
 
-		return loadoutChosen;
+		return true;
 	}
 
 	public override bool AllowMovement()

@@ -455,6 +455,10 @@ public partial class GunfightPlayer : Player, IHudMarker
 		if ( LifeState != LifeState.Alive )
 			return;
 
+		var camera = Client.Components.Get<DevCamera>( false );
+		if ( camera is not null )
+			return;
+
 		if ( ActiveChild is GunfightWeapon weapon )
 		{
 			weapon.RenderHud( screenSize );

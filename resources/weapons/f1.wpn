@@ -48,8 +48,6 @@
 			GlobalLerpPower = 1
 			GlobalPositionOffset = "0,0,1"
 			GlobalAngleOffset = "-1,0,-2"
-			AimPositionOffset = "0,50,0"
-			AimAngleOffset = "50,0,0"
 			CrouchPositionOffset = "-3,1,0"
 			CrouchAngleOffset = "2,0,-15"
 			SlidePositionOffset = "-2,0,-1"

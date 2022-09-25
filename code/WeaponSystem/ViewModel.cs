@@ -69,23 +69,16 @@ public partial class ViewModel : BaseViewModel
 	Vector3 realPositionOffset;
 	Rotation realRotationOffset;
 
-	public Transform GetAimAttachment( bool worldspace = true )
+	public Vector3 GetAimOffset()
 	{
-		var wpn = Weapon as GunfightWeapon;
+		var hasLaser = (Weapon as GunfightWeapon).HasAttachment<LaserSightAttachment>();
+		return hasLaser ? Setup.LaserPositionOffset : Setup.AimPositionOffset;
+	}
 
-		foreach( var attachment in wpn.Attachments )
-		{
-			if ( !string.IsNullOrEmpty( attachment.AimAttachment ) )
-			{
-				var style = attachment.AimAttachmentStyle;
-				if ( style == AimAttachmentStyle.OnViewModel )
-					return GetAttachment( attachment.AimAttachment, worldspace ) ?? new();
-				else
-					return attachment.GetAttachment( attachment.AimAttachment, worldspace ) ?? new();
-			}
-		}
-
-		return wpn.GetAttachment( "aim", worldspace ) ?? new();
+	public Angles GetAimAngle()
+	{
+		var hasLaser = (Weapon as GunfightWeapon).HasAttachment<LaserSightAttachment>();
+		return hasLaser ? Setup.LaserAngleOffset : Setup.AimAngleOffset;
 	}
 
 	private void AddCameraEffects( ref CameraSetup camSetup )
@@ -130,7 +123,7 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref sprintLerp, sprint && !burstSprint ? 1 : 0, 10f );
 		LerpTowards( ref burstSprintLerp, burstSprint ? 1 : 0, 8f );
 
-		LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 14f );
+		LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 30f );
 		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );
 		LerpTowards( ref slideLerp, sliding ? TimeSincePrimaryAttack.Remap( 0, 0.2f, 0, 1 ).Clamp( 0, 1 ) : 0, 7f );
 		LerpTowards( ref airLerp, isGrounded ? 0 : 1, 10f );
@@ -148,8 +141,8 @@ public partial class ViewModel : BaseViewModel
 		var mouseDeltaX = -Input.MouseDelta.x * DeltaTime * MouseScale;
 		var mouseDeltaY = -Input.MouseDelta.y * DeltaTime * MouseScale;
 
-		acceleration += Vector3.Left * mouseDeltaX * 0.5f * (1f - aimLerp * 2f);
-		acceleration += Vector3.Up * mouseDeltaY * (1f - aimLerp * 2f);
+		acceleration += Vector3.Left * mouseDeltaX * 0.5f * (1f - aimLerp);
+		acceleration += Vector3.Up * mouseDeltaY * (1f - aimLerp);
 		acceleration += -velocity * ReturnForce * DeltaTime;
 
 		// Apply horizontal offsets based on walking direction
@@ -170,12 +163,6 @@ public partial class ViewModel : BaseViewModel
 
 		velocity = velocity.Normal * Math.Clamp( velocity.Length, 0, VelocityClamp );
 
-		var aimPointW = GetAimAttachment( true );
-		var aimPointL = GetAimAttachment( false );
-
-		var eyePos = camSetup.Position;
-		var diff = aimPointW.Position - eyePos;
-
 		Position = camSetup.Position;
 		Rotation = camSetup.Rotation;
 
@@ -183,8 +170,6 @@ public partial class ViewModel : BaseViewModel
 		rotationOffsetTarget = Rotation.Identity;
 
 		{
-			positionOffsetTarget -= diff * aimLerp;
-			rotationOffsetTarget *= aimPointL.Rotation * aimLerp;
 			// Global
 			rotationOffsetTarget *= Rotation.From( GlobalAngleOffset );
 			positionOffsetTarget += forward * (velocity.x * VelocityScale + GlobalPositionOffset.x);
@@ -228,6 +213,10 @@ public partial class ViewModel : BaseViewModel
 		// In air
 		rotationOffsetTarget *= Rotation.From( new Angles( -2, 0, -7f ) * airLerp );
 		ApplyPositionOffset( new Vector3( 0, 0, 0.5f ), airLerp, camSetup );
+
+		// Aim
+		rotationOffsetTarget *= Rotation.From( GetAimAngle() * aimLerp );
+		ApplyPositionOffset( GetAimOffset(), aimLerp, camSetup );
 
 		realRotationOffset = Rotation.Lerp( realRotationOffset, rotationOffsetTarget, Time.Delta * 20f );
 		realPositionOffset = realPositionOffset.LerpTo( positionOffsetTarget, Time.Delta * 20f );

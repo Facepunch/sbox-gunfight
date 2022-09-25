@@ -37,8 +37,11 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 	[Event.Frame]
 	protected void Update()
 	{
-		if ( IsClient )
+		if ( Weapon.EnableDrawing )
 		{
+			DotParticles ??= Particles.Create( "particles/laserdot.vpcf" );
+			LaserParticles ??= Particles.Create( "particles/laserline.vpcf" );
+
 			var attachment = EffectEntity.GetAttachment( "laser", true );
 			if ( !attachment.HasValue ) return;
 
@@ -46,7 +49,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 			var rotation = attachment.Value.Rotation;
 
 			var player = Weapon.Owner as GunfightPlayer;
-			if ( !player.IsValid() || player != Local.Pawn )
+			if ( !player.IsValid() || player != Local.Pawn || Weapon.TimeSinceDeployed < 1f || player.IsHolstering )
 			{
 				// Do nothing
 			}
@@ -79,6 +82,13 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 
 			LaserParticles.SetPosition( 0, start );
 			LaserParticles.SetPosition( 1, end );
+		}
+		else
+		{
+			DotParticles?.Destroy( true );
+			DotParticles = null;
+			LaserParticles?.Destroy( true );
+			LaserParticles = null;
 		}
 	}
 }

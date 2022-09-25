@@ -7,6 +7,9 @@ public enum CrosshairType
 
 public partial class CrosshairRender
 {
+	[ConVar.Client( "gunfight_crosshair_always_show" )]
+	public static bool AlwaysShow { get; set; } = false;
+
 	public Color StandardColor => ThemeColor;
 	public Color DisabledColor => Color.Red;
 
@@ -27,7 +30,7 @@ public partial class CrosshairRender
 		var draw = Render.Draw2D;
 
 		speed = speed.LerpInverse( 0, 400, true );
-		alpha = alpha.LerpTo( ads ? 0 : 1, Time.Delta * 20f );
+		alpha = alpha.LerpTo( ads && !AlwaysShow ? 0 : 1, Time.Delta * 20f );
 
 		var shootEase = Easing.EaseIn( lastAttack.LerpInverse( 0.2f, 0.0f ) );
 		var color = Color.Lerp( DisabledColor, StandardColor, lastAttack.LerpInverse( 0.0f, 0.4f ) );

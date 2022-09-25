@@ -2,7 +2,6 @@ namespace Facepunch.Gunfight;
 
 public struct ViewModelSetup
 {
-
 	//// General
 	public float OverallWeight { get; set; }
 	public float WeightReturnForce { get; set; }
@@ -12,7 +11,6 @@ public struct ViewModelSetup
 	public float RotationalPivotForce { get; set; }
 	public float RotationalScale { get; set; }
 
-
 	//// Walking & Bob
 	public Vector3 WalkCycleOffset { get; set; }
 	public Vector2 BobAmount { get; set; }
@@ -21,10 +19,6 @@ public struct ViewModelSetup
 	public float GlobalLerpPower { get; set; }
 	public Vector3 GlobalPositionOffset { get; set; }
 	public Angles GlobalAngleOffset { get; set; }
-
-	//// Aiming
-	public Vector3 AimPositionOffset { get; set; }
-	public Angles AimAngleOffset { get; set; }
 
 	//// Crouching
 	public Vector3 CrouchPositionOffset { get; set; }
@@ -50,4 +44,11 @@ public struct ViewModelSetup
 	//// Sprinting
 	public Vector3 SprintPositionOffset { get; set; }
 	public Angles SprintAngleOffset { get; set; }
+
+	/// Aim Down Sight
+	public Vector3 AimPositionOffset { get; set; }
+	public Angles AimAngleOffset { get; set; }
+	// Laser Aim
+	public Vector3 LaserPositionOffset { get; set; }
+	public Angles LaserAngleOffset { get; set; }
 }

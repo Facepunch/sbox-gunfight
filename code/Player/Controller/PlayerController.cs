@@ -125,7 +125,7 @@ public partial class PlayerController : BasePlayerController
 		var wantsToAim = Input.Down( InputButton.SecondaryAttack );
 		var player = Pawn as GunfightPlayer;
 		var weapon = player.ActiveChild as GunfightWeapon;
-		IsAiming = wantsToAim && !IsSprinting && !(weapon?.IsReloading ?? false);
+		IsAiming = wantsToAim && !IsSprinting;
 
 		if ( weapon.IsValid() && weapon.WeaponDefinition.AimingDisabled )
 			IsAiming = false;

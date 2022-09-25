@@ -59,6 +59,11 @@ public partial class GunfightWeapon
 		}
 	}
 
+	public bool HasAttachment<T>() where T : WeaponAttachment
+	{
+		return Attachments.OfType<T>().Any();
+	}
+
 	// Entity Virtuals
 	public override void OnChildAdded( Entity child )
 	{

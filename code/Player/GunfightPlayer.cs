@@ -212,7 +212,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		SimulateWeapons( cl );
 		SimulatePing( cl );
 
-		if ( TimeSinceDamage > 5f )
+		if ( TimeSinceDamage > 5f && ( GamemodeSystem.Current?.CanPlayerRegenerate( this ) ?? true ) )
 		{
 			PassiveHeal();
 			if ( Health != MaxHealth )

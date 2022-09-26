@@ -186,4 +186,9 @@ public abstract partial class GamemodeEntity : Entity
 	{
 		//
 	}
+
+	public virtual bool CanPlayerRegenerate( GunfightPlayer player )
+	{
+		return true;
+	}
 }

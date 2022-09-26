@@ -11,6 +11,7 @@
 		Icon = resource:"ui/weapons/m1911.png"
 		BaseFireRate = 0.15
 		DefaultFireMode = "Semi"
+		DamageFlags = "Bullet"
 		SupportedFireModes = 
 		[
 			"Semi",
@@ -21,9 +22,11 @@
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
+		BurstCooldown = 0.3
 		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
 		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
 		AimingDisabled = false
+		BulletRange = 5000
 		AmmoType = "Pistol"
 		ClipSize = 7
 		StandardClip = 7
@@ -50,14 +53,17 @@
 			AvoidanceAngleOffset = "2,0,-25"
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "5,25,0"
+			AimPositionOffset = "-1.17,2.66,1.48"
+			AimAngleOffset = "0.26,0.03,0.9"
+			LaserPositionOffset = "-2.67,1.92,-4.72"
+			LaserAngleOffset = "-2.21,4.53,-58.4"
 		}
 		Recoil = 
 		{
 			Decay = "30,50"
 			BaseRecoilMinimum = "-2,4"
 			BaseRecoilMaximum = "2,4"
-			ViewModelScale = 1
-			ViewModelRecoverySpeed = 3
 		}
+		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
 	}
 }

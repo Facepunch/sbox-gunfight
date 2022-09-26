@@ -11,7 +11,7 @@ public class Grenades : Panel
 	public Grenades()
 	{
 		GrenadeBar = Add.Panel( "grenadebar" );
-		Inventory = Add.Label( "[1]", "inventory" );
+		Inventory = Add.Label( "1", "inventory" );
 		Icon = Add.Image( "ui/weapons/grenade.png", "icon" );
 	}
 

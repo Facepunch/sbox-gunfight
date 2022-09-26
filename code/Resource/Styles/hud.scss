@@ -1,9 +1,15 @@
 ﻿
-$theme-color: #fbf1c7;
+//$theme-color: #fbf1c7;
 //$theme-color: #CECECE;
-
+$theme-color: #D7D9D7;
 $friendly: cyan;
 $enemy: red;
+
+$main-font: Quantico-Regular;
+$main-font-bold: Quantico-Bold;
+
+$alternate-font: Oswald-Regular;
+$alternate-font-bold: Oswald-Bold;
 
 @import "_damageindicator.scss";
 @import "_hitindicator.scss";
@@ -39,6 +45,14 @@ vitals {
     }
 }
 
+.bottom-middle {
+    position: absolute;
+    bottom: 32px;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
 .top-middle {
     top: 32px;
     width: 100%;
@@ -64,20 +78,18 @@ vitals {
 }
 
 .bottom-left {
-    left: 150px;
+    left: 32px;
     flex-direction: column;
-    transform: skew(0deg, -2deg);
 }
 
 .bottom-right {
-    right: 150px;
-    transform: skew(0deg, 2deg);
+    right: 32px;
 }
 
 .bottom-left, .bottom-right
 {	mix-blend-mode: lighten;
     position: absolute;
-    bottom: 50px;
+    bottom: 32px;
 }
 
 .bottom-right {
@@ -104,11 +116,10 @@ vitals {
 
         .gunname {
             position: absolute;
-            bottom: 16px;
+            bottom: 15px;
             left: 7px;
-            font-family: Quantico-Regular;
-            font-size: 16px;
-            font-weight: bolder;
+            font-family: $alternate-font;
+            font-size: 18px;
             text-align: left;
             color: $theme-color;
         }
@@ -129,7 +140,6 @@ vitals {
                 transition: all 0.25s ease-out;
                 min-height: 8px;
 
-
                 &.empty {
                     background-color: $theme-color;
                     opacity: 0.0;
@@ -142,7 +152,7 @@ vitals {
                 opacity: 0.04;
                 box-shadow: none;
                 animation-name: spentbullet;
-                animation-duration: .5s;
+                animation-duration: .2s;
                 animation-timing-function: linear;
                 animation-iteration-count: 1;
             }
@@ -159,7 +169,7 @@ vitals {
 
         .currentammo {
             bottom: 10px;
-            font-family: Quantico-Bold;
+            font-family: $main-font-bold;
             font-size: 64px;
             font-weight: bolder;
             color: $theme-color;
@@ -188,13 +198,8 @@ vitals {
         transform: scale( 1 );
     }
 
-    50% {
-        transform: scale( 2 );
-        transform: rotate( -360deg ) translateY( 150 ) translateX( -10 );
-    }
-
     100% {
-        transform: scale( 1 );
+        transform: scaleY( 0 );
     }
 }
 
@@ -211,37 +216,35 @@ vitals {
         transform: scale( 1 );
     }
 }
-Grenades {
+
+.tactical {
     position: absolute;
-    font-family: Teko-SemiBold;
+    bottom: 103px;
+}
+
+Grenades {
     transition: all 0.2s ease-out;
     opacity: 1;
-    justify-content: left;
-    height: 50%;
-    bottom: 103px;
-    border-right: 2px solid rgba(#fbf1c7 0.25);
-    align-items: flex-start;
-    background-color: rgba(#3c3836 0.2);
-    min-width: 50px;
-    border-bottom: 2px solid rgba(#fbf1c7 0.25);
+    width: 75px;
+    height: 60px;
 
     .icon {
+        margin-left: -16px;
+        margin-top: 4px;
         position: absolute;
-        right: 0px;
-        top: 5px;
-        width: 50px;
-        height: 50px;
-        z-index: -1;
-        opacity: .1;
+        height: 100%;
+        aspect-ratio: 1;
+        opacity: 0.1;
         background-image-tint: $theme-color;
     }
 
     .inventory {
-        left: 0px;
-        bottom: 8px;
-        font-family: Quantico-Bold;
-        font-size: 16px;
-        font-weight: bolder;
+        position: absolute;
+        height: 85%;
+        right: 0px;
+        bottom: 0px;
+        font-family: $alternate-font-bold;
+        font-size: 24px;
         color: $theme-color;
         opacity: .5;
     }
@@ -263,15 +266,15 @@ Stance {
     }
 }
 Location {
-
     .local {
-        top:0px;
-        font-family: Quantico-Bold;
-        font-size: 24px;
+        bottom: 16px;
+        font-family: $alternate-font;
+        font-size: 28px;
         color: $theme-color;
         background-image-tint: $theme-color;
     }
 }
+
 healthhud, armourhud {
     padding: 6px;
     font-size: 32px;
@@ -327,8 +330,8 @@ healthhud, armourhud {
         background-color: rgba( $theme-color .2);
         position: absolute;
         border-radius: 0;
-        left: 0;
-        top: -6px;
+        left: -3px;
+        top: -7px;
         right: 0;
         width: 150px;
         height: 6px;
@@ -350,7 +353,7 @@ healthhud, armourhud {
     .health {
         background-color: rgba(#3c3836 0.2);
         color: $theme-color;
-        border-right: 2px solid rgba(#fbf1c7 0.5);
+        border-left: 2px solid rgba(#fbf1c7 0.5);
 
         .innerBar {
             background-color: $theme-color;
@@ -392,7 +395,7 @@ armourhud
 {
     &.empty
     {
-        opacity: 0.1;
+        opacity: 0;
     }
 }
 

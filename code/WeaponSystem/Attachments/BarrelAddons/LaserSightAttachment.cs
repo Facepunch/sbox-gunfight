@@ -67,6 +67,8 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 
 	protected void UpdateEyeTrace()
 	{
+		if ( !Weapon.IsValid() || !Weapon.Owner.IsValid() ) return;
+
 		var pos = TraceStartPosition;
 		var rot = Weapon.Owner.EyeRotation;
 
@@ -94,7 +96,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 
 			var player = Weapon.Owner as GunfightPlayer;
 			var ctrl = player?.Controller as PlayerController;
-			var noEyeOrigin = ( Weapon.IsValid() && Weapon.IsReloading ) || ( ctrl != null && ctrl.IsSprinting || ctrl.Slide.IsActive );
+			var noEyeOrigin = ( Weapon.IsValid() && Weapon.IsReloading ) || ctrl != null && ( ctrl.IsSprinting || ctrl.Slide.IsActive );
 
 			// Laser end position preference changed
 			if ( NoEyeOrigin != noEyeOrigin )

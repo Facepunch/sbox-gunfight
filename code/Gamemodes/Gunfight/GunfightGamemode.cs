@@ -71,6 +71,7 @@ public partial class GunfightGamemode : GamemodeEntity
 	public override bool PlayerLoadout( GunfightPlayer player )
 	{
 		GetRandomLoadout()?.Give( player );
+		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
 		return true;
 	}
@@ -83,6 +84,11 @@ public partial class GunfightGamemode : GamemodeEntity
 	public override bool AllowDamage()
 	{
 		return State != GameState.RoundCountdown;
+	}
+
+	public override bool CanPlayerRegenerate( GunfightPlayer player )
+	{
+		return State != GameState.RoundActive;
 	}
 
 	public override void PreSpawn( GunfightPlayer player )
@@ -104,13 +110,10 @@ public partial class GunfightGamemode : GamemodeEntity
 	{
 		return State switch
 		{
-			GameState.WaitingForPlayers => $"Waiting for players",
-			GameState.RoundCountdown => $"Prepare to fight",
-			GameState.RoundActive => $"Eliminate the enemies",
-			GameState.RoundFlagActive => $"",
-			GameState.RoundOver => "Round over",
-			GameState.GameWon => $"{WinningTeam.GetName()} won the match!",
-			_ => "Gunfight"
+			GameState.WaitingForPlayers => $"WAITING",
+			GameState.RoundOver => "Round Over",
+			GameState.GameWon => $"{WinningTeam.GetName()} WON",
+			_ => $"{GetTimeLeftLabel()}"
 		};
 	}
 
@@ -154,6 +157,8 @@ public partial class GunfightGamemode : GamemodeEntity
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{
 		TimeSinceStateChanged = 0;
+
+		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
 		if ( after == GameState.WaitingForPlayers )
 		{
@@ -327,6 +332,8 @@ public partial class GunfightGamemode : GamemodeEntity
 		{
 			CheckDeadPlayers();
 		}
+
+		GunfightStatusPanel.RpcUpdate( To.Everyone );
 	}
 
 	public override void CleanupMap()

@@ -62,7 +62,8 @@ GunfightScorePanel {
         height: 40px;
 
         > label {
-            font-size: 24px;
+            font-size: 28px;
+            font-family: $main-font-bold;
         }
     }
 
@@ -75,7 +76,7 @@ GunfightScorePanel {
 
         > label {
             font-size: 32px;
-            font-family: Quantico-Bold;
+            font-family: $main-font-bold;
         }
     }
 

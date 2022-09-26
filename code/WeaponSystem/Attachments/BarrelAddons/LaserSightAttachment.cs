@@ -34,6 +34,53 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 		}
 	}
 
+	// Where the trace starts
+	protected Vector3 TraceStartPosition;
+	// Where the trace ends if we're going forward from the Attachment
+	protected Vector3 AttachmentEndPosition;
+	// Where the trace ends if we're going forward from the Attachment towards the player's EyeRotation
+	protected Vector3 EyeEndPosition;
+	// When we decide that the laser needs to move, we'll set this and use the fraction to lerp between both Vectors
+	protected TimeUntil UntilPositionChanged;
+	// Stored state for checking the last frame's decision
+	protected bool NoEyeOrigin;
+
+	protected void UpdateAttachmentTrace()
+	{
+		var attachment = EffectEntity.GetAttachment( "laser", true );
+		if ( !attachment.HasValue ) return;
+
+		var pos = attachment.Value.Position;
+		var rot = attachment.Value.Rotation;
+
+		var trace = Trace.Ray( pos, pos + rot.Forward * 4096f )
+			.UseHitboxes()
+			.WithAnyTags( "solid", "player" )
+			.Radius( 1 )
+			.Ignore( Weapon )
+			.Ignore( EffectEntity )
+			.Run();
+		
+		TraceStartPosition = pos;
+		AttachmentEndPosition = trace.EndPosition;
+	}
+
+	protected void UpdateEyeTrace()
+	{
+		var pos = TraceStartPosition;
+		var rot = Weapon.Owner.EyeRotation;
+
+		var trace = Trace.Ray( pos, pos + rot.Forward * 4096f )
+			.UseHitboxes()
+			.WithAnyTags( "solid", "player" )
+			.Radius( 1 )
+			.Ignore( Weapon )
+			.Ignore( EffectEntity )
+			.Run();
+
+		EyeEndPosition = trace.EndPosition;
+	}
+
 	[Event.Frame]
 	protected void Update()
 	{
@@ -42,45 +89,31 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 			DotParticles ??= Particles.Create( "particles/laserdot.vpcf" );
 			LaserParticles ??= Particles.Create( "particles/laserline.vpcf" );
 
-			var attachment = EffectEntity.GetAttachment( "laser", true );
-			if ( !attachment.HasValue ) return;
-
-			var position = attachment.Value.Position;
-			var rotation = attachment.Value.Rotation;
+			UpdateAttachmentTrace();
+			UpdateEyeTrace();
 
 			var player = Weapon.Owner as GunfightPlayer;
-			if ( !player.IsValid() || player != Local.Pawn || Weapon.TimeSinceDeployed < 1f || player.IsHolstering )
-			{
-				// Do nothing
-			}
-			else
-			{
-				rotation = player.EyeRotation;
+			var ctrl = player?.Controller as PlayerController;
+			var noEyeOrigin = ( Weapon.IsValid() && Weapon.IsReloading ) || ( ctrl != null && ctrl.IsSprinting || ctrl.Slide.IsActive );
 
-				var ctrl = player.Controller as PlayerController;
-				if ( ctrl != null && Weapon.IsValid() && Weapon.IsReloading || ctrl.IsSprinting || ctrl.Slide.IsActive )
-				{
-					rotation = attachment.Value.Rotation;
-				}
+			// Laser end position preference changed
+			if ( NoEyeOrigin != noEyeOrigin )
+			{
+				NoEyeOrigin = noEyeOrigin;
+				UntilPositionChanged = 0.2f;
 			}
 
-			var trace = Trace.Ray( position, position + rotation.Forward * 4096f )
-				.UseHitboxes()
-				.WithAnyTags( "solid", "player" )
-				.Radius( 1 )
-				.Ignore( Weapon )
-				.Ignore( EffectEntity )
-				.Run();
-
-			var start = attachment.Value.Position;
-			var end = trace.EndPosition;
-
+			// What the fuck am I doing here
+			var end = Vector3.Lerp( 
+				NoEyeOrigin ? EyeEndPosition : AttachmentEndPosition, 
+				NoEyeOrigin ? AttachmentEndPosition : EyeEndPosition, 
+				UntilPositionChanged.Fraction 
+			);
+			
 			LaserParticles.SetPosition( 2, LaserColor * 255f );
 			DotParticles.SetPosition( 2, LaserColor * 255f );
-
 			DotParticles.SetPosition( 0, end );
-
-			LaserParticles.SetPosition( 0, start );
+			LaserParticles.SetPosition( 0, TraceStartPosition );
 			LaserParticles.SetPosition( 1, end );
 		}
 		else

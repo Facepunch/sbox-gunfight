@@ -21,7 +21,6 @@ $alternate-font-bold: Oswald-Bold;
 
 HudRootPanel
 {
-    background-color: rgba( #333, 0 );
     transition: background-color 0.2s ease-in;
     transform-origin: 50% 50%;
 
@@ -37,7 +36,6 @@ vitals {
     font-family: Oswald-Light;
 
     label {
-
         &.danger {
             color: #f00;
             text-shadow: 0px 0px 10px #f005;
@@ -47,7 +45,7 @@ vitals {
 
 .bottom-middle {
     position: absolute;
-    bottom: 32px;
+    bottom: 96px;
     width: 100%;
     flex-direction: column;
     align-items: center;
@@ -78,40 +76,32 @@ vitals {
 }
 
 .bottom-left {
-    left: 32px;
+    left: 64px;
     flex-direction: column;
 }
 
 .bottom-right {
-    right: 32px;
+    right: 96px;
 }
 
-.bottom-left, .bottom-right
-{	mix-blend-mode: lighten;
+.bottom-left, .bottom-right {
     position: absolute;
-    bottom: 32px;
+    bottom: 64px;
 }
 
 .bottom-right {
     ammo {
         flex-direction: row-reverse;
         font-family: Oswald-Light;
-        width: 100%;
+        width: 335px;
         height: 100%;
-        border-right: 2px solid rgba(#fbf1c7 0.5);
         align-items: flex-end;
-        background-color: rgba(#3c3836 0.2);
-        min-width: 150px;
-
         .icon {
+            top: -15px;
+            left: 0px;
             position: absolute;
-            top: -40px;
-            right: 25px;
-            width: 150px;
-            height: 150px;
-            z-index: -1;
-            opacity: .05;
-            background-image-tint: $theme-color;
+            aspect-ratio: 2;
+            width: 220px;
         }
 
         .gunname {
@@ -122,6 +112,7 @@ vitals {
             font-size: 18px;
             text-align: left;
             color: $theme-color;
+            opacity: 0;
         }
 
         .ammobar {
@@ -130,6 +121,7 @@ vitals {
             flex-shrink: 0;
             align-items: flex-start;
             top: 80%;
+            opacity: 0;
 
             .bullet {
                 width: 2px;
@@ -165,14 +157,6 @@ vitals {
             &.danger {
                 color: #f00;
             }
-        }
-
-        .currentammo {
-            bottom: 10px;
-            font-family: $main-font-bold;
-            font-size: 64px;
-            font-weight: bolder;
-            color: $theme-color;
         }
 
         &.low {
@@ -218,23 +202,21 @@ vitals {
 }
 
 .tactical {
-    position: absolute;
-    bottom: 103px;
 }
 
 Grenades {
     transition: all 0.2s ease-out;
     opacity: 1;
-    width: 75px;
+    width: 60px;
     height: 60px;
+    margin-left: 16px;
+    top: 15px;
 
-    .icon {
-        margin-left: -16px;
-        margin-top: 4px;
+    > .icon {
         position: absolute;
         height: 100%;
         aspect-ratio: 1;
-        opacity: 0.1;
+        opacity: 0.5;
         background-image-tint: $theme-color;
     }
 
@@ -251,17 +233,13 @@ Grenades {
 }
 
 Stance {
-    position: absolute;
-    bottom: 50px;
-    left: -50px;
     min-width: 50px;
-    transition: all 0.2s ease-in-out;
 
-    .icon {
+    > .icon {
         position: absolute;
         width: 50px;
         height: 50px;
-        opacity: .1;
+        opacity: .5;
         background-image-tint: $theme-color;
     }
 }
@@ -275,6 +253,37 @@ Location {
     }
 }
 
+Ammo {
+    border-right: 2px solid rgba( $theme-color, 0.5 );
+    padding-right: 30px;
+
+    .info {
+        bottom: 4px;
+        flex-direction: column;
+        font-weight: bolder;
+        color: $theme-color;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0px;
+
+        .inventory {
+            padding-right: 2px;
+            width: 100%;
+            font-size: 20px;
+            color: grey;
+        }
+
+        .currentammo {
+            width: 100%;
+            font-family: $main-font-bold;
+            font-size: 50px;
+            color: $theme-color;
+            height: 55px;
+        }
+    }
+}
+
 healthhud, armourhud {
     padding: 6px;
     font-size: 32px;
@@ -284,7 +293,7 @@ healthhud, armourhud {
     font-family: Quantico-Regular;
     min-width: 105px;
 }
-.ammobar,.currentammo {
+.ammobar {
     padding: 6px;
     font-size: 24px;
     font-weight: bolder;
@@ -297,19 +306,7 @@ healthhud, armourhud {
     font-weight: 900;
 
 }
-.inventory {
-    padding: 6px;
-    font-size: 24px;
-    left: 10px;
-    bottom:25px;
-    font-weight: bolder;
-    color: $theme-color;
-    text-align: center;
-    align-items: center;
-    border-radius: 0px;
-    font-family: Quantico-Regular;
-    font-weight: 900;
-}
+
 iconpanel
 {
     font-family: "Material Icons";
@@ -327,7 +324,6 @@ healthhud, armourhud {
     }
 
     .outerbar {
-        background-color: rgba( $theme-color .2);
         position: absolute;
         border-radius: 0;
         left: -3px;
@@ -341,7 +337,7 @@ healthhud, armourhud {
         }
     }
 
-    .icon {
+    > .icon {
         color: $theme-color;
     }
 

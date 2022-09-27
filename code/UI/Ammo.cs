@@ -3,23 +3,24 @@ using Sandbox.UI.Construct;
 
 namespace Facepunch.Gunfight;
 
+[UseTemplate]
 public class Ammo : Panel
 {
-	public Image Icon;
-	public Label Inventory;
-	public Label CurrentAmmo;
-	public Label GunName;
-	public Panel AmmoBar;
+	// @ref
+	public Image Icon { get; set; }
+	// @ref
+	public Label Inventory { get; set; }
+	// @ref
+	public Label CurrentAmmo { get; set; }
+	// @ref
+	public Label GunName { get; set; }
+	// @ref
+	public Panel AmmoBar { get; set; }
 
 	List<Panel> BulletPanels = new List<Panel>();
 
 	public Ammo()
 	{
-		AmmoBar = Add.Panel( "ammobar" );
-		Inventory = Add.Label( "100", "inventory" );
-		CurrentAmmo = Add.Label( "69", "currentammo" );
-		GunName = Add.Label( "69", "gunname" );
-		Icon = Add.Image( "", "icon" );
 	}
 
 	int weaponHash;

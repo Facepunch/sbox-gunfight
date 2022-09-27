@@ -8,7 +8,7 @@
 		HoldType = "Rifle"
 		Model = resource:"models/f1/w_f1.vmdl"
 		ViewModel = resource:"models/f1/fp_f1.vmdl"
-		Icon = resource:"ui/weapons/famas.png"
+		Icon = resource:"models/f1/w_f1.vmdl.png"
 		BaseFireRate = 0.05
 		DefaultFireMode = "Burst"
 		DamageFlags = "Bullet"

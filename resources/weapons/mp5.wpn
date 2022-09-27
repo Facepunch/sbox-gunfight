@@ -8,7 +8,7 @@
 		HoldType = "Rifle"
 		Model = resource:"models/mp5/w_mp5.vmdl"
 		ViewModel = resource:"models/mp5/fp_mp5.vmdl"
-		Icon = resource:"ui/weapons/mp5.png"
+		Icon = resource:"models/mp5/w_mp5.vmdl.png"
 		BaseFireRate = 0.07
 		DefaultFireMode = "FullAuto"
 		DamageFlags = "Bullet"

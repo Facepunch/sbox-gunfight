@@ -8,7 +8,7 @@
 		HoldType = "Pistol"
 		Model = resource:"models/m1911/w_m1911.vmdl"
 		ViewModel = resource:"models/m1911/fp_m1911.vmdl"
-		Icon = resource:"ui/weapons/m1911.png"
+		Icon = resource:"models/m1911/w_m1911.vmdl.png"
 		BaseFireRate = 0.15
 		DefaultFireMode = "Semi"
 		DamageFlags = "Bullet"

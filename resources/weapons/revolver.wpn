@@ -8,7 +8,7 @@
 		HoldType = "Pistol"
 		Model = resource:"models/revolver/w_revolver.vmdl"
 		ViewModel = resource:"models/revolver/fp_revolver.vmdl"
-		Icon = resource:"ui/weapons/m1911.png"
+		Icon = resource:"models/revolver/w_revolver.vmdl.png"
 		BaseFireRate = 0.2
 		DefaultFireMode = "Semi"
 		DamageFlags = "Bullet"

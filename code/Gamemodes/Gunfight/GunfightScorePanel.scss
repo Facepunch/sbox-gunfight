@@ -1,86 +1,73 @@
 @import "/Resource/Styles/hud.scss";
 
 GunfightScorePanel {
+    left: 32px;
+    bottom: 32px;
     position: absolute;
-    margin-top: 64px;
     width: 18%;
-    justify-content: center;
-    align-content: center;
     flex-direction: column;
 
     label {
         color: $theme-color;
-        font-family: Quantico-Regular;
         font-size: 16px;
     }
 
-    .counts {
-        position: absolute;
-        width: 100%;
-        top: 4px;
-        height: 24px;
-        align-content: center;
-        justify-content: center;
-
-        label {
-            font-size: 24px;
-        }
-
-        .count {
-            font-family: Quantico-Bold;
-
-            > .icon {
-                margin-top: 4px;
-                font-family: Material Icons;
-            }
-
-            &.enemy {
-                > .icon {
-                    color: $enemy;
-                    margin-left: 4px;
-                }
-            }
-
-            &.friendly {
-                > .icon {
-                    color: $friendly;
-                    margin-right: 4px;
-                }
-            }
-        }
-
-        .spacer {
-            width: 100%;
-        }
-    }
-
-    .gamestatus {
-        justify-content: center;
-        align-content: center;
-        flex-direction: column;
-        align-items: center;
-        height: 40px;
-
-        > label {
-            font-size: 28px;
-            font-family: $main-font-bold;
-        }
-    }
-
     .time {
-        justify-content: center;
-        align-content: center;
-        flex-direction: column;
-        align-items: center;
-        height: 40px;
+        margin-top: 16px;
+        font-size: 20px;
+        font-family: $main-font-bold;
+    }
 
-        > label {
-            font-size: 32px;
+    .score {
+        margin-right: 10px;
+        text-shadow: 0px 0px 2px rgba( black, 0.5 );
+
+        &.friendly {
+            font-size: 40px;
+            width: 32px;
             font-family: $main-font-bold;
+        }
+
+        &.enemy {
+            font-size: 20px;
+            width: 32px;
         }
     }
 
-    .scoreboxes {
+    .boxes {
+        width: 100%;
+        align-items: center;
+        align-content: center;
+
+        .box {
+            margin-left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: rgba( $theme-color, 0.02 );
+            background-image-tint: $theme-color;
+        }
+
+        &.friendly {
+            .box {
+                &.won {
+                    border: 2px solid $friendly;
+                    background-color: rgba( $friendly, 0.5 );
+                    background-image-tint: $friendly;
+                }
+            }
+        }
+
+        &.enemy {
+            .box {
+                &.won {
+                    border: 2px solid $enemy;
+                    background-color: rgba( $enemy, 0.5 );
+                    background-image-tint: $enemy;
+                }
+            }
+        }
+    }
+    /*.scoreboxes {
         justify-content: center;
         align-content: center;
         align-items: center;
@@ -120,5 +107,5 @@ GunfightScorePanel {
                 background-image: url( /ui/crown.png );
             }
         }
-    }
+    }*/
 }

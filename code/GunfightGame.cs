@@ -172,6 +172,8 @@ partial class GunfightGame : Game
 
 		Audio.SetEffect( "core.player.death.muffle1", 0 );
 
+		postProcess.Saturate.Enabled = true;
+
 		if ( Local.Pawn is GunfightPlayer localPlayer )
 		{
 			var timeSinceDamage = localPlayer.TimeSinceDamage.Relative;
@@ -191,13 +193,13 @@ partial class GunfightGame : Game
 
 			var healthDelta = localPlayer.Health.LerpInverse( 0, 100.0f, true );
 
-			healthDelta = MathF.Pow( healthDelta, 0.5f );
+			healthDelta = MathF.Pow( healthDelta, 2f );
 
 			postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, Color.Red, 1 - healthDelta );
 			postProcess.Vignette.Intensity += (1 - healthDelta) * 0.5f;
 			postProcess.Vignette.Smoothness += (1 - healthDelta);
 			postProcess.Vignette.Roundness += (1 - healthDelta) * 0.5f;
-			postProcess.Saturate.Amount *= healthDelta;
+			postProcess.Saturate.Amount = MathF.Pow( healthDelta, 0.2f );
 			postProcess.FilmGrain.Intensity += (1 - healthDelta) * 0.5f;
 
 			Audio.SetEffect( "core.player.death.muffle1", 1 - healthDelta, velocity: 2.0f );

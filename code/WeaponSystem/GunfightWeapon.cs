@@ -17,7 +17,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	[Net, Predicted] public TimeSince TimeSinceDeployed { get; set; }
 	[Net, Predicted] public TimeSince TimeSincePrimaryAttack { get; set; }
 	[Net, Predicted] protected int BurstCount { get; set; } = 0;
-	[Net, Predicted] public FireMode CurrentFireMode { get; set; } = FireMode.Semi;
+	[Net, Change( "FireModeChanged" )] public FireMode CurrentFireMode { get; set; } = FireMode.Semi;
 	[Net, Predicted] public TimeSince TimeSinceFireModeSwitch { get; set; }
 	[Net, Predicted] public TimeSince TimeSinceBurstFinished { get; set; }
 	[Net, Predicted] public bool IsBurstFiring { get; set; }
@@ -56,6 +56,12 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public float BulletRange => WeaponDefinition.BulletRange;
 	public string GunIcon => WeaponDefinition.Icon;
 	public float PostSprintAttackDelay => 0.15f;
+
+	// @event
+	protected void FireModeChanged( FireMode before, FireMode after )
+	{
+		Event.Run( "gunfight.firemode.changed", after );
+	}
 
 	public void StartDecaying()
 	{

@@ -31,13 +31,6 @@ public class InventoryBar : Panel
 		if ( Weapons.Count != Container.ChildrenCount )
 		{
 			Container.DeleteChildren( true );
-
-			foreach ( var weapon in Weapons.OrderBy( x => x.Slot ) )
-			{
-				var icon = new InventoryIcon( weapon );
-
-				Container.AddChild( icon );
-			}
 		}
 	}
 

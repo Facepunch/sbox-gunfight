@@ -157,6 +157,7 @@ partial class GunfightGame : Game
 		GamemodeSystem.Current?.Simulate( cl );
 	}
 
+	Color RedColor = new Color( 1f, 0.2f, 0.2f, 1f );
 	public override void FrameSimulate( Client cl )
 	{
 		base.FrameSimulate( cl );
@@ -181,7 +182,7 @@ partial class GunfightGame : Game
 			if ( damageUi > 0 )
 			{
 				postProcess.Saturate.Amount -= damageUi;
-				postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, Color.Red, damageUi );
+				postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, damageUi );
 				postProcess.Vignette.Intensity += damageUi;
 				postProcess.Vignette.Smoothness += damageUi;
 				postProcess.Vignette.Roundness += damageUi;
@@ -195,7 +196,7 @@ partial class GunfightGame : Game
 
 			healthDelta = MathF.Pow( healthDelta, 2f );
 
-			postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, Color.Red, 1 - healthDelta );
+			postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, 1 - healthDelta );
 			postProcess.Vignette.Intensity += (1 - healthDelta) * 0.5f;
 			postProcess.Vignette.Smoothness += (1 - healthDelta);
 			postProcess.Vignette.Roundness += (1 - healthDelta) * 0.5f;

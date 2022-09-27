@@ -464,4 +464,14 @@ public partial class GunfightPlayer : Player, IHudMarker
 			weapon.RenderHud( screenSize );
 		}
 	}
+
+	[ConCmd.Admin( "gunfight_sethp" )]
+	public static void SetHP( int hp )
+	{
+		var pawn = ConsoleSystem.Caller?.Pawn;
+		if ( pawn.IsValid() )
+		{
+			pawn.Health = hp;
+		}
+	}
 }

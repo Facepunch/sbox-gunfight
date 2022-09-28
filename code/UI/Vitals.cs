@@ -16,7 +16,7 @@ public class HealthHud : Panel
 
 	public override void Tick()
 	{
-		var player = Local.Pawn as GunfightPlayer;
+		var player = GunfightCamera.Target;
 		if ( player == null ) return;
 		Value.Text.Text = $"{player.Health.CeilToInt()}";
 		Value.InnerBar.Style.Width = Length.Fraction( Math.Max( player.Health / player.MaxHealth, 0.05f ) );
@@ -42,7 +42,7 @@ public class ArmourHud : Panel
 
 	public override void Tick()
 	{
-		var player = Local.Pawn as GunfightPlayer;
+		var player = GunfightCamera.Target;
 		if ( player == null ) return;
 
 		Value.Text.Text = $"{player.Armour.CeilToInt()}";

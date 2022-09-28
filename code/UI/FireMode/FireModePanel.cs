@@ -27,7 +27,7 @@ public class FireModePanel : Panel
 	[Event( "gunfight.firemode.changed" )]
 	public void FireModeChanged( FireMode newFireMode )
 	{
-		var player = Local.Pawn as GunfightPlayer;
+		var player = GunfightCamera.Target;
 		var weapon = player?.CurrentWeapon;
 		if ( !weapon.IsValid() )
 			return;
@@ -51,7 +51,7 @@ public class FireModePanel : Panel
 	{
 		base.Tick();
 
-		var player = Local.Pawn as GunfightPlayer;
+		var player = GunfightCamera.Target;
 		var weapon = player?.CurrentWeapon;
 		if ( !weapon.IsValid() || weapon.WeaponDefinition is null )
 			return;

@@ -271,8 +271,8 @@ partial class GunfightGame : Game
 
 	public override void RenderHud()
 	{
-		var localPawn = Local.Pawn as GunfightPlayer;
-		if ( localPawn == null ) return;
+		var player = GunfightCamera.Target;
+		if ( !player.IsValid() ) return;
 
 		//
 		// scale the screen using a matrix, so the scale math doesn't invade everywhere
@@ -285,7 +285,7 @@ partial class GunfightGame : Game
 
 		using ( Render.Draw2D.MatrixScope( matrix ) )
 		{
-			localPawn.RenderHud( screenSize );
+			player.RenderHud( screenSize );
 		}
 	}
 

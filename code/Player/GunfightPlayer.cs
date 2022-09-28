@@ -22,7 +22,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		SetModel( "models/citizen/citizen.vmdl" );
 
 		Animator = new PlayerAnimator();
-		CameraMode = new FirstPersonCamera();
+		CameraMode = new GunfightPlayerCamera();
 		Controller = new PlayerController();
 
 		PlayerInventory?.DeleteContents();

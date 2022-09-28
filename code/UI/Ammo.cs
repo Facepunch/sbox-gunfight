@@ -25,12 +25,11 @@ public class Ammo : Panel
 
 	int weaponHash;
 
+
 	public override void Tick()
 	{
 		var player = GunfightCamera.Target;
-		if ( !player.IsValid() ) return;
-
-		var weapon = player.ActiveChild as GunfightWeapon;
+		var weapon = player?.ActiveChild as GunfightWeapon;
 		SetClass( "active", weapon != null );
 
 		if ( weapon == null ) return;

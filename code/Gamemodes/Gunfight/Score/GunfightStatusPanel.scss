@@ -138,10 +138,10 @@ GunfightStatusPanel {
 
                         > .person {
                             color: $enemy;
-                        }
 
-                        &.dead {
-                            color: darkgrey;
+                            &.dead {
+                                color: darkgrey;
+                            }
                         }
                     }
                 }

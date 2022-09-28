@@ -249,7 +249,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( TimeSinceDeployed < 0.6f )
 			return;
 
-		if ( Input.Pressed( InputButton.Menu ) )
+		if ( Input.Pressed( InputButton.View ) )
 		{
 			CycleFireMode();
 		}

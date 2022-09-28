@@ -5,9 +5,36 @@ hudhints {
     width: 100%;
     height: 100%;
 
+    > .spectator {
+        top: 128px;
+        left: 64px;
+        height: 70px;
+        padding-left: 16px;
+        flex-direction: column;
+        border-left: 2px solid $theme-color;
+        opacity: 0;
+
+        &.active {
+            opacity: 1;
+        }
+
+        .entry {
+            margin-bottom: 2px;
+            margin-right: 8px;
+        }
+
+        .identity {
+            .name {
+                margin-left: 8px;
+                font-family: $alternate-font-bold;
+                color: $theme-color;
+            }
+        }
+    }
+
     label {
         color: $theme-color;
-        font-family: Quantico-Bold;
+        font-family: $alternate-font;
         font-size: 24px;
         top: -6px;
     }
@@ -15,7 +42,6 @@ hudhints {
     InputHint {
         margin-left: 4px;
         margin-right: 4px;
-        margin-top: -5px;
     }
 
     .reload {

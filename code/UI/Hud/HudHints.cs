@@ -15,11 +15,17 @@ public partial class HudHints : Panel
 	public Panel PickupHint { get; set; }
 	// @ref
 	public Label PickupLabel { get; set; }
+	// @ref
+	public Panel SpectatorHint { get; set; }
+	// @text
+	public string SpectatorTarget => GunfightCamera.Target?.Client?.Name ?? "nobody";
 
 	public override void Tick()
 	{
 		var player = Local.Pawn as GunfightPlayer;
 		if ( !player.IsValid() ) return;
+
+		SpectatorHint.SetClass( "active", player.CameraMode is GunfightSpectatorCamera );
 
 		var controller = player.Controller as PlayerController;
 		if ( controller == null ) return;

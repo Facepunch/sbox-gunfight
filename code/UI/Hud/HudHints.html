@@ -6,6 +6,25 @@
         <label>RELOAD</label>
     </div>
 
+    <div class="spectator" @ref="SpectatorHint">
+        <div class="entry identity">
+            <label>Spectating</label>
+            <label class="name" @text="SpectatorTarget">DevulTj</label>
+        </div>
+        
+        <div class="binds">
+            <div class="entry">
+                <InputHint btn="Menu" />
+                <label>Previous</label>
+            </div>
+
+            <div class="entry">
+                <InputHint btn="Use" />
+                <label>Next</label>
+            </div>
+        </div>
+    </div>
+
     <div class="vault" @ref="VaultHint">
         <InputHint btn="Jump" />
         <label>to</label>

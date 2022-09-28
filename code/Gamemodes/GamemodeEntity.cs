@@ -51,6 +51,11 @@ public abstract partial class GamemodeEntity : Entity
 	{
 	}
 
+	public virtual bool AllowSpectating()
+	{
+		return !AllowRespawning();
+	}
+
 	/// <summary>
 	/// Called when a client leaves the game
 	/// </summary>

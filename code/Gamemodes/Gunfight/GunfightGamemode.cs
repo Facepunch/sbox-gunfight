@@ -86,6 +86,11 @@ public partial class GunfightGamemode : GamemodeEntity
 		return State != GameState.RoundCountdown;
 	}
 
+	public override bool AllowSpectating()
+	{
+		return true;
+	}
+
 	public override bool CanPlayerRegenerate( GunfightPlayer player )
 	{
 		return State != GameState.RoundActive;

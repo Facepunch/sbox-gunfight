@@ -36,4 +36,21 @@ public partial class GunfightDeathCamera : CameraMode
 	{
 		return FocusRotation.Forward * 100f;
 	}
+
+	protected void Spectate()
+	{
+		Local.Pawn.Components.Add( new GunfightSpectatorCamera() );
+	}
+
+	public override void BuildInput( InputBuilder input )
+	{
+		base.BuildInput( input );
+
+		var gamemode = GamemodeSystem.Current;
+
+		if ( input.Pressed( InputButton.Jump ) && gamemode.IsValid() && gamemode.AllowSpectating() )
+		{
+			Spectate();
+		}
+	}
 }

@@ -17,7 +17,7 @@ public class Grenades : Panel
 
 	public override void Tick()
 	{
-		var player = Local.Pawn as Player;
+		var player = GunfightCamera.Target;
 		if ( player == null ) return;
 
 		// TODO - Setup

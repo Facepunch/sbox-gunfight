@@ -17,7 +17,7 @@ public class Stance : Panel
 
 	public override void Tick()
 	{
-		var player = Local.Pawn as GunfightPlayer;
+		var player = GunfightCamera.Target;
 		if ( player == null ) return;
 		if ( PlayerController == null ) return;
 		if ( PlayerController.Duck.IsActive )

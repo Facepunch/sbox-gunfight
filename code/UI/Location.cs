@@ -13,7 +13,7 @@ public class Location : Panel
 
 	public override void Tick()
 	{
-		var player = Local.Pawn as GunfightPlayer;
+		var player = GunfightCamera.Target;
 		if ( player == null ) return;
 
 		LocationName.SetText( $"{player.PlayerLocation}" );

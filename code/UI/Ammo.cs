@@ -27,8 +27,8 @@ public class Ammo : Panel
 
 	public override void Tick()
 	{
-		var player = Local.Pawn as Player;
-		if ( player == null ) return;
+		var player = GunfightCamera.Target;
+		if ( !player.IsValid() ) return;
 
 		var weapon = player.ActiveChild as GunfightWeapon;
 		SetClass( "active", weapon != null );

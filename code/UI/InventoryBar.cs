@@ -22,7 +22,7 @@ public class InventoryBar : Panel
 
 		SetClass( "active", IsOpen );
 
-		var player = Local.Pawn as Player;
+		var player = GunfightCamera.Target;
 		if ( player == null ) return;
 
 		Weapons.Clear();

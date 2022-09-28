@@ -175,7 +175,7 @@ partial class GunfightGame : Game
 
 		postProcess.Saturate.Enabled = true;
 
-		if ( Local.Pawn is GunfightPlayer localPlayer )
+		if ( GunfightCamera.Target is GunfightPlayer localPlayer )
 		{
 			var timeSinceDamage = localPlayer.TimeSinceDamage.Relative;
 			var damageUi = timeSinceDamage.LerpInverse( 0.25f, 0.0f, true ) * 0.3f;

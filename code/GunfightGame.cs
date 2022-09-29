@@ -14,9 +14,6 @@ partial class GunfightGame : Game
 	[Net] public GunfightHud Hud { get; set; }
 	[Net] public TeamScores Scores { get; set; }
 
-
-	StandardPostProcess postProcess;
-
 	public GunfightGame()
 	{
 		//
@@ -29,12 +26,6 @@ partial class GunfightGame : Game
 			Scores = new();
 
 			Global.TickRate = 30;
-		}
-
-		if ( IsClient )
-		{
-			postProcess = new StandardPostProcess();
-			PostProcess.Add( postProcess );
 		}
 	}
 
@@ -162,18 +153,15 @@ partial class GunfightGame : Game
 	{
 		base.FrameSimulate( cl );
 
-		postProcess.Sharpen.Enabled = true;
-		postProcess.Sharpen.Strength = 0.1f;
+		var postProcess = Map.Camera.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
 
-		postProcess.Vignette.Enabled = true;
-		postProcess.Vignette.Intensity = 1.0f;
+		postProcess.Sharpen = 0.1f;
+		postProcess.Vignette.Intensity = 0.5f;
 		postProcess.Vignette.Roundness = 1.5f;
 		postProcess.Vignette.Smoothness = 0.5f;
-		postProcess.Vignette.Color = Color.Black;
+		postProcess.Vignette.Color = Color.Black.WithAlpha( 0.2f );
 
 		Audio.SetEffect( "core.player.death.muffle1", 0 );
-
-		postProcess.Saturate.Enabled = true;
 
 		if ( GunfightCamera.Target is GunfightPlayer localPlayer )
 		{
@@ -181,16 +169,15 @@ partial class GunfightGame : Game
 			var damageUi = timeSinceDamage.LerpInverse( 0.25f, 0.0f, true ) * 0.3f;
 			if ( damageUi > 0 )
 			{
-				postProcess.Saturate.Amount -= damageUi;
+				postProcess.Saturation -= damageUi;
+
 				postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, damageUi );
 				postProcess.Vignette.Intensity += damageUi;
 				postProcess.Vignette.Smoothness += damageUi;
 				postProcess.Vignette.Roundness += damageUi;
 
-				postProcess.Blur.Enabled = true;
-				postProcess.Blur.Strength = damageUi * 0.5f;
+				postProcess.MotionBlur.Scale = damageUi * 0.5f;
 			}
-
 
 			var healthDelta = localPlayer.Health.LerpInverse( 0, 100.0f, true );
 
@@ -200,14 +187,14 @@ partial class GunfightGame : Game
 			postProcess.Vignette.Intensity += (1 - healthDelta) * 0.5f;
 			postProcess.Vignette.Smoothness += (1 - healthDelta);
 			postProcess.Vignette.Roundness += (1 - healthDelta) * 0.5f;
-			postProcess.Saturate.Amount = MathF.Pow( healthDelta, 0.2f );
+			postProcess.Saturation = MathF.Pow( healthDelta, 0.2f );
 			postProcess.FilmGrain.Intensity += (1 - healthDelta) * 0.5f;
 
 			Audio.SetEffect( "core.player.death.muffle1", 1 - healthDelta, velocity: 2.0f );
 		}
 
 		// Let the gamemode control post process
-		GamemodeSystem.Current?.PostProcessTick( postProcess );
+		GamemodeSystem.Current?.PostProcessTick();
 
 		// Simulate active gamemode
 		GamemodeSystem.Current?.FrameSimulate( cl );

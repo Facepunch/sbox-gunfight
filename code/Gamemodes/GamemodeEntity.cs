@@ -156,7 +156,7 @@ public abstract partial class GamemodeEntity : Entity
 	/// Called on Client Tick, allows gamemodes to define custom post processing
 	/// </summary>
 	/// <param name="postProcess"></param>
-	public virtual void PostProcessTick( StandardPostProcess postProcess )
+	public virtual void PostProcessTick()
 	{
 	}
 

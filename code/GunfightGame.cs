@@ -155,11 +155,11 @@ partial class GunfightGame : Game
 
 		var postProcess = Map.Camera.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
 
-		postProcess.Sharpen = 0.1f;
+		//postProcess.Sharpen = 0.1f;
 		postProcess.Vignette.Intensity = 0.5f;
-		postProcess.Vignette.Roundness = 1.5f;
-		postProcess.Vignette.Smoothness = 0.5f;
-		postProcess.Vignette.Color = Color.Black.WithAlpha( 0.2f );
+		//postProcess.Vignette.Roundness = 1.5f;
+		//postProcess.Vignette.Smoothness = 0.5f;
+		//postProcess.Vignette.Color = Color.Black.WithAlpha( 0.2f );
 
 		Audio.SetEffect( "core.player.death.muffle1", 0 );
 
@@ -169,26 +169,26 @@ partial class GunfightGame : Game
 			var damageUi = timeSinceDamage.LerpInverse( 0.25f, 0.0f, true ) * 0.3f;
 			if ( damageUi > 0 )
 			{
-				postProcess.Saturation -= damageUi;
+				//postProcess.Saturation -= damageUi;
 
-				postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, damageUi );
-				postProcess.Vignette.Intensity += damageUi;
-				postProcess.Vignette.Smoothness += damageUi;
-				postProcess.Vignette.Roundness += damageUi;
+				//postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, damageUi );
+				//postProcess.Vignette.Intensity += damageUi;
+				//postProcess.Vignette.Smoothness += damageUi;
+				//postProcess.Vignette.Roundness += damageUi;
 
-				postProcess.MotionBlur.Scale = damageUi * 0.5f;
+				//postProcess.MotionBlur.Scale = damageUi * 0.5f;
 			}
 
 			var healthDelta = localPlayer.Health.LerpInverse( 0, 100.0f, true );
 
 			healthDelta = MathF.Pow( healthDelta, 2f );
 
-			postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, 1 - healthDelta );
-			postProcess.Vignette.Intensity += (1 - healthDelta) * 0.5f;
-			postProcess.Vignette.Smoothness += (1 - healthDelta);
-			postProcess.Vignette.Roundness += (1 - healthDelta) * 0.5f;
-			postProcess.Saturation = MathF.Pow( healthDelta, 0.2f );
-			postProcess.FilmGrain.Intensity += (1 - healthDelta) * 0.5f;
+			//postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, 1 - healthDelta );
+			//postProcess.Vignette.Intensity += (1 - healthDelta) * 0.1f;
+			//postProcess.Vignette.Smoothness += (1 - healthDelta);
+			//postProcess.Vignette.Roundness += (1 - healthDelta) * 0.1f;
+			//postProcess.Saturation = MathF.Pow( healthDelta, 0.2f );
+			//postProcess.FilmGrain.Intensity += (1 - healthDelta) * 0.1f;
 
 			Audio.SetEffect( "core.player.death.muffle1", 1 - healthDelta, velocity: 2.0f );
 		}

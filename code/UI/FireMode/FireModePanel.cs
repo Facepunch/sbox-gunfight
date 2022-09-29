@@ -29,7 +29,7 @@ public class FireModePanel : Panel
 	{
 		var player = GunfightCamera.Target;
 		var weapon = player?.CurrentWeapon;
-		if ( !weapon.IsValid() )
+		if ( !weapon.IsValid() || weapon.WeaponDefinition is null )
 			return;
 
 		Rebuild( weapon );

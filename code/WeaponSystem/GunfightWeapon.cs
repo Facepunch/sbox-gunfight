@@ -86,16 +86,28 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		}
 	}
 
+	protected int GetIndex( FireMode fireMode )
+	{
+		int i = 0;
+		foreach( var mode in WeaponDefinition.SupportedFireModes )
+		{
+			if ( mode == fireMode ) return i;
+			i++;
+		}
+
+		return 0;
+	}
+
 	public void CycleFireMode()
 	{
 		if ( TimeSinceFireModeSwitch < 0.3f ) return;
 
-		var curIndex = (int)CurrentFireMode;
-		var length = Enum.GetNames( typeof( FireMode ) ).Length;
+		var curIndex = GetIndex( CurrentFireMode );
+		var length = WeaponDefinition.SupportedFireModes.Count;
 		curIndex++;
 
 		var newIndex = (curIndex + length) % length;
-		CurrentFireMode = (FireMode)newIndex;
+		CurrentFireMode = WeaponDefinition.SupportedFireModes[newIndex];
 
 		// TODO - Sound, animations (?)
 

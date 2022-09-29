@@ -104,9 +104,11 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		var curIndex = GetIndex( CurrentFireMode );
 		var length = WeaponDefinition.SupportedFireModes.Count;
-		curIndex++;
+		var newIndex = (curIndex + 1 + length) % length;
 
-		var newIndex = (curIndex + length) % length;
+		// We didn't change anything
+		if ( newIndex == curIndex ) return;
+
 		CurrentFireMode = WeaponDefinition.SupportedFireModes[newIndex];
 
 		// TODO - Sound, animations (?)

@@ -148,53 +148,51 @@ partial class GunfightGame : Game
 		GamemodeSystem.Current?.Simulate( cl );
 	}
 
-	Color RedColor = new Color( 1f, 0.2f, 0.2f, 1f );
+	Color RedColor => new Color( 0.1f, 0f, 0f, 0.1f );
+
+	// TODO - Delete this
+	TimeUntil ActivateHack = 2f;
 	public override void FrameSimulate( Client cl )
 	{
 		base.FrameSimulate( cl );
 
-		var postProcess = Map.Camera.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
-
-		//postProcess.Sharpen = 0.1f;
-		postProcess.Vignette.Intensity = 0.5f;
-		//postProcess.Vignette.Roundness = 1.5f;
-		//postProcess.Vignette.Smoothness = 0.5f;
-		//postProcess.Vignette.Color = Color.Black.WithAlpha( 0.2f );
-
-		Audio.SetEffect( "core.player.death.muffle1", 0 );
-
-		if ( GunfightCamera.Target is GunfightPlayer localPlayer )
+		if ( GunfightCamera.Target is GunfightPlayer localPlayer && ActivateHack )
 		{
+			var postProcess = Map.Camera.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
+			postProcess.Sharpen = 0.1f;
+			postProcess.Vignette.Intensity = 0.5f;
+			postProcess.Vignette.Roundness = 1.5f;
+			postProcess.Vignette.Smoothness = 0.5f;
+			postProcess.Vignette.Color = Color.Black.WithAlpha( 0.2f );
+			postProcess.MotionBlur.Scale = 0f;
+			postProcess.Saturation = 0;
+
 			var timeSinceDamage = localPlayer.TimeSinceDamage.Relative;
-			var damageUi = timeSinceDamage.LerpInverse( 0.25f, 0.0f, true ) * 0.3f;
+			var damageUi = MathF.Pow( timeSinceDamage.LerpInverse( 0.8f, 0.0f, true ), 0.3f );
+			var shortDamageUi = timeSinceDamage.LerpInverse( 0.2f, 0.0f, true );
 			if ( damageUi > 0 )
 			{
-				//postProcess.Saturation -= damageUi;
-
-				//postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, damageUi );
-				//postProcess.Vignette.Intensity += damageUi;
-				//postProcess.Vignette.Smoothness += damageUi;
-				//postProcess.Vignette.Roundness += damageUi;
-
-				//postProcess.MotionBlur.Scale = damageUi * 0.5f;
+				postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, damageUi );
+				postProcess.Vignette.Intensity += damageUi * 0.05f;
+				postProcess.Vignette.Smoothness += damageUi * 0.1f;
 			}
 
-			var healthDelta = localPlayer.Health.LerpInverse( 0, 100.0f, true );
+			postProcess.ChromaticAberration.Scale = shortDamageUi * 1f;
+			postProcess.Saturation -= shortDamageUi * 0.1f;
+			postProcess.Pixelation = shortDamageUi * 0.05f;
 
-			healthDelta = MathF.Pow( healthDelta, 2f );
+			var healthDelta = localPlayer.Health.LerpInverse( 0, localPlayer.MaxHealth, true );
+			healthDelta = MathF.Pow( healthDelta, 0.6f );
 
-			//postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, 1 - healthDelta );
-			//postProcess.Vignette.Intensity += (1 - healthDelta) * 0.1f;
-			//postProcess.Vignette.Smoothness += (1 - healthDelta);
-			//postProcess.Vignette.Roundness += (1 - healthDelta) * 0.1f;
-			//postProcess.Saturation = MathF.Pow( healthDelta, 0.2f );
-			//postProcess.FilmGrain.Intensity += (1 - healthDelta) * 0.1f;
+			postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, 1 - healthDelta );
+			postProcess.Saturation += healthDelta;
+			postProcess.ChromaticAberration.Scale += MathF.Pow( 1f - healthDelta, 3f ) * MathF.Sin( Time.Now * 1f );
 
 			Audio.SetEffect( "core.player.death.muffle1", 1 - healthDelta, velocity: 2.0f );
-		}
 
-		// Let the gamemode control post process
-		GamemodeSystem.Current?.PostProcessTick();
+			// Let the gamemode control post process
+			GamemodeSystem.Current?.PostProcessTick();
+		}
 
 		// Simulate active gamemode
 		GamemodeSystem.Current?.FrameSimulate( cl );

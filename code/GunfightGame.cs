@@ -261,19 +261,7 @@ partial class GunfightGame : Game
 		var player = GunfightCamera.Target;
 		if ( !player.IsValid() ) return;
 
-		//
-		// scale the screen using a matrix, so the scale math doesn't invade everywhere
-		// (other than having to pass the new scale around)
-		//
-
-		var scale = Screen.Height / 1080.0f;
-		var screenSize = Screen.Size / scale;
-		var matrix = Matrix.CreateScale( scale );
-
-		using ( Render.Draw2D.MatrixScope( matrix ) )
-		{
-			player.RenderHud( screenSize );
-		}
+		player.RenderHud( Screen.Size );
 	}
 
 	/// <summary>

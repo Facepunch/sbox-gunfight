@@ -30,6 +30,12 @@ public partial class GunfightGamemode : GamemodeEntity
 
 	public override Panel GetHudPanel() => new GunfightGamemodePanel();
 
+	public override void Spawn()
+	{
+		base.Spawn();
+		RandomizeLoadout();
+	}
+
 	public override void OnClientJoined( Client cl )
 	{
 		base.OnClientJoined( cl );

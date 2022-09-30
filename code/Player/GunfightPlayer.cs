@@ -465,13 +465,22 @@ public partial class GunfightPlayer : Player, IHudMarker
 		}
 	}
 
-	[ConCmd.Admin( "gunfight_sethp" )]
-	public static void SetHP( int hp )
+	[ConCmd.Admin( "gunfight_debug_sethp" )]
+	public static void Debug_SetHP( int hp )
 	{
 		var pawn = ConsoleSystem.Caller?.Pawn;
 		if ( pawn.IsValid() )
 		{
 			pawn.Health = hp;
+		}
+	}
+	[ConCmd.Admin( "gunfight_debug_damage" )]
+	public static void Debug_Damage( int amt )
+	{
+		var pawn = ConsoleSystem.Caller?.Pawn;
+		if ( pawn.IsValid() )
+		{
+			pawn.TakeDamage( DamageInfo.FromBullet( pawn.Position, 100f, amt ) );
 		}
 	}
 }

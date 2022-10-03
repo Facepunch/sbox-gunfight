@@ -51,9 +51,9 @@ namespace Facepunch.Gunfight.Entities.Hammer
 				return;
 
 			LastDamage = info;
-			Log.Info( GetHitboxBone( LastDamage.HitboxIndex ) );
+			
 			// Headshot
-			var isHeadshot = GetHitboxBone( info.HitboxIndex ) == 1;
+			var isHeadshot = info.Hitbox.HasTag( "head" );
 			if ( isHeadshot )
 			{
 				info.Damage *= 2.0f;

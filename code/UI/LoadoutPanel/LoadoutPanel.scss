@@ -1,0 +1,59 @@
+@import "/Resource/Styles/hud.scss";
+
+LoadoutPanel {
+    position: absolute;
+    width: 30%;
+    border-left: 2px solid $theme-color;
+    padding-left: 16px;
+    left: 64px;
+    top: 64px;
+    flex-direction: column;
+
+    > .header {
+        label {
+            font-family: $alternate-font;
+            font-size: 32px;
+            color: $theme-color;
+        }
+        margin-bottom: 16px;
+    }
+
+    > .main {
+        padding-left: 16px;
+        flex-direction: column;
+
+        > .entry {
+            width: 100%;
+            height: 120px;
+            border-left: 2px solid $theme-color;
+
+            margin-bottom: 16px;
+
+            > .icon {
+                position: absolute;
+                height: 100%;
+                aspect-ratio: 2;
+                background-size: cover;
+            }
+
+            > .name {
+                position: absolute;
+                margin-left: 16px;
+                bottom: 2px;
+                font-family: $alternate-font;
+                font-size: 24px;
+                color: $theme-color;
+            }
+
+            > .attachments {
+                > .attachment {
+                    > .icon {
+                    }
+
+                    > .name {
+                    }
+                }
+            }
+        }
+    }
+}

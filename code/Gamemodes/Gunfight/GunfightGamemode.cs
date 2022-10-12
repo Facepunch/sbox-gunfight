@@ -10,9 +10,7 @@ public partial class GunfightGamemode : GamemodeEntity
 	[Net] public TimeSince TimeSinceStateChanged { get; protected set; }
 	[Net] public TimeUntil TimeUntilNextState { get; protected set; }
 	[Net] public Team WinningTeam { get; protected set; }
-
-	public Loadout CurrentLoadout { get; set; }
-
+	[Net] public Loadout CurrentLoadout { get; set; }
 	[Net] public CapturePointEntity ActiveFlag { get; set; }
 
 	public TimeSpan TimeRemaining => TimeSpan.FromSeconds( TimeUntilNextState );
@@ -186,6 +184,8 @@ public partial class GunfightGamemode : GamemodeEntity
 			TimeUntilNextState = RoundCountdownLength;
 			RandomizeLoadout();
 			RespawnAllPlayers();
+
+			LoadoutPanel.RpcShow( To.Everyone );
 		}
 		else if ( after == GameState.RoundActive )
 			TimeUntilNextState = RoundLength;

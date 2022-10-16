@@ -5,15 +5,15 @@ public partial class GamemodeSystem
 	[ConVar.Server( "gunfight_gamemode" )]
 	public static string SelectedGamemode { get; set; } = "";
 
-	private static GamemodeEntity current;
-	public static GamemodeEntity Current
+	private static Gamemode current;
+	public static Gamemode Current
 	{
 		get
 		{
 			if ( Host.IsServer ) return current;
 
 			if ( !current.IsValid() )
-				current = Entity.All.FirstOrDefault( x => x is GamemodeEntity ) as GamemodeEntity;
+				current = Entity.All.FirstOrDefault( x => x is Gamemode ) as Gamemode;
 
 			return current;
 		}
@@ -23,15 +23,15 @@ public partial class GamemodeSystem
 		}
 	}
 
-	protected static GamemodeEntity FetchGamemodeEntity()
+	protected static Gamemode FetchGamemodeEntity()
 	{
 		// First, see if the map has a gamemode we want to use already
-		var gamemode = Entity.All.FirstOrDefault( x => x is GamemodeEntity ) as GamemodeEntity;
+		var gamemode = Entity.All.FirstOrDefault( x => x is Gamemode ) as Gamemode;
 
 		// If not, use game preferences to create one.
 		if ( !gamemode.IsValid() && !string.IsNullOrEmpty( SelectedGamemode ) )
 		{
-			var gamemodeEntity = TypeLibrary.Create<GamemodeEntity>( SelectedGamemode );
+			var gamemodeEntity = TypeLibrary.Create<Gamemode>( SelectedGamemode );
 			if ( gamemodeEntity.IsValid() )
 			{
 				Log.Info( $"Found gamemode from TypeLibrary - {SelectedGamemode}" );

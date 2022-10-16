@@ -2,7 +2,7 @@ using Sandbox.UI;
 
 namespace Facepunch.Gunfight;
 
-public abstract partial class GamemodeEntity : Entity
+public abstract partial class Gamemode : Entity
 {
 	/// <summary>
 	/// A quick accessor to get how many people are in the game
@@ -21,6 +21,11 @@ public abstract partial class GamemodeEntity : Entity
 	/// <param name="cl"></param>
 	/// <returns></returns>
 	public virtual GunfightPlayer GetPawn( Client cl ) => new GunfightPlayer();
+
+	/// <summary>
+	/// Lets gamemodes define what teams are available in a gamemode
+	/// </summary>
+	public virtual List<Team> TeamSetup => new() { Team.Unassigned };
 
 	public virtual void CreatePawn( Client cl )
 	{

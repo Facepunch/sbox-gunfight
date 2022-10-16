@@ -2,7 +2,7 @@
 {
 	data = 
 	{
-		LoadoutName = "AKM"
+		LoadoutName = "MP5 Loadout w/ Laser"
 		Tags = 
 		[
 			"gunfight",
@@ -10,15 +10,19 @@
 		PrimaryWeapon = 
 		{
 			IsSet = true
-			Definition = resource:"resources/weapons/akm.wpn"
-			Attachments = [  ]
+			WeaponName = "mp5"
+			Attachments = 
+			[
+				"laser",
+			]
 		}
 		SecondaryWeapon = 
 		{
+			WeaponName = ""
 		}
 		Ammo = 
 		{
-			Rifle = 60
+			SMG = 60
 		}
 	}
 }

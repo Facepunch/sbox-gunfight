@@ -2,9 +2,10 @@ namespace Facepunch.Gunfight;
 
 public struct LoadoutSlot
 {
-	[HideInEditor] public bool IsSet => Definition != null;
+	[HideInEditor] public bool IsSet => !string.IsNullOrEmpty( WeaponName );
+	[HideInEditor] public WeaponDefinition Definition => WeaponDefinition.Find( WeaponName );
 
-	public WeaponDefinition Definition { get; set; }
+	public string WeaponName { get; set; }
 	public List<string> Attachments { get; set; }
 }
 

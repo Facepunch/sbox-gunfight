@@ -1,6 +1,6 @@
 namespace Facepunch.Gunfight;
 
-[Library( "laser" )]
+[Library( "laser"), Title( "Laser Sight" )]
 public partial class LaserSightAttachment : BarrelAddonAttachment
 {
 	public override Model AttachmentModel => Model.Load( "models/attachments/laser/laser_sight.vmdl" );

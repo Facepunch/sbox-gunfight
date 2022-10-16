@@ -2,7 +2,6 @@
 
 LoadoutPanel {
     position: absolute;
-    width: 30%;
     border-left: 2px solid $theme-color;
     padding-left: 16px;
     left: 64px;
@@ -15,6 +14,7 @@ LoadoutPanel {
             font-size: 32px;
             color: $theme-color;
         }
+
         margin-bottom: 16px;
     }
 
@@ -23,15 +23,20 @@ LoadoutPanel {
         flex-direction: column;
 
         > .entry {
-            width: 100%;
+            width: 250px;
             height: 120px;
             border-left: 2px solid $theme-color;
-
             margin-bottom: 16px;
+
+            background-image: linear-gradient( to left, rgba( black, 0 ), rgba( black, 0.5 ));
+
+            &.has-attachments {
+                height: 150px;
+            }
 
             > .icon {
                 position: absolute;
-                height: 100%;
+                height: 120px;
                 aspect-ratio: 2;
                 background-size: cover;
             }
@@ -39,18 +44,33 @@ LoadoutPanel {
             > .name {
                 position: absolute;
                 margin-left: 16px;
-                bottom: 2px;
+                top: 80px;
                 font-family: $alternate-font;
                 font-size: 24px;
                 color: $theme-color;
             }
 
             > .attachments {
-                > .attachment {
-                    > .icon {
-                    }
+                position: absolute;
+                width: 100%;
+                bottom: 2px;
+                margin-left: 16px;
 
+                > .title {
+                    font-family: material icons;
+                    font-size: 24px;
+                    align-items: center;
+                    color: $theme-color;
+                    margin-right: 8px;
+                }
+
+                > .attachment {
                     > .name {
+                        align-items: center;
+                        font-family: $alternate-font;
+                        font-size: 20px;
+                        color: $theme-color;
+                        margin-right: 8px;
                     }
                 }
             }

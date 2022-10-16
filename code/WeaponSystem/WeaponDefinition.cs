@@ -52,6 +52,8 @@ public partial class WeaponDefinition : GameResource
 
 	public static WeaponDefinition Find( string search )
 	{
+		if ( string.IsNullOrEmpty( search ) ) return null;
+
 		if ( Index.TryGetValue( search, out var weaponDef ) )
 			return weaponDef;
 

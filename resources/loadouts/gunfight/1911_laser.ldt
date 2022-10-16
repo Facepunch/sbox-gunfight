@@ -2,24 +2,29 @@
 {
 	data = 
 	{
-		LoadoutName = "Crazy Cowboy"
+		LoadoutName = "M1911 w/ Laser"
 		Tags = 
 		[
 			"gunfight",
 		]
 		PrimaryWeapon = 
 		{
+			IsSet = true
+			WeaponName = "famas"
 			Attachments = [  ]
 		}
 		SecondaryWeapon = 
 		{
 			IsSet = true
-			Definition = resource:"resources/weapons/revolver.wpn"
-			Attachments = [  ]
+			WeaponName = "1911"
+			Attachments = 
+			[
+				"laser",
+			]
 		}
 		Ammo = 
 		{
-			Pistol = 12
+			Pistol = 21
 		}
 	}
 }

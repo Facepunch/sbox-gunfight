@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Facepunch.Gunfight;
 
 [Display( Name = "Gunfight Gamemode" )]
-public partial class GunfightGamemode : GamemodeEntity
+public partial class GunfightGamemode : Gamemode
 {
 	[Net] public GameState State { get; protected set; }
 	[Net] public TimeSince TimeSinceStateChanged { get; protected set; }
@@ -17,6 +17,8 @@ public partial class GunfightGamemode : GamemodeEntity
 	public string FormattedTimeRemaining => TimeRemaining.ToString( @"mm\:ss" );
 
 	protected string CachedTimeRemaining { get; set; }
+
+	public override List<Team> TeamSetup => new() { Team.BLUFOR, Team.OPFOR };
 
 	// Stats
 	protected int MinimumPlayers => 4;

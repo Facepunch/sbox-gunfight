@@ -39,8 +39,15 @@ public class Scoreboard : Panel
 
 		if ( !IsLoaded )
 		{
-			AddTeamHeader( Team.BLUFOR );
-			AddTeamHeader( Team.OPFOR );
+			if ( !GamemodeSystem.Current.IsValid() )
+			{
+				AddTeamHeader( Team.Unassigned );
+			}
+			else
+			{
+				GamemodeSystem.Current.TeamSetup.ForEach( AddTeamHeader );
+			}
+
 			IsLoaded = true;
 		}
 

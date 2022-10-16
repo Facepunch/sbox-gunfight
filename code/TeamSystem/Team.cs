@@ -140,7 +140,7 @@ public static class TeamSystem
 				return "Bialystok Marines";
 		}
 
-		return "N/A";
+		return "Unassigned";
 	}
 
 	public static Team GetTeam( Client cl )

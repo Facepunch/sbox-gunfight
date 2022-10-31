@@ -1,0 +1,59 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.UI.Construct;
+
+@namespace Facepunch.Gunfight.UI
+
+<root class="chat-entry @PlayerClasses() @MessageClasses()">
+	@if ( PlayerId != 0 )
+	{
+		<div class="avatar">
+			<img class="image" src="avatar:@PlayerId"/>
+		</div>
+	}
+
+	@if ( IsChatMessage )
+	{
+		<div class="header">
+			<label class="name">@Name</label>
+		</div>
+	}
+    
+	<div class="main">
+		@if ( !IsChatMessage )
+		{
+			<label class="name">@Name</label>
+		}
+		<label class="message">@Message</label>
+	</div>
+</root>
+
+@code
+{
+	public string Name { get; set; }
+	public string Message { get; set; }
+	public long PlayerId { get; set; }
+	public bool IsChatMessage { get; set; }
+
+	protected TimeSince Lifetime = 0;
+
+	public string PlayerClasses()
+	{
+		if ( Local.PlayerId != PlayerId ) return "not-me";
+		return "";
+	}
+
+	public string MessageClasses()
+	{
+		if ( !IsChatMessage ) return "not-message";
+		return "";
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+
+		if ( Lifetime > 10f && !IsDeleting )
+			Delete();
+	}
+}

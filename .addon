@@ -3,6 +3,7 @@
   "Type": "game",
   "Org": "facepunch",
   "Ident": "gunfight",
+  "Tags": "",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
@@ -119,6 +120,7 @@
         "DisplayName": "Gamemode",
         "DefaultValue": ""
       }
-    }
+    },
+    "ParentPackage": ""
   }
 }

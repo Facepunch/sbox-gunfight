@@ -45,6 +45,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		SupressPickupNotices = false;
 
+		Transmit = TransmitType.Always;
 		MaxHealth = 100;
 		Health = 100;
 		Armour = 0;

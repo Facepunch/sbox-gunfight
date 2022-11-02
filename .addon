@@ -9,7 +9,8 @@
   "AssetsPath": "",
   "ResourcePaths": [
     "/ui/*",
-    "/fonts/*"
+    "/fonts/*",
+    "/models/*"
   ],
   "HasCode": true,
   "CodePath": "/code/",
@@ -20,6 +21,7 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Unrestricted",
     "MapList": [
+      "facepunch.prison",
       "baks.training_arena"
     ],
     "RankType": "None",

@@ -9,13 +9,11 @@
 		]
 		PrimaryWeapon = 
 		{
-			IsSet = true
-			WeaponName = "famas"
+			WeaponName = ""
 			Attachments = [  ]
 		}
 		SecondaryWeapon = 
 		{
-			IsSet = true
 			WeaponName = "1911"
 			Attachments = 
 			[

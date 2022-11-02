@@ -2,19 +2,15 @@
 {
 	data = 
 	{
-		LoadoutName = "MP5 Loadout w/ Laser"
+		LoadoutName = "Revolver"
 		Tags = 
 		[
 			"gunfight",
 		]
 		PrimaryWeapon = 
 		{
-			IsSet = true
-			WeaponName = "mp5"
-			Attachments = 
-			[
-				"laser",
-			]
+			WeaponName = "revolver"
+			Attachments = [  ]
 		}
 		SecondaryWeapon = 
 		{
@@ -22,7 +18,7 @@
 		}
 		Ammo = 
 		{
-			SMG = 60
+			Pistol = 16
 		}
 	}
 }

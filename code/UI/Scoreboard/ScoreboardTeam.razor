@@ -35,7 +35,7 @@
     {
         if ( Canvas == null ) return;
 
-        foreach ( var client in Client.All.Except( Rows.Keys ) )
+        foreach ( var client in Client.All.Except( Rows.Keys ).Where( x => x.GetTeam() == Team ) )
         {
             var entry = AddClient( client );
             if ( entry == null ) continue;

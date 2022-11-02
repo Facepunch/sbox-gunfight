@@ -1,6 +1,6 @@
 ﻿using Sandbox.UI;
 
-namespace Facepunch.Gunfight;
+namespace Facepunch.Gunfight.UI;
 
 public class HudRootPanel : RootPanel
 {
@@ -20,7 +20,7 @@ public class HudRootPanel : RootPanel
 
 		AddChild<PickupFeed>();
 
-		AddChild<ChatBox>();
+		AddChild<Chatbox>();
 		AddChild<KillFeed>();
 		Scoreboard = AddChild<Scoreboard>();
 		AddChild<GunVoiceList>();

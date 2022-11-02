@@ -1,4 +1,5 @@
-﻿using Sandbox.UI;
+﻿using Facepunch.Gunfight.UI;
+using Sandbox.UI;
 
 namespace Facepunch.Gunfight;
 

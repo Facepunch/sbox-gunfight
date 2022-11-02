@@ -168,7 +168,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		}
 		else
 		{
-			BecomeRagdollOnClient( Velocity, LastDamage.Flags, LastDamage.Position, LastDamage.Force, GetHitboxBone( LastDamage.HitboxIndex ) );
+			BecomeRagdollOnClient( Velocity, LastDamage.Flags, LastDamage.Position, LastDamage.Force, LastDamage.BoneIndex );
 		}
 
 		ClearEffects();
@@ -318,7 +318,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		LastDamage = info;
 
 		// Headshot
-		var isHeadshot = GetHitboxGroup( info.HitboxIndex ) == 1;
+		var isHeadshot = info.Hitbox.HasTag( "head" );
 		if ( isHeadshot )
 		{
 			info.Damage *= 2.5f;

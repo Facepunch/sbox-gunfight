@@ -1,0 +1,60 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@attribute [StyleSheet( "/UI/Scoreboard/Scoreboard.scss" )]
+@namespace Facepunch.Gunfight.UI
+
+<root>
+</root>
+
+@code
+{
+    public Dictionary<Team, ScoreboardTeam> Teams = new();
+
+    bool IsLoaded = false;
+
+    public void AddTeam( Team team )
+    {
+        var teamPanel = AddChild<ScoreboardTeam>( "team" );
+        teamPanel.Team = team;
+
+        Teams.Add( team, teamPanel );
+    }
+
+    public override void Tick()
+    {
+        SetClass( "open", Input.Down( InputButton.Score ) );
+
+        if ( !IsVisible )
+            return;
+
+        if ( !IsLoaded )
+        {
+            if ( !GamemodeSystem.Current.IsValid() )
+            {
+                AddTeam( Team.Unassigned );
+            }
+            else
+            {
+                GamemodeSystem.Current.TeamSetup.ForEach( AddTeam );
+            }
+
+            IsLoaded = true;
+        }
+
+        Update();
+    }
+
+
+    TimeUntil TimeUntilNextUpdate = 0;
+    void Update()
+    {
+        if ( TimeUntilNextUpdate )
+        {
+            TimeUntilNextUpdate = 0.2f;
+
+            foreach( var team in Teams )
+                team.Value.Update();
+        }
+    }
+}

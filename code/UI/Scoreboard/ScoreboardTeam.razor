@@ -1,0 +1,65 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace Facepunch.Gunfight.UI
+
+<root>
+    <div class="header">
+        <label class="team-name">@TeamName</label>
+        <label class="team-score">@TeamScore</label>
+    </div>
+
+    <div class="names">
+        <label class="name">Name</label>
+        <label class="kills">Kills</label>
+        <label class="deaths">Deaths</label>
+        <label class="score">Score</label>
+        <label class="ping">Ping</label>
+    </div>
+
+    <div class="canvas" @ref=Canvas></div>
+</root>
+
+@code
+{
+    // Panel that all Rows will be placed in
+    public Panel Canvas;
+    public Team Team = Team.Unassigned;
+
+    public string TeamName => Team.GetName();
+    public string TeamScore => GunfightGame.Current.Scores.GetScore( Team ).ToString();
+
+    public Dictionary<Client, ScoreboardRow> Rows = new();
+
+    public void Update()
+    {
+        if ( Canvas == null ) return;
+
+        foreach ( var client in Client.All.Except( Rows.Keys ).Where( x => x.GetTeam() == Team ) )
+        {
+            var entry = AddClient( client );
+            if ( entry == null ) continue;
+
+            Rows[client] = entry;
+        }
+
+        foreach ( var client in Rows.Keys.Except( Client.All ) )
+        {
+            if ( Rows.TryGetValue( client, out var row ) )
+            {
+                row?.Delete();
+                Rows.Remove( client );
+            }
+        }
+    }
+
+    ScoreboardRow AddClient( Client cl )
+    {
+        var teamIndex = cl.Components.Get<TeamComponent>()?.Team ?? Team.Unassigned;
+
+		var p = Canvas.AddChild<ScoreboardRow>();
+		p.SetClient( cl );
+
+		return p;
+	}
+}

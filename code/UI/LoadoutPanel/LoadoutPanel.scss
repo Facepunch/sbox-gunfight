@@ -18,60 +18,58 @@ LoadoutPanel {
         margin-bottom: 16px;
     }
 
-    > .main {
-        padding-left: 16px;
-        flex-direction: column;
+    padding-left: 16px;
+    flex-direction: column;
 
-        > .entry {
-            width: 250px;
+    > .entry {
+        width: 250px;
+        height: 120px;
+        border-left: 2px solid $theme-color;
+        margin-bottom: 16px;
+        background-image: linear-gradient( to left, rgba( black, 0 ), rgba( black, 0.5 ));
+
+        &.has-attachments {
+            height: 155px;
+        }
+
+        > .icon {
+            position: absolute;
             height: 120px;
-            border-left: 2px solid $theme-color;
-            margin-bottom: 16px;
+            aspect-ratio: 2;
+            background-size: cover;
+        }
 
-            background-image: linear-gradient( to left, rgba( black, 0 ), rgba( black, 0.5 ));
+        > .name {
+            position: absolute;
+            margin-left: 16px;
+            top: 80px;
+            font-family: $alternate-font;
+            font-size: 24px;
+            color: $theme-color;
+        }
 
-            &.has-attachments {
-                height: 150px;
-            }
-
-            > .icon {
-                position: absolute;
-                height: 120px;
-                aspect-ratio: 2;
-                background-size: cover;
-            }
+        &.empty {
+            height: 50px;
 
             > .name {
-                position: absolute;
-                margin-left: 16px;
-                top: 80px;
-                font-family: $alternate-font;
-                font-size: 24px;
-                color: $theme-color;
+                top: 5px;
+                color: rgba( $theme-color, 0.8 );
             }
+        }
 
-            > .attachments {
-                position: absolute;
-                width: 100%;
-                bottom: 2px;
-                margin-left: 16px;
+        > .attachments {
+            position: absolute;
+            width: 100%;
+            bottom: 6px;
+            margin-left: 16px;
 
-                > .title {
-                    font-family: material icons;
-                    font-size: 24px;
+            > .attachment {
+                > .name {
                     align-items: center;
-                    color: $theme-color;
+                    font-family: $alternate-font;
+                    font-size: 20px;
+                    color: rgba( $theme-color, 0.9 );
                     margin-right: 8px;
-                }
-
-                > .attachment {
-                    > .name {
-                        align-items: center;
-                        font-family: $alternate-font;
-                        font-size: 20px;
-                        color: $theme-color;
-                        margin-right: 8px;
-                    }
                 }
             }
         }

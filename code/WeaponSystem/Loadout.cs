@@ -5,6 +5,9 @@ public struct LoadoutSlot
 	[HideInEditor] public bool IsSet => !string.IsNullOrEmpty( WeaponName );
 	[HideInEditor] public WeaponDefinition Definition => WeaponDefinition.Find( WeaponName );
 
+	public string NiceName => Definition.WeaponName;
+	public bool HasAttachments => Attachments != null && Attachments.Count > 0;
+
 	public string WeaponName { get; set; }
 	public List<string> Attachments { get; set; }
 }

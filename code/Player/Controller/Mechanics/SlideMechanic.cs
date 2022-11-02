@@ -67,7 +67,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 
 	public override void PreSimulate()
 	{
-		if ( !Input.Down( InputButton.Duck ) || !ShouldSlide() ) StopTry();
+		if ( !ShouldSlide() ) StopTry();
 	}
 
 	public override void Simulate()

@@ -176,4 +176,29 @@ ChatboxRow {
             }
         }
     }
+
+    &.friend {
+        .header {
+            background-color: rgba( $friendly, 0.3 );
+        }
+
+        &.not-message {
+            .main {
+                background-color: rgba( $friendly, 0.3 );
+            }
+        }
+    }
+
+    &.enemy {
+        .header {
+            background-color: rgba( $enemy, 0.3 );
+        }
+
+
+        &.not-message {
+            .main {
+                background-color: rgba( $enemy, 0.3 );
+            }
+        }
+    }
 }

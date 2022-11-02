@@ -187,7 +187,7 @@ public partial class GunfightGamemode : Gamemode
 			RandomizeLoadout();
 			RespawnAllPlayers();
 
-			LoadoutPanel.RpcShow( To.Everyone );
+			UI.LoadoutPanel.RpcShow( To.Everyone );
 		}
 		else if ( after == GameState.RoundActive )
 			TimeUntilNextState = RoundLength;

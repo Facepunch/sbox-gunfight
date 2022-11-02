@@ -2,18 +2,15 @@
 {
 	data = 
 	{
-		LoadoutName = "F1 FAMAS w/ Laser"
+		LoadoutName = "AKM"
 		Tags = 
 		[
 			"gunfight",
 		]
 		PrimaryWeapon = 
 		{
-			WeaponName = "famas"
-			Attachments = 
-			[
-				"laser",
-			]
+			WeaponName = "akm"
+			Attachments = [  ]
 		}
 		SecondaryWeapon = 
 		{

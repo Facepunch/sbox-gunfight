@@ -1,12 +1,13 @@
+using System.Text.Json.Serialization;
+
 namespace Facepunch.Gunfight;
 
 public struct LoadoutSlot
 {
-	[HideInEditor] public bool IsSet => !string.IsNullOrEmpty( WeaponName );
-	[HideInEditor] public WeaponDefinition Definition => WeaponDefinition.Find( WeaponName );
-
-	public string NiceName => Definition.WeaponName;
-	public bool HasAttachments => Attachments != null && Attachments.Count > 0;
+	[HideInEditor, JsonIgnore] public bool IsSet => !string.IsNullOrEmpty( WeaponName );
+	[HideInEditor, JsonIgnore] public WeaponDefinition Definition => WeaponDefinition.Find( WeaponName );
+	[HideInEditor, JsonIgnore] public string NiceName => Definition.WeaponName;
+	[HideInEditor, JsonIgnore] public bool HasAttachments => Attachments != null && Attachments.Count > 0;
 
 	public string WeaponName { get; set; }
 	public List<string> Attachments { get; set; }

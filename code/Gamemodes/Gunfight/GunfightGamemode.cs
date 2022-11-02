@@ -70,13 +70,23 @@ public partial class GunfightGamemode : Gamemode
 
 	protected void RandomizeLoadout()
 	{
-		var randomLoadout = GetRandomLoadout();
-		CurrentLoadout = randomLoadout;
+		var oldLoadout = CurrentLoadout;
+		
+		Loadout newLoadout = null;
+		while ( newLoadout == null )
+		{
+			var randomLoadout = GetRandomLoadout();
+			if ( randomLoadout == oldLoadout ) continue;
+
+			newLoadout = randomLoadout;
+		}
+
+		CurrentLoadout = newLoadout;
 	}
 
 	public override bool PlayerLoadout( GunfightPlayer player )
 	{
-		GetRandomLoadout()?.Give( player );
+		CurrentLoadout?.Give( player );
 		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
 		return true;

@@ -1,0 +1,32 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace Facepunch.Gunfight.UI
+
+<root>
+    @if ( Client.IsValid() )
+    {
+        <label class="name">@Client.Name</label>
+        <label class="kills">@Client.GetValue( "frags", 0 )</label>
+        <label class="deaths">@Client.GetValue( "deaths", 0 )</label>
+        <label class="score">@Client.GetValue( "score", 0 )</label>
+        <label class="ping">@Client.Ping</label>
+    }
+    else
+    {
+        <label class="loading">...</label>SetClass( "me", Client == Local.Client );
+    }
+</root>
+
+@code
+{
+    Client Client { get; set; }
+
+    public void SetClient( Client cl )
+    {
+        Client = cl;
+        SetClass( "me", cl == Local.Client );
+
+        StateHasChanged();
+    }
+}

@@ -1,6 +1,6 @@
 @import "/Resource/Styles/hud.scss";
 
-.scoreboard {
+Scoreboard {
     align-items: flex-start;
     background-color: rgba(#000,0.8);
     font-family: $main-font-bold;
@@ -20,7 +20,7 @@
         opacity: 1;
     }
 
-    .team {
+    ScoreboardTeam {
         top: 10%;
 
         &:first-child {
@@ -37,7 +37,7 @@
         min-width: 40%;
         margin-top: 30px;
 
-        .team-header {
+        .header {
             align-items: center;
             color: #fff;
             background-size: 100%;
@@ -81,7 +81,7 @@
             }
         }
 
-        .table-header {
+        .names {
             align-items: center;
             background-size: 100%;
             background-image: linear-gradient(to right, rgba( black, 0 ), black 10%, black 90%, rgba( black, 0 ) 100% );
@@ -100,7 +100,7 @@
             min-width: 30%;
             mix-blend-mode: lighten;
 
-            .entry {
+            ScoreboardRow {
                 align-items: center;
                 background-size: 100%;
                 margin-bottom: 2px;

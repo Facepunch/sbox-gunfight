@@ -4,7 +4,7 @@
 
 @namespace Facepunch.Gunfight.UI
 
-<root class="chat-entry @PlayerClasses() @MessageClasses()">
+<root class="chat-entry @PlayerClasses() @MessageClasses() @HeaderClasses()">
 	@if ( PlayerId != 0 )
 	{
 		<div class="avatar">
@@ -46,6 +46,20 @@
 	public string MessageClasses()
 	{
 		if ( !IsChatMessage ) return "not-message";
+		return "";
+	}
+
+	public string HeaderClasses()
+	{
+		var cl = Client.All.FirstOrDefault( x => x.PlayerId == PlayerId );
+		if ( cl == null ) return "disconnected";
+
+		var friendState = TeamSystem.GetFriendState( cl.GetTeam(), TeamSystem.MyTeam );
+
+		if ( friendState == TeamSystem.FriendlyStatus.Friendly ) return "friend";
+		if ( friendState == TeamSystem.FriendlyStatus.Hostile ) return "enemy";
+		if ( friendState == TeamSystem.FriendlyStatus.Neutral ) return "neutral";
+
 		return "";
 	}
 

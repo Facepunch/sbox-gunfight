@@ -43,8 +43,8 @@ public partial class GunfightGamemode : Gamemode
 		var teamComponent = cl.Components.GetOrCreate<TeamComponent>();
 		teamComponent.Team = TeamSystem.GetLowestCount();
 
-		ChatBox.AddInformation( ToExtensions.Team( teamComponent.Team ), $"{cl.Name} joined {teamComponent.Team.GetName()}" );
-
+		UI.Chatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, null, false );
+		
 		VerifyEnoughPlayers();
 	}
 

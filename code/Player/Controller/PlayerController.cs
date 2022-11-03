@@ -4,7 +4,8 @@ namespace Facepunch.Gunfight;
 [Library]
 public partial class PlayerController : BasePlayerController
 {
-	[Net] public float SprintSpeed { get; set; } = 300.0f;
+	[Net] public float SprintSpeed { get; set; } = 280.0f;
+	[Net] public float BurstSprintSpeed { get; set; } = 350.0f;
 	[Net] public float WalkSpeed { get; set; } = 185.0f;
 	[Net] public float DefaultSpeed { get; set; } = 185.0f;
 	[Net] public float Acceleration { get; set; } = 8.0f;
@@ -113,6 +114,10 @@ public partial class PlayerController : BasePlayerController
 		return CurrentMechanic?.GetGroundFriction() ?? 8f;
 	}
 
+	[Net, Predicted] public TimeSince SinceBurstActivated { get; set; } = -5;
+	[Net, Predicted] public TimeSince SinceBurstEnded { get; set; } = -5;
+	public float BurstStaminaDuration => 2f;
+
 	public override void Simulate()
 	{
 		EyeLocalPosition = Vector3.Up * (GetEyeHeight() * Pawn.Scale);
@@ -133,7 +138,39 @@ public partial class PlayerController : BasePlayerController
 		CheckLadder();
 		Swimming = Pawn.WaterLevel > 0.6f;
 
-		IsSprinting = Input.Down( InputButton.Run ) && Velocity.Length > 0 && Input.Forward > 0f;
+		if ( IsSprinting && Input.Pressed( InputButton.Run ) && SinceBurstEnded > 5f )
+		{
+			if ( Input.Forward > 0.5f )
+			{
+				IsBurstSprinting = !IsBurstSprinting;
+
+				if ( IsBurstSprinting )
+					SinceBurstActivated = 0;
+			}
+		}
+
+		if ( IsBurstSprinting && SinceBurstActivated > BurstStaminaDuration )
+		{
+			IsBurstSprinting = false;
+			SinceBurstEnded = 0;
+		}
+
+		if ( Input.Pressed( InputButton.Run ) )
+		{
+			if ( !IsSprinting )
+				IsSprinting = true;
+			else if ( IsSprinting && Input.Forward < 0.5f )
+				IsSprinting = false;
+		}
+
+		if ( !IsBurstSprinting && IsSprinting && Velocity.Length < 40 || Input.Forward < 0.5f )
+			IsSprinting = false;
+
+		if ( Input.Down( InputButton.PrimaryAttack ) || Input.Down( InputButton.SecondaryAttack) )
+			IsSprinting = false;
+
+		if ( !IsSprinting )
+			IsBurstSprinting = false;
 
 		//
 		// Start Gravity
@@ -320,16 +357,20 @@ public partial class PlayerController : BasePlayerController
 		new ScreenShake.Pitch( 1f, 7f * velocityLength );
 	}
 
-	public virtual bool WishSprinting => Input.Down( InputButton.Run ) && Input.Forward >= 0f;
-
 	[Net, Predicted]
-	public bool IsSprinting { get; set; }
+	protected bool _IsSprinting { get; set; }
+
+	public bool IsSprinting { get => _IsSprinting; protected set { if ( _IsSprinting && !value ) SinceSprintStopped = 0; _IsSprinting = value; } }
+	
+	[Net, Predicted] public TimeSince SinceSprintStopped { get; set; }
+	[Net, Predicted] public bool IsBurstSprinting { get; protected set; }
 
 	public virtual float GetWishSpeed()
 	{
 		var mechanicSpeed = CurrentMechanic?.GetWishSpeed();
 		if ( mechanicSpeed != null ) return mechanicSpeed.Value;
 
+		if ( IsBurstSprinting ) return BurstSprintSpeed;
 		if ( IsSprinting ) return SprintSpeed;
 		if ( Input.Down( InputButton.Walk ) ) return WalkSpeed;
 

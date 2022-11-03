@@ -284,10 +284,10 @@ public partial class GunfightPlayer : Player, IHudMarker
 	{
 		base.PostCameraSetup( ref setup );
 
-		//if ( setup.Viewer != null )
-		//{
-		//	AddCameraEffects( ref setup );
-		//}
+		if ( setup.Viewer != null )
+		{
+			AddCameraEffects( ref setup );
+		}
 	}
 
 	float walkBob = 0;
@@ -304,6 +304,16 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		setup.Position += up * MathF.Sin( walkBob ) * speed * 2;
 		setup.Position += left * MathF.Sin( walkBob ) * speed * -1f;
+
+		GunfightGame.AddedCameraFOV = 0f;
+		var ctrl = Controller as PlayerController;
+		if ( ctrl != null )
+		{
+			if ( ctrl.IsBurstSprinting )
+			{
+				GunfightGame.AddedCameraFOV = 10f;
+			}
+		}
 	}
 
 	DamageInfo LastDamage;

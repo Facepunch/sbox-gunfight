@@ -1,0 +1,140 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@inherits Panel;
+@namespace Facepunch.Gunfight.UI
+
+<style>
+    GameStatus {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-content: center;
+        font-family: Oxanium;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        padding-top: 4px;
+        padding-bottom: 4px;
+
+        > .head-gradient {
+            position: absolute;
+            width: 225px;
+            height: 59px;
+            background-image: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 53.13%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        > .head {
+            height: 3px;
+            margin-bottom: 4px;
+            background-image: linear-gradient( 270deg, rgba(255, 207, 38, 0) 0%, #FFCF26 49.48%, rgba(255, 207, 38, 0) 100% );
+        }
+
+        > .location {
+            margin-right: 2px;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            text-align: center;
+            font-size: 30px;
+            padding: 0;
+            color: #FFCF28;
+        }
+
+        > .timer {
+            padding-top: 2px;
+            padding-bottom: 0px;
+            background-color: #FFCF28; 
+            font-size: 28px;
+            color: black;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+        }
+
+        > .scores {
+            margin-top: 4px;
+            height: 25px;
+            flex-direction: row;
+
+            > .left {
+                flex-direction: row;
+
+                .box {
+                    margin-right: 2px;
+                }
+            }
+
+            > .grow {
+                flex-grow: 1;
+            }
+
+            > .right {
+                flex-direction: row-reverse;
+
+                .box {
+                    margin-left: 2px;
+                }
+            }
+
+            .box {
+                aspect-ratio: 1;
+                height: 100%;
+                background-color: rgba(40, 38, 38, 0.5);
+                border: 2px solid rgba(0, 0, 0, 0.3);
+
+                &.friendly {
+                    background-color: #1AE7F4;
+                    border: 2px solid #0FB7C1;
+                    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+                }
+
+                &.enemy {
+                    background-color: #F53F16;
+                    border: 2px solid #C12B09;
+                    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+                }
+            }
+        }
+    }
+</style>
+
+<root>
+    <div class="head-gradient"/>
+    <div class="head"/>
+    <text class="location">@PlayerLocation</text>
+    <text class="timer">@TimeLeft</text>
+
+    <div class="scores">
+        <div class="left">
+            @for( int i = 0; i < BoxAmount; i++ )
+            {
+                <div class="box @(FriendlyScore > i ? "friendly" : "")"/>
+            }
+        </div>
+        
+        <div class="grow"/>
+
+        <div class="right">
+            @for( int i = 0; i < BoxAmount; i++ )
+            {
+                <div class="box @(EnemyScore > i ? "enemy" : "")"/>
+            }
+        </div>
+    </div>
+</root>
+
+@code
+{
+    public string PlayerLocation => Local.Client.GetLocation();
+    public string TimeLeft => (GamemodeSystem.Current as GunfightGamemode)?.GetTimeLeftLabel() ?? "00:00";
+
+	protected int BoxAmount => GunfightGame.Current.Scores.MaximumScore;
+    public int FriendlyScore => GunfightGame.Current.Scores.GetScore( TeamSystem.MyTeam );
+    public int EnemyScore => GunfightGame.Current.Scores.GetScore( TeamSystem.MyTeam.GetOpponent() );
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( PlayerLocation, FriendlyScore, EnemyScore, TimeLeft );
+    }
+}

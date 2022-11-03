@@ -39,6 +39,12 @@ public static class TeamExtensions
 		return TeamSystem.GetTeam( cl );
 	}
 
+	public static string GetLocation( this Client cl )
+	{
+		var pawn = cl.Pawn as GunfightPlayer;
+		return pawn?.PlayerLocation ?? "UNKNOWN";
+	}
+
 	public static string GetName( this Team team )
 	{
 		return TeamSystem.GetTeamName( team );

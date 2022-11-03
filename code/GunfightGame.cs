@@ -131,9 +131,15 @@ partial class GunfightGame : Game
 		return distance;
 	}
 
+	protected float FovOffset { get; set; } = 0f;
+	public static float AddedCameraFOV { get; set; } = 0f;
+
 	public override void PostCameraSetup( ref CameraSetup camSetup )
 	{
 		base.PostCameraSetup( ref camSetup );
+
+		FovOffset = FovOffset.LerpTo( AddedCameraFOV, Time.Delta * 10f, true );
+		camSetup.FieldOfView += FovOffset;
 
 		CameraModifier.Apply( ref camSetup );
 

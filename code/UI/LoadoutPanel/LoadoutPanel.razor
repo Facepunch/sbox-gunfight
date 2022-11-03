@@ -38,7 +38,7 @@
     else
     {
         <div class="entry empty">
-            <label class="name">No primary weapon</label>
+            <label class="name">No primary</label>
         </div>
     }
 
@@ -67,7 +67,7 @@
     else
     {
         <div class="entry empty">
-            <label class="name">No secondary weapon</label>
+            <label class="name">No secondary</label>
         </div>
     }
 </root>
@@ -85,7 +85,7 @@
 
     async Task DeleteSoon()
     {
-        await GameTask.DelaySeconds( 10 );
+        await GameTask.DelaySeconds( 60 );
         Delete();
     }
 }

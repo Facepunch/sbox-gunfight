@@ -2,34 +2,35 @@
 
 LoadoutPanel {
     position: absolute;
-    border-left: 2px solid $theme-color;
-    padding-left: 16px;
-    left: 64px;
+    right: 64px;
     top: 64px;
     flex-direction: column;
 
     > .header {
         label {
-            font-family: $alternate-font;
-            font-size: 32px;
-            color: $theme-color;
+            font-family: Oxanium;
+            font-weight: 600;
+            font-size: 24px;
+            color: $main-color;
+            text-transform: uppercase;
         }
 
-        margin-bottom: 16px;
+        margin-bottom: 6px;
     }
 
     padding-left: 16px;
     flex-direction: column;
 
     > .entry {
-        width: 250px;
+        width: 320px;
         height: 120px;
-        border-left: 2px solid $theme-color;
         margin-bottom: 16px;
-        background-image: linear-gradient( to left, rgba( black, 0 ), rgba( black, 0.5 ));
+        background-color: rgba(40, 38, 38, 0.5);
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        border-right: 2px solid $main-color;
 
         &.has-attachments {
-            height: 155px;
+            height: 148px;
         }
 
         > .icon {
@@ -37,22 +38,25 @@ LoadoutPanel {
             height: 120px;
             aspect-ratio: 2;
             background-size: cover;
+            right: 32px;
         }
 
         > .name {
             position: absolute;
-            margin-left: 16px;
+            margin-left: 8px;
             top: 80px;
-            font-family: $alternate-font;
+            font-family: Oxanium;
+            font-weight: 600;
             font-size: 24px;
-            color: $theme-color;
+            color: $main-color;
+            text-transform: uppercase;
         }
 
         &.empty {
             height: 50px;
 
             > .name {
-                top: 5px;
+                top: 9px;
                 color: rgba( $theme-color, 0.8 );
             }
         }
@@ -61,13 +65,14 @@ LoadoutPanel {
             position: absolute;
             width: 100%;
             bottom: 6px;
-            margin-left: 16px;
+            margin-left: 8px;
 
             > .attachment {
                 > .name {
                     align-items: center;
-                    font-family: $alternate-font;
-                    font-size: 20px;
+                    font-family: Oxanium;
+                    font-weight: 600;
+                    font-size: 16px;
                     color: rgba( $theme-color, 0.9 );
                     margin-right: 8px;
                 }

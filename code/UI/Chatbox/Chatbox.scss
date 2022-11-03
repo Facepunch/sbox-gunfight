@@ -22,13 +22,37 @@ Chatbox {
         opacity: 0;
         color: white;
         padding: 15px;
-        background-color: rgba( black, 0.1 );
+        background-color: rgba(40, 38, 38, 0.5);
         font-size: 18px;
-        width: 70%;
+        width: 50%;
+        border: 2px solid rgba(0, 0, 0, 0.3);
+
+        > .send {
+            right: 0;
+            position: absolute;
+            background-color: rgba(40, 38, 38, 0.5);
+            height: 51px;
+            aspect-ratio: 1;
+            border-left: 2px solid rgba(0, 0, 0, 0.1);
+            
+            label {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                font-family: Material Icons;
+                font-size: 28px;
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                color: $main-color;
+            }
+
+        }
     }
 
     .placeholder {
-        color: white;
+        color: rgba(255, 255, 255, 0.5);
     }
 
     .canvas {
@@ -44,7 +68,7 @@ Chatbox {
 
         textentry {
             opacity: 1;
-            width: 120%;
+            width: 100%;
             cursor: text;
         }
 
@@ -64,7 +88,9 @@ ChatboxRow {
     flex-grow: 0;
     max-width: 150%;
     transform: scale( 1 );
-    flex-direction: column;
+    flex-direction: row;
+
+    background-image: linear-gradient( to right, rgba( black, 0.5 ), rgba( black, 0 ) );
 
     &:intro, &:outro {
         max-height: 0px;
@@ -76,60 +102,50 @@ ChatboxRow {
     }
 
     .avatar {
-        width: 52px;
-        height: 52px;
-        min-height: 32px;
-        border-radius: 100px;
+        aspect-ratio: 1;
+        height: 45px;
         border: 1px solid black;
         position: absolute;
-        left: 4px;
-        top: 50%;
-        transform: translateY(-50%);
         z-index: 100;
     }
 
-    .image {
-        border-radius: 100px;
-    }
-
     .header {
-        padding: 4px;
-        padding-right: 16px;
-        padding-left: 8px;
-        background-color: rgba( black, 0.7 );
         text-shadow: 0px 0px 1px rgba( black, 0.3 );
+        height: 100%;
     }
 
     .name {
-        margin-left: 56px;
-        padding-right: 12px;
+        margin-left: 46px;
         font-weight: 600;
         font-size: 20px;
         color: white;
         flex-shrink: 0;
+        text-shadow: 0px 0px 1px rgba( black, 0.8 );
+        top: 11px;
     }
 
     .main {
-        padding: 4px;
+        padding: 8px;
         padding-right: 16px;
         padding-left: 8px;
-        background-color: rgba( black, 0.2 );
+        padding-bottom: 11px;
     }
 
     .message {
-        margin-left: 56px;
         color: white;
-        font-size: 17px;
-        font-weight: bolder;
+        font-size: 20px;
+        font-family: $main-font-semibold;
+        font-weight: 600;
         flex-grow: 1;
+        text-shadow: 0px 0px 1px rgba( black, 0.5 );
+        top: 3px;
     }
 
-    &.noname .name {
-        display: none;
-    }
+    &.not-message {
+        .message {
+            color: $main-color;
 
-    &.noavatar image {
-        display: none;
+        }
     }
 
     &.is-lobby {
@@ -138,67 +154,23 @@ ChatboxRow {
         }
     }
 
-    &.custom {
+    &.friend {
         .name {
-            display: none;
-        }
-    }
-
-    &.not-message {
-        .main {
-            background-color: rgba( black, 0.7 );
-        }
-
-        .message {
-            margin-left: 0px;
-            color: rgba( white, 0.8 );
-            text-shadow: 0px 0px 1px rgba( black, 0.5 );
-        }
-
-        .name {
-            text-shadow: 0px 0px 1px rgba( black, 0.8 );
+            color: rgba( $friendly, 1 );
         }
 
         .avatar {
-            left: 0px;
-        }
-    }
-
-
-    &.not-me {
-        .header {
-            background-color: rgba( black, 0.5 );
-        }
-
-        &.not-message {
-            .main {
-                background-color: rgba( black, 0.5 );
-            }
-        }
-    }
-
-    &.friend {
-        .header {
-            background-color: rgba( $friendly, 0.3 );
-        }
-
-        &.not-message {
-            .main {
-                background-color: rgba( $friendly, 0.3 );
-            }
+            border: 2px solid rgba( $friendly, 0.8 );
         }
     }
 
     &.enemy {
-        .header {
-            background-color: rgba( $enemy, 0.3 );
+        .name {
+            color: rgba( $enemy, 1 );
         }
 
-
-        &.not-message {
-            .main {
-                background-color: rgba( $enemy, 0.3 );
-            }
+        .avatar {
+            border: 2px solid rgba( $enemy, 0.8 );
         }
     }
 }

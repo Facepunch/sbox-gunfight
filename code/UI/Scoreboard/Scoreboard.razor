@@ -1,20 +1,39 @@
 @using Sandbox;
 @using Sandbox.UI;
 
+@attribute [StyleSheet( "/UI/Scoreboard/GunfightScoreboard.scss" )]
 @namespace Facepunch.Gunfight.UI
 
 <root>
+    <div class="main">
+        <div class="title">
+            <text>Scoreboard</text>
+        </div>
+
+        <div class="names">
+            <label class="name">Name</label>
+            <label class="kills">Kills</label>
+            <label class="deaths">Deaths</label>
+            <label class="score">Score</label>
+            <label class="ping">Ping</label>
+        </div>
+
+        <div class="canvases" @ref=Canvases>
+        </div>
+    </div>
 </root>
 
 @code
 {
     public Dictionary<Team, ScoreboardTeam> Teams = new();
 
+    public Panel Canvases;
+
     bool IsLoaded = false;
 
     public void AddTeam( Team team )
     {
-        var teamPanel = AddChild<ScoreboardTeam>( "team" );
+        var teamPanel = Canvases.AddChild<ScoreboardTeam>( "team" );
         teamPanel.Team = team;
 
         Teams.Add( team, teamPanel );

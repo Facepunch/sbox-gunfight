@@ -16,7 +16,6 @@ $alternate-font-bold: Oxanium-Bold;
 @import "_damageindicator.scss";
 @import "_hitindicator.scss";
 @import "_inventory.scss";
-@import "_killfeed.scss";
 @import "_pickupfeed.scss";
 
 HudRootPanel
@@ -86,7 +85,7 @@ vitals {
 
 .bottom-left, .bottom-right {
     position: absolute;
-    bottom: 64px;
+    bottom: 80px;
 }
 
 .bottom-right {
@@ -213,28 +212,27 @@ vitals {
 Grenades {
     transition: all 0.2s ease-out;
     opacity: 1;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     margin-left: 16px;
-    top: 15px;
 
     > .icon {
         position: absolute;
         height: 100%;
         aspect-ratio: 1;
-        opacity: 0.5;
-        background-image-tint: $theme-color;
+        opacity: 1;
+        background-image-tint: white;
     }
 
     .inventory {
         position: absolute;
-        height: 85%;
-        right: 0px;
+        height: 66%;
+        right: -5px;
         bottom: 0px;
-        font-family: $alternate-font-bold;
+        font-family: Oxanium;
+        font-weight: 400;
         font-size: 24px;
-        color: $theme-color;
-        opacity: .5;
+        color: rgba(255, 255, 255, 0.54);
     }
 }
 
@@ -260,7 +258,7 @@ Location {
 }
 
 Ammo {
-    border-right: 2px solid rgba( $theme-color, 0.5 );
+    border-right: 3px solid rgba( $main-color, 1 );
     padding-right: 30px;
 
     .info {
@@ -276,15 +274,19 @@ Ammo {
         .inventory {
             padding-right: 2px;
             width: 100%;
+            font-family: Oxanium;
+            font-weight: 400;
             font-size: 20px;
-            color: grey;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.54);
         }
 
         .currentammo {
             width: 100%;
             font-family: $main-font-bold;
             font-size: 50px;
-            color: $theme-color;
+            color: white;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
             height: 55px;
         }
     }

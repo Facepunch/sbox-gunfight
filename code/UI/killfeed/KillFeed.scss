@@ -3,20 +3,19 @@
 killfeed
 {
 	position: absolute;
-	top: 100px;
-	right: 100px;
+	top: 170px;
+	left: 64px;
 	z-index: 100;
 	flex-direction: column-reverse;
 	width: 500px;
 	font-family: Poppins;
 	font-size: 15px;
 	font-weight: 500;
-	align-items: flex-end;
+	align-items: flex-start;
 }
 
 KillFeedEntry
 {
-	background-color: rgba( black, 0.8 );
 	margin-bottom: 5px;
 	color: white;
 	transition: all 0.2s ease-out;
@@ -24,8 +23,10 @@ KillFeedEntry
 	flex-shrink: 0;
 	flex-grow: 0;
 	padding: 12px;
-	height: 45px;
-	position: relative;
+	height: 60px;
+	font-size: 20px;
+	font-family: Oxanium;
+	font-weight: 500;
 
 	&:intro
 	{
@@ -82,7 +83,7 @@ KillFeedEntry
 	.message
 	{
 		color: #ccc;
-		font-size: 14px;
+		font-size: 20px;
 		//	background-color: red;
 		flex-grow: 1;
 	}

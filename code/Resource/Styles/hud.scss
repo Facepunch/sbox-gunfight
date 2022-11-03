@@ -4,12 +4,14 @@
 $theme-color: #D7D9D7;
 $friendly: cyan;
 $enemy: red;
+$main-color: #FFCF26;
 
-$main-font: Quantico-Regular;
-$main-font-bold: Quantico-Bold;
+$main-font: Oxanium-Regular;
+$main-font-semibold: Oxanium;
+$main-font-bold: Oxanium-Bold;
 
-$alternate-font: Oswald-Regular;
-$alternate-font-bold: Oswald-Bold;
+$alternate-font: Oxanium-Regular;
+$alternate-font-bold: Oxanium-Bold;
 
 @import "_damageindicator.scss";
 @import "_hitindicator.scss";

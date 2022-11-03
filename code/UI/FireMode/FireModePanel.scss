@@ -1,21 +1,26 @@
 @import "/Resource/Styles/hud.scss";
 
 FireModePanel {
-    top: 70px;
+    top: 90px;
+    left: 50px;
     position: absolute;
     align-items: center;
     align-content: center;
 
     > .active {
-        width: 40px;
-        height: 40px;
+        margin-right: 4px;
+        width: 35px;
+        height: 35px;
         justify-content: center;
         align-items: center;
         align-content: center;
-
+        
+        background-color: rgba(255, 207, 38, 0.5);
+        border: 2px solid #FFCF26;
+        
         image {
-            width: 35px;
-            height: 35px;
+            width: 25px;
+            height: 25px;
         }
     }
 
@@ -24,13 +29,19 @@ FireModePanel {
     }
 
     > .inactive {
+        margin-right: 4px;
+        width: 35px;
+        height: 35px;
         justify-content: center;
         align-items: center;
         align-content: center;
 
+        background-color: rgba(40, 38, 38, 0.5);
+        border: 2px solid rgba(0, 0, 0, 0.3);
+
         image {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             opacity: 0.1;
         }
     }

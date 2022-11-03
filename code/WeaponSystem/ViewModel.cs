@@ -32,8 +32,10 @@ public partial class ViewModel : BaseViewModel
 	Angles SlideAngleOffset => Setup.SlideAngleOffset;
 	Angles AvoidanceAngleOffset => Setup.AvoidanceAngleOffset;
 	Vector3 AvoidancePositionOffset => Setup.AvoidancePositionOffset;
-	Angles SprintAngleOffset => Setup.SprintAngleOffset;
-	Vector3 SprintPositionOffset => Setup.SprintPositionOffset;
+	Angles SprintAngleOffset => Setup.GetSprintAngleOffset( false );
+	Vector3 SprintPositionOffset => Setup.GetSprintPosOffset( false );
+	Vector3 BurstSprintPositionOffset => Setup.GetSprintPosOffset( true );
+	Angles BurstSprintAngleOffset => Setup.GetSprintAngleOffset( true );
 
 	// Utility
 	float DeltaTime => Time.Delta;
@@ -111,7 +113,7 @@ public partial class ViewModel : BaseViewModel
 						.Run();
 
 		var sprint = controller.IsSprinting;
-		var burstSprint = false;
+		var burstSprint = controller.IsBurstSprinting;
 		var aim = controller.IsAiming;
 		var crouched = controller?.Duck?.IsActive ?? false;
 		var sliding = controller?.Slide?.IsActive ?? false;
@@ -188,6 +190,10 @@ public partial class ViewModel : BaseViewModel
 			// Sprinting
 			rotationOffsetTarget *= Rotation.From( SprintAngleOffset * sprintLerp );
 			ApplyPositionOffset( SprintPositionOffset, sprintLerp, camSetup );
+
+			// Sprinting
+			rotationOffsetTarget *= Rotation.From( BurstSprintAngleOffset * burstSprintLerp );
+			ApplyPositionOffset( BurstSprintPositionOffset, burstSprintLerp, camSetup );
 
 			// Vertical Look
 			var lookDownDot = camSetup.Rotation.Forward.Dot( Vector3.Down );

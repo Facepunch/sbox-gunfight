@@ -32,8 +32,8 @@ public partial class ViewModel : BaseViewModel
 	Angles SlideAngleOffset => Setup.SlideAngleOffset;
 	Angles AvoidanceAngleOffset => Setup.AvoidanceAngleOffset;
 	Vector3 AvoidancePositionOffset => Setup.AvoidancePositionOffset;
-	Angles SprintAngleOffset => Setup.GetSprintAngleOffset( false );
-	Vector3 SprintPositionOffset => Setup.GetSprintPosOffset( false );
+	Angles SprintAngleOffset => Setup.SprintAngleOffset;
+	Vector3 SprintPositionOffset => Setup.SprintPositionOffset;
 	Vector3 BurstSprintPositionOffset => Setup.GetSprintPosOffset( true );
 	Angles BurstSprintAngleOffset => Setup.GetSprintAngleOffset( true );
 

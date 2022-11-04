@@ -281,6 +281,8 @@ partial class GunfightGame : Game
 		{
 			if ( pawn.LastAttacker.Client != null )
 			{
+				GunfightHud.ShowDeathInformation( To.Single( client ), pawn.LastAttacker.Client );
+				
 				var wep = pawn.LastAttackerWeapon as GunfightWeapon;
 				if ( wep != null )
 				{
@@ -300,6 +302,8 @@ partial class GunfightGame : Game
 		else
 		{
 			OnKilledMessage( 0, "", client.PlayerId, client.Name, "died" );
+
+			GunfightHud.ShowDeathInformation( To.Single( client ), client );
 		}
 	}
 

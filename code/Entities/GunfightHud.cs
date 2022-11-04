@@ -19,4 +19,18 @@ public partial class GunfightHud : HudEntity<HudRootPanel>
 		if ( CurrentHudPanel is not null )
 			CurrentHudPanel.Parent = this.RootPanel;
 	}
+
+	[ClientRpc]
+	public static void ShowDeathInformation( Client attacker )
+	{
+		var deathInfo = GunfightGame.Current.Hud.RootPanel.AddChild<DeathInformation>();
+		deathInfo.Attacker = attacker;
+
+		var delayedKill = async () => {
+			await GameTask.DelaySeconds( 3f );
+			deathInfo.Delete();
+		};
+
+		_ = delayedKill();
+	}
 }

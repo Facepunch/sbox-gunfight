@@ -7,6 +7,11 @@ FireModePanel {
     align-items: center;
     align-content: center;
 
+    opacity: 0;
+    &.active {
+        opacity: 1;
+    }
+
     > .active {
         margin-right: 4px;
         width: 35px;

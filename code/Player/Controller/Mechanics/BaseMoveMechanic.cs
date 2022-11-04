@@ -98,7 +98,7 @@ public partial class BaseMoveMechanic : BaseNetworkable
 		if ( !trace.Hit ) return null;
 
 		Vector3 tracePos;
-		var height = ApproximateWallHeight( Controller.Position, trace.Normal, 500f, 100f, 100, out tracePos, out float absoluteHeight );
+		var height = ApproximateWallHeight( Controller.Position, trace.Normal, 500f, 100f, 128, out tracePos, out float absoluteHeight );
 
 		return new WallInfo()
 		{
@@ -111,7 +111,7 @@ public partial class BaseMoveMechanic : BaseNetworkable
 		};
 	}
 
-	private static int MaxWallTraceIterations => 20;
+	private static int MaxWallTraceIterations => 40;
 	private static float ApproximateWallHeight( Vector3 startPos, Vector3 wallNormal, float maxHeight, float maxDist, int precision, out Vector3 tracePos, out float absoluteHeight )
 	{
 		tracePos = Vector3.Zero;

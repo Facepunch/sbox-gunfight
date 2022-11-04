@@ -18,7 +18,9 @@ public class Grenades : Panel
 	public override void Tick()
 	{
 		var player = GunfightCamera.Target;
-		if ( player == null ) return;
+		var weapon = player?.CurrentWeapon;
+		var inactive = !weapon.IsValid() || weapon.WeaponDefinition is null || player.LifeState != LifeState.Alive;
+		Style.Display = inactive ? DisplayMode.None : DisplayMode.Flex;
 
 		// TODO - Setup
 	}

@@ -53,8 +53,12 @@ public class FireModePanel : Panel
 
 		var player = GunfightCamera.Target;
 		var weapon = player?.CurrentWeapon;
-		if ( !weapon.IsValid() || weapon.WeaponDefinition is null )
-			return;
+		var inactive = !weapon.IsValid() || weapon.WeaponDefinition is null || player.LifeState != LifeState.Alive;
+
+		SetClass( "active", !inactive );
+
+		if ( inactive )
+			return;	
 
 		var hash = HashCode.Combine( player, weapon.WeaponDefinition );
 		if ( weaponHash != hash )

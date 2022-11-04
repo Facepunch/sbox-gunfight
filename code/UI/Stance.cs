@@ -18,8 +18,14 @@ public class Stance : Panel
 	public override void Tick()
 	{
 		var player = GunfightCamera.Target;
-		if ( player == null ) return;
-		if ( PlayerController == null ) return;
+		if ( player == null || PlayerController == null ) 
+		{
+			Style.Display = DisplayMode.None;
+			return;
+		}
+
+		Style.Display = DisplayMode.Flex;
+
 		if ( PlayerController.Duck.IsActive )
 		{
 			Icon.SetTexture( "ui/stance/duck.png" );

@@ -15,12 +15,12 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 	public bool CanActivate( bool assignValues = false )
 	{
-		var wall = GetWallInfo( Controller.Rotation.Forward );
+		var wall = GetWallInfo( Controller.WishVelocity.Normal );
 
 		if ( wall == null ) return false;
 		if ( wall.Height == 0 ) return false;
 		if ( wall.Distance > Controller.BodyGirth * 1 ) return false;
-		if ( Vector3.Dot( Controller.EyeRotation.Forward, wall.Normal ) > -.5f ) return false;
+		//if ( Vector3.Dot( Controller.WishVelocity.Normal, wall.Normal ) > -.f ) return false;
 
 		var posFwd = Controller.Position - wall.Normal * (Controller.BodyGirth + wall.Distance);
 		var floorTraceStart = posFwd.WithZ( wall.AbsoluteHeight );

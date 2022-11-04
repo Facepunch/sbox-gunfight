@@ -37,7 +37,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 		if ( assignValues )
 		{
 			timeSinceVault = 0;
-			vaultEnd = floorTrace.EndPosition.WithZ( floorTrace.EndPosition.z + 10f );
+			vaultEnd = floorTrace.EndPosition.WithZ( floorTrace.EndPosition.z + 6.3f );
 			Controller.Velocity = Controller.Velocity.WithZ( 0 );
 		}
 

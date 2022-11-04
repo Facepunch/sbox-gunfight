@@ -52,7 +52,7 @@
 
 @code
 {
-    public Client Attacker => Local.Client;
+    public Client Attacker { get; set; }
 
     protected override int BuildHash()
     {

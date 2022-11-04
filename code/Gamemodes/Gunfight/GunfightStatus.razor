@@ -97,9 +97,12 @@
 <root>
     <div class="info">
         <div class="bar">
-            <div class="bar-inner friendly" style="width:@FriendlyPercent%">
-                <text class="score friendly">@FriendlyHealth</text>
-            </div>
+            @if ( FriendlyPlayers.Count() > 0 )
+            {
+                <div class="bar-inner friendly" style="width:@FriendlyPercent%">
+                    <text class="score friendly">@FriendlyHealth</text>
+                </div>
+            }
         </div>
         <div class="members">
             @foreach( var member in FriendlyPlayers )
@@ -113,9 +116,12 @@
 
     <div class="info">
         <div class="bar">
-            <div class="bar-inner enemy" style="width:@EnemyPercent%">
-                <text class="score enemy">@EnemyHealth</text>
-            </div>
+            @if ( EnemyPlayers.Count() > 0 )
+            {
+                <div class="bar-inner enemy" style="width:@EnemyPercent%">
+                    <text class="score enemy">@EnemyHealth</text>
+                </div>
+            }
         </div>
         <div class="members">
             @foreach( var member in EnemyPlayers )

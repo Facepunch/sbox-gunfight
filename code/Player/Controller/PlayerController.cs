@@ -12,11 +12,11 @@ public partial class PlayerController : BasePlayerController
 	[Net] public float AirAcceleration { get; set; } = 4.0f;
 	[Net] public float StopSpeed { get; set; } = 100.0f;
 	[Net] public float GroundAngle { get; set; } = 46.0f;
-	[Net] public float StepSize { get; set; } = 32f;
+	[Net] public float StepSize { get; set; } = 16f;
 	[Net] public float MaxNonJumpVelocity { get; set; } = 140.0f;
 	[Net] public float BodyGirth { get; set; } = 32.0f;
 	[Net] public float BodyHeight { get; set; } = 72.0f;
-	[Net] public float Gravity { get; set; } = 800.0f;
+	[Net] public float Gravity { get; set; } = 700.0f;
 	[Net] public float AirControl { get; set; } = 30.0f;
 
 	[Net, Predicted] public bool IsAiming { get; set; }

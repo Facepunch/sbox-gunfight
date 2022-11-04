@@ -142,7 +142,7 @@
 		var hp = 0f;
 		players.ToList().ForEach( x => hp += x.Health );
 
-		return hp;
+		return hp.CeilToInt();
 	}
 
 	public float GetMaxHealth( IEnumerable<GunfightPlayer> players )
@@ -150,7 +150,7 @@
 		var hp = 0f;
 		players.ToList().ForEach( x => hp += x.MaxHealth );
 
-		return hp;
+		return hp.CeilToInt();
 	}
 
 	public IEnumerable<GunfightPlayer> FriendlyPlayers => TeamSystem.MyTeam.AllPlayers();

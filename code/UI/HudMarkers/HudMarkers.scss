@@ -12,7 +12,7 @@ hudmarker {
     transition: width 0.1s linear, height 0.1s linear, opacity 0.05s linear, border 0.1s linear, border-radius 0.2s linear, transform 0.05s linear;
 
     label {
-        font-family: Quantico-Bold;
+        font-family: Oxanium;
         font-size: 20px;
         color: $theme-color;
     }
@@ -27,8 +27,8 @@ hudmarker {
 
     &.player {
         border-radius: 60px;
-        width: 12px;
-        height: 12px;
+        width: 18px;
+        height: 18px;
         background-color: $enemy;
         box-shadow: 0px 0px 20px rgba( black, 0.05 );
 
@@ -39,19 +39,35 @@ hudmarker {
             position: absolute;
             align-self: center;
             text-align: center;
-            font-size: 20px;
-            font-family: Quantico-Bold;
-            font-weight: 900;
-            color: rgba( $enemy, 1 );
+            font-size: 22px;
+            font-weight: 600;
             box-shadow: 0px 0px 20px rgba( black, 0.05 );
             text-shadow: 0px 0px 5px rgba( black, 0.1 );
         }
 
+        &.enemy {
+            label {
+                color: rgba( $enemy, 1 );
+            }
+        }
+
         &.friendly {
-            background-color: $friendly;
+            background-color: rgba( $friendly, 0.2 );
+            border: 1px solid rgba( $friendly, 0.5 );
 
             label {
                 color: rgba( $friendly, 1 );
+            }
+        }
+
+        &.isfocused {
+            transform: translateX( -50% ) scale( 0.9 );
+            opacity: 1;
+        }
+
+        &.nofocus {
+            label {
+                opacity: 0;
             }
         }
     }
@@ -89,7 +105,7 @@ hudmarker {
             align-self: center;
             text-align: center;
             font-size: 15px;
-            font-family: Quantico-Bold;
+            font-family: Oxanium;
             font-weight: 600;
             box-shadow: 0px 0px 20px rgba( $theme-color, 0.1 );
             color: rgba( #51e55b, 1 );

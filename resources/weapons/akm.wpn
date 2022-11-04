@@ -57,6 +57,8 @@
 			AvoidanceAngleOffset = "2,0,-25"
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "10.3,41.72,-7.53"
+			BurstSprintPositionOffset = "-2,-2,-1"
+			BurstSprintAngleOffset = "10.3,41.72,-7.53"
 			AimPositionOffset = "-0.79,2.7,0.68"
 			AimAngleOffset = "0.59,-1.62,0.5"
 		}
@@ -65,7 +67,7 @@
 			Decay = "60,100"
 			BaseRecoilMinimum = "-2.5,7"
 			BaseRecoilMaximum = "2.5,8"
-			SpreadDecay = "10,10"
+			SpreadDecay = "20,20"
 			MinimumSpread = "-4,-4"
 			MaximumSpread = "4,4"
 		}

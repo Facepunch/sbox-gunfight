@@ -347,14 +347,17 @@ public partial class PlayerController : BasePlayerController
 		Pawn.PlaySound( "sounds/player/foley/gear/player.walk.gear.sound" );
 
 		if ( smallFall )
+		{
+			new ScreenShake.Pitch( 0.5f, 3f * velocityLength );
 			return;
+		}
 
 		SinceLastFall = 0;
 
 		// Play the heavy land sound, on top of the light one.
 		Pawn.PlaySound( "sounds/player/foley/gear/player.heavy_land.gear.sound" );
 
-		new ScreenShake.Pitch( 1f, 7f * velocityLength );
+		new ScreenShake.Pitch( 1f, 10f * velocityLength );
 	}
 
 	[Net, Predicted]

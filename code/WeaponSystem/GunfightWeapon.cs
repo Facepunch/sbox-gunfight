@@ -117,7 +117,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		if ( Host.IsServer )
 		{
-			ChatBox.AddInformation( To.Single( Owner ), $"Fire Mode: {CurrentFireMode}" );
+			UI.NotificationManager.AddNotification( UI.NotificationDockType.BottomMiddle, $"Fire Mode: {CurrentFireMode}", 1 );
 		}
 	}
 

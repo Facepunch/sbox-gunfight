@@ -56,6 +56,8 @@
 			AvoidanceAngleOffset = "2,0,-25"
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "5,25,0"
+			BurstSprintPositionOffset = "0,-3,-2"
+			BurstSprintAngleOffset = "0,45,0"
 			AimPositionOffset = "-5,3.68,-1"
 			AimAngleOffset = "1,-3.9,0"
 			LaserPositionOffset = "-3.13,4.86,-2.54"

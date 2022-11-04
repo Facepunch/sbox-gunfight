@@ -294,13 +294,13 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 	private void AddCameraEffects( ref CameraSetup setup )
 	{
-		var speed = Velocity.Length.LerpInverse( 0, 270 );
+		var speed = Velocity.Length.LerpInverse( 0, 350 );
 
 		var left = setup.Rotation.Left;
 		var up = setup.Rotation.Up;
 
 		if ( GroundEntity != null )
-			walkBob += Time.Delta * 3f * speed;
+			walkBob += Time.Delta * 10f * speed;
 
 		setup.Position += up * MathF.Sin( walkBob ) * speed * 2;
 		setup.Position += left * MathF.Sin( walkBob ) * speed * -1f;

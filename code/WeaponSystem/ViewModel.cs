@@ -46,7 +46,7 @@ public partial class ViewModel : BaseViewModel
 	Vector3 acceleration;
 	Vector2 LerpRecoil;
 
-	float VelocityClamp => 3f;
+	float VelocityClamp => 10f;
 	float walkBob = 0;
 	float upDownOffset = 0;
 	float avoidance = 0;
@@ -102,7 +102,7 @@ public partial class ViewModel : BaseViewModel
 		var isGrounded = Owner.GroundEntity != null;
 		var weapon = Weapon as GunfightWeapon;
 		var speed = Owner.Velocity.Length.LerpInverse( 0, 750 );
-		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -100, 500 );
+		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -250, 700 );
 		var left = camSetup.Rotation.Left;
 		var up = camSetup.Rotation.Up;
 		var forward = camSetup.Rotation.Forward;
@@ -131,7 +131,7 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref airLerp, isGrounded ? 0 : 1, 10f );
 
 		bobSpeed *= 1 - sprintLerp * 0.25f;
-		bobSpeed *= 1 - burstSprintLerp * 0.15f;
+		bobSpeed *= 1 - burstSprintLerp * 2f;
 
 		if ( isGrounded && !sliding && controller is not null /*&& !controller.Slide.IsActive*/ )
 		{

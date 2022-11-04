@@ -131,9 +131,9 @@ public partial class GunfightGamemode : Gamemode
 	{
 		return State switch
 		{
-			GameState.WaitingForPlayers => $"WAITING",
+			GameState.WaitingForPlayers => $"NEED {MinimumPlayers - PlayerCount} PLAYER(S)",
 			GameState.RoundOver => "Round Over",
-			GameState.GameWon => $"{WinningTeam.GetName()} WON",
+			GameState.GameWon => $"{WinningTeam.GetName()} won",
 			_ => $"{GetTimeLeftLabel()}"
 		};
 	}

@@ -7,7 +7,7 @@ public abstract partial class Gamemode : Entity
 	/// <summary>
 	/// A quick accessor to get how many people are in the game
 	/// </summary>
-	public int PlayerCount { get; private set; }
+	[Net] public int PlayerCount { get; private set; }
 
 	/// <summary>
 	/// Can specify a panel to be created when the gamemode is made.

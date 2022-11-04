@@ -12,6 +12,16 @@
         width: 380px;
         flex-direction: column;
 
+        > .state {
+            label {
+                color: #FFCF26;
+                font-family: Oxanium;
+                font-weight: 600;
+                font-size: 24px;
+                text-transform: uppercase;
+            }
+        }
+
         > .info {
             margin-bottom: 4px;
             flex-direction: row;
@@ -134,6 +144,10 @@
             }
         </div>
     </div>
+
+    <div class="state">
+        <label>@GameState</label>
+    </div>
 </root>
 
 @code
@@ -144,6 +158,8 @@
 	public float EnemyHealth => GetHealth( AliveEnemyPlayers );
 	public float MaxEnemyHealth => GetMaxHealth( EnemyPlayers );
     public float EnemyPercent => ( EnemyHealth / MaxEnemyHealth ) * 100;
+
+    public string GameState => ( GamemodeSystem.Current as GunfightGamemode ).GetGameStateLabel();
 
 	public float GetHealth( IEnumerable<GunfightPlayer> players )
 	{

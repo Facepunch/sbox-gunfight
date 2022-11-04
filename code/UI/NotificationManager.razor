@@ -1,0 +1,127 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.UI.Construct;
+
+@namespace Facepunch.Gunfight.UI
+@inherits Panel;
+
+<style>
+    NotificationManager {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+
+        > .dock {
+            position: absolute;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+
+            width: 100%;
+            min-height: 64px;
+
+            label {
+                font-family: Oxanium;
+                font-size: 24px;
+                font-weight: 600;
+                color: #FFCF26;
+                text-shadow: 0px 0px 5px rgba( black, 0.3 );
+            }
+
+            &.bottom-middle {
+                bottom: 160px;
+                flex-direction: column-reverse;
+                
+                > .notification {
+                    transition: all 0.1s ease;
+
+                    &:intro {
+                        opacity: 0;
+                        transform: scale(0.5);    
+                    }
+
+                    &:outro {
+                        opacity: 0;
+                        transform: scale(1.2);
+                    }
+                }
+            }
+
+            &.middle {
+                top: 40%;
+                flex-direction: column-reverse;
+            }
+
+            &.top-middle {
+                top: 160px;
+
+                > .notification {
+                    label {
+                        color: white;
+                        font-size: 32px;
+                        top: 2px;
+                    }
+
+                    transition: all 0.1s ease;
+                    background-image: linear-gradient( 270deg, rgba(cyan, 0) 0%, rgba(cyan, 0.9) 49.48%, rgba(cyan, 0) 100% );
+                    padding: 50px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+
+                    &:intro {
+                        opacity: 0;
+                        transform: scaleX(0.5);    
+                    }
+                }
+            }
+        }
+    }
+</style>
+
+<root>
+   <div class="dock bottom-middle" @ref=BottomMiddleDock></div>
+   <div class="dock middle" @ref=MiddleDock></div>
+   <div class="dock top-middle" @ref=TopMiddleDock></div>
+</root>
+
+@code
+{
+    // @ref
+    public Panel BottomMiddleDock;
+    public Panel MiddleDock;
+    public Panel TopMiddleDock;
+
+    public static NotificationManager Current;
+
+    protected Panel GetDock( NotificationDockType dock )
+    {
+        return dock switch {
+            NotificationDockType.BottomMiddle => BottomMiddleDock,
+            NotificationDockType.Middle => MiddleDock,
+            _ => TopMiddleDock
+        };
+    }
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        Current = this;
+    }
+
+    protected async Task Decay( Panel notification, int seconds = 5 )
+    {
+        await GameTask.DelaySeconds( seconds );
+        notification.Delete();
+    }
+
+    public void Add( NotificationDockType dock, string text, int seconds = 5 )
+    {
+        var parent = GetDock( dock );
+        var notification = parent.AddChild<Panel>( "notification" );
+        notification.Add.Label( text );
+
+        Decay( notification, seconds );
+    }
+}

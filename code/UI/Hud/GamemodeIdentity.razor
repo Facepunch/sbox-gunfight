@@ -1,0 +1,52 @@
+@using Sandbox.UI;
+@using Sandbox;
+
+@namespace Facepunch.Gunfight.UI
+@inherits Panel;
+
+<style>
+    GamemodeIdentity {
+        position: absolute;
+        top: 25%;
+        flex-direction: column;
+        width: 400px;
+        transition: all 0.2s ease;
+        border-left: 2px solid #FFCF26;
+        padding-left: 8px;
+        left: 64px;
+        opacity: 1;
+
+        &:intro, &:outro {
+            opacity: 0;
+            left: -400px;
+        }
+
+        label {
+            font-family: Oxanium;
+         }
+
+        > .name {
+            color: #FFCF26;
+            font-size: 32px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        > .desc {
+            font-weight: 600;
+            color: lightgrey;
+            font-size: 20px;
+        }
+    }
+</style>
+
+<root>
+    <div class="name">@GameName</div>
+    <div class="desc">@GameDescription</div>
+</root>
+
+@code
+{
+    public string GameName => DisplayInfo.For( GamemodeSystem.Current ).Name;
+    public string GameDescription => DisplayInfo.For( GamemodeSystem.Current ).Description;
+}

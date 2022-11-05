@@ -38,9 +38,10 @@ public partial class CrosshairRender
 
 		var shootEase = Easing.EaseIn( lastAttack.LerpInverse( 0.2f, 0.0f ) );
 		var color = Color.Lerp( DisabledColor, StandardColor, lastAttack.LerpInverse( 0.0f, 0.4f ) );
+		var regularColor = color.WithAlpha( ( 0.4f + lastAttack.LerpInverse( 1.2f, 0 ) * 0.5f ) * alpha );
 
 		draw.BlendMode = BlendMode.Lighten;
-		draw.Color = color.WithAlpha( ( 0.4f + lastAttack.LerpInverse( 1.2f, 0 ) * 0.5f ) * alpha );
+		draw.Color = regularColor;
 
 		var length = 12.0f - shootEase * 2.0f;
 		var gap = 20.0f + shootEase * 30.0f;
@@ -50,11 +51,15 @@ public partial class CrosshairRender
 
 		var thickness = 2.0f;
 
-		draw.Line( thickness, newCenter + Vector2.Left * gap, newCenter + Vector2.Left * (length + gap) );
-		draw.Line( thickness, newCenter - Vector2.Left * gap, newCenter - Vector2.Left * (length + gap) );
+		var hideLines = ( GunfightCamera.Target.Controller as PlayerController ).IsSprinting || !GunfightCamera.Target.GroundEntity.IsValid();
+		if ( !hideLines )
+		{
+			draw.Line( thickness, newCenter + Vector2.Left * gap, newCenter + Vector2.Left * (length + gap) );
+			draw.Line( thickness, newCenter - Vector2.Left * gap, newCenter - Vector2.Left * (length + gap) );
 
-		draw.Line( thickness, newCenter + Vector2.Up * gap, newCenter + Vector2.Up * (length + gap) );
-		draw.Line( thickness, newCenter - Vector2.Up * gap, newCenter - Vector2.Up * (length + gap) );
+			draw.Line( thickness, newCenter + Vector2.Up * gap, newCenter + Vector2.Up * (length + gap) );
+			draw.Line( thickness, newCenter - Vector2.Up * gap, newCenter - Vector2.Up * (length + gap) );
+		}
 
 		var reload = lastReload.Clamp( 0, 1 );
 		if ( reload < 1f && reload > 0f )

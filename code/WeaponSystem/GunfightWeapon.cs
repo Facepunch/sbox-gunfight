@@ -697,9 +697,9 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		RenderCrosshair( center, CrosshairLastShoot.Relative, IsReloading ? TimeSinceReload / ReloadTime : 0, Owner?.Velocity.Length ?? 0, IsAiming );
 	}
 
-	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
+	public virtual void RenderCrosshair( Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
 	{
-		Crosshair?.RenderCrosshair( in center, lastAttack, lastReload, speed, ads );
+		Crosshair?.RenderCrosshair( center, lastAttack, lastReload, speed, ads );
 	}
 
 	public override string ToString()

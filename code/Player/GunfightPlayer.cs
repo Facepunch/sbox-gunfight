@@ -290,8 +290,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		}
 	}
 
-	float walkBob = 0;
-
+	float WalkBob = 0;
 	private void AddCameraEffects( ref CameraSetup setup )
 	{
 		var speed = Velocity.Length.LerpInverse( 0, 350 );
@@ -300,10 +299,10 @@ public partial class GunfightPlayer : Player, IHudMarker
 		var up = setup.Rotation.Up;
 
 		if ( GroundEntity != null )
-			walkBob += Time.Delta * 10f * speed;
+			WalkBob += Time.Delta * 10f * speed;
 
-		setup.Position += up * MathF.Sin( walkBob ) * speed * 2;
-		setup.Position += left * MathF.Sin( walkBob ) * speed * -1f;
+		setup.Position += up * MathF.Sin( WalkBob ) * speed * 2;
+		setup.Position += left * MathF.Sin( WalkBob ) * speed * -1f;
 
 		GunfightGame.AddedCameraFOV = 0f;
 		var ctrl = Controller as PlayerController;

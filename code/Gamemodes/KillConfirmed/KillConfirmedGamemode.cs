@@ -130,7 +130,7 @@ public partial class KillConfirmedGamemode : Gamemode
 		{
 			GameState.WaitingForPlayers => $"NEED {MinimumPlayers - PlayerCount} PLAYER(S)",
 			GameState.GameWon => $"{WinningTeam.GetName()} won",
-			_ => $"{GetTimeLeftLabel()}"
+			_ => base.GetGameStateLabel()
 		};
 	}
 

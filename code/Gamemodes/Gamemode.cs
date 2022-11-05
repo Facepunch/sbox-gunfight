@@ -34,6 +34,8 @@ public abstract partial class Gamemode : Entity
 	/// </summary>
 	public TeamScores Scores => GunfightGame.Current.Scores;
 
+	public virtual int MaximumScore => 4;
+
 	public virtual string GetTimeLeftLabel()
 	{
 		return "00:00";

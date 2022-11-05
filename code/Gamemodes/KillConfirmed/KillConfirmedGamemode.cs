@@ -24,13 +24,13 @@ public partial class KillConfirmedGamemode : Gamemode
 	protected float RoundLength => 600f;
 	protected float GameWonLength => 30f;
 
+	public override int MaximumScore => 75;
 	public override Panel GetHudPanel() => new UI.KillConfirmedHud();
 
 	public override void Spawn()
 	{
 		base.Spawn();
 		RandomizeLoadout();
-		Scores.MaximumScore = 75;
 	}
 
 	public override void OnClientJoined( Client cl )

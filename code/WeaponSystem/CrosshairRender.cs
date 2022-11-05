@@ -51,7 +51,7 @@ public partial class CrosshairRender
 
 		var thickness = 2.0f;
 
-		var hideLines = ( GunfightCamera.Target.Controller as PlayerController ).IsSprinting || !GunfightCamera.Target.GroundEntity.IsValid();
+		var hideLines = GunfightCamera.Target.IsValid() && ( GunfightCamera.Target.Controller as PlayerController ).IsSprinting || !GunfightCamera.Target.GroundEntity.IsValid();
 		if ( !hideLines )
 		{
 			draw.Line( thickness, newCenter + Vector2.Left * gap, newCenter + Vector2.Left * (length + gap) );

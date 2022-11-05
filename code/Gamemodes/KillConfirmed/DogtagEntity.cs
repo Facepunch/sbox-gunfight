@@ -2,7 +2,7 @@ namespace Facepunch.Gunfight;
 
 public partial class DogtagEntity : BaseTrigger, IHudMarker
 {
-    public Team Team { get; set; } = Team.Unassigned;
+    public Team ScoringTeam { get; set; } = Team.Unassigned;
     public TimeSince TimeSinceCreated = 0;
     public float Lifetime => 30f;
 
@@ -10,7 +10,9 @@ public partial class DogtagEntity : BaseTrigger, IHudMarker
     {
         base.Spawn();
 
-        // TODO - Set model based on team
+    	SetupPhysicsFromSphere( PhysicsMotionType.Keyframed, Vector3.Zero, 32f );
+		Transmit = TransmitType.Always;
+        Tags.Add( "trigger" );
     }
 	
     string IHudMarker.GetClass() => "dogtag";
@@ -38,9 +40,20 @@ public partial class DogtagEntity : BaseTrigger, IHudMarker
 
     public void Take( GunfightPlayer player )
     {
-        Poof();
+        var team = player.Team;
+        if ( team == ScoringTeam )
+        {
+            // Deny
+			UI.NotificationManager.AddNotification( UI.NotificationDockType.BottomMiddle, $"Denied kill!", 3 );
+        }
+        else
+        {
+			UI.NotificationManager.AddNotification( UI.NotificationDockType.BottomMiddle, $"Secured kill!", 3 );
+            var scores = GunfightGame.Current.Scores;
+            scores.AddScore( team, 1 );
+        }
 
-        // TODO - Give points, stats
+        Poof();
     }
 
     public void Poof()

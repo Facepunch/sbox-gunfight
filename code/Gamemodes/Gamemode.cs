@@ -9,6 +9,8 @@ public abstract partial class Gamemode : Entity
 	/// </summary>
 	[Net] public int PlayerCount { get; private set; }
 
+	[Net] public Loadout CurrentLoadout { get; protected set; }
+
 	/// <summary>
 	/// Can specify a panel to be created when the gamemode is made.
 	/// </summary>
@@ -26,6 +28,16 @@ public abstract partial class Gamemode : Entity
 	/// Lets gamemodes define what teams are available in a gamemode
 	/// </summary>
 	public virtual List<Team> TeamSetup => new() { Team.Unassigned };
+
+	/// <summary>
+	/// Accessor for score system
+	/// </summary>
+	public TeamScores Scores => GunfightGame.Current.Scores;
+
+	public virtual string GetTimeLeftLabel()
+	{
+		return "00:00";
+	}
 
 	public virtual void CreatePawn( Client cl )
 	{

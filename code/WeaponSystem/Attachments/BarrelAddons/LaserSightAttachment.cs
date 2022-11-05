@@ -86,7 +86,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 	[Event.Frame]
 	protected void Update()
 	{
-		if ( Weapon.EnableDrawing )
+		if ( Weapon.IsValid() && Weapon.EnableDrawing )
 		{
 			DotParticles ??= Particles.Create( "particles/laserdot.vpcf" );
 			LaserParticles ??= Particles.Create( "particles/laserline.vpcf" );

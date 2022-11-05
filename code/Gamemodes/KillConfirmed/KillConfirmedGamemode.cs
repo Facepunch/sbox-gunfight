@@ -257,12 +257,14 @@ public partial class KillConfirmedGamemode : Gamemode
 
 	public override void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )
 	{
-		var scores = GunfightGame.Current.Scores;
-		var attacker = lastDamage.Attacker as GunfightPlayer;
-		if ( attacker.IsValid() )
+		if ( State != GameState.RoundActive ) 
+			return;
+
+		_ = new DogtagEntity
 		{
-			var newScore = scores.AddScore( attacker.Team, 1 );
-		}
+			Position = player.Position,
+			ScoringTeam = player.Team
+		};
     }
 
 	public override void CleanupMap()

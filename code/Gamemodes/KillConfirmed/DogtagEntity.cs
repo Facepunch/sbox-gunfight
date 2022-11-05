@@ -22,7 +22,7 @@ public partial class DogtagEntity : BaseTrigger, IHudMarker
 			return false;
 
 		info.Text = "";
-		info.Position = Position + Rotation.Up * 150f;
+		info.Position = Position + Rotation.Up * 30f;
 		info.StayOnScreen = true;
 
 		return true;
@@ -44,11 +44,11 @@ public partial class DogtagEntity : BaseTrigger, IHudMarker
         if ( team == ScoringTeam )
         {
             // Deny
-			UI.NotificationManager.AddNotification( UI.NotificationDockType.BottomMiddle, $"Denied kill!", 3 );
+			UI.NotificationManager.AddNotification( To.Single( player ), UI.NotificationDockType.BottomMiddle, $"Denied kill!", 3 );
         }
         else
         {
-			UI.NotificationManager.AddNotification( UI.NotificationDockType.BottomMiddle, $"Secured kill!", 3 );
+			UI.NotificationManager.AddNotification( To.Single( player ), UI.NotificationDockType.BottomMiddle, $"Secured kill!", 3 );
             var scores = GunfightGame.Current.Scores;
             scores.AddScore( team, 1 );
         }

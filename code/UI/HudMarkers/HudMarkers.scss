@@ -25,6 +25,14 @@ hudmarker {
         opacity: 0;
     }
 
+    &.dogtag {
+        border-radius: 60px;
+        width: 18px;
+        height: 18px;
+        background-color: $main-color;
+        box-shadow: 0px 0px 20px rgba( black, 0.05 );
+    }
+
     &.player {
         border-radius: 60px;
         width: 18px;

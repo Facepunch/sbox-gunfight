@@ -97,6 +97,11 @@
 
     public string GameState {
         get {
+            if ( GamemodeSystem.Current.GetGameStateLabel() != "N/A" )
+            {
+                return GamemodeSystem.Current.GetGameStateLabel();
+            }
+            
             if ( MyScore > EnemyScore )
                 return "WINNING";
             else if ( EnemyScore > MyScore )

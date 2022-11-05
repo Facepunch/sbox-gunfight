@@ -126,7 +126,7 @@ public partial class GunfightGamemode : Gamemode
 		OnGameStateChanged( old, newState );
 	}
 
-	public string GetGameStateLabel()
+	public override string GetGameStateLabel()
 	{
 		return State switch
 		{
@@ -144,7 +144,7 @@ public partial class GunfightGamemode : Gamemode
 		return "";
 	}
 
-	public string GetTimeLeftLabel()
+	public override string GetTimeLeftLabel()
 	{
 		return State switch
 		{

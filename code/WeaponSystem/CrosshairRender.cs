@@ -25,8 +25,12 @@ public partial class CrosshairRender
 	float alpha = 0;
 
 	public Color ThemeColor => Color.Parse( "#ffffda" ) ?? Color.Red;
-	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
+	public virtual void RenderCrosshair( Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
 	{
+		var walkBob = MathF.Sin( Time.Now * 5f ) * GunfightCamera.Target.Velocity.Length.LerpInverse( 0, 350 );
+
+		var newCenter = center + new Vector2( walkBob * -5, walkBob * 0.5f );
+
 		var draw = Render.Draw2D;
 
 		speed = speed.LerpInverse( 0, 400, true );
@@ -46,11 +50,11 @@ public partial class CrosshairRender
 
 		var thickness = 2.0f;
 
-		draw.Line( thickness, center + Vector2.Left * gap, center + Vector2.Left * (length + gap) );
-		draw.Line( thickness, center - Vector2.Left * gap, center - Vector2.Left * (length + gap) );
+		draw.Line( thickness, newCenter + Vector2.Left * gap, newCenter + Vector2.Left * (length + gap) );
+		draw.Line( thickness, newCenter - Vector2.Left * gap, newCenter - Vector2.Left * (length + gap) );
 
-		draw.Line( thickness, center + Vector2.Up * gap, center + Vector2.Up * (length + gap) );
-		draw.Line( thickness, center - Vector2.Up * gap, center - Vector2.Up * (length + gap) );
+		draw.Line( thickness, newCenter + Vector2.Up * gap, newCenter + Vector2.Up * (length + gap) );
+		draw.Line( thickness, newCenter - Vector2.Up * gap, newCenter - Vector2.Up * (length + gap) );
 
 		var reload = lastReload.Clamp( 0, 1 );
 		if ( reload < 1f && reload > 0f )
@@ -63,7 +67,7 @@ public partial class CrosshairRender
 			var finishAng = 1f * 360f;
 
 			var offset = 30f + (30f * speed);
-			var circleCenter = center + Vector2.Up * offset + Vector2.Left * offset;
+			var circleCenter = newCenter + Vector2.Up * offset + Vector2.Left * offset;
 
 			draw.Color = ThemeColor.WithAlpha( 0.01f );
 			draw.Circle( circleCenter, circleSize, 32 );
@@ -72,7 +76,7 @@ public partial class CrosshairRender
 
 		}
 
-		draw.Circle( center, thickness, 32 );
+		draw.Circle( newCenter, thickness, 32 );
 	}
 }
 

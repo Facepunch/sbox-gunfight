@@ -39,6 +39,11 @@ public abstract partial class Gamemode : Entity
 		return "00:00";
 	}
 
+	public virtual string GetGameStateLabel()
+	{
+		return "N/A";
+	}
+
 	public virtual void CreatePawn( Client cl )
 	{
 		cl.Pawn?.Delete();

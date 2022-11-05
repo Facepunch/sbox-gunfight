@@ -125,7 +125,7 @@ public partial class KillConfirmedGamemode : Gamemode
 		OnGameStateChanged( old, newState );
 	}
 
-	public string GetGameStateLabel()
+	public override string GetGameStateLabel()
 	{
 		return State switch
 		{

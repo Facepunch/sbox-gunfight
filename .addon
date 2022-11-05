@@ -106,24 +106,26 @@
       "Keyboard": true,
       "Gamepad": true
     },
-    "GameSettings": {
-      "gunfight_gamemode": {
+    "ParentPackage": "",
+    "PackageSettings": [
+      {
         "DisplayType": "Choice",
         "Choices": [
           {
-            "Value": "",
-            "Name": "No gamemode"
+            "Value": "GunfightGamemode",
+            "Name": "Gunfight: Trios"
           },
           {
-            "Value": "GunfightGamemode",
-            "Name": "Gunfight (3v3)"
+            "Value": "KillConfirmedGamemode",
+            "Name": "Kill Confirmed"
           }
         ],
         "ConVarName": "gunfight_gamemode",
-        "DisplayName": "Gamemode",
-        "DefaultValue": ""
+        "DisplayName": "Active Mode",
+        "DefaultValue": "GunfightGamemode",
+        "Description": "The current gamemode.",
+        "Group": "Important"
       }
-    },
-    "ParentPackage": ""
+    ]
   }
 }

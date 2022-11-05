@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Facepunch.Gunfight;
 
-[Display( Name = "Gunfight Gamemode" )]
-public partial class GunfightGamemode : Gamemode
+[Display( Name = "Kill Confirmed Gamemode" )]
+public partial class KillConfirmedGamemode : Gamemode
 {
 	[Net] public GameState State { get; protected set; }
 	[Net] public TimeSince TimeSinceStateChanged { get; protected set; }
 	[Net] public TimeUntil TimeUntilNextState { get; protected set; }
 	[Net] public Team WinningTeam { get; protected set; }
-	[Net] public CapturePointEntity ActiveFlag { get; set; }
+	[Net] public Loadout CurrentLoadout { get; set; }
 
 	public TimeSpan TimeRemaining => TimeSpan.FromSeconds( TimeUntilNextState );
 	public string FormattedTimeRemaining => TimeRemaining.ToString( @"mm\:ss" );
@@ -20,19 +20,18 @@ public partial class GunfightGamemode : Gamemode
 	public override List<Team> TeamSetup => new() { Team.BLUFOR, Team.OPFOR };
 
 	// Stats
-	protected int MinimumPlayers => 4;
+	protected int MinimumPlayers => 2;
 	protected float RoundCountdownLength => 10f;
-	protected float RoundLength => 40f;
-	protected float FlagActiveLength => 10f;
-	protected float RoundOverLength => 10f;
-	protected float GameWonLength => 15f;
+	protected float RoundLength => 600f;
+	protected float GameWonLength => 30f;
 
-	public override Panel GetHudPanel() => new GunfightGamemodePanel();
+	public override Panel GetHudPanel() => new UI.KillConfirmedHud();
 
 	public override void Spawn()
 	{
 		base.Spawn();
 		RandomizeLoadout();
+		Scores.MaximumScore = 75;
 	}
 
 	public override void OnClientJoined( Client cl )
@@ -108,7 +107,7 @@ public partial class GunfightGamemode : Gamemode
 
 	public override bool CanPlayerRegenerate( GunfightPlayer player )
 	{
-		return State != GameState.RoundActive;
+		return true;
 	}
 
 	public override void PreSpawn( GunfightPlayer player )
@@ -131,47 +130,17 @@ public partial class GunfightGamemode : Gamemode
 		return State switch
 		{
 			GameState.WaitingForPlayers => $"NEED {MinimumPlayers - PlayerCount} PLAYER(S)",
-			GameState.RoundOver => "Round Over",
 			GameState.GameWon => $"{WinningTeam.GetName()} won",
 			_ => $"{GetTimeLeftLabel()}"
 		};
 	}
 
-	string GetFlagActiveTime()
-	{
-		if ( ActiveFlag.CurrentState == CapturePointEntity.CaptureState.None )
-			return FormattedTimeRemaining;
-		return "";
-	}
-
-	public string GetTimeLeftLabel()
+	public override string GetTimeLeftLabel()
 	{
 		return State switch
 		{
-			GameState.RoundFlagActive => GetFlagActiveTime(),
 			_ => FormattedTimeRemaining
 		};
-	}
-
-	public void CreateFlag()
-	{
-		var markers = GamemodeMarker.WithTag( "capturepoint" ).ToList();
-		if ( markers.Count > 0 )
-		{
-			var rand = Rand.Int( 0, markers.Count - 1 );
-			var marker = markers[rand];
-
-			// Make the flag
-			ActiveFlag = new CapturePointEntity
-			{
-				Transform = marker.Transform,
-				Identity = "Capture the flag"
-			};
-		}
-		else
-		{
-			Log.Error( "Map doesn't seem to have capture points for Gunfight mode." );
-		}
 	}
 
 	protected void OnGameStateChanged( GameState before, GameState after )
@@ -200,17 +169,6 @@ public partial class GunfightGamemode : Gamemode
 		}
 		else if ( after == GameState.RoundActive )
 			TimeUntilNextState = RoundLength;
-		else if ( after == GameState.RoundFlagActive )
-		{
-			CreateFlag();
-			TimeUntilNextState = FlagActiveLength;
-		}
-		else if ( after == GameState.RoundOver )
-		{
-			CleanupMap();
-			RpcRoundWonMessage( To.Everyone );
-			TimeUntilNextState = RoundOverLength;
-		}
 		else if ( after == GameState.GameWon )
 		{
 			TimeUntilNextState = GameWonLength;
@@ -218,13 +176,6 @@ public partial class GunfightGamemode : Gamemode
 		}
 
 		Event.Run( "gunfight.gamestate.changed", before, after );
-	}
-
-	[ClientRpc]
-	public void RpcRoundWonMessage()
-	{
-		// Show the round won panel.
-		GunfightRoundWonPanel.Show();
 	}
 	
 	protected void OnSecond()
@@ -268,19 +219,8 @@ public partial class GunfightGamemode : Gamemode
 			// If the round counts down to 0, start the round
 			if ( State == GameState.RoundCountdown )
 				SetGameState( GameState.RoundActive );
-			// If the round ends, activate the flag since not enough players have died
 			else if ( State == GameState.RoundActive )
-				SetGameState( GameState.RoundFlagActive );
-			// If the flag has been active for too long, end the round anyway without a winner.
-			else if ( State == GameState.RoundFlagActive )
-			{
-				// Only end the round if there's nobody on the flag
-				if ( ActiveFlag.CurrentState == CapturePointEntity.CaptureState.None )
-					SetGameState( GameState.RoundOver );
-			}
-			// After the round ends, go back to countdown.
-			else if ( State == GameState.RoundOver )
-				SetGameState( GameState.RoundCountdown );
+				SetGameState( GameState.GameWon );
 			else if ( State == GameState.GameWon )
 				SetGameState( GameState.WaitingForPlayers );
 		}
@@ -301,18 +241,6 @@ public partial class GunfightGamemode : Gamemode
 		//}
 	}
 
-	protected void WinRound( Team team )
-	{
-		var scores = GunfightGame.Current.Scores;
-		var newScore = scores.AddScore( team, 1 );
-
-		ChatBox.AddInformation( To.Everyone, $"{team.GetName()} won the round!" );
-
-		// Round ends!
-		if ( newScore < scores.MaximumScore )
-			SetGameState( GameState.RoundOver );
-	}
-
 	public override void OnScoreChanged( Team team, int score, bool maxReached = false )
 	{
 		if ( maxReached )
@@ -322,48 +250,23 @@ public partial class GunfightGamemode : Gamemode
 		}
 	}
 
-	protected void CheckDeadPlayers()
-	{
-		var aliveBluePlayers = Team.BLUFOR.AlivePlayers();
-		var aliveRedPlayers = Team.OPFOR.AlivePlayers();
-
-		if ( aliveBluePlayers.Count() == 0 )
-		{
-			WinRound( Team.OPFOR );
-		}
-		else if ( aliveRedPlayers.Count() == 0 )
-		{
-			WinRound( Team.BLUFOR );
-		}
-	}
-
 	public override void OnPlayerKilled( GunfightPlayer player, DamageInfo damageInfo, out LifeState lifeState )
 	{
-		if ( State == GameState.WaitingForPlayers )
-		{
-			lifeState = LifeState.Respawning;
-			return;
-		}
-
-		// Do not allow automatic respawning
-		lifeState = LifeState.Dead;
+		lifeState = LifeState.Respawning;
 	}
 
 	public override void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )
 	{
-		if ( State == GameState.RoundActive || State == GameState.RoundFlagActive )
+		var scores = GunfightGame.Current.Scores;
+		var attacker = lastDamage.Attacker as GunfightPlayer;
+		if ( attacker.IsValid() )
 		{
-			CheckDeadPlayers();
+			var newScore = scores.AddScore( attacker.Team, 1 );
 		}
-
-		GunfightStatusPanel.RpcUpdate( To.Everyone );
-	}
+    }
 
 	public override void CleanupMap()
 	{
-		// Delete the flag if it exists.
-		ActiveFlag?.Delete();
-
 		foreach( var weapon in Entity.All.OfType<GunfightWeapon>() )
 		{
 			if ( !weapon.Parent.IsValid() )
@@ -373,21 +276,12 @@ public partial class GunfightGamemode : Gamemode
 		}
 	}
 
-	public override void OnFlagCaptured( CapturePointEntity flag, Team team )
-	{
-		// Might not even need this, tbh
-		if ( State != GameState.RoundFlagActive ) return;
-
-		WinRound( team );
-	}
 
 	public enum GameState
 	{
 		WaitingForPlayers, // to round countdown
 		RoundCountdown, // to round active
-		RoundActive, // to either round over, or flag becomes active
-		RoundFlagActive, // to round over
-		RoundOver, // to round countdown
+		RoundActive, // to game won
 		GameWon
 	}
 }

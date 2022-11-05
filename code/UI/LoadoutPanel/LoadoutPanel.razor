@@ -74,7 +74,7 @@
 
 @code
 {
-    public Loadout Loadout => (GamemodeSystem.Current as GunfightGamemode).CurrentLoadout;
+    public Loadout Loadout => GamemodeSystem.Current.CurrentLoadout;
 
     protected override void OnAfterTreeRender( bool firstTime )
     {

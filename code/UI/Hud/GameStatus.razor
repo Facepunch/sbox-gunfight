@@ -105,33 +105,38 @@
     <text class="location">@PlayerLocation</text>
     <text class="timer">@TimeLeft</text>
 
-    <div class="scores">
-        <div class="left">
-            @for( int i = 0; i < BoxAmount; i++ )
-            {
-                <div class="box @(FriendlyScore > i ? "friendly" : "")"/>
-            }
-        </div>
-        
-        <div class="grow"/>
+    @if ( IsGunfightMode )
+    {
+        <div class="scores">
+            <div class="left">
+                @for( int i = 0; i < BoxAmount; i++ )
+                {
+                    <div class="box @(FriendlyScore > i ? "friendly" : "")"/>
+                }
+            </div>
+            
+            <div class="grow"/>
 
-        <div class="right">
-            @for( int i = 0; i < BoxAmount; i++ )
-            {
-                <div class="box @(EnemyScore > i ? "enemy" : "")"/>
-            }
+            <div class="right">
+                @for( int i = 0; i < BoxAmount; i++ )
+                {
+                    <div class="box @(EnemyScore > i ? "enemy" : "")"/>
+                }
+            </div>
         </div>
-    </div>
+    }
 </root>
 
 @code
 {
     public string PlayerLocation => Local.Client.GetLocation();
-    public string TimeLeft => (GamemodeSystem.Current as GunfightGamemode)?.GetTimeLeftLabel() ?? "00:00";
+    public string TimeLeft => GamemodeSystem.Current?.GetTimeLeftLabel() ?? "00:00";
 
 	protected int BoxAmount => GunfightGame.Current.Scores.MaximumScore;
     public int FriendlyScore => GunfightGame.Current.Scores.GetScore( TeamSystem.MyTeam );
     public int EnemyScore => GunfightGame.Current.Scores.GetScore( TeamSystem.MyTeam.GetOpponent() );
+
+    public bool IsGunfightMode => GamemodeSystem.Current is GunfightGamemode;
 
     protected override int BuildHash()
     {

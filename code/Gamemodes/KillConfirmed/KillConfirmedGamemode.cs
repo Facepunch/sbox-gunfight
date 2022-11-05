@@ -3,14 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Facepunch.Gunfight;
 
-[Display( Name = "Kill Confirmed Gamemode" )]
+[Display( Name = "Kill Confirmed", Description = "Each kill will leave behind dog tags for players to collect." )]
 public partial class KillConfirmedGamemode : Gamemode
 {
 	[Net] public GameState State { get; protected set; }
 	[Net] public TimeSince TimeSinceStateChanged { get; protected set; }
 	[Net] public TimeUntil TimeUntilNextState { get; protected set; }
 	[Net] public Team WinningTeam { get; protected set; }
-	[Net] public Loadout CurrentLoadout { get; set; }
 
 	public TimeSpan TimeRemaining => TimeSpan.FromSeconds( TimeUntilNextState );
 	public string FormattedTimeRemaining => TimeRemaining.ToString( @"mm\:ss" );
@@ -165,6 +164,7 @@ public partial class KillConfirmedGamemode : Gamemode
 			RandomizeLoadout();
 			RespawnAllPlayers();
 
+			UI.GamemodeIdentity.RpcShow( To.Everyone, RoundCountdownLength.CeilToInt() );
 			UI.LoadoutPanel.RpcShow( To.Everyone );
 		}
 		else if ( after == GameState.RoundActive )

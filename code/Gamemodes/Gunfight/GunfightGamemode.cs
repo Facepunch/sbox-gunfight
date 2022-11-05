@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Facepunch.Gunfight;
 
-[Display( Name = "Gunfight Gamemode" )]
+[Display( Name = "Gunfight", Description = "Two teams are pitted against each other. Everyone has the same loadout. Respawns are OFF." )]
 public partial class GunfightGamemode : Gamemode
 {
 	[Net] public GameState State { get; protected set; }

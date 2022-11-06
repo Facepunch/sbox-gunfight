@@ -146,9 +146,12 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Shooting" ), ResourceType( "sound" )]
 	public string DryFireSound { get; set; } = "";
 
-	[Category( "Shooting" )]
+	[Category( "Aiming" )]
 	public bool AimingDisabled { get; set; }
 
+	[Category( "Aiming" )]
+	public float BaseAimTime { get; set; } = 0.2f;
+ 	
 	[Category( "Shooting" )]
 	public float BulletRange { get; set; } = 5000f;
 

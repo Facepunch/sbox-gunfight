@@ -20,6 +20,7 @@ public partial class PlayerController : BasePlayerController
 	[Net] public float AirControl { get; set; } = 30.0f;
 
 	[Net, Predicted] public bool IsAiming { get; set; }
+	[Net, Predicted] public TimeUntil AimFireDelay { get; set; } = 0;
 	[Net, Predicted] public bool Swimming { get; set; }
 	[Net, Predicted] public bool cachedSprint { get; set; }
 	[Net, Predicted] public TimeSince SinceStoppedSprinting { get; set; }
@@ -92,6 +93,9 @@ public partial class PlayerController : BasePlayerController
 
 	protected float SurfaceFriction;
 
+	// Accessors
+	protected GunfightPlayer Player => Pawn as GunfightPlayer;
+	protected GunfightWeapon Weapon => Player?.ActiveChild as GunfightWeapon;
 
 	public override void FrameSimulate()
 	{
@@ -118,6 +122,34 @@ public partial class PlayerController : BasePlayerController
 	[Net, Predicted] public TimeSince SinceBurstEnded { get; set; } = -5;
 	public float BurstStaminaDuration => 2f;
 
+	protected bool WantsToAim()
+	{
+		return Input.Down( InputButton.SecondaryAttack );
+	}
+
+	protected void StartAiming()
+	{
+		if ( IsAiming ) return;
+
+		IsAiming = true;
+		AimFireDelay = Weapon.BaseAimTime;
+	}
+
+	protected void StopAiming()
+	{
+		IsAiming = false;
+	}
+
+	protected bool CanAim()
+	{
+		if ( !Weapon.IsValid() ) return false;
+		if ( Weapon.WeaponDefinition.AimingDisabled ) return false;
+
+		if ( IsSprinting ) return false;
+
+		return true;
+	}
+
 	public override void Simulate()
 	{
 		EyeLocalPosition = Vector3.Up * (GetEyeHeight() * Pawn.Scale);
@@ -126,14 +158,14 @@ public partial class PlayerController : BasePlayerController
 		EyeLocalPosition += TraceOffset;
 		EyeRotation = Input.Rotation;
 
-		// TODO - This is shit, redo later
-		var wantsToAim = Input.Down( InputButton.SecondaryAttack );
-		var player = Pawn as GunfightPlayer;
-		var weapon = player.ActiveChild as GunfightWeapon;
-		IsAiming = wantsToAim && !IsSprinting;
-
-		if ( weapon.IsValid() && weapon.WeaponDefinition.AimingDisabled )
-			IsAiming = false;
+		if ( WantsToAim() && CanAim() )
+		{
+			StartAiming();
+		}
+		else
+		{
+			StopAiming();
+		}
 
 		CheckLadder();
 		Swimming = Pawn.WaterLevel > 0.6f;

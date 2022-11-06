@@ -26,6 +26,7 @@
 		FireSound = resource:"sounds/guns/revolver/revolver_shoot.sound"
 		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
 		AimingDisabled = false
+		BaseAimTime = 0.1
 		BulletRange = 5000
 		AmmoType = "Pistol"
 		ClipSize = 6

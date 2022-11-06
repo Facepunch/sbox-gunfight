@@ -6,11 +6,13 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 	public override Model AttachmentModel => Model.Load( "models/attachments/laser/laser_sight.vmdl" );
 	public override string AimAttachment => "laser_aim";
 	public override AimAttachmentStyle AimAttachmentStyle => AimAttachmentStyle.OnViewModel;
+	public override float AimSpeedModifier => -0.1f;
 
 	public Particles LaserParticles { get; private set; }
 	public Particles DotParticles { get; private set; }
 
 	public Color LaserColor { get; set; } = new( 1f, 0, 0, 1 );
+
 
 	public override void OnNewModel( Model model )
 	{

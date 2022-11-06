@@ -34,6 +34,11 @@ public partial class WeaponAttachment : AnimatedEntity
 	/// Informs the aiming system on which entity to find an attachment
 	/// </summary>
 	public virtual AimAttachmentStyle AimAttachmentStyle => AimAttachmentStyle.OnAttachment;
+	
+	/// <summary>
+	/// Allow attachments to impact aim speed.
+	/// </summary>
+	public virtual float AimSpeedModifier => 0f;
 
 	/// <summary>
 	/// Attach this attachment onto a weapon.

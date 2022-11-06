@@ -554,6 +554,19 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	/// </summary>
 	protected virtual float MaxRicochetAngle => 45f;
 
+	public virtual float GetAimTime()
+	{
+		var aimTime = BaseAimTime;
+
+		// Allow attachments to have a say here.
+		foreach( var attachment in Attachments )
+		{
+			aimTime += attachment.AimSpeedModifier;
+		}
+
+		return aimTime.Clamp( 0, 1 );
+	}
+
 	protected virtual bool ShouldBulletContinue( TraceResult tr, float angle, ref float damage )
 	{
 		float maxAngle = MaxRicochetAngle;

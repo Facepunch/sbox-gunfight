@@ -132,7 +132,7 @@ public partial class PlayerController : BasePlayerController
 		if ( IsAiming ) return;
 
 		IsAiming = true;
-		AimFireDelay = Weapon.BaseAimTime;
+		AimFireDelay = Weapon.GetAimTime();
 	}
 
 	protected void StopAiming()

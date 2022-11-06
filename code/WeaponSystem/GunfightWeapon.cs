@@ -224,20 +224,19 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		var randSpreadX = Rand.Float( WeaponDefinition.Recoil.MinimumSpread.x, WeaponDefinition.Recoil.MaximumSpread.x );
 		var randSpreadY = Rand.Float( WeaponDefinition.Recoil.MinimumSpread.y, WeaponDefinition.Recoil.MaximumSpread.y );
 
-		// TODO - Remove magic numbers.
 		var recoilScale = 1f;
+		bool isInAir = !PlayerController.GroundEntity.IsValid();
 
 		// Recoil gets decreased when aiming down the sights.
 		if ( IsAiming )
-		{
 			recoilScale *= 0.8f;
-		}
 
 		// Recoil gets decreased when ducking.
-		if ( PlayerController.Duck.IsActive )
-		{
+		if ( !isInAir && PlayerController.Duck.IsActive )
 			recoilScale *= 0.8f;
-		}
+
+		if ( isInAir )
+			recoilScale *= 1.4f;
 
 		// If you're moving at speed, apply more recoil.
 		var speed = Player.Velocity.Length.LerpInverse( 0, 400, true );

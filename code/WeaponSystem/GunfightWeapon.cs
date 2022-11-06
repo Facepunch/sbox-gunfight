@@ -285,11 +285,12 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			return;
 		}
 
-		if ( IsReloading && Input.Pressed( InputButton.PrimaryAttack ) )
-		{
-			IsReloading = false;
-			TimeSinceReload = ReloadTime;
-		}
+		// Reload cancelling
+		// if ( IsReloading && Input.Pressed( InputButton.PrimaryAttack ) )
+		// {
+		// 	IsReloading = false;
+		// 	TimeSinceReload = ReloadTime;
+		// }
 
 		//
 		// Reload could have changed our owner

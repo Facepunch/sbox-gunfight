@@ -107,6 +107,11 @@ ChatboxRow {
         border: 1px solid black;
         position: absolute;
         z-index: 100;
+
+        .image { 
+            height: 45px;
+            aspect-ratio: 1; 
+        }
     }
 
     .header {

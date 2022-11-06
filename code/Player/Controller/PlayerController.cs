@@ -144,8 +144,8 @@ public partial class PlayerController : BasePlayerController
 	{
 		if ( !Weapon.IsValid() ) return false;
 		if ( Weapon.WeaponDefinition.AimingDisabled ) return false;
-
 		if ( IsSprinting ) return false;
+		if ( Slide.IsActive ) return false;
 
 		return true;
 	}

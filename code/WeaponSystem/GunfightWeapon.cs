@@ -373,6 +373,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	protected bool CanDefaultPrimaryAttack()
 	{
 		if ( !PlayerController.AimFireDelay ) return false;
+		if ( PlayerController.Slide.IsActive ) return false;
 		if ( IsSprinting ) return false;
 		if ( IsReloading ) return false;
 		if ( PlayerController.SinceStoppedSprinting <= PostSprintAttackDelay ) return false;

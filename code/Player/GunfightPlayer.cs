@@ -325,6 +325,13 @@ public partial class GunfightPlayer : Player, IHudMarker
 		if ( GamemodeSystem.Current.IsValid() && !GamemodeSystem.Current.AllowDamage() )
 			return;
 
+		var attacker = info.Attacker as GunfightPlayer;
+		if ( attacker.IsValid() && !GamemodeSystem.Current.AllowFriendlyFire() )
+		{
+			if ( attacker.Team == Team )
+				return;
+		}
+
 		LastDamage = info;
 
 		// Headshot
@@ -371,7 +378,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		TimeSinceDamage = 0;
 
-		if ( info.Attacker is GunfightPlayer attacker )
+		if ( attacker.IsValid() )
 		{
 			if ( attacker != this )
 			{

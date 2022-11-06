@@ -176,6 +176,11 @@ public abstract partial class Gamemode : Entity
 		return true;
 	}
 
+	public virtual bool AllowFriendlyFire()
+	{
+		return true;
+	}
+
 	/// <summary>
 	/// Called on Client Tick, allows gamemodes to define custom post processing
 	/// </summary>

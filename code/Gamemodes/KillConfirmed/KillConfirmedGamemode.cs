@@ -99,6 +99,11 @@ public partial class KillConfirmedGamemode : Gamemode
 		return State != GameState.RoundCountdown;
 	}
 
+	public override bool AllowFriendlyFire()
+	{
+		return false;
+	}
+
 	public override bool AllowSpectating()
 	{
 		return true;

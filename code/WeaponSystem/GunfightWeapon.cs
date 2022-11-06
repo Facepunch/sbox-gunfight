@@ -56,6 +56,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public float BulletRange => WeaponDefinition.BulletRange;
 	public string GunIcon => WeaponDefinition.Icon;
 	public float PostSprintAttackDelay => 0.15f;
+	public float BaseAimTime => WeaponDefinition.BaseAimTime;
 
 	// @event
 	protected void FireModeChanged( FireMode before, FireMode after )
@@ -371,6 +372,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	protected bool CanDefaultPrimaryAttack()
 	{
+		if ( !PlayerController.AimFireDelay ) return false;
 		if ( IsSprinting ) return false;
 		if ( IsReloading ) return false;
 		if ( PlayerController.SinceStoppedSprinting <= PostSprintAttackDelay ) return false;

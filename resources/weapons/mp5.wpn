@@ -28,6 +28,7 @@
 		FireSound = resource:"sounds/guns/mp5/smg1_shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
 		AimingDisabled = false
+		BaseAimTime = 0.1
 		BulletRange = 5000
 		AmmoType = "SMG"
 		ClipSize = 30

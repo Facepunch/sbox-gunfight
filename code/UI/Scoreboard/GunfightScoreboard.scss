@@ -79,9 +79,8 @@ Scoreboard {
         flex-grow: 1;
     }
 
-    .deaths, .kills, .score, .fps, .captures {
+    .deaths, .kills, .score, .fps, .captures, .ping {
         width: 150px;
-        text-align: center;
     }
 
     .canvases {

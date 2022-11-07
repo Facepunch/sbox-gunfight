@@ -33,10 +33,12 @@ hudhints {
     }
 
     label {
-        color: $theme-color;
-        font-family: $alternate-font;
+        color: $main-color;
+        font-family: Oxanium;
         font-size: 24px;
-        top: -6px;
+        top: 2px;
+        left: 2px;
+        font-weight: 600;
     }
 
     InputHint {

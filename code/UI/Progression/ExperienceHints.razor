@@ -1,0 +1,50 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace Facepunch.Gunfight.UI
+@inherits Panel;
+
+<style>
+    ExperienceHints {
+        position: absolute;
+        left: 50%;
+        top: 45%;
+
+        .canvas {
+            margin-left: 64px;
+            flex-direction: column-reverse;
+        }
+    }
+</style>
+
+<root>
+    <div @ref=Canvas class="canvas">
+    </div>
+</root>
+
+@code
+{
+    public static ExperienceHints Current;
+    public Panel Canvas;
+
+    public void AddHint( int xp, string text, int lifetime = 5 )
+    {
+        var entry = Canvas.AddChild<ExperienceHintEntry>();
+        entry.XP = xp;
+        entry.Text = text;
+
+        _ = Decay( entry, lifetime );
+    }
+
+    protected async Task Decay( ExperienceHintEntry panel, int lifetime = 5 )
+    {
+        await GameTask.DelaySeconds( lifetime );
+        panel.Delete();
+    }
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        base.OnAfterTreeRender( firstTime );
+        Current = this;
+    }
+}

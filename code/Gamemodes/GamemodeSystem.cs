@@ -3,7 +3,7 @@ namespace Facepunch.Gunfight;
 public partial class GamemodeSystem
 {
 	[ConVar.Server( "gunfight_gamemode" )]
-	public static string SelectedGamemode { get; set; } = "";
+	public static string SelectedGamemode { get; set; } = "KillConfirmedGamemode";
 
 	private static Gamemode current;
 	public static Gamemode Current

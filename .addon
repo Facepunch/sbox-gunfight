@@ -183,6 +183,7 @@
         "Minimum": 1,
         "Maximum": 300
       }
-    ]
+    ],
+    "DefaultLeaderboards": []
   }
 }

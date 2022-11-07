@@ -176,6 +176,9 @@ public abstract partial class Gamemode : Entity
 		return true;
 	}
 
+	[ConVar.Server( "gunfight_friendly_fire_override" )]
+	public static bool FriendlyFireOverride { get; set; } = false;
+
 	public virtual bool AllowFriendlyFire()
 	{
 		return true;

@@ -118,6 +118,10 @@
           {
             "Value": "KillConfirmedGamemode",
             "Name": "Kill Confirmed"
+          },
+          {
+            "Value": "",
+            "Name": "No Gamemode (good for testing)"
           }
         ],
         "ConVarName": "gunfight_gamemode",
@@ -125,6 +129,59 @@
         "DefaultValue": "GunfightGamemode",
         "Description": "The current gamemode.",
         "Group": "Important"
+      },
+      {
+        "DisplayType": "Boolean",
+        "Choices": [],
+        "ConVarName": "gunfight_friendly_fire_override",
+        "DisplayName": "Friendly Fire (Override)",
+        "DefaultValue": "false",
+        "Description": "If set on, friendly fire will always be active.",
+        "Group": "Miscellaneous"
+      },
+      {
+        "DisplayType": "Integer",
+        "Choices": [],
+        "ConVarName": "gunfight_kc_minimum_players",
+        "DisplayName": "Minimum Players",
+        "DefaultValue": "2",
+        "Description": "The minimum amount of required players to start a Kill Confirmed game.",
+        "Group": "Kill Confirmed",
+        "Minimum": 1,
+        "Maximum": 16
+      },
+      {
+        "DisplayType": "Float",
+        "Choices": [],
+        "ConVarName": "gunfight_kc_round_countdown",
+        "DisplayName": "Round Countdown",
+        "DefaultValue": "10",
+        "Description": "The time (in seconds) it takes to start a match in Kill Confirmed.",
+        "Group": "Kill Confirmed",
+        "Maximum": 30
+      },
+      {
+        "DisplayType": "Float",
+        "Choices": [],
+        "ConVarName": "gunfight_kc_round_duration",
+        "DisplayName": "Round Duration",
+        "DefaultValue": "600",
+        "Description": "The round duration (in seconds) in Kill Confirmed.",
+        "Group": "Kill Confirmed",
+        "Minimum": 60,
+        "Maximum": 3600,
+        "Step": 1
+      },
+      {
+        "DisplayType": "Integer",
+        "Choices": [],
+        "ConVarName": "gunfight_kc_max_score",
+        "DisplayName": "Maximum Score",
+        "DefaultValue": "75",
+        "Description": "The score required to win a match in Kill Confirmed.",
+        "Group": "Kill Confirmed",
+        "Minimum": 1,
+        "Maximum": 300
       }
     ]
   }

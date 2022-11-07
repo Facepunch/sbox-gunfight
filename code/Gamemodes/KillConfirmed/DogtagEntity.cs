@@ -45,12 +45,12 @@ public partial class DogtagEntity : BaseTrigger, IHudMarker
         var team = player.Team;
         if ( team == ScoringTeam )
         {
-            // Deny
-			UI.NotificationManager.AddNotification( To.Single( player ), UI.NotificationDockType.BottomMiddle, $"Denied kill!", 3 );
+			Progression.GiveAward( player.Client, "KillDenied" );
         }
         else
         {
-			UI.NotificationManager.AddNotification( To.Single( player ), UI.NotificationDockType.BottomMiddle, $"Secured kill!", 3 );
+			Progression.GiveAward( player.Client, "KillConfirmed" );
+
             var scores = GunfightGame.Current.Scores;
             scores.AddScore( team, 1 );
         }

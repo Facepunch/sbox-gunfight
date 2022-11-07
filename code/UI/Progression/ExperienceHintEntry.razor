@@ -1,0 +1,46 @@
+@using Sandbox.UI;
+
+@namespace Facepunch.Gunfight.UI
+@inherits Panel;
+
+<style>
+    ExperienceHintEntry {
+        .xp, .text {
+            font-family: Oxanium;
+            font-weight: 600;
+            color: rgba( #FFCF26, 0.8 );
+            font-size: 20px;
+            text-shadow: 0px 0px 5px rgba( black, 0.5 );
+        }
+
+        .xp {
+            font-weight: 800;
+            font-size: 22px;
+        }
+
+        .text {
+            top: 1px;
+            margin-left: 16px;
+        }
+
+        opacity: 1;
+        transition: all 0.2s ease;
+
+        &:intro, &:outro {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+</style>
+
+<root>
+    <label class="xp">+@XP</label>
+    <label class="text">@Text</label>
+</root>
+
+
+@code
+{
+    public int XP;
+    public string Text;
+}

@@ -8,6 +8,8 @@ public class AwardAttribute : Attribute
 
 	public int PointsGiven { get; set; }
 	public string IconTexture { get; set; }
+
+	public bool ShareXP { get; set; } = true;
 }
 
 public static class Awards
@@ -16,6 +18,16 @@ public static class Awards
 	public static void Kill( GunfightPlayer player )
 	{
 		player.Client.AddInt( "frags", 1 );
+	}
+
+	[Award( Title = "Kill Confirmed", PointsGiven = 75, Description = "Kill confirmed" )]
+	public static void KillConfirmed( GunfightPlayer player )
+	{
+	}
+
+	[Award( Title = "Kill Denied", PointsGiven = 25, Description = "Kill Denied" )]
+	public static void KillDenied( GunfightPlayer player )
+	{
 	}
 
 	[Award( Title = "Team Kill", PointsGiven = -50, Description = "Team killed" )]

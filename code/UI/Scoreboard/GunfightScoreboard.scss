@@ -23,6 +23,10 @@ Scoreboard {
         }
     }
 
+    .grow {
+        flex-grow: 1;
+    }
+
     .main {
         flex-direction: column;
         transition: all 0.2s ease;
@@ -30,7 +34,7 @@ Scoreboard {
         position: absolute;
         width: 50%;
         height: 100%;
-        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.5) 100%);
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.8) 100%);
         backdrop-filter-blur: 50px;
     }
 
@@ -103,6 +107,28 @@ Scoreboard {
             flex-direction: row;
             padding-top: 24px;
             padding-bottom: 24px;
+            height: 100px;
+
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+
+            > .score {
+                flex-direction: column;
+                margin-right: 96px;
+                width: 300px;
+
+                > .bar {
+                    flex-grow: 1;
+                    background-color: rgba(40, 38, 38, 0.5);
+                    border: 2px solid rgba(0, 0, 0, 0.2);
+
+                    > .bar-inner {
+                        border: 2px solid rgba(0, 0, 0, 0.1);
+                        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+                    }
+                }
+            }
 
             .team-name, .team-score {
                 text-transform: uppercase;
@@ -115,8 +141,9 @@ Scoreboard {
             }
 
             .team-score {
-                margin-left: 16px;
-                font-size: 35px;
+                height: 35px;
+                margin-left: -12px;
+                font-size: 30px;
             }
         }
 
@@ -124,6 +151,10 @@ Scoreboard {
             > .header {
                 label {
                     color: $friendly;
+                }
+
+                .bar-inner {
+                    background-color: rgba( #1AE7F4, 0.8 );
                 }
             }
         }
@@ -133,12 +164,34 @@ Scoreboard {
                 label {
                     color: $enemy;
                 }
+
+                .bar-inner {
+                    background-color: rgba( #F53F16, 0.8 );
+                }
             }
         }
 
         .canvas {
             flex-direction: column;
             min-width: 30%;
+
+            .placeholder {
+                background-color: rgba(0, 0, 0, 0.2);
+                border: 2px solid rgba(0, 0, 0, 0.2);
+                align-items: center;
+                background-size: 100%;
+                margin-bottom: 4px;
+                height: 50px;
+                padding-right: 40px;
+                text-align: center;
+                font-weight: 600;
+                font-family: Oxanium;
+                font-size: 20px;
+                color: grey;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+            }
 
             ScoreboardRow {
                 align-items: center;

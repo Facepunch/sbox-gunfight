@@ -47,7 +47,8 @@ public partial class DogtagEntity : BaseTrigger
 
     public void Poof()
     {
-        // TODO - VFX
+        Particles.Create( "particles/break/break.cardboard.vpcf", Position + Vector3.Up * 20f );
+
         Delete();
     }
 

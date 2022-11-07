@@ -10,14 +10,6 @@
             <text>Scoreboard</text>
         </div>
 
-        <div class="names">
-            <label class="name">Name</label>
-            <label class="kills">Kills</label>
-            <label class="deaths">Deaths</label>
-            <label class="score">Score</label>
-            <label class="ping">Ping</label>
-        </div>
-
         <div class="canvases" @ref=Canvases>
         </div>
     </div>
@@ -37,6 +29,12 @@
         teamPanel.Team = team;
 
         Teams.Add( team, teamPanel );
+    }
+
+    [Event.Hotload]
+    protected void Hotload()
+    {
+        IsLoaded = false;
     }
 
     public override void Tick()

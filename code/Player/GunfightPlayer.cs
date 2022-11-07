@@ -143,6 +143,11 @@ public partial class GunfightPlayer : Player, IHudMarker
 		StopUsing();
 		Client?.AddInt( "deaths", 1 );
 
+		if ( LastDamage.Attacker.IsValid() )
+		{
+			Progression.GiveAward( LastDamage.Attacker.Client, "Kill" );
+		}
+
 		if ( CapturePoint.IsValid() )
 		{
 			CapturePoint.RemovePlayer( this );

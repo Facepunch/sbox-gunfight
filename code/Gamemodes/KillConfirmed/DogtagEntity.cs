@@ -1,10 +1,12 @@
 namespace Facepunch.Gunfight;
 
-public partial class DogtagEntity : BaseTrigger, IHudMarker
+public partial class DogtagEntity : BaseTrigger
 {
-    [Net] public Team ScoringTeam { get; set; } = Team.Unassigned;
+    [Net, Change( "UpdateDogtag" )] public Team ScoringTeam { get; set; } = Team.Unassigned;
     public TimeSince TimeSinceCreated = 0;
     public float Lifetime => 30f;
+
+    public Particles Particle;
 
     public override void Spawn()
     {
@@ -14,21 +16,6 @@ public partial class DogtagEntity : BaseTrigger, IHudMarker
 		Transmit = TransmitType.Always;
         Tags.Add( "trigger" );
     }
-	
-    string IHudMarker.GetClass() => "dogtag";
-	bool IHudMarker.UpdateMarker( ref HudMarkerBuilder info )
-	{
-		if ( !this.IsValid() )
-			return false;
-
-		info.Text = "";
-		info.Position = Position + Rotation.Up * 30f;
-		info.StayOnScreen = true;
-
-        info.Classes["friendly"] = TeamSystem.IsFriendly( TeamSystem.MyTeam, ScoringTeam );
-
-		return true;
-	}
 
     public override void StartTouch( Entity other )
 	{
@@ -71,5 +58,15 @@ public partial class DogtagEntity : BaseTrigger, IHudMarker
         {
             Poof();
         }
+    }
+
+    public void UpdateDogtag()
+    {
+        Particle?.Destroy( true );
+
+        var isFriendly = TeamSystem.IsFriendly( TeamSystem.MyTeam, ScoringTeam );
+
+        Particle = Particles.Create( "particles/gameplay/dogtags/team_1_dog_tags.vpcf", this, true );
+        Particle.SetPosition( 1, new( isFriendly ? 0 : 1, 0, 0 ) );
     }
 }

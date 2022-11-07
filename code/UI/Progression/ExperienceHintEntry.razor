@@ -30,10 +30,18 @@
             transform: translateX(100%);
             opacity: 0;
         }
+
+        &.effect {
+            transform: scale( 1.3 );
+
+            .xp, .text {
+                text-shadow: 0px 0px 10px rgba( #FFCF26, 0.5 );
+            }
+        }
     }
 </style>
 
-<root>
+<root class="@EffectClasses()">
     <label class="xp">+@XP</label>
     <label class="text">@Text</label>
 </root>
@@ -43,4 +51,22 @@
 {
     public int XP;
     public string Text;
+    public Task DecayTask;
+
+    public TimeSince Effected = 1;
+
+    public void Effect()
+    {
+        Effected = 0;
+    }
+
+    protected string EffectClasses()
+    {
+        return Effected < 0.1f ? "effect" : "";
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Time.Now );
+    }
 }

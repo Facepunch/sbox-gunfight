@@ -26,20 +26,41 @@
 {
     public static ExperienceHints Current;
     public Panel Canvas;
+    
+    public List<ExperienceHintEntry> Entries = new();
+
+    public ExperienceHintEntry FindExisting( string text )
+    {
+        return Entries.FirstOrDefault( x => x.Text == text );
+    } 
 
     public void AddHint( int xp, string text, int lifetime = 5 )
     {
+        var existing = FindExisting( text );
+        if ( existing != null )
+        {
+            existing.XP += xp;
+            existing.StateHasChanged();
+            existing.Effect();
+            existing.DecayTask = Decay( existing, lifetime );
+
+            return;
+        }
+
         var entry = Canvas.AddChild<ExperienceHintEntry>();
         entry.XP = xp;
         entry.Text = text;
 
-        _ = Decay( entry, lifetime );
+        Entries.Add( entry );
+
+        entry.DecayTask = Decay( entry, lifetime );
     }
 
     protected async Task Decay( ExperienceHintEntry panel, int lifetime = 5 )
     {
         await GameTask.DelaySeconds( lifetime );
         panel.Delete();
+        Entries.Remove( panel );
     }
 
     protected override void OnAfterTreeRender( bool firstTime )

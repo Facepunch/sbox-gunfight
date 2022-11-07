@@ -39,7 +39,6 @@ public partial class KillConfirmedGamemode : Gamemode
 	public override void Spawn()
 	{
 		base.Spawn();
-		RandomizeLoadout();
 	}
 
 	public override void OnClientJoined( Client cl )
@@ -92,6 +91,8 @@ public partial class KillConfirmedGamemode : Gamemode
 
 	public override bool PlayerLoadout( GunfightPlayer player )
 	{
+		RandomizeLoadout();
+
 		CurrentLoadout?.Give( player );
 		GunfightStatusPanel.RpcUpdate( To.Everyone );
 

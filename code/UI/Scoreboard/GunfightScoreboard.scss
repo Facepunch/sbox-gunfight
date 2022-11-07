@@ -176,21 +176,22 @@ Scoreboard {
             min-width: 30%;
 
             .placeholder {
-                background-color: rgba(0, 0, 0, 0.2);
                 border: 2px solid rgba(0, 0, 0, 0.2);
-                align-items: center;
-                background-size: 100%;
-                margin-bottom: 4px;
-                height: 50px;
-                padding-right: 40px;
+                border-bottom: none;
                 text-align: center;
-                font-weight: 600;
+                font-weight: 700;
                 font-family: Oxanium;
-                font-size: 20px;
-                color: grey;
-                justify-content: center;
+                font-size: 35px;
                 align-items: center;
+                justify-content: center;
                 align-content: center;
+                height: 250px;
+                background-image: linear-gradient( to top, rgba( black, 0.5 ), rgba( black, 0 ) );
+
+                animation-name: placeholderanim;
+                animation-duration: 1.5s;
+                animation-timing-function: ease-in;
+                animation-iteration-count: infinite;
             }
 
             ScoreboardRow {
@@ -251,5 +252,20 @@ Scoreboard {
                 }
             }
         }
+    }
+}
+
+
+@keyframes placeholderanim {
+    0% {
+        color: rgba( #FFCF26, 1 );
+    }
+
+    50% {
+        color: rgba( #FFCF26, 0.5 );
+    }
+
+    100% {
+        color: rgba( #FFCF26, 1 );
     }
 }

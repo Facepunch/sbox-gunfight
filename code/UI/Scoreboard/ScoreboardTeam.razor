@@ -3,11 +3,22 @@
 
 @namespace Facepunch.Gunfight.UI
 
-<root>
-    <!-- <div class="header">
-        <label class="team-name">@TeamName</label>
-        <label class="team-score">@TeamScore</label>
-    </div> -->
+<root class="@Classes()">
+    @if ( Rows.Count > 0 )
+    {
+        <div class="header">
+            <label class="team-name">@TeamName</label>
+            <label class="team-score">@TeamScore</label>
+        </div>
+
+        <div class="names">
+            <label class="name">Name</label>
+            <label class="kills">Kills</label>
+            <label class="deaths">Deaths</label>
+            <label class="score">Score</label>
+            <label class="ping">Ping</label>
+        </div>
+    }
 
     <div class="canvas" @ref=Canvas></div>
 </root>
@@ -54,4 +65,20 @@
 
 		return p;
 	}
+
+    protected string Classes()
+    {
+        var friendState = TeamSystem.GetFriendState( Team, TeamSystem.MyTeam );
+
+		if ( friendState == TeamSystem.FriendlyStatus.Friendly ) return "friend";
+		if ( friendState == TeamSystem.FriendlyStatus.Hostile ) return "enemy";
+		if ( friendState == TeamSystem.FriendlyStatus.Neutral ) return "neutral";
+
+        return "";
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Rows.Count );
+    }
 }

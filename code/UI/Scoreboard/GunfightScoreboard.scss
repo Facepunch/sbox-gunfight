@@ -59,7 +59,6 @@ Scoreboard {
     }
 
     .names {
-        margin-top: 56px;
         align-items: center;
         background-size: 100%;
         color: $main-color;
@@ -99,6 +98,43 @@ Scoreboard {
         flex-direction: column;
         margin-bottom: 20px;
         width: 100%;
+
+        > .header {
+            flex-direction: row;
+            padding-top: 24px;
+            padding-bottom: 24px;
+
+            .team-name, .team-score {
+                text-transform: uppercase;
+                font-family: Oxanium;
+                font-weight: 600;
+                font-size: 50px;
+                color: white;
+                align-items: center;
+                text-shadow: 0px 0px 20px rgba( black, 0.5 );
+            }
+
+            .team-score {
+                margin-left: 16px;
+                font-size: 35px;
+            }
+        }
+
+        &.friend {
+            > .header {
+                label {
+                    color: $friendly;
+                }
+            }
+        }
+
+        &.enemy {
+            > .header {
+                label {
+                    color: $enemy;
+                }
+            }
+        }
 
         .canvas {
             flex-direction: column;

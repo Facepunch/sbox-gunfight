@@ -2,7 +2,7 @@ namespace Facepunch.Gunfight;
 
 public partial class DogtagEntity : BaseTrigger, IHudMarker
 {
-    public Team ScoringTeam { get; set; } = Team.Unassigned;
+    [Net] public Team ScoringTeam { get; set; } = Team.Unassigned;
     public TimeSince TimeSinceCreated = 0;
     public float Lifetime => 30f;
 
@@ -24,6 +24,8 @@ public partial class DogtagEntity : BaseTrigger, IHudMarker
 		info.Text = "";
 		info.Position = Position + Rotation.Up * 30f;
 		info.StayOnScreen = true;
+
+        info.Classes["friendly"] = TeamSystem.IsFriendly( TeamSystem.MyTeam, ScoringTeam );
 
 		return true;
 	}

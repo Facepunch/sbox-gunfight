@@ -326,7 +326,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 			return;
 
 		var attacker = info.Attacker as GunfightPlayer;
-		if ( attacker.IsValid() && !GamemodeSystem.Current.AllowFriendlyFire() )
+		if ( attacker.IsValid() && !GamemodeSystem.Current.AllowFriendlyFire() && Gamemode.FriendlyFireOverride == false )
 		{
 			if ( attacker.Team == Team )
 				return;

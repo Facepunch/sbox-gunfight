@@ -19,12 +19,21 @@ public partial class KillConfirmedGamemode : Gamemode
 	public override List<Team> TeamSetup => new() { Team.BLUFOR, Team.OPFOR };
 
 	// Stats
-	protected int MinimumPlayers => 2;
-	protected float RoundCountdownLength => 10f;
-	protected float RoundLength => 600f;
+	[ConVar.Server( "gunfight_kc_minimum_players" )]
+	protected static int MinimumPlayers { get; set; } = 2;
+
+	[ConVar.Server( "gunfight_kc_round_countdown" )]
+	protected static float RoundCountdownLength { get; set; } = 10f;
+
+	[ConVar.Server( "gunfight_kc_round_duration" )]
+	protected static float RoundLength { get; set; } = 600f;
+
+	[ConVar.Server( "gunfight_kc_max_score" )]
+	protected static int ConVarMaxScore { get; set; } = 75;
+
 	protected float GameWonLength => 30f;
 
-	public override int MaximumScore => 75;
+	public override int MaximumScore => ConVarMaxScore;
 	public override Panel GetHudPanel() => new UI.KillConfirmedHud();
 
 	public override void Spawn()

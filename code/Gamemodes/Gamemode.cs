@@ -214,8 +214,10 @@ public abstract partial class Gamemode : Entity
 	{
 		foreach( var client in Client.All )
 		{
-			client.SetInt( "kills", 0 );
+			client.SetInt( "frags", 0 );
 			client.SetInt( "deaths", 0 );
+			client.SetInt( "score", 0 );
+			client.SetInt( "captures", 0 );
 		}
 	}
 

@@ -3,7 +3,7 @@
 killfeed
 {
 	position: absolute;
-	top: 170px;
+	top: 200px;
 	left: 64px;
 	z-index: 100;
 	flex-direction: column-reverse;
@@ -22,8 +22,7 @@ KillFeedEntry
 	opacity: 1;
 	flex-shrink: 0;
 	flex-grow: 0;
-	padding: 12px;
-	height: 60px;
+	height: 30px;
 	font-size: 20px;
 	font-family: Oxanium;
 	font-weight: 500;

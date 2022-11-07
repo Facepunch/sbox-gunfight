@@ -8,9 +8,9 @@
     {
         <img class="avatar" src="avatar:@Client.PlayerId" />
         <label class="name">@Client.Name</label>
-        <label class="kills">@Client.GetValue( "frags", 0 )</label>
-        <label class="deaths">@Client.GetValue( "deaths", 0 )</label>
-        <label class="score">@Client.GetValue( "score", 0 )</label>
+        <label class="kills">@Kills</label>
+        <label class="deaths">@Deaths</label>
+        <label class="score">@Score</label>
         <label class="ping">@Client.Ping</label>
     }
     else
@@ -22,6 +22,10 @@
 @code
 {
     Client Client { get; set; }
+
+    public int Kills => Client.GetInt( "frags", 0 );
+    public int Deaths => Client.GetInt( "deaths", 0 );
+    public int Score => Client.GetInt( "score", 0 );
 
     public void SetClient( Client cl )
     {
@@ -44,4 +48,9 @@
 
 		return "";
 	}
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Kills, Deaths, Score );
+    }
 }

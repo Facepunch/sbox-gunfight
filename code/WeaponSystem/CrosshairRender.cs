@@ -27,6 +27,13 @@ public partial class CrosshairRender
 	public Color ThemeColor => Color.Parse( "#ffffda" ) ?? Color.Red;
 	public virtual void RenderCrosshair( Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
 	{
+		if ( !GunfightCamera.Target.IsValid() ) 
+			return;
+
+		var ctrl = GunfightCamera.Target.Controller as PlayerController;
+		if ( ctrl == null ) 
+			return;
+
 		var walkBob = MathF.Sin( Time.Now * 5f ) * GunfightCamera.Target.Velocity.Length.LerpInverse( 0, 350 );
 
 		var newCenter = center + new Vector2( walkBob * -5, walkBob * 0.5f );
@@ -51,7 +58,7 @@ public partial class CrosshairRender
 
 		var thickness = 2.0f;
 
-		var hideLines = GunfightCamera.Target.IsValid() && ( GunfightCamera.Target.Controller as PlayerController ).IsSprinting || !GunfightCamera.Target.GroundEntity.IsValid();
+		var hideLines = ctrl.IsSprinting || !GunfightCamera.Target.GroundEntity.IsValid();
 		if ( !hideLines )
 		{
 			draw.Line( thickness, newCenter + Vector2.Left * gap, newCenter + Vector2.Left * (length + gap) );

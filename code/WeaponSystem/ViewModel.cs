@@ -74,12 +74,15 @@ public partial class ViewModel : BaseViewModel
 	public Vector3 GetAimOffset()
 	{
 		var hasLaser = (Weapon as GunfightWeapon).HasAttachment<LaserSightAttachment>();
+		if ( Setup.LaserPositionOffset.IsNearlyZero() ) return Setup.AimPositionOffset;
+
 		return hasLaser ? Setup.LaserPositionOffset : Setup.AimPositionOffset;
 	}
 
 	public Angles GetAimAngle()
 	{
 		var hasLaser = (Weapon as GunfightWeapon).HasAttachment<LaserSightAttachment>();
+		if ( Setup.LaserAngleOffset.IsNearlyZero() ) return Setup.AimAngleOffset;
 		return hasLaser ? Setup.LaserAngleOffset : Setup.AimAngleOffset;
 	}
 

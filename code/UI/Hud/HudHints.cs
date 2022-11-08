@@ -23,9 +23,11 @@ public partial class HudHints : Panel
 	public override void Tick()
 	{
 		var player = Local.Pawn as GunfightPlayer;
-		if ( !player.IsValid() ) return;
 
-		SpectatorHint.SetClass( "active", player.CameraMode is GunfightSpectatorCamera );
+		SpectatorHint.SetClass( "active", GunfightCamera.Target != Local.Pawn );
+
+		if ( !player.IsValid() ) 
+			return;
 
 		var controller = player.Controller as PlayerController;
 		if ( controller == null ) return;

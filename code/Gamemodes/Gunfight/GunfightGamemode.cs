@@ -35,15 +35,17 @@ public partial class GunfightGamemode : Gamemode
 		RandomizeLoadout();
 	}
 
-	public override void OnClientJoined( Client cl )
+	public override void AssignTeam( Client cl )
 	{
-		base.OnClientJoined( cl );
-
 		var teamComponent = cl.Components.GetOrCreate<TeamComponent>();
 		teamComponent.Team = TeamSystem.GetLowestCount();
 
 		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, null, false );
-		
+	}
+
+	public override void OnClientJoined( Client cl )
+	{
+		base.OnClientJoined( cl );
 		VerifyEnoughPlayers();
 	}
 

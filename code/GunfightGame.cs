@@ -36,7 +36,7 @@ partial class GunfightGame : Game
 		GamemodeSystem.SetupGamemode();
 	}
 
-	protected Player CreatePawn( Client cl )
+	public Player CreatePawn( Client cl )
 	{
 		cl.Pawn?.Delete();
 

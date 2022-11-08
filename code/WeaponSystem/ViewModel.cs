@@ -129,7 +129,7 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref burstSprintLerp, burstSprint ? 1 : 0, 8f );
 
 		var frac = controller.IsAiming ? controller.AimFireDelay.Fraction : 0;
-		LerpTowards( ref aimLerp, frac, controller.IsAiming ? 30f : 15f );
+		LerpTowards( ref aimLerp, frac, controller.IsAiming ? 60f : 15f );
 
 		//LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 30f );
 		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );

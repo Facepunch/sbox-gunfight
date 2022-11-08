@@ -236,4 +236,26 @@ public abstract partial class Gamemode : Entity
 	{
 		UI.WinningTeamDisplay.AddToHud( team );
 	}
+
+	[ConCmd.Admin( "gunfight_debug_ui_teamdisplay" )]
+	public static void DebugShowTeamDisplay( bool win = true )
+	{
+		ShowWinningTeam( To.Everyone, win ? Team.BLUFOR : Team.OPFOR );
+	}
+
+	[Event( "gunfight.hudrender" )]
+	protected void HudRender()
+	{
+		GunfightHud.HudState = HudVisibilityState.Visible;
+
+		if ( UI.WinningTeamDisplay.Visible )
+			GunfightHud.HudState = HudVisibilityState.Invisible;
+
+		UpdateHudRenderState();
+	}
+
+	public virtual void UpdateHudRenderState()
+	{
+		//
+	}
 }

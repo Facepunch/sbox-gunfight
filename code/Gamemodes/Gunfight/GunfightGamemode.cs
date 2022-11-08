@@ -42,7 +42,7 @@ public partial class GunfightGamemode : Gamemode
 		var teamComponent = cl.Components.GetOrCreate<TeamComponent>();
 		teamComponent.Team = TeamSystem.GetLowestCount();
 
-		UI.Chatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, null, false );
+		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, null, false );
 		
 		VerifyEnoughPlayers();
 	}
@@ -306,7 +306,7 @@ public partial class GunfightGamemode : Gamemode
 		var scores = GunfightGame.Current.Scores;
 		var newScore = scores.AddScore( team, 1 );
 
-		ChatBox.AddInformation( To.Everyone, $"{team.GetName()} won the round!" );
+		UI.GunfightChatbox.AddInformation( To.Everyone, $"{team.GetName()} won the round!" );
 
 		// Round ends!
 		if ( newScore < scores.MaximumScore )

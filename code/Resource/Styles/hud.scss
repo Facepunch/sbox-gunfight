@@ -410,3 +410,20 @@ armourhud
         display: none;
     }
 }
+
+HudRootPanel {
+    GunfightGamemodePanel, KillConfirmedHud, .main-game-hud { transition: opacity 0.2s ease; }
+
+    &.disable-hud {
+        GunfightGamemodePanel, KillConfirmedHud, .main-game-hud {
+            opacity: 0;    
+        }
+    }
+
+    &.almost-disable-hud {
+        GunfightGamemodePanel, KillConfirmedHud, .main-game-hud {
+            transition: opacity 0.2s ease;
+            opacity: 0.2;    
+        }
+    }
+}

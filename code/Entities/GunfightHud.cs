@@ -3,9 +3,18 @@ using Sandbox.UI;
 
 namespace Facepunch.Gunfight;
 
+public enum HudVisibilityState
+{
+	Visible,
+	AlmostVisible,
+	Invisible
+}
+
 public partial class GunfightHud : HudEntity<HudRootPanel>
 {
 	public static Panel CurrentHudPanel { get; protected set; }
+	
+	public static HudVisibilityState HudState = HudVisibilityState.Visible;
 
 	[Event.Tick.Client]
 	protected void DoTick()

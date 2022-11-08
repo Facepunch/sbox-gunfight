@@ -48,7 +48,7 @@ public partial class KillConfirmedGamemode : Gamemode
 		var teamComponent = cl.Components.GetOrCreate<TeamComponent>();
 		teamComponent.Team = TeamSystem.GetLowestCount();
 
-		UI.Chatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, null, false );
+		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, null, false );
 		
 		VerifyEnoughPlayers();
 	}
@@ -192,7 +192,7 @@ public partial class KillConfirmedGamemode : Gamemode
 
 		Event.Run( "gunfight.gamestate.changed", before, after );
 	}
-	
+
 	protected void OnSecond()
 	{
 		CachedTimeRemaining = FormattedTimeRemaining;

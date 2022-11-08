@@ -31,7 +31,7 @@ public partial class KillConfirmedGamemode : Gamemode
 	[ConVar.Server( "gunfight_kc_max_score" )]
 	protected static int ConVarMaxScore { get; set; } = 75;
 
-	protected float GameWonLength => 30f;
+	protected float GameWonLength => 15f;
 
 	public override int MaximumScore => ConVarMaxScore;
 	public override Panel GetHudPanel() => new UI.KillConfirmedHud();

@@ -163,7 +163,7 @@
     protected async Task Decay( int lifetime = 5 )
     {
         Visible = true;
-        await GameTask.DelaySeconds( lifetime );
+        await GameTask.DelayRealtimeSeconds( lifetime );
         Visible = false;
         Delete();
     }
@@ -173,7 +173,7 @@
         var pnl = GunfightGame.Current.Hud.RootPanel.AddChild<WinningTeamDisplay>();
         pnl.Team = team;
 
-        _ = pnl.Decay( 10 );
+        _ = pnl.Decay( 15 );
     }
 
     protected string TeamClasses()

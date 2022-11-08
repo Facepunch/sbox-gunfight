@@ -7,8 +7,8 @@ namespace Facepunch.Gunfight;
 public partial class KillConfirmedGamemode : Gamemode
 {
 	[Net] public GameState State { get; protected set; }
-	[Net] public TimeSince TimeSinceStateChanged { get; protected set; }
-	[Net] public TimeUntil TimeUntilNextState { get; protected set; }
+	[Net] public RealTimeSince TimeSinceStateChanged { get; protected set; }
+	[Net] public RealTimeUntil TimeUntilNextState { get; protected set; }
 	[Net] public Team WinningTeam { get; protected set; }
 
 	public TimeSpan TimeRemaining => TimeSpan.FromSeconds( TimeUntilNextState );
@@ -293,6 +293,22 @@ public partial class KillConfirmedGamemode : Gamemode
 		}
 	}
 
+	protected override void TickServer()
+	{
+		Global.TimeScale = 1;
+
+		if ( State == GameState.GameWon )
+		{
+			float timeSince = TimeSinceStateChanged;
+			Global.TimeScale = 1 - timeSince.Remap( 0, 5, 0f, 0.75f ).Clamp( 0, 0.75f );
+		}
+	}
+
+	[ConCmd.Admin( "gunfight_debug_kc_wingame" )]
+	public static void WinGameDebug()
+	{
+		( GamemodeSystem.Current as KillConfirmedGamemode )?.SetGameState( GameState.GameWon );
+	}
 
 	public enum GameState
 	{

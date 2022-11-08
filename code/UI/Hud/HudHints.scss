@@ -6,8 +6,9 @@ hudhints {
     height: 100%;
 
     > .spectator {
-        top: 128px;
+        position: absolute;
         left: 64px;
+        top: 45%;
         height: 70px;
         padding-left: 16px;
         flex-direction: column;
@@ -26,8 +27,8 @@ hudhints {
         .identity {
             .name {
                 margin-left: 8px;
-                font-family: $alternate-font-bold;
-                color: $theme-color;
+                font-family: Oxanium;
+                color: $main-color;
             }
         }
     }

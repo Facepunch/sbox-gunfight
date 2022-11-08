@@ -69,6 +69,13 @@ public abstract partial class Gamemode : Entity
 	public virtual void OnClientJoined( Client cl )
 	{
 		PlayerCount++;
+		
+		AssignTeam( cl );
+	}
+	
+	public virtual void AssignTeam( Client cl )
+	{
+		// Do nothing for now	
 	}
 
 	public virtual void Initialize()

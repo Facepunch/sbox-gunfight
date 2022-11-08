@@ -1,0 +1,130 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@inherits Panel;
+@namespace Facepunch.Gunfight.UI
+
+<style>
+    WinningTeamDisplay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        transition: all 0.2s ease;
+
+        &:intro {
+            opacity: 0;
+
+        }
+
+        flex-direction: column;
+
+        > .canvas {
+            margin-bottom: 200px;
+            background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.5) 100%);
+            box-shadow: 0px 4px 76px rgba(0, 0, 0, 0.45);
+            
+            > .header {
+                padding: 15px;
+
+                label {
+                    top: 2px;
+                    text-transform: uppercase;
+                    font-family: Oxanium;
+                    font-weight: 600;
+                    font-size: 32px;
+                    color: #FFCF26;
+                }
+            }
+
+            > .main {
+                padding: 20px;
+
+                justify-content: center;
+                align-items: center;
+                align-content: stretch;
+                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.152) 0%, rgba(0, 0, 0, 0.2) 100%);
+
+                > .team {
+                    top: 2px;
+                    text-transform: uppercase;
+                    font-family: Oxanium;
+                    font-weight: 600;
+                    font-size: 24px;
+                }
+            
+                > .text {
+                    top: 2px;
+                    text-transform: uppercase;
+                    font-family: Oxanium;
+                    font-weight: 600;
+                    font-size: 24px;
+                    color: #FFCF26;
+                }
+            }
+        }
+
+        &.friend {
+            .team {
+                color: rgba( #1AE7F4, 0.8 );
+            }
+        }
+
+        &.enemy {
+            .team {
+                color: rgba( #F53F16, 0.8 );
+            }
+        }
+    }
+</style>
+
+<root class="@TeamClasses()">
+    <div class="canvas">
+        <div class="header">
+            <label>GAME OVER</label>
+        </div>
+
+        <div class="main">
+            <label class="team">@Team.GetName()</label> <label class="text">IS THE WINNER</label>
+        </div>
+    </div>
+</root>
+
+@code
+{
+    public Team Team = Team.Unassigned;
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Team );
+    }
+
+    protected async Task Decay( int lifetime = 5 )
+    {
+        await GameTask.DelaySeconds( lifetime );
+        Delete();
+    }
+
+    public static void AddToHud( Team team )
+    {
+        var pnl = GunfightGame.Current.Hud.RootPanel.AddChild<WinningTeamDisplay>();
+        pnl.Team = team;
+
+        _ = pnl.Decay( 10 );
+    }
+
+    protected string TeamClasses()
+    {
+		var friendState = TeamSystem.GetFriendState( Team, TeamSystem.MyTeam );
+
+		if ( friendState == TeamSystem.FriendlyStatus.Friendly ) return "friend";
+		if ( friendState == TeamSystem.FriendlyStatus.Hostile ) return "enemy";
+		if ( friendState == TeamSystem.FriendlyStatus.Neutral ) return "neutral";
+
+		return "nothing";
+    }
+}

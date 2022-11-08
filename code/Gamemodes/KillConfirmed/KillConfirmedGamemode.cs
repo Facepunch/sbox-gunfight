@@ -187,7 +187,7 @@ public partial class KillConfirmedGamemode : Gamemode
 		else if ( after == GameState.GameWon )
 		{
 			TimeUntilNextState = GameWonLength;
-			ChatBox.AddInformation( To.Everyone, $"{WinningTeam.GetName()} won the match!" );
+			ShowWinningTeam( To.Everyone, WinningTeam );
 		}
 
 		Event.Run( "gunfight.gamestate.changed", before, after );

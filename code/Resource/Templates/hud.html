@@ -1,23 +1,36 @@
 ﻿<root>
-    <div class="bottom-left">
-        <!--<ArmourHud></ArmourHud>
-            <HealthHud></HealthHud>-->
-    </div>
-
-    <div class="bottom-right">
-        <FireModePanel></FireModePanel>
-        <Ammo></Ammo>
-        <div class="tactical">
-            <Grenades></Grenades>
+    <div class="main-game-hud">
+        <div class="bottom-left">
+            <!--<ArmourHud></ArmourHud>
+                <HealthHud></HealthHud>-->
         </div>
+    
+        <div class="bottom-right">
+            <FireModePanel></FireModePanel>
+            <Ammo></Ammo>
+            <div class="tactical">
+                <Grenades></Grenades>
+            </div>
+        </div>
+    
+        <div class="top-middle">
+        </div>
+        <div class="bottom-middle">
+            <Stance></Stance>
+        </div>
+    
+        <NotificationManager />
+        <ExperienceHints />
+        <DamageIndicator />
+        <HitIndicator />
+        <GunVoiceList />
+        <GunVoiceSpeaker />
+        <HudHints />
+        <HudMarkers />
+        <PickupFeed />
+        <GunfightKillFeed />
     </div>
 
-    <div class="top-middle">
-    </div>
-    <div class="bottom-middle">
-        <Stance></Stance>
-    </div>
-
-    <NotificationManager />
-    <ExperienceHints />
+    <GunfightScoreboard />
+    <GunfightChatbox />
 </root>

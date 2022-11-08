@@ -16,28 +16,35 @@
         align-content: center;
         transition: all 0.2s ease;
 
+        z-index: 98;
+
         &:intro {
             opacity: 0;
 
         }
 
-        flex-direction: column;
-
         > .canvas {
-            margin-bottom: 200px;
-            background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.5) 100%);
-            box-shadow: 0px 4px 76px rgba(0, 0, 0, 0.45);
+            flex-direction: column;
+            margin-bottom: 100px;
             
             > .header {
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                
                 padding: 15px;
+                padding-left: 300px;
+                padding-right: 300px;
 
                 label {
                     top: 2px;
                     text-transform: uppercase;
                     font-family: Oxanium;
-                    font-weight: 600;
-                    font-size: 32px;
+                    font-weight: 700;
+                    font-size: 70px;
                     color: #FFCF26;
+                    text-shadow: 0px 0px 5px rgba( black, 0.5 );
                 }
             }
 
@@ -47,7 +54,6 @@
                 justify-content: center;
                 align-items: center;
                 align-content: stretch;
-                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.152) 0%, rgba(0, 0, 0, 0.2) 100%);
 
                 > .team {
                     top: 2px;
@@ -55,6 +61,8 @@
                     font-family: Oxanium;
                     font-weight: 600;
                     font-size: 24px;
+                    text-shadow: 0px 0px 5px rgba( black, 0.5 );
+
                 }
             
                 > .text {
@@ -62,21 +70,37 @@
                     text-transform: uppercase;
                     font-family: Oxanium;
                     font-weight: 600;
-                    font-size: 24px;
+                    font-size: 22px;
                     color: #FFCF26;
+                    text-shadow: 0px 0px 5px rgba( black, 0.5 );
+    
                 }
             }
         }
 
         &.friend {
+            background-image: linear-gradient( to top, rgba(#52afec, 0) 0%, rgba(#52afec, 0) 30%, rgba(#52afec, 0.15) 100%);
             .team {
-                color: rgba( #1AE7F4, 0.8 );
+                color: rgba( #52afec, 0.8 );
+            }
+
+            > .canvas { 
+                > .header {
+                    background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(#52afec, 0.9) 45%, rgba(#52afec, 0.9) 50%, rgba(#52afec, 0.9) 55%, rgba(0, 0, 0, 0) 100% );
+                }
             }
         }
 
         &.enemy {
+            background-image: linear-gradient( to top, rgba(#F53F16, 0) 0%, rgba(#F53F16, 0) 30%, rgba(#F53F16, 0.15) 100%);
             .team {
                 color: rgba( #F53F16, 0.8 );
+            }
+
+            > .canvas { 
+                > .header {
+                    background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(#F53F16, 0.9) 45%, rgba(#F53F16, 0.9) 50%, rgba(#F53F16, 0.9) 55%, rgba(0, 0, 0, 0) 100% );
+                }
             }
         }
     }
@@ -85,7 +109,14 @@
 <root class="@TeamClasses()">
     <div class="canvas">
         <div class="header">
-            <label>GAME OVER</label>
+            @if ( Winner )
+            {
+                <label>VICTORY</label>
+            }
+            else
+            {
+                <label>DEFEAT</label>
+            }
         </div>
 
         <div class="main">
@@ -96,7 +127,10 @@
 
 @code
 {
+    public static bool Visible;
+
     public Team Team = Team.Unassigned;
+    public bool Winner => TeamSystem.GetFriendState( Team, TeamSystem.MyTeam ) == TeamSystem.FriendlyStatus.Friendly;
 
     protected override int BuildHash()
     {
@@ -105,7 +139,9 @@
 
     protected async Task Decay( int lifetime = 5 )
     {
+        Visible = true;
         await GameTask.DelaySeconds( lifetime );
+        Visible = false;
         Delete();
     }
 

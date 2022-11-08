@@ -4,11 +4,11 @@ iconpanel {
     font-family: "Material Icons";
 }
 
-Chatbox {
+GunfightChatbox {
     position: absolute;
     bottom: 64px;
     left: 64px;
-    z-index: 50;
+    z-index: 99;
     flex-direction: column;
     width: 550px;
     font-family: $main-font-bold;

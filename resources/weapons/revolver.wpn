@@ -67,8 +67,8 @@
 			BaseRecoilMinimum = "-8,8"
 			BaseRecoilMaximum = "8,16"
 			SpreadDecay = "30,30"
-			MinimumSpread = "-15,8"
-			MaximumSpread = "15,12"
+			MinimumSpread = "-8,4"
+			MaximumSpread = "8,8"
 		}
 		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
 	}

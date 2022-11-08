@@ -230,4 +230,10 @@ public abstract partial class Gamemode : Entity
 	{
 		return true;
 	}
+
+	[ClientRpc]
+	public static void ShowWinningTeam( Team team = Team.Unassigned )
+	{
+		UI.WinningTeamDisplay.AddToHud( team );
+	}
 }

@@ -258,4 +258,15 @@ public abstract partial class Gamemode : Entity
 	{
 		//
 	}
+
+	[Event.Tick.Server]
+	protected void EventServerTick()
+	{
+		TickServer();
+	}
+
+	protected virtual void TickServer()
+	{
+		//
+	}
 }

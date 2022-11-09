@@ -748,6 +748,30 @@ public partial class PlayerController : BasePlayerController
 	}
 
 	/// <summary>
+	/// Traces the bbox and returns the trace result.
+	/// LiftFeet will move the start position up by this amount, while keeping the top of the bbox at the same 
+	/// position. This is good when tracing down because you won't be tracing through the ceiling above.
+	/// </summary>
+	public override TraceResult TraceBBox( Vector3 start, Vector3 end, Vector3 mins, Vector3 maxs, float liftFeet = 0.0f )
+	{
+		if ( liftFeet > 0 )
+		{
+			start += Vector3.Up * liftFeet;
+			maxs = maxs.WithZ( maxs.z - liftFeet );
+		}
+
+		var tr = Trace.Ray( start + TraceOffset, end + TraceOffset )
+					.Size( mins, maxs )
+					.WithAnyTags( "solid", "playerclip", "passbullets" )
+					.WithoutTags( "player" )
+					.Ignore( Pawn )
+					.Run();
+
+		tr.EndPosition -= TraceOffset;
+		return tr;
+	}
+
+	/// <summary>
 	/// Traces the current bbox and returns the result.
 	/// liftFeet will move the start position up by this amount, while keeping the top of the bbox at the same
 	/// position. This is good when tracing down because you won't be tracing through the ceiling above.

@@ -540,6 +540,9 @@ public partial class PlayerController : BasePlayerController
 
 	public virtual void CheckJumpButton()
 	{
+		if ( Slide.TimeSinceActivate < 0.3f )
+			return;
+		
 		// If we are in the water most of the way...
 		if ( Swimming )
 		{

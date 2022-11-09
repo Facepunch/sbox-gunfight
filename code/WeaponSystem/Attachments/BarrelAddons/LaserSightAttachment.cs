@@ -11,7 +11,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 	public Particles LaserParticles { get; private set; }
 	public Particles DotParticles { get; private set; }
 
-	public Color LaserColor { get; set; } = new( 1f, 0, 0, 1 );
+	public Color LaserColor => new( 0.5f, 0, 0, 1 );
 
 
 	public override void OnNewModel( Model model )

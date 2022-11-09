@@ -50,6 +50,8 @@ public partial class GunfightPlayer : Player, IHudMarker
 		Health = 100;
 		Armour = 0;
 
+		Tags.Add( "player" );
+
 		base.Respawn();
 	}
 

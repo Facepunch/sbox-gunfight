@@ -41,6 +41,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 	{
 		Wish = Input.Pressed( InputButton.Use );
 
+		if ( !Controller.IsAiming ) return false;
 		if ( !Wish ) return false;
 		if ( !CanMountWall() ) return false;
 		if ( Controller.Slide.IsActive ) return false;

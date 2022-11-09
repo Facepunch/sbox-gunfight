@@ -325,7 +325,42 @@ public partial class PlayerController : BasePlayerController
 			DebugOverlay.ScreenText( $"    Duck: {Duck?.IsActive ?? false}", lineOffset + 7 );
 		}
 
+		if ( Host.IsServer ) {
+			if ( IsSprinting )
+			{
+				var trForward = Trace.Ray( Pawn.EyePosition, Pawn.EyePosition + Pawn.EyeRotation.Forward * 50f ).WithTag( "solid" ).Radius( 5f ).Ignore( Pawn ).Run();
+
+				if ( trForward.Entity is DoorEntity door )
+				{
+					door.Speed = 500f;
+					door.Open( Pawn );
+				
+					SendDoorSlamEffect( To.Single( Pawn.Client ) );
+
+					_ = ResetDoor( door );
+				}
+			}
+		}
+
+
 		SimulateMechanics();
+	}
+
+	static TimeSince LastDoorSlam = 5f;
+	[ClientRpc]
+	public static void SendDoorSlamEffect()
+	{
+		if ( LastDoorSlam < 0.5f ) return;
+
+		LastDoorSlam = 0;
+
+		new ScreenShake.Pitch( 0.5f, 3f * 10f );
+	}
+
+	protected async Task ResetDoor( DoorEntity door )
+	{
+		await GameTask.DelaySeconds( 0.2f );
+		door.Speed = 100f;
 	}
 
 	protected void SimulateMechanics()

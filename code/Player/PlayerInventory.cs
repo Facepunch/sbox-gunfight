@@ -95,8 +95,7 @@ public partial class PlayerInventory : BaseNetworkable
 
 		carriable?.OnCarryStart( Owner );
 
-		if ( makeactive || !Owner.ActiveChild.IsValid() )
-			SetActive( ent );
+		SetActive( ent );
 
 		return true;
 	}

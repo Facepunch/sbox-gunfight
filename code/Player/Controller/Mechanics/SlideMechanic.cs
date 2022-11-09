@@ -56,6 +56,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 	{
 		Wish = Input.Down( InputButton.Duck );
 
+		if ( !Controller.IsSprinting ) return false;
 		if ( !Wish ) return false;
 		if ( !ShouldSlide() ) return false;
 		if ( TimeSinceActivate < Cooldown ) return false;
@@ -82,6 +83,9 @@ public partial class SlideMechanic : BaseMoveMechanic
 		var dot = Vector3.Dot( Controller.Velocity.Normal, slopeDir );
 		var slopeForward = Vector3.Cross( Controller.GroundNormal, Controller.Pawn.Rotation.Right );
 		var spdGain = 4000f;
+
+		if ( Controller.IsBurstSprinting )
+			spdGain *= 1.5f;
 
 		if ( dot > 0.15f )
 			spdGain *= 0.8f * SlideIntensity;

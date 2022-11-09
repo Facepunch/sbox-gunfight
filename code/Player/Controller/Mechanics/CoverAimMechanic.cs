@@ -39,7 +39,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-		Wish = Input.Down( InputButton.SecondaryAttack );
+		Wish = Input.Pressed( InputButton.Use );
 
 		if ( !Wish ) return false;
 		if ( !CanMountWall() ) return false;
@@ -55,7 +55,15 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 
 	public override void PreSimulate()
 	{
-		if ( !Input.Down( InputButton.SecondaryAttack ) ) StopTry();
+		bool shouldStop = false;
+		if ( !Input.Forward.AlmostEqual( 0f ) || !Input.Left.AlmostEqual( 0f ) || Input.Pressed( InputButton.Jump ) )
+			shouldStop = true;
+
+		if ( Vector3.Dot( Controller.EyeRotation.Forward.Normal, CachedWallInfo.Normal ) > - 0.5f )
+			shouldStop = true;
+
+		if ( shouldStop ) 
+			StopTry();
 	}
 
 	public override void StopTry()

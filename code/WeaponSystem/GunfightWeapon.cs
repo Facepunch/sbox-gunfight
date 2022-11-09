@@ -235,6 +235,9 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( !isInAir && PlayerController.Duck.IsActive )
 			recoilScale *= 0.8f;
 
+		if ( PlayerController.CoverAim.IsActive )
+			recoilScale *= 0.5f;
+
 		if ( isInAir )
 			recoilScale *= 1.4f;
 

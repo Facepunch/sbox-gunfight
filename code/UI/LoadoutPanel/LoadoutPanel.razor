@@ -15,25 +15,7 @@
 
     @if ( Loadout.PrimaryWeapon.IsSet )
     {
-        <div class="entry @(Loadout.PrimaryWeapon.HasAttachments ? "has-attachments" : "")">
-            <image class="icon" src="@Loadout.PrimaryWeapon.Definition.Icon" />
-            <label class="name">@Loadout.PrimaryWeapon.NiceName</label>
-
-            @if ( Loadout.PrimaryWeapon.HasAttachments )
-            {
-                <div class="attachments">
-                    @foreach ( var attachment in Loadout.PrimaryWeapon.Attachments )
-			        {
-				        var library = TypeLibrary.GetDescription( attachment );
-				        if ( library is null ) continue;
-
-                        <div class="attachment">
-                            <label class="name">@library.Title</label>
-                        </div>
-			        }
-                </div>
-            }
-        </div>
+        <WeaponPanel Weapon="@Loadout.PrimaryWeapon.WeaponName" />
     }
     else
     {
@@ -44,25 +26,7 @@
 
     @if ( Loadout.SecondaryWeapon.IsSet )
     {
-        <div class="entry @(Loadout.SecondaryWeapon.HasAttachments ? "has-attachments" : "")">
-            <image class="icon" src="@Loadout.SecondaryWeapon.Definition.Icon" />
-            <label class="name">@Loadout.SecondaryWeapon.NiceName</label>
-
-            @if (Loadout.SecondaryWeapon.Attachments != null && Loadout.SecondaryWeapon.Attachments.Count > 0)
-            {
-                <div class="attachments">
-                    @foreach ( var attachment in Loadout.SecondaryWeapon.Attachments )
-			        {
-				        var library = TypeLibrary.GetDescription( attachment );
-				        if ( library is null ) continue;
-
-                        <div class="attachment">
-                            <label class="name">@library.Title</label>
-                        </div>
-			        }
-                </div>
-            }
-        </div>
+        <WeaponPanel Weapon="@Loadout.SecondaryWeapon.WeaponName" />
     }
     else
     {

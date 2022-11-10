@@ -11,6 +11,14 @@ public struct LoadoutSlot
 
 	public string WeaponName { get; set; }
 	public List<string> Attachments { get; set; }
+
+
+	public string[] GetAttachments() 
+	{
+		if ( Attachments == null ) return new List<string>().ToArray();
+
+		return Attachments.ToArray();
+	}
 }
 
 [GameResource( "Gunfight Loadout", "ldt", "A loadout resource for Gunfight", Icon = "checklist", IconBgColor = "#62945c", IconFgColor = "#335c2e" )]
@@ -65,10 +73,10 @@ public partial class Loadout : GameResource
 	/// <param name="player"></param>
 	public void Give( GunfightPlayer player )
 	{
-		if ( PrimaryWeapon.IsSet )
-			player.GiveWeapon( PrimaryWeapon.Definition, true, PrimaryWeapon.Attachments.ToArray() );
 		if ( SecondaryWeapon.IsSet )
-			player.GiveWeapon( SecondaryWeapon.Definition, false, SecondaryWeapon.Attachments.ToArray() );
+			player.GiveWeapon( SecondaryWeapon.Definition, false, SecondaryWeapon.GetAttachments() );
+		if ( PrimaryWeapon.IsSet )
+			player.GiveWeapon( PrimaryWeapon.Definition, true, PrimaryWeapon.GetAttachments() );
 
 		foreach( var kv in Ammo )
 			player.GiveAmmo( kv.Key, kv.Value );

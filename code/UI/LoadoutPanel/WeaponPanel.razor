@@ -28,7 +28,7 @@
             margin-right: 10%;
         }
 
-        > .name {
+        > .label {
             position: absolute;
             margin-left: 8px;
             top: 80px;
@@ -46,6 +46,10 @@
                 top: 9px;
                 color: rgba( white, 0.8 );
             }
+        }
+
+        > .placeholder {
+            color: rgba( white, 0.8 );
         }
 
         &.no-name {
@@ -77,8 +81,14 @@
 </style>
 
 <root class="@Classes()">
-    <img class="icon" src="@Definition.Icon" />
-    <text class="name">@Definition.WeaponName</text>
+    @if ( Definition != null )
+    {
+        <img class="icon" src="@Definition.Icon" />
+    }
+    else
+    {
+        <text class="placeholder">NO WEAPON</text>
+    }
 </root>
 
 @code

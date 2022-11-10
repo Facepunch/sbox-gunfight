@@ -72,7 +72,7 @@ public partial class KillConfirmedGamemode : Gamemode
 
 	protected static Loadout GetRandomLoadout()
 	{
-		var loadouts = Loadout.WithTag( "gunfight" ).ToList();
+		var loadouts = Loadout.WithTag( "generic" ).ToList();
 		var index = Rand.Int( 1, loadouts.Count() ) - 1;
 		var loadout = loadouts[index];
 

@@ -34,16 +34,17 @@
                     @if ( SelectedLoadout != null )
                     {
                         <label class="status">Use @SelectedLoadout.LoadoutName?</label>
+                        <div class="row">
+                            @if ( SelectedLoadout.PrimaryWeapon.IsSet )
+                            {
+                                <WeaponPanel Weapon=@SelectedLoadout.PrimaryWeapon.WeaponName HideName />
+                            }
 
-                        @if ( SelectedLoadout.PrimaryWeapon.IsSet )
-                        {
-                            <WeaponPanel Weapon=@SelectedLoadout.PrimaryWeapon.WeaponName HideName />
-                        }
-
-                        @if ( SelectedLoadout.SecondaryWeapon.IsSet )
-                        {
-                            <WeaponPanel Weapon=@SelectedLoadout.SecondaryWeapon.WeaponName HideName />
-                        }
+                            @if ( SelectedLoadout.SecondaryWeapon.IsSet )
+                            {
+                                <WeaponPanel Weapon=@SelectedLoadout.SecondaryWeapon.WeaponName HideName />
+                            }
+                        </div>
                     }
                 </div>
             <div class="actions">
@@ -65,7 +66,7 @@
 
     public IEnumerable<Loadout> GetLoadouts()
     {
-        return Loadout.All;
+        return Loadout.WithTag( "generic" );
     }
 
     public void SelectLoadout( Loadout loadout )

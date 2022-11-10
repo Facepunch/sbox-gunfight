@@ -130,6 +130,14 @@ LoadoutSelector {
                     color: $main-color;
                     font-size: 32px;
                 }
+
+                .row {
+                    flex-direction: row;
+
+                    > WeaponPanel {
+                        margin-right: 16px;
+                    }
+                }
             }
         
             > .actions {

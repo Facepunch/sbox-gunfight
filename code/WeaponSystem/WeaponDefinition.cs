@@ -170,6 +170,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Ammo" )]
 	public bool ReloadSingle { get; set; } = false;
 
+	[Category( "Shooting" )]
+	public float MaxEffectiveRange { get; set; } = 2048f;
+
 	[Category( "UI" )]
 	public CrosshairType Crosshair { get; set; } = CrosshairType.Default;
 

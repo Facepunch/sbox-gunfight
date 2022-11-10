@@ -65,14 +65,7 @@
 
     public IEnumerable<Loadout> GetLoadouts()
     {
-        if ( LoadoutSystem.AllowCustomLoadouts )
-        {
-            return Loadout.WithTag( LoadoutSystem.LoadoutTag );
-        }
-        else
-        {
-            return Loadout.All;
-        }
+        return Loadout.All;
     }
 
     public void SelectLoadout( Loadout loadout )
@@ -87,20 +80,30 @@
 
     public void Shutdown()
     {
-        Delete();
+        SetClass( "open", false );
     }
 
     public void Submit()
     {
         if ( SelectedLoadout == null )
-        {
-            Log.Info("No loadout.");
-
             return;
-        }
 
         LoadoutSystem.SetPreference( SelectedLoadout.ResourceName );
 
-        Delete();
+        Shutdown();
+    }
+
+    protected void ToggleOpen()
+    {
+        if ( !LoadoutSystem.AllowCustomLoadouts )
+            return;
+
+        SetClass( "open", !HasClass( "open" ) );
+    }
+
+    public override void Tick()
+    {
+        if ( Input.Pressed( InputButton.Menu ) )
+            ToggleOpen();
     }
 }

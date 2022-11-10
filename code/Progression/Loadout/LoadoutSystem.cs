@@ -1,10 +1,34 @@
 namespace Facepunch.Gunfight;
 
-public partial class LoadoutSystem
+public partial class LoadoutSystem : Entity
 {
-    public static Loadout MatchLoadout = null;
-    public static bool AllowCustomLoadouts = false;
-    public static string LoadoutTag = "";
+    private static LoadoutSystem Instance;
+
+    [Net] private Loadout matchLoadout { get; set; }
+    [Net] private bool allowCustomLoadouts { get; set; }
+
+    public static Loadout MatchLoadout
+    {
+        get => Instance.matchLoadout;
+        set => Instance.matchLoadout = value;
+    }
+    
+    public static bool AllowCustomLoadouts
+    {
+        get => Instance.allowCustomLoadouts;
+        set => Instance.allowCustomLoadouts = value;
+    }
+
+    public override void Spawn()
+    {
+        Transmit = TransmitType.Always;
+        Instance = this;
+    }
+
+    public override void ClientSpawn()
+    {
+        Instance = this;
+    }
 
     [ConCmd.Server( "gunfight_loadout_setpreference" )]
     public static void SetPreference( string name )

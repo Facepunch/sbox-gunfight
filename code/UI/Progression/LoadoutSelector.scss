@@ -6,20 +6,22 @@ LoadoutSelector {
     font-family: $main-font-bold;
     flex-direction: row;
     position: absolute;
-    opacity: 1;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     z-index: 100;
     transition: opacity 0.2s ease;
-    pointer-events: all;
+    pointer-events: none;
+    opacity: 0;
 
-    &:intro, &:outro {
-        pointer-events: none;
-        opacity: 0;
+    &.open {
+        opacity: 1;
+        pointer-events: all;
+
         .main {
-            transform: translateX(-100%);
+            transform: translateX(0%);
+
         }
     }
 
@@ -28,7 +30,8 @@ LoadoutSelector {
     }
 
     .main {
-        transform: translateX(0%);
+        transform: translateX(-100%);
+
         flex-direction: column;
         transition: all 0.2s ease;
         position: absolute;

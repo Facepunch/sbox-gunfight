@@ -23,6 +23,8 @@ partial class GunfightGame : Game
 		if ( IsServer )
 		{
 			Hud = new GunfightHud();
+			_ = new LoadoutSystem();
+
 			Scores = new();
 
 			Global.TickRate = 30;

@@ -39,6 +39,8 @@ public partial class KillConfirmedGamemode : Gamemode
 	public override void Spawn()
 	{
 		base.Spawn();
+
+		LoadoutSystem.AllowCustomLoadouts = true;
 	}
 
 	public override void AssignTeam( Client cl )
@@ -79,7 +81,7 @@ public partial class KillConfirmedGamemode : Gamemode
 
 	protected void RandomizeLoadout()
 	{
-		var oldLoadout = CurrentLoadout;
+		var oldLoadout = LoadoutSystem.MatchLoadout;
 		
 		Loadout newLoadout = null;
 		while ( newLoadout == null )
@@ -90,14 +92,14 @@ public partial class KillConfirmedGamemode : Gamemode
 			newLoadout = randomLoadout;
 		}
 
-		CurrentLoadout = newLoadout;
+		LoadoutSystem.MatchLoadout = newLoadout;
 	}
 
 	public override bool PlayerLoadout( GunfightPlayer player )
 	{
 		RandomizeLoadout();
 
-		CurrentLoadout?.Give( player );
+		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
 		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
 		return true;

@@ -1,0 +1,106 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@attribute [StyleSheet( "/UI/Progression/LoadoutSelector.scss" )]
+@namespace Facepunch.Gunfight.UI
+
+<root>
+    <div class="main">
+        <div class="title">
+            <text>Loadouts</text>
+        </div>
+
+        <div class="loadouts grow" @ref=LoadoutsCanvas>
+            @foreach( var loadout in @GetLoadouts() )
+            {
+                <div class="loadout" @onclick=@( () => SelectLoadout( loadout ) )>
+                    <label class="name">@loadout.LoadoutName</label>
+
+                    @if ( loadout.PrimaryWeapon.IsSet )
+                    {
+                        <WeaponPanel Weapon=@loadout.PrimaryWeapon.WeaponName HideName />
+                    }
+
+                    @if ( loadout.SecondaryWeapon.IsSet )
+                    {
+                        <WeaponPanel Weapon=@loadout.SecondaryWeapon.WeaponName HideName />
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="footer">
+                <div class="selected grow">
+                    @if ( SelectedLoadout != null )
+                    {
+                        <label class="status">Use @SelectedLoadout.LoadoutName?</label>
+
+                        @if ( SelectedLoadout.PrimaryWeapon.IsSet )
+                        {
+                            <WeaponPanel Weapon=@SelectedLoadout.PrimaryWeapon.WeaponName HideName />
+                        }
+
+                        @if ( SelectedLoadout.SecondaryWeapon.IsSet )
+                        {
+                            <WeaponPanel Weapon=@SelectedLoadout.SecondaryWeapon.WeaponName HideName />
+                        }
+                    }
+                </div>
+            <div class="actions">
+                <div class="button" @onclick=@Shutdown>
+                    <label class="icon">close</label>
+                </div>
+                <div class="button primary" @onclick=@Submit>
+                    <label class="icon">check</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</root>
+
+@code
+{
+    public Panel LoadoutsCanvas;
+    public Loadout SelectedLoadout;
+
+    public IEnumerable<Loadout> GetLoadouts()
+    {
+        if ( LoadoutSystem.AllowCustomLoadouts )
+        {
+            return Loadout.WithTag( LoadoutSystem.LoadoutTag );
+        }
+        else
+        {
+            return Loadout.All;
+        }
+    }
+
+    public void SelectLoadout( Loadout loadout )
+    {
+        SelectedLoadout = loadout;
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( SelectedLoadout );
+    }
+
+    public void Shutdown()
+    {
+        Delete();
+    }
+
+    public void Submit()
+    {
+        if ( SelectedLoadout == null )
+        {
+            Log.Info("No loadout.");
+
+            return;
+        }
+
+        LoadoutSystem.SetPreference( SelectedLoadout.ResourceName );
+
+        Delete();
+    }
+}

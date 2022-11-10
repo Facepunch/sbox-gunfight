@@ -8,9 +8,9 @@ killfeed
 	z-index: 100;
 	flex-direction: column-reverse;
 	width: 500px;
-	font-family: Poppins;
+	font-family: Oxanium;
 	font-size: 15px;
-	font-weight: 500;
+	font-weight: 600;
 	align-items: flex-start;
 }
 
@@ -25,7 +25,7 @@ KillFeedEntry
 	height: 30px;
 	font-size: 20px;
 	font-family: Oxanium;
-	font-weight: 500;
+	font-weight: 600;
 
 	&:intro
 	{
@@ -95,5 +95,12 @@ KillFeedEntry
 	&.noavatar image
 	{
 		display: none;
+	}
+
+	&.information {
+		.method {
+			opacity: 1;
+			color: $main-color;
+		}
 	}
 }

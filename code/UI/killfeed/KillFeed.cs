@@ -54,4 +54,33 @@ public partial class KillFeed : Panel
 
 		return e;
 	}
+
+	public virtual Panel AddInformation( long lsteamid, string left, string method )
+	{
+		var e = Current.AddChild<KillFeedEntry>();
+
+		e.Left.Text = left;
+		e.Left.SetClass( "me", lsteamid == Local.PlayerId );
+
+		e.AddClass( method );
+
+		e.AddClass( "information" );
+
+		var gun = WeaponDefinition.Find( method );
+		if ( gun != null )
+		{
+			e.Method.Text = gun.WeaponName;
+		}
+		else
+			e.Method.Text = method;
+
+		if ( lsteamid != 0 )
+		{
+			var leftFriendState = TeamSystem.GetFriendState( GetClient( lsteamid ), TeamSystem.MyTeam );
+			e.Left.SetClass( "friendly", leftFriendState == TeamSystem.FriendlyStatus.Friendly );
+			e.Left.SetClass( "enemy", leftFriendState == TeamSystem.FriendlyStatus.Hostile );
+		}
+
+		return e;
+	}
 }

@@ -54,18 +54,21 @@ public partial class Awards
 	public static void DoubleKill( GunfightPlayer player )
 	{
 		KillFeedMessage( To.Everyone, player.Client.PlayerId, player.Client.Name, "got a Double Kill!" );
+		player.Client.AddInt( "stat_doublekills", 1 );
 	}
 
 	[Award( Title = "Triple Kill", PointsGiven = 200, Description = "Triple Kill" )]
 	public static void TripleKill( GunfightPlayer player )
 	{
 		KillFeedMessage( To.Everyone, player.Client.PlayerId, player.Client.Name, "got a Triple Kill!" );
+		player.Client.AddInt( "stat_triplekills", 1 );
 	}
 
 	[Award( Title = "Quad Kill", PointsGiven = 500, Description = "Quad Kill" )]
 	public static void QuadKill( GunfightPlayer player )
 	{
 		KillFeedMessage( To.Everyone, player.Client.PlayerId, player.Client.Name, "got a Quad Kill!" );
+		player.Client.AddInt( "stat_quadkills", 1 );
 	}
 
     public static MethodDescription? Get( string title )

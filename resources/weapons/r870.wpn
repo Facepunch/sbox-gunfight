@@ -27,12 +27,14 @@
 		FireSound = resource:"sounds/guns/r870/shotgun1_shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
 		AimingDisabled = true
+		BaseAimTime = 0.2
 		BulletRange = 5000
 		AmmoType = "Shotgun"
 		ClipSize = 6
 		StandardClip = 6
 		ReloadTime = 0.6
 		ReloadSingle = true
+		MaxEffectiveRange = 2048
 		Crosshair = "Default"
 		ViewModelSetup = 
 		{

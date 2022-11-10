@@ -511,7 +511,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 			var reflectDir = CalculateRicochetDirection( tr, ref curHits );
 			var angle = reflectDir.Angle( tr.Direction );
-			var dist = tr.Distance.Remap( 0, Definition.MaxEffectiveRange, 1, 0.5f ).Clamp( 0.5f, 1f );
+			var dist = tr.Distance.Remap( 0, WeaponDefinition.MaxEffectiveRange, 1, 0.5f ).Clamp( 0.5f, 1f );
 			damage *= dist;
 
 			start = tr.EndPosition;

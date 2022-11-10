@@ -35,6 +35,7 @@
 		StandardClip = 30
 		ReloadTime = 3
 		ReloadSingle = false
+		MaxEffectiveRange = 2048
 		Crosshair = "Default"
 		ViewModelSetup = 
 		{

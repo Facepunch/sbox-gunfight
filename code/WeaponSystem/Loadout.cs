@@ -54,6 +54,8 @@ public partial class Loadout : GameResource
 	/// <returns></returns>
 	public static IEnumerable<Loadout> WithTag( string tag )
 	{
+		if ( string.IsNullOrEmpty( tag ) ) return All;
+
 		return All.Where( x => x.Tags.Contains( tag ) );
 	}
 

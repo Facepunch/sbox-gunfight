@@ -71,7 +71,7 @@ public partial class GunfightGamemode : Gamemode
 
 	protected void RandomizeLoadout()
 	{
-		var oldLoadout = CurrentLoadout;
+		var oldLoadout = LoadoutSystem.MatchLoadout;
 		
 		Loadout newLoadout = null;
 		while ( newLoadout == null )
@@ -82,12 +82,12 @@ public partial class GunfightGamemode : Gamemode
 			newLoadout = randomLoadout;
 		}
 
-		CurrentLoadout = newLoadout;
+		LoadoutSystem.MatchLoadout = newLoadout;
 	}
 
 	public override bool PlayerLoadout( GunfightPlayer player )
 	{
-		CurrentLoadout?.Give( player );
+		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
 		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
 		return true;

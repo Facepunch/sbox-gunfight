@@ -17,12 +17,15 @@
             height: 148px;
         }
 
+        justify-content: flex-end;
+        align-items: center;
+        align-content: stretch;
+
         > .icon {
-            position: absolute;
-            height: 120px;
+            height: 90%;
             aspect-ratio: 2;
             background-size: cover;
-            right: 32px;
+            margin-right: 10%;
         }
 
         > .name {
@@ -45,6 +48,14 @@
             }
         }
 
+        &.no-name {
+            > .name {
+                display: none;
+            }
+
+            height: 80px;
+        }
+
         > .attachments {
             position: absolute;
             width: 100%;
@@ -65,7 +76,7 @@
     }
 </style>
 
-<root>
+<root class="@Classes()">
     <img class="icon" src="@Definition.Icon" />
     <text class="name">@Definition.WeaponName</text>
 </root>
@@ -73,6 +84,7 @@
 @code
 {
     protected WeaponDefinition Definition;
+    public bool HideName = false;
 
     public string Weapon
     {
@@ -85,5 +97,12 @@
     protected override int BuildHash()
     {
         return HashCode.Combine( Definition );
+    }
+
+    public string Classes()
+    {
+        if ( HideName ) return "no-name";
+
+        return "";
     }
 }

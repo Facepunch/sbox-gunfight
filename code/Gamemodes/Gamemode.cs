@@ -9,8 +9,6 @@ public abstract partial class Gamemode : Entity
 	/// </summary>
 	[Net] public int PlayerCount { get; private set; }
 
-	[Net] public Loadout CurrentLoadout { get; protected set; }
-
 	/// <summary>
 	/// Can specify a panel to be created when the gamemode is made.
 	/// </summary>

@@ -42,6 +42,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		GiveAll();
 		ClearEffects();
+		ClearKillStreak();
 
 		SupressPickupNotices = false;
 
@@ -148,6 +149,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		if ( LastDamage.Attacker.IsValid() )
 		{
 			Progression.GiveAward( LastDamage.Attacker.Client, "Kill" );
+			( LastDamage.Attacker as GunfightPlayer )?.AddKill();
 		}
 
 		if ( CapturePoint.IsValid() )

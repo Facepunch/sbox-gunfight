@@ -26,12 +26,14 @@
 		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
 		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
 		AimingDisabled = false
+		BaseAimTime = 0.2
 		BulletRange = 5000
 		AmmoType = "Pistol"
 		ClipSize = 7
 		StandardClip = 7
 		ReloadTime = 2
 		ReloadSingle = false
+		MaxEffectiveRange = 1024
 		Crosshair = "Default"
 		ViewModelSetup = 
 		{

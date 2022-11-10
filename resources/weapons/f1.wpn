@@ -27,12 +27,14 @@
 		FireSound = resource:"sounds/guns/f1/ar2_shoot.sound"
 		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
 		AimingDisabled = false
+		BaseAimTime = 0.2
 		BulletRange = 5000
 		AmmoType = "Rifle"
 		ClipSize = 27
 		StandardClip = 27
 		ReloadTime = 3
 		ReloadSingle = false
+		MaxEffectiveRange = 4096
 		Crosshair = "Default"
 		ViewModelSetup = 
 		{

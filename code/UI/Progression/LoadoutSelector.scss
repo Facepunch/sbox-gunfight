@@ -15,7 +15,8 @@ LoadoutSelector {
     transition: opacity 0.2s ease;
     pointer-events: all;
 
-    &:intro {
+    &:intro, &:outro {
+        pointer-events: none;
         opacity: 0;
         .main {
             transform: translateX(-100%);

@@ -7,10 +7,13 @@ public partial class HudMarker : Panel
 	public HudMarker( IHudMarker entity )
 	{
 		Label = AddChild<Label>( "label" );
+		Icon = AddChild<Panel>( "icon" );
+
 		Entity = entity;
 	}
 
 	public Label Label { get; set; }
+	public Panel Icon { get; set; }
 	public IHudMarker Entity { get; set; }
 
 	public bool StayOnScreen { get; set; } = false;

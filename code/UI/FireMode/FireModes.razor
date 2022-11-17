@@ -52,6 +52,9 @@
         @if ( !Weapon.IsValid() ) 
             return;
 
+        @if ( Player.IsValid() && Player.LifeState != LifeState.Alive )
+            return;
+
         @if ( Weapon.WeaponDefinition.SupportedFireModes.Count() != 1 )
         {
             <InputHint Button="View" />
@@ -91,6 +94,6 @@
     {
         if ( !Player.IsValid() ) return -1;
 
-        return HashCode.Combine( Player, Weapon?.CurrentFireMode );
+        return HashCode.Combine( Player, Player.LifeState, Weapon?.CurrentFireMode );
     }
 }

@@ -9,7 +9,7 @@
 		Model = resource:"models/mp5/w_mp5.vmdl"
 		ViewModel = resource:"models/mp5/fp_mp5.vmdl"
 		Icon = resource:"models/mp5/w_mp5.vmdl.png"
-		BaseFireRate = 0.07
+		BaseFireRate = 0.08
 		DefaultFireMode = "FullAuto"
 		DamageFlags = "Bullet"
 		SupportedFireModes = 
@@ -24,6 +24,7 @@
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
+		BurstFireRate = 0.06
 		BurstCooldown = 0.3
 		FireSound = resource:"sounds/guns/mp5/smg1_shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"

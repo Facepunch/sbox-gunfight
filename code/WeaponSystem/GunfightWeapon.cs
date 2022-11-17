@@ -373,6 +373,11 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		// TODO - player third person model reload
 	}
 
+	protected virtual float GetFireRate()
+	{
+		return CurrentFireMode == FireMode.Burst ? WeaponDefinition.BurstFireRate : WeaponDefinition.BaseFireRate;
+	}
+
 	protected bool CanDefaultPrimaryAttack()
 	{
 		if ( !PlayerController.AimFireDelay ) return false;
@@ -381,7 +386,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( IsReloading ) return false;
 		if ( PlayerController.SinceStoppedSprinting <= PostSprintAttackDelay ) return false;
 
-		return TimeSincePrimaryAttack >= PrimaryFireRate;
+		return TimeSincePrimaryAttack >= GetFireRate();
 	}
 
 	protected bool CanPrimaryAttackSemi()

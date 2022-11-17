@@ -42,7 +42,11 @@ public static class TeamExtensions
 	public static string GetLocation( this Client cl )
 	{
 		var pawn = cl.Pawn as GunfightPlayer;
-		return pawn?.PlayerLocation ?? "UNKNOWN";
+
+		if ( string.IsNullOrEmpty( pawn?.PlayerLocation ) )
+			return "UNKNOWN";
+
+		return pawn.PlayerLocation;
 	}
 
 	public static string GetName( this Team team )

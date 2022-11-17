@@ -15,7 +15,6 @@
 		SupportedFireModes = 
 		[
 			"Semi",
-			"FullAuto",
 		]
 		BulletSpread = 0.2
 		BulletForce = 1.5
@@ -23,10 +22,11 @@
 		BulletSize = 3
 		BulletCount = 12
 		BurstAmount = 3
+		BurstFireRate = 0
 		BurstCooldown = 0.3
 		FireSound = resource:"sounds/guns/r870/shotgun1_shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
-		AimingDisabled = true
+		AimingDisabled = false
 		BaseAimTime = 0.2
 		BulletRange = 5000
 		AmmoType = "Shotgun"
@@ -56,6 +56,8 @@
 			AvoidanceAngleOffset = "2,0,-25"
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "5,25,0"
+			AimPositionOffset = "1.14,2.011,0.8020002"
+			AimAngleOffset = "0.428,-1.1,2.952"
 		}
 		Recoil = 
 		{

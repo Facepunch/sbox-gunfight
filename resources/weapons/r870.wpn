@@ -56,8 +56,8 @@
 			AvoidanceAngleOffset = "2,0,-25"
 			SprintPositionOffset = "0,-2,-1"
 			SprintAngleOffset = "5,25,0"
-			AimPositionOffset = "1.14,2.011,0.8020002"
-			AimAngleOffset = "0.428,-1.1,2.952"
+			AimPositionOffset = "0.5699999,1.9,0.8020002"
+			AimAngleOffset = "0.2,-0.35,5.366"
 		}
 		Recoil = 
 		{

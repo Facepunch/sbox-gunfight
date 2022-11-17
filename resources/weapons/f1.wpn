@@ -9,7 +9,7 @@
 		Model = resource:"models/f1/w_f1.vmdl"
 		ViewModel = resource:"models/f1/fp_f1.vmdl"
 		Icon = resource:"models/f1/w_f1.vmdl.png"
-		BaseFireRate = 0.05
+		BaseFireRate = 0.1
 		DefaultFireMode = "Burst"
 		DamageFlags = "Bullet"
 		SupportedFireModes = 
@@ -23,6 +23,7 @@
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
+		BurstFireRate = 0.04
 		BurstCooldown = 0.3
 		FireSound = resource:"sounds/guns/f1/ar2_shoot.sound"
 		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"

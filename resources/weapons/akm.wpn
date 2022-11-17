@@ -16,7 +16,6 @@
 		[
 			"Semi",
 			"FullAuto",
-			"Burst",
 		]
 		BulletSpread = 0.03
 		BulletForce = 2
@@ -24,7 +23,8 @@
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
-		BurstCooldown = 0.3
+		BurstFireRate = 0
+		BurstCooldown = 0.25
 		FireSound = resource:"sounds/guns/akm/akm.shoot.sound"
 		DryFireSound = resource:"sounds/guns/mp5/reload/mp5.mag.load.sound"
 		AimingDisabled = false

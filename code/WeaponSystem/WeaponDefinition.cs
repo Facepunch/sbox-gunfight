@@ -134,10 +134,13 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Shooting" )]
 	public int BulletCount { get; set; } = 1;
 
-	[ShowIf( "DefaultFireMode", FireMode.Burst )]
+	[Category( "Shooting" )]
 	public int BurstAmount { get; set; } = 3;
 
-	[ShowIf( "DefaultFireMode", FireMode.Burst )]
+	[Category( "Shooting" )]
+	public float BurstFireRate { get; set; } = 0.08f;
+
+	[Category( "Shooting" )]
 	public float BurstCooldown { get; set; } = 0.3f;
 
 	[Category( "Shooting" ), ResourceType( "sound" )]

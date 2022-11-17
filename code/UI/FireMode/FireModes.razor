@@ -1,0 +1,96 @@
+@using Sandbox.UI;
+@using Sandbox;
+
+@inherits Panel;
+@namespace Facepunch.Gunfight.UI
+
+<style>
+    FireModes {
+        top: 90px;
+        left: 50px;
+        position: absolute;
+        align-items: center;
+        align-content: center;
+
+        > .firemode {
+            margin-right: 4px;
+            width: 35px;
+            height: 35px;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+        
+            img {
+                width: 25px;
+                height: 25px;
+            }
+
+            background-color: rgba(40, 38, 38, 0.5);
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            
+            &.active {
+                        
+                width: 40px;
+                height: 40px;
+                background-color: rgba(255, 207, 38, 0.5);
+                border: 2px solid #FFCF26;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+
+        > InputHint {
+            margin-right: 8px;
+        }
+    }
+</style>
+
+<root>
+        @if ( !Weapon.IsValid() ) 
+            return;
+
+        @if ( Weapon.WeaponDefinition.SupportedFireModes.Count() != 1 )
+        {
+            <InputHint Button="View" />
+        }
+
+       <div class="firemode active">
+           <img src=@GetImage( Weapon.CurrentFireMode ) />
+       </div>
+
+        @foreach( var firemode in Weapon.WeaponDefinition.SupportedFireModes )
+        {
+            if ( Weapon.CurrentFireMode == firemode ) continue;
+        
+           <div class="firemode">
+               <img src=@GetImage( firemode ) />
+           </div>
+        }
+</root>
+
+@code
+{
+    string GetImage( FireMode firemode )
+    {
+        return firemode switch
+        {
+            FireMode.Semi => "/ui/firemode/semi.png",
+            FireMode.FullAuto => "/ui/firemode/auto.png",
+            FireMode.Burst => "/ui/firemode/burst.png",
+            _ => "/ui/firemode/auto.png"
+        };
+    }
+
+    public GunfightPlayer Player => GunfightCamera.Target;
+    public GunfightWeapon Weapon => Player.CurrentWeapon;
+
+    protected override int BuildHash()
+    {
+        if ( !Player.IsValid() ) return -1;
+
+        return HashCode.Combine( Player, Weapon?.CurrentFireMode );
+    }
+}

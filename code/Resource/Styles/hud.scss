@@ -209,33 +209,6 @@ vitals {
 .tactical {
 }
 
-Grenades {
-    transition: all 0.2s ease-out;
-    opacity: 1;
-    width: 80px;
-    height: 80px;
-    margin-left: 16px;
-
-    > .icon {
-        position: absolute;
-        height: 100%;
-        aspect-ratio: 1;
-        opacity: 1;
-        background-image-tint: white;
-    }
-
-    .inventory {
-        position: absolute;
-        height: 66%;
-        right: -5px;
-        bottom: 0px;
-        font-family: Oxanium;
-        font-weight: 400;
-        font-size: 24px;
-        color: rgba(255, 255, 255, 0.54);
-    }
-}
-
 Stance {
     min-width: 50px;
 
@@ -244,15 +217,6 @@ Stance {
         width: 50px;
         height: 50px;
         opacity: .5;
-        background-image-tint: $theme-color;
-    }
-}
-Location {
-    .local {
-        bottom: 16px;
-        font-family: $alternate-font;
-        font-size: 28px;
-        color: $theme-color;
         background-image-tint: $theme-color;
     }
 }
@@ -301,6 +265,7 @@ healthhud, armourhud {
     font-family: Quantico-Regular;
     min-width: 105px;
 }
+
 .ammobar {
     padding: 6px;
     font-size: 24px;

@@ -380,6 +380,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	protected bool CanDefaultPrimaryAttack()
 	{
+		if ( Player.IsHolstering ) return false;
+		if ( TimeSinceDeployed < 0.2f ) return false;
 		if ( !PlayerController.AimFireDelay ) return false;
 		if ( PlayerController.Slide.IsActive ) return false;
 		if ( IsSprinting ) return false;

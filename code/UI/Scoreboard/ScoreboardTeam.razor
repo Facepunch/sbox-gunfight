@@ -2,6 +2,7 @@
 @using Sandbox.UI;
 
 @namespace Facepunch.Gunfight.UI
+@inherits Panel;
 
 <root class="@Classes()">
     @if ( Team != Team.Unassigned )
@@ -46,9 +47,15 @@
 
     public Dictionary<Client, ScoreboardRow> Rows = new();
 
+    TimeSince TimeSinceUpdate = 0;
+
     public void Update()
     {
         if ( Canvas == null ) return;
+
+        TimeSinceUpdate = 0;
+        
+        Canvas.SortChildren<ScoreboardRow>( x => -x.Client.GetInt( "score" ) * 1000 );
 
         foreach ( var client in Client.All.Except( Rows.Keys ).Where( x => x.GetTeam() == Team ) )
         {
@@ -65,6 +72,16 @@
                 row?.Delete();
                 Rows.Remove( client );
             }
+        }
+    }
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if ( TimeSinceUpdate > 0.25f )
+        {
+            Update();
         }
     }
 

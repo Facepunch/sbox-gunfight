@@ -21,7 +21,7 @@
 
 @code
 {
-    Client Client { get; set; }
+    public Client Client { get; protected set; }
 
     public int Kills => Client.GetInt( "frags", 0 );
     public int Deaths => Client.GetInt( "deaths", 0 );

@@ -122,24 +122,6 @@ public partial class PlayerController : BasePlayerController
 	[Net, Predicted] public TimeSince SinceBurstEnded { get; set; } = -5;
 	public float BurstStaminaDuration => 2f;
 
-	protected bool WantsToAim()
-	{
-		return Input.Down( InputButton.SecondaryAttack );
-	}
-
-	protected void StartAiming()
-	{
-		if ( IsAiming ) return;
-
-		IsAiming = true;
-		AimFireDelay = Weapon.GetAimTime();
-	}
-
-	protected void StopAiming()
-	{
-		IsAiming = false;
-	}
-
 	protected bool CanAim()
 	{
 		if ( !Weapon.IsValid() ) return false;
@@ -159,13 +141,17 @@ public partial class PlayerController : BasePlayerController
 		EyeLocalPosition += TraceOffset;
 		EyeRotation = Input.Rotation;
 
-		if ( WantsToAim() && CanAim() )
+		if ( Input.Down( InputButton.SecondaryAttack ) )
 		{
-			StartAiming();
+			if ( !IsAiming )
+			{
+				IsAiming = true;
+				AimFireDelay = Weapon.GetAimTime();
+			}
 		}
 		else
 		{
-			StopAiming();
+			IsAiming = false;
 		}
 
 		CheckLadder();

@@ -311,8 +311,9 @@ public partial class PlayerController : BasePlayerController
 			DebugOverlay.ScreenText( $"    Duck: {Duck?.IsActive ?? false}", lineOffset + 7 );
 		}
 
-		if ( Host.IsServer ) {
-			if ( IsSprinting )
+		if ( Host.IsServer )
+		{
+			if ( IsSprinting || Slide.IsActive )
 			{
 				var trForward = Trace.Ray( Pawn.EyePosition, Pawn.EyePosition + Pawn.EyeRotation.Forward * 50f ).WithTag( "solid" ).Radius( 5f ).Ignore( Pawn ).Run();
 

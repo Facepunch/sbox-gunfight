@@ -100,6 +100,9 @@ public partial class ViewModel : BaseViewModel
 		if ( controller == null )
 			return;
 
+		var frac = controller.IsAiming ? Sandbox.Easing.ExpoOut( controller.AimFireDelay.Fraction ) : 0;
+		LerpTowards( ref aimLerp, frac, 40f );
+
 		SmoothedVelocity += (Owner.Velocity - SmoothedVelocity) * 5f * DeltaTime;
 
 		var isGrounded = Owner.GroundEntity != null;
@@ -127,9 +130,6 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref avoidance, avoidanceVal, 10f );
 		LerpTowards( ref sprintLerp, sprint && !burstSprint ? 1 : 0, 10f );
 		LerpTowards( ref burstSprintLerp, burstSprint ? 1 : 0, 8f );
-
-		var frac = controller.IsAiming ? controller.AimFireDelay.Fraction : 0;
-		LerpTowards( ref aimLerp, frac, controller.IsAiming ? 60f : 15f );
 
 		//LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 30f );
 		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );
@@ -230,8 +230,8 @@ public partial class ViewModel : BaseViewModel
 		rotationOffsetTarget *= Rotation.From( GetAimAngle() * aimLerp );
 		ApplyPositionOffset( GetAimOffset(), aimLerp, camSetup );
 
-		realRotationOffset = Rotation.Lerp( realRotationOffset, rotationOffsetTarget, Time.Delta * 20f );
-		realPositionOffset = realPositionOffset.LerpTo( positionOffsetTarget, Time.Delta * 20f );
+		realRotationOffset = rotationOffsetTarget;
+		realPositionOffset = positionOffsetTarget;
 
 		Rotation *= realRotationOffset;
 		Position += realPositionOffset;

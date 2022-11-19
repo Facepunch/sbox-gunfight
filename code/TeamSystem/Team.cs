@@ -64,6 +64,15 @@ public static class TeamExtensions
 
 		return Team.Unassigned;
 	}
+
+	public static string GetTag( this Team team )
+	{
+		return team switch {
+			Team.BLUFOR => "blue",
+			Team.OPFOR => "red",
+			_ => "unknown"
+		};
+	}
 }
 
 public static class TeamSystem

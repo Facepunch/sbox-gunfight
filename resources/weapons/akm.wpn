@@ -69,7 +69,7 @@
 			Decay = "60,100"
 			BaseRecoilMinimum = "-2.5,7"
 			BaseRecoilMaximum = "2.5,8"
-			SpreadDecay = "20,20"
+			SpreadDecay = "40,40"
 			MinimumSpread = "-4,-4"
 			MaximumSpread = "4,4"
 		}

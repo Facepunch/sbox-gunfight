@@ -101,7 +101,7 @@ public partial class ViewModel : BaseViewModel
 			return;
 
 		var frac = controller.IsAiming ? Sandbox.Easing.ExpoOut( controller.AimFireDelay.Fraction ) : 0;
-		LerpTowards( ref aimLerp, frac, 40f );
+		LerpTowards( ref aimLerp, frac, 20f );
 
 		SmoothedVelocity += (Owner.Velocity - SmoothedVelocity) * 5f * DeltaTime;
 

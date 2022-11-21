@@ -9,11 +9,11 @@ GunfightCapturePanel {
     align-content: center;
     flex-direction: column;
     opacity: 0;
-    transition: opacity 0.5s ease;
-    transform: translateX(-50%);
+    transition: all 0.2s ease;
 
     &.show {
         opacity: 1;
+        transform: translateX(-50%);
     }
 
     label {
@@ -34,7 +34,7 @@ GunfightCapturePanel {
         width: 100%;
         height: 32px;
         flex-direction: row;
-        
+
         > .icon {
             width: 32px;
             height: 32px;

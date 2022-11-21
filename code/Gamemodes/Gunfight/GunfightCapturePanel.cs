@@ -6,7 +6,7 @@ namespace Facepunch.Gunfight;
 public partial class GunfightCapturePanel : Panel
 {
 	protected GunfightGamemode Gamemode => GamemodeSystem.Current as GunfightGamemode;
-	public CapturePointEntity Flag => Gamemode?.ActiveFlag;
+	public CapturePointEntity Flag => Gamemode?.ActiveFlag ?? ( Local.Pawn as GunfightPlayer )?.CapturePoint;
 	public float CaptureAmount => Flag?.Captured ?? 0f;
 
 	// @ref

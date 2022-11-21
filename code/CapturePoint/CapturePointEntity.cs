@@ -232,7 +232,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 		}
 	}
 
-	public Dictionary<string, bool> GetUIClasses()
+	private Dictionary<string, bool> GetUIClasses()
 	{
 		var classes = new Dictionary<string, bool>();
 		var friendState = TeamSystem.GetFriendState( Team, TeamSystem.MyTeam );
@@ -245,6 +245,8 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 
 		return classes;
 	}
+
+	public string UIClasses => string.Join( " ", GetUIClasses().Where( x => x.Value ).Select( x => x.Key ) );
 
 	string IHudMarker.GetClass() => "capturepoint";
 	bool IHudMarker.UpdateMarker( ref HudMarkerBuilder info )

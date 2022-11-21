@@ -126,13 +126,17 @@
             "Name": "Kill Confirmed"
           },
           {
+            "Value": "WarGamemode",
+            "Name": "War (Conquest)"
+          },
+          {
             "Value": "",
             "Name": "No Gamemode (good for testing)"
           }
         ],
         "ConVarName": "gunfight_gamemode",
         "DisplayName": "Active Mode",
-        "DefaultValue": "GunfightGamemode",
+        "DefaultValue": "KillConfirmedGamemode",
         "Description": "The current gamemode.",
         "Group": "Important"
       },

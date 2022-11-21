@@ -1,0 +1,110 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch.Gunfight.UI;
+
+@inherits Panel;
+@namespace Facepunch.Gunfight.War
+
+<style>
+    CapturePoints {
+        > .entries {
+            height: 50px;
+
+            flex-direction: row;
+	        justify-content: center;
+	        align-items: center;
+
+            label {
+                font-family: Oxanium;
+                font-weight: 900;
+                text-transform: uppercase;
+                color: white;
+            }
+
+            >.point {
+                width: 70px;
+                height: 70px;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+
+                .icon {
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    background-color: rgba( white, 0.2 );
+                    border: 1px solid rgba( white, 0.5 );
+                }
+
+                &.enemy {
+                    .icon {
+                        transform: rotate(45deg);
+                        background-color: rgba( #F53F16, 0.2 );
+                        border: 1px solid rgba( #F53F16, 0.5 );
+                    }
+                }
+
+                &.contested {
+                    .icon {
+                        transform: rotate(45deg);
+                        background-color: rgba( #D7D9D7, 0.2 );
+                        border: 1px solid rgba( #D7D9D7, 0.5 );
+                    }
+                }
+
+                &.friendly {
+                    .icon {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 100px;
+                        background-color: rgba( #52afec, 0.2 );
+                        border: 1px solid rgba( #52afec, 0.5 );
+                    }
+                }
+                
+                .identity {
+                    padding-top: 2px;
+                    padding-right: 4px;
+                    font-size: 18px;
+                    position: absolute;
+                    text-shadow: 1px 1px 1px rgba( black, 0.7 );
+                }
+
+                .name {
+                    display: none;
+                    bottom: 16px;
+                    font-size: 14px;
+                    position: absolute;
+                }
+            }
+        }
+    }
+</style>
+
+<root>
+    <div class="entries">
+		@foreach( var capturePoint in CapturePointList )
+        {
+            <div class="point @PointClasses( capturePoint )">
+                <div class="icon"></div>
+                <label class="identity">@capturePoint.Identity</label>
+                <label class="name">@capturePoint.NiceName</label>
+            </div>
+        }
+    </div>
+</root>
+
+@code
+{
+    public IEnumerable<CapturePointEntity> CapturePointList => Entity.All.OfType<CapturePointEntity>().OrderBy( x => x.Identity );
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(CapturePointList);
+    }
+
+    protected string PointClasses( CapturePointEntity capturePoint )
+    {
+        return capturePoint.UIClasses;
+    }
+}

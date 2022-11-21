@@ -7,7 +7,6 @@ hudmarkers {
 }
 
 hudmarker {
-    background-color: green;
     position: absolute;
     transition: width 0.1s linear, height 0.1s linear, opacity 0.05s linear, border 0.1s linear, border-radius 0.2s linear, transform 0.05s linear;
     justify-content: center;
@@ -16,7 +15,7 @@ hudmarker {
 
     label {
         font-family: Oxanium;
-        font-size: 15px;
+        font-size: 18px;
         color: $theme-color;
     }
 
@@ -26,6 +25,47 @@ hudmarker {
 
     &:outro {
         opacity: 0;
+    }
+
+    &.capturepoint {
+        .icon {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: rgba( white, 0.2 );
+            border: 1px solid rgba( white, 0.5 );
+        }
+
+        label {
+            top: 1px;
+            color: white;
+            font-weight: 900;
+            text-shadow: 1px 1px 1px black;
+        }
+
+        &.enemy {
+            .icon {
+                transform: rotate(45deg);
+                background-color: rgba( $enemy, 0.2 );
+                border: 1px solid rgba( $enemy, 0.5 );
+            }
+        }
+
+        &.contested {
+            .icon {
+                transform: rotate(45deg);
+                background-color: rgba( $main-color, 0.2 );
+                border: 1px solid rgba( $main-color, 0.5 );
+            }
+        }
+
+        &.friendly {
+            .icon {
+                border-radius: 100px;
+                background-color: rgba( $friendly, 0.2 );
+                border: 1px solid rgba( $friendly, 0.5 );
+            }
+        }
     }
 
     &.dogtag {

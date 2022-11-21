@@ -232,6 +232,20 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 		}
 	}
 
+	public Dictionary<string, bool> GetUIClasses()
+	{
+		var classes = new Dictionary<string, bool>();
+		var friendState = TeamSystem.GetFriendState( Team, TeamSystem.MyTeam );
+
+		// This isn't great. But it'll do.
+		classes["friendly"] = friendState == TeamSystem.FriendlyStatus.Friendly;
+		classes["enemy"] = friendState == TeamSystem.FriendlyStatus.Hostile;
+		classes["contested"] = CurrentState == CaptureState.Contested;
+		classes["capturing"] = CurrentState == CaptureState.Capturing;
+
+		return classes;
+	}
+
 	string IHudMarker.GetClass() => "capturepoint";
 	bool IHudMarker.UpdateMarker( ref HudMarkerBuilder info )
 	{
@@ -244,6 +258,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 		info.Text = Identity;
 		info.Position = Position + Rotation.Up * 150f;
 		info.StayOnScreen = true;
+		info.Classes = GetUIClasses();
 
 		return true;
 	}

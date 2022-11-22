@@ -90,7 +90,7 @@ partial class GunfightGame : Game
 
 		gamemode?.PreSpawn( player );
 
-		var query = Entity.All.OfType<SpawnPoint>();
+		var query = Entity.All.Where( x => x is SpawnPoint || x is GunfightSpawnPoint );
 		if ( player.SpawnPointTag != null )
 			query = query.Where( x => x.Tags.Has( player.SpawnPointTag ) );
 

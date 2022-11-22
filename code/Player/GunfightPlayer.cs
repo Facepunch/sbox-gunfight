@@ -215,6 +215,14 @@ public partial class GunfightPlayer : Player, IHudMarker
 		var controller = GetActiveController();
 		controller?.Simulate( cl, this, GetActiveAnimator() );
 
+		if ( Input.Pressed( InputButton.View ) )
+		{
+			if ( GamemodeSystem.Current?.AllowThirdPerson ?? false )
+			{
+				GunfightCamera.IsThirdPerson ^= true;
+			}
+		}
+
 		if ( LifeState != LifeState.Alive )
 			return;
 

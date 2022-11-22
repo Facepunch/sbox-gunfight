@@ -184,6 +184,11 @@ public abstract partial class Gamemode : Entity
 	[ConVar.Server( "gunfight_friendly_fire_override" )]
 	public static bool FriendlyFireOverride { get; set; } = false;
 
+	[ConVar.Replicated( "gunfight_thirdperson" )]
+	public static bool ThirdPersonConVar { get; set; } = false;
+
+	public virtual bool AllowThirdPerson => ThirdPersonConVar;
+
 	public virtual bool AllowFriendlyFire()
 	{
 		return true;
@@ -192,7 +197,6 @@ public abstract partial class Gamemode : Entity
 	/// <summary>
 	/// Called on Client Tick, allows gamemodes to define custom post processing
 	/// </summary>
-	/// <param name="postProcess"></param>
 	public virtual void PostProcessTick()
 	{
 	}

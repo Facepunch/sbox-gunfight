@@ -20,8 +20,14 @@ public partial class WarGamemode : Gamemode
 		LoadoutSystem.AllowCustomLoadouts = true;
 	}
 
+	public override void Initialize()
+	{
+		Scores.SetScore( Team.BLUFOR, MaximumScore );
+		Scores.SetScore( Team.OPFOR, MaximumScore );
+	}
+
 	[ConVar.Server( "gunfight_gamemode_war_maxscore" )]
-	private static int MaximumScoreConfig { get; set; } = 1000;
+	private static int MaximumScoreConfig { get; set; } = 300;
 	public override int MaximumScore => MaximumScoreConfig;
 	public override Panel GetHudPanel() => new WarHud();
 	public override List<Team> TeamSetup => new() { Team.BLUFOR, Team.OPFOR };
@@ -62,8 +68,13 @@ public partial class WarGamemode : Gamemode
 	public override void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )
 	{
 		base.PostPlayerKilled( player, lastDamage );
-	}
 
+		var team = player.Team;
+		if ( team != Team.Unassigned )
+		{
+			Scores.AddScore( team, -1 );
+		}
+	}
 
 	public override string GetGameStateLabel()
 	{
@@ -107,5 +118,25 @@ public partial class WarGamemode : Gamemode
 		Countdown,
 		Active,
 		End
+	}
+
+	TimeSince LastTicket = 0;
+
+	[Event.Tick.Server]
+	public void TickTickets()
+	{
+		if ( LastTicket < 5f ) return;
+		
+		LastTicket = 0;
+
+		foreach ( var capturePoint in Entity.All.OfType<CapturePointEntity>() )
+		{
+			var team = capturePoint.Team;
+			if ( team != Team.Unassigned )
+			{
+				var otherTeam = team.GetOpponent();
+				Scores.AddScore( otherTeam, -1 );
+			}
+		}
 	}
 }

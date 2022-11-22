@@ -12,14 +12,23 @@ public partial class GunfightCapturePanel : Panel
 	// @ref
 	public Panel Bar { get; set; }
 
+	bool ShouldShow()
+	{
+		if ( !Flag.IsValid() ) return false;
+		if ( Flag.CurrentState == CapturePointEntity.CaptureState.None && Flag.Team == TeamSystem.MyTeam ) return false;
+
+		return true;
+	}
+
 	public void Update()
 	{
-		BindClass( "show", () => Flag.IsValid() );
+		BindClass( "show", ShouldShow );
 	}
 
 	protected override void PostTemplateApplied()
 	{
 		base.PostTemplateApplied();
+
 		Update();
 	}
 

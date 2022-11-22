@@ -89,10 +89,10 @@ partial class GunfightGame : Game
 		}
 
 		gamemode?.PreSpawn( player );
-
-		var query = Entity.All.Where( x => x is SpawnPoint || x is GunfightSpawnPoint );
-
-		query = query.Where( x => player.SpawnPointTag != null && x.Tags.Has( player.SpawnPointTag ) || ( x is GunfightSpawnPoint sp && sp.Team == player.Team ) );
+		
+		// Firstly, evaluate Gunfight Spawn Points
+		var query = Entity.All.OfType<GunfightSpawnPoint>();
+		query = query.Where( x => x is GunfightSpawnPoint sp && sp.Team == player.Team );
 
 		// Bullshit, clean this up later
 		query.Where( x =>
@@ -104,8 +104,16 @@ partial class GunfightGame : Game
 			return true;
 		} );
 
-		var spawnpoint = query.OrderByDescending( x => SpawnpointWeight( player, x ) ).FirstOrDefault();
+		SpawnPoint spawnpoint = query.OrderByDescending( x => SpawnpointWeight( player, x ) ).FirstOrDefault();
+		if ( spawnpoint == null )
+		{
+			// Fall back to S&box spawnpoints if we didn't find one
+			var legacySpawnPoints = Entity.All.OfType<SpawnPoint>();
+			var newQuery = legacySpawnPoints.Where( x => player.SpawnPointTag != null && x.Tags.Has( player.SpawnPointTag ) );
+			spawnpoint = newQuery.OrderByDescending( x => SpawnpointWeight( player, x ) ).FirstOrDefault();
+		}
 
+		// Otherwise, we fucked up
 		if ( spawnpoint == null )
 		{
 			Log.Warning( $"Couldn't find spawnpoint for {player}!" );

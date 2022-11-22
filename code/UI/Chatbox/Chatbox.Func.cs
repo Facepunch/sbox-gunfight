@@ -35,9 +35,9 @@ public partial class GunfightChatbox
 	}
 
 	[ConCmd.Client( "gunfight_chat_addinfo", CanBeCalledFromServer = true )]
-	public static void AddInformation( string message, long playerId = 0 )
+	public static void AddInformation( string message )
 	{
-		Current?.AddEntry( null, message, playerId );
+		Current?.AddEntry( null, message );
 	}
 
 	[ConCmd.Server( "gunfight_say" )]

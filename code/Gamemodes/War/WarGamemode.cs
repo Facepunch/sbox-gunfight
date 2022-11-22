@@ -11,6 +11,9 @@ public partial class WarGamemode : Gamemode
 	[Net] public RealTimeUntil TimeUntilNextState { get; protected set; }
 	public TimeSpan TimeRemaining => TimeSpan.FromSeconds( TimeUntilNextState );
 	public string FormattedTimeRemaining => TimeRemaining.ToString( @"mm\:ss" );
+	[Net] public Team WinningTeam { get; set; } = Team.Unassigned;
+	
+	TimeSince LastTicket = 0;
 
 	protected string CachedTimeRemaining { get; set; }
 	public override void Spawn()
@@ -58,6 +61,8 @@ public partial class WarGamemode : Gamemode
 		teamComponent.Team = TeamSystem.GetLowestCount();
 
 		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, null, false );
+
+		VerifyEnoughPlayers();
 	}
 
 	public override bool PlayerLoadout( GunfightPlayer player )
@@ -108,8 +113,58 @@ public partial class WarGamemode : Gamemode
 		OnGameStateChanged( old, newState );
 	}
 
+	protected void VerifyEnoughPlayers()
+	{
+		if ( State == GameState.WaitingForPlayers )
+		{
+			if ( PlayerCount >= 2 )
+			{
+				SetGameState( GameState.Countdown );
+			}
+		}
+	}
+
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{
+		TimeSinceStateChanged = 0;
+
+		if ( after == GameState.WaitingForPlayers )
+		{
+			WinningTeam = Team.Unassigned;
+			var scores = GunfightGame.Current.Scores;
+			Initialize();
+
+			ResetStats();
+			VerifyEnoughPlayers();
+		}
+		if ( after == GameState.Countdown )
+		{
+			var countdown = 10f;
+			CleanupMap();
+			TimeUntilNextState = countdown;
+			RespawnAllPlayers();
+
+			UI.GamemodeIdentity.RpcShow( To.Everyone, countdown.CeilToInt() );
+		}
+		else if ( after == GameState.Active )
+			TimeUntilNextState = 600;
+		else if ( after == GameState.End )
+		{
+			TimeUntilNextState = 10;
+			ShowWinningTeam( To.Everyone, WinningTeam );
+		}
+
+		Event.Run( "gunfight.gamestate.changed", before, after );
+	}
+
+	public override void OnScoreChanged( Team team, int score, bool maxReached = false )
+	{
+		if ( score == 0 )
+		{
+			var winner = team.GetOpponent();
+			WinningTeam = winner;
+			SetGameState( GameState.End );
+		}
 	}
 
 	public enum GameState
@@ -120,10 +175,32 @@ public partial class WarGamemode : Gamemode
 		End
 	}
 
-	TimeSince LastTicket = 0;
+	protected void DecideWinner()
+	{
+		SetGameState( GameState.End );
+	}
 
-	[Event.Tick.Server]
-	public void TickTickets()
+	public override void Simulate( Client cl )
+	{
+		base.Simulate( cl );
+
+		if ( IsServer )
+		{
+			SimulateTickets();
+
+			if ( TimeUntilNextState )
+			{
+				if ( State == GameState.Countdown )
+					SetGameState( GameState.Active );
+				else if ( State == GameState.Active )
+					DecideWinner();
+				else if ( State == GameState.End )
+					SetGameState( GameState.WaitingForPlayers );
+			}
+		}
+	}
+
+	public void SimulateTickets()
 	{
 		if ( LastTicket < 5f ) return;
 		

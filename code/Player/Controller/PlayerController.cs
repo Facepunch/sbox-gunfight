@@ -6,7 +6,7 @@ public partial class PlayerController : BasePlayerController
 {
 	[Net] public float SprintSpeed { get; set; } = 280.0f;
 	[Net] public float BurstSprintSpeed { get; set; } = 350.0f;
-	[Net] public float WalkSpeed { get; set; } = 185.0f;
+	[Net] public float WalkSpeed { get; set; } = 120.0f;
 	[Net] public float DefaultSpeed { get; set; } = 185.0f;
 	[Net] public float Acceleration { get; set; } = 8.0f;
 	[Net] public float AirAcceleration { get; set; } = 4.0f;

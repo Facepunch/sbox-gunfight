@@ -268,9 +268,10 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( TimeSinceDeployed < 0.6f )
 			return;
 
-		if ( Input.Pressed( InputButton.View ) )
+		if ( Input.Down( InputButton.Use ) && Input.Pressed( InputButton.Reload ) )
 		{
 			CycleFireMode();
+			return;
 		}
 
 		if ( IsBurst && BurstCount >= WeaponDefinition.BurstAmount )

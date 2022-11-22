@@ -1,5 +1,28 @@
 namespace Facepunch.Gunfight;
 
+[Flags]
+public enum GamemodeType
+{
+	Gunfight = 1 << 1,
+	KillConfirmed = 1 << 2,
+	War = 1 << 3,
+	Any = 1 << 4
+}
+
+public static class GamemodeTypeMethods
+{
+	public static string GetIdent( this GamemodeType type )
+	{
+		return type switch
+		{
+			GamemodeType.Gunfight => "GunfightGamemode",
+			GamemodeType.KillConfirmed => "KillConfirmedGamemode",
+			GamemodeType.War => "WarGamemode",
+			_ => ""
+		};
+	}
+}
+
 public partial class GamemodeSystem
 {
 	[ConVar.Server( "gunfight_gamemode" )]

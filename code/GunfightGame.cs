@@ -91,8 +91,18 @@ partial class GunfightGame : Game
 		gamemode?.PreSpawn( player );
 
 		var query = Entity.All.Where( x => x is SpawnPoint || x is GunfightSpawnPoint );
-		if ( player.SpawnPointTag != null )
-			query = query.Where( x => x.Tags.Has( player.SpawnPointTag ) || ( x is GunfightSpawnPoint sp && sp.Team == player.Team ) );
+
+		query = query.Where( x => player.SpawnPointTag != null && x.Tags.Has( player.SpawnPointTag ) || ( x is GunfightSpawnPoint sp && sp.Team == player.Team ) );
+
+		// Bullshit, clean this up later
+		query.Where( x =>
+		{
+			if ( x is not GunfightSpawnPoint sp ) return true;
+			if ( string.IsNullOrEmpty( sp.GamemodeIdent ) ) return true;
+			if ( sp.GamemodeIdent != GamemodeSystem.SelectedGamemode ) return false;
+
+			return true;
+		} );
 
 		var spawnpoint = query.OrderByDescending( x => SpawnpointWeight( player, x ) ).FirstOrDefault();
 

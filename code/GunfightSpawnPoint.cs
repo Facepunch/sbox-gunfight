@@ -6,5 +6,5 @@ namespace Facepunch.Gunfight;
 public partial class GunfightSpawnPoint : SpawnPoint
 {
 	[Property] public Team Team { get; set; } = Team.Unassigned;
-	[Property] public string GamemodeIdent { get; set; } = "";
+	[Property] public GamemodeType SupportedGamemodes { get; set; } = GamemodeType.Any;
 }

@@ -66,7 +66,7 @@ public partial class GunfightPlayer
 	{
 		if ( !IsServer ) return;
 
-		if ( Input.Pressed( InputButton.Flashlight ) )
+		if ( Input.Pressed( InputButton.Zoom ) )
 		{
 			Ping();
 		}

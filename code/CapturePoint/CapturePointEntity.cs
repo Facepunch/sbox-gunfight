@@ -36,7 +36,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 
 	public CapturePointEntity() { }
 
-	protected void Initialize()
+	public void Initialize()
 	{
 		if ( Host.IsServer )
 		{

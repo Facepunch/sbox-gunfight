@@ -50,6 +50,16 @@ public partial class WarGamemode : Gamemode
 		return true;
 	}
 
+	public override bool AllowMovement()
+	{
+		return State != GameState.Countdown;
+	}
+
+	public override bool AllowDamage()
+	{
+		return State != GameState.Countdown;
+	}
+
 	public override bool CanPlayerRegenerate( GunfightPlayer player )
 	{
 		return true;
@@ -124,6 +134,12 @@ public partial class WarGamemode : Gamemode
 		}
 	}
 
+	void ResetCapturePoints()
+	{
+		Entity.All.OfType<CapturePointEntity>().ToList().ForEach( x => x.Initialize() );
+	}
+	
+
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{
 		TimeSinceStateChanged = 0;
@@ -133,7 +149,7 @@ public partial class WarGamemode : Gamemode
 			WinningTeam = Team.Unassigned;
 			var scores = GunfightGame.Current.Scores;
 			Initialize();
-
+			ResetCapturePoints();
 			ResetStats();
 			VerifyEnoughPlayers();
 		}

@@ -146,6 +146,13 @@ ChatboxRow {
         top: 3px;
     }
 
+    &.noname
+    {
+        .name {
+            display: none;
+        }    
+    }
+
     &.not-message {
         .message {
             color: $main-color;

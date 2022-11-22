@@ -6,7 +6,7 @@ public partial class PlayerInventory : BaseNetworkable
 
 	public virtual int MaxGadgets => 2;
 
-	[Net] public Player Owner { get; init; }
+	[Net] public Player Owner { get; set; }
 
 	// 0
 	[Net] public GunfightWeapon PrimaryWeapon { get; set; }

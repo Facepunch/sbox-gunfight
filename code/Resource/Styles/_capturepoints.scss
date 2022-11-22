@@ -1,0 +1,142 @@
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+hudmarker {
+    &.capturepoint {
+        .icon {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: rgba( white, 0.2 );
+            border: 1px solid rgba( white, 0.5 );
+        }
+
+        label {
+            top: 1px;
+            color: white;
+            font-weight: 900;
+            text-shadow: 1px 1px 1px black;
+        }
+
+        &.enemy {
+            .icon {
+                transform: rotate(45deg);
+                background-color: rgba( $enemy, 0.2 );
+                border: 1px solid rgba( $enemy, 0.5 );
+            }
+        }
+
+        &.friendly {
+            .icon {
+                border-radius: 100px;
+                background-color: rgba( $friendly, 0.2 );
+                border: 1px solid rgba( $friendly, 0.5 );
+            }
+        }
+
+        &.capturing {
+            animation-name: flash;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        &.contested {
+            animation-name: flash;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+
+            .icon {
+                transform: rotate(45deg);
+                background-color: rgba( $main-color, 0.2 );
+                border: 1px solid rgba( $main-color, 0.5 );
+            }
+        }
+    }
+}
+
+capturepoints {
+    > .entries {
+        height: 50px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        > .point {
+            width: 70px;
+            height: 70px;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+
+            label {
+                color: white;
+                font-weight: 900;
+            }
+
+            .identity {
+                font-family: Oxanium;
+                padding-top: 1px;
+                padding-right: 4px;
+                font-size: 18px;
+                text-shadow: 1px 1px 1px rgba( black, 0.4 );
+            }
+
+            .icon {
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                background-color: rgba( white, 0.2 );
+                border: 1px solid rgba( white, 0.5 );
+            }
+
+            &.enemy {
+                .icon {
+                    transform: rotate(45deg);
+                    background-color: rgba( $enemy, 0.2 );
+                    border: 1px solid rgba( $enemy, 0.5 );
+                }
+            }
+
+            &.friendly {
+                .icon {
+                    border-radius: 100px;
+                    background-color: rgba( $friendly, 0.2 );
+                    border: 1px solid rgba( $friendly, 0.5 );
+                }
+            }
+
+            &.capturing {
+                animation-name: flash;
+                animation-duration: 0.5s;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+            }
+
+            &.contested {
+                animation-name: flash;
+                animation-duration: 0.5s;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+
+                .icon {
+                    transform: rotate(45deg);
+                    background-color: rgba( $main-color, 0.2 );
+                    border: 1px solid rgba( $main-color, 0.5 );
+                }
+            }
+        }
+    }
+}

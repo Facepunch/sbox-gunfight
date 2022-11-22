@@ -20,7 +20,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 	[Net, Category( "Capture Point" ), Property] public string Identity { get; set; }
 	[Net, Category( "Capture Point" ), Property] public string NiceName { get; set; } = "ZONE";
 	[Net, Category( "Capture Point" )] public Team HighestTeam { get; set; } = Team.Unassigned;
-	[Net, Category( "Capture Point" )] public List<int> OccupantCounts { get; set; } = new();
+	[Net, Category( "Capture Point" )] public IList<int> OccupantCounts { get; set; }
 	[Net, Category( "Capture Point" )] public float Captured { get; set; } = 0;
 	[Net, Category( "Capture Point" ), Change( "OnStateChanged" )] public CaptureState CurrentState { get; set; }
 

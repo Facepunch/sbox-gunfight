@@ -27,47 +27,6 @@ hudmarker {
         opacity: 0;
     }
 
-    &.capturepoint {
-        .icon {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-color: rgba( white, 0.2 );
-            border: 1px solid rgba( white, 0.5 );
-        }
-
-        label {
-            top: 1px;
-            color: white;
-            font-weight: 900;
-            text-shadow: 1px 1px 1px black;
-        }
-
-        &.enemy {
-            .icon {
-                transform: rotate(45deg);
-                background-color: rgba( $enemy, 0.2 );
-                border: 1px solid rgba( $enemy, 0.5 );
-            }
-        }
-
-        &.contested {
-            .icon {
-                transform: rotate(45deg);
-                background-color: rgba( $main-color, 0.2 );
-                border: 1px solid rgba( $main-color, 0.5 );
-            }
-        }
-
-        &.friendly {
-            .icon {
-                border-radius: 100px;
-                background-color: rgba( $friendly, 0.2 );
-                border: 1px solid rgba( $friendly, 0.5 );
-            }
-        }
-    }
-
     &.dogtag {
         border-radius: 60px;
         width: 18px;

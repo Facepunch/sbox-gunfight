@@ -18,8 +18,23 @@ public static class GamemodeTypeMethods
 			GamemodeType.Gunfight => "GunfightGamemode",
 			GamemodeType.KillConfirmed => "KillConfirmedGamemode",
 			GamemodeType.War => "WarGamemode",
-			_ => ""
+			_ => null
 		};
+	}
+
+	public static string[] GetArray( this GamemodeType type )
+	{
+		List<string> tags = new();
+
+		foreach ( var enumValue in Enum.GetValues<GamemodeType>() )
+		{
+			if ( type.HasFlag( enumValue ) )
+			{
+				tags.Add( enumValue.GetIdent() );
+			}
+		}
+
+		return tags.ToArray();
 	}
 }
 

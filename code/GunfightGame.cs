@@ -76,22 +76,6 @@ partial class GunfightGame : Game
 		GamemodeSystem.Current?.OnClientLeft( cl, reason );
 	}
 
-	public string[] GetSupportedGamemodes( GamemodeType type )
-	{
-		List<string> tags = new();
-
-		foreach ( var enumValue in Enum.GetValues<GamemodeType>() )
-		{
-			if ( type.HasFlag( enumValue ) )
-			{
-				Log.Info( $"Spawn Point has matching gamemode tag: {enumValue}" );
-				tags.Add( enumValue.GetIdent() );
-			}
-		}
-
-		return tags.ToArray();
-	}
-
 	public override void MoveToSpawnpoint( Entity entity )
 	{
 		var player = entity as GunfightPlayer;
@@ -108,9 +92,9 @@ partial class GunfightGame : Game
 		
 		// Firstly, evaluate Gunfight Spawn Points
 		var query = Entity.All.OfType<GunfightSpawnPoint>()
-			.Where( x => x.Team == player.Team && GetSupportedGamemodes( x.SupportedGamemodes ).Any( x => x == GamemodeSystem.SelectedGamemode || x is null ) );
+			.Where( x => x.Team == player.Team && x.SupportedGamemodes.GetArray().Any( x => x == GamemodeSystem.SelectedGamemode || x is null ) );
 
-		SpawnPoint spawnpoint = query.OrderByDescending( x => SpawnpointWeight( player, x ) ).FirstOrDefault();
+		Entity spawnpoint = query.OrderByDescending( x => SpawnpointWeight( player, x ) ).FirstOrDefault();
 		if ( spawnpoint == null )
 		{
 			// Fall back to S&box spawnpoints if we didn't find one

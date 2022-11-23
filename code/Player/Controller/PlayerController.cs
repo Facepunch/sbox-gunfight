@@ -30,7 +30,7 @@ public partial class PlayerController : BasePlayerController
 	public VaultMoveMechanic Vault => GetMechanic<VaultMoveMechanic>();
 	public CoverAimMechanic CoverAim => GetMechanic<CoverAimMechanic>();
 
-	[Net] public IList<BaseMoveMechanic> Mechanics { get; set; }
+	public List<BaseMoveMechanic> Mechanics = new();
 	public BaseMoveMechanic CurrentMechanic => Mechanics.FirstOrDefault( x => x.IsActive );
 
 	public PlayerController()

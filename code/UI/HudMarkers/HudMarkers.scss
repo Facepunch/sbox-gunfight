@@ -4,6 +4,7 @@ hudmarkers {
     position: absolute;
     width: 100%;
     height: 100%;
+    padding-bottom: 24px;
 }
 
 hudmarker {
@@ -38,6 +39,7 @@ hudmarker {
             background-color: $friendly;
         }
     }
+
 
     &.player {
         .icon {

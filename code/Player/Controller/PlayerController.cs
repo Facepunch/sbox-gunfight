@@ -4,10 +4,10 @@ namespace Facepunch.Gunfight;
 [Library]
 public partial class PlayerController : BasePlayerController
 {
-	[Net] public float SprintSpeed { get; set; } = 280.0f;
-	[Net] public float BurstSprintSpeed { get; set; } = 350.0f;
+	[Net] public float SprintSpeed { get; set; } = 250.0f;
+	[Net] public float BurstSprintSpeed { get; set; } = 300f;
 	[Net] public float WalkSpeed { get; set; } = 120.0f;
-	[Net] public float DefaultSpeed { get; set; } = 185.0f;
+	[Net] public float DefaultSpeed { get; set; } = 175.0f;
 	[Net] public float Acceleration { get; set; } = 8.0f;
 	[Net] public float AirAcceleration { get; set; } = 4.0f;
 	[Net] public float StopSpeed { get; set; } = 100.0f;

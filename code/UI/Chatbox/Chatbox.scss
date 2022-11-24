@@ -10,7 +10,7 @@ GunfightChatbox {
     left: 64px;
     z-index: 99;
     flex-direction: column;
-    width: 550px;
+    width: 650px;
     font-family: $main-font-bold;
     font-size: 16px;
     pointer-events: none;
@@ -86,10 +86,9 @@ ChatboxRow {
     max-height: 200px;
     flex-shrink: 0;
     flex-grow: 0;
-    max-width: 150%;
+    max-width: 100%;
     transform: scale( 1 );
     flex-direction: row;
-
     background-image: linear-gradient( to right, rgba( black, 0.5 ), rgba( black, 0 ) );
 
     &:intro, &:outro {
@@ -102,15 +101,15 @@ ChatboxRow {
     }
 
     .avatar {
+        position: absolute;
         aspect-ratio: 1;
         height: 45px;
         border: 1px solid black;
-        position: absolute;
         z-index: 100;
 
-        .image { 
+        .image {
             height: 45px;
-            aspect-ratio: 1; 
+            aspect-ratio: 1;
         }
     }
 
@@ -122,41 +121,39 @@ ChatboxRow {
     .name {
         margin-left: 46px;
         font-weight: 600;
+        flex-shrink: 0;
         font-size: 20px;
         color: white;
-        flex-shrink: 0;
         text-shadow: 0px 0px 1px rgba( black, 0.8 );
         top: 11px;
+        white-space: nowrap;
     }
 
     .main {
         padding: 8px;
         padding-right: 16px;
-        padding-left: 8px;
+        padding-left: 32px;
         padding-bottom: 11px;
     }
 
-    .message {
+    .msg {
         color: white;
         font-size: 20px;
-        font-family: $main-font-semibold;
-        font-weight: 600;
-        flex-grow: 1;
+        font-family: Oxanium;
+        font-weight: 500;
         text-shadow: 0px 0px 1px rgba( black, 0.5 );
         top: 3px;
     }
 
-    &.noname
-    {
+    &.noname {
         .name {
             display: none;
-        }    
+        }
     }
 
     &.not-message {
         .message {
             color: $main-color;
-
         }
     }
 

@@ -35,7 +35,7 @@
 		ReloadTime = 0.6
 		ReloadSingle = true
 		MaxEffectiveRange = 2048
-		Crosshair = "Default"
+		Crosshair = "Shotgun"
 		ViewModelSetup = 
 		{
 			OverallWeight = 0.1

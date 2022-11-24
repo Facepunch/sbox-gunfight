@@ -4,7 +4,7 @@
 
 @namespace Facepunch.Gunfight.UI
 
-<root class="chat-entry @PlayerClasses() @MessageClasses() @HeaderClasses()">
+<root class="@PlayerClasses() @MessageClasses() @HeaderClasses()">
 	@if ( PlayerId != 0 )
 	{
 		<div class="avatar">
@@ -17,7 +17,7 @@
 		</div>
 
 	<div class="main">
-		<label class="message">@Message</label>
+		<label class="msg">@Message</label>
 	</div>
 </root>
 

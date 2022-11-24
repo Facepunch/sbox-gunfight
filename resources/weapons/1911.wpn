@@ -22,6 +22,7 @@
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
+		BurstFireRate = 0.08
 		BurstCooldown = 0.3
 		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
 		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
@@ -34,7 +35,7 @@
 		ReloadTime = 2
 		ReloadSingle = false
 		MaxEffectiveRange = 1024
-		Crosshair = "Default"
+		Crosshair = "Pistol"
 		ViewModelSetup = 
 		{
 			OverallWeight = 0.1

@@ -1,39 +1,16 @@
 namespace Facepunch.Gunfight;
 
-public enum CrosshairType
+public partial class PistolCrosshair : CrosshairRender
 {
-	Default,
-	Pistol
-}
-
-public partial class CrosshairRender
-{
-	[ConVar.Client( "gunfight_crosshair_always_show" )]
-	public static bool AlwaysShow { get; set; } = false;
-
-	public virtual Color StandardColor => ThemeColor;
-	public virtual Color DisabledColor => Color.Red;
-	public Color ThemeColor => Color.Parse( "#ffffda" ) ?? Color.Red;
-
-	public static CrosshairRender From( CrosshairType type )
-	{
-		return type switch
-		{
-			CrosshairType.Pistol => new PistolCrosshair(),
-			CrosshairType.Default => new CrosshairRender(),
-			_ => new CrosshairRender(),
-		};
-	}
-
 	float alpha = 0;
 
-	public virtual void RenderCrosshair( Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
+	public override void RenderCrosshair( Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
 	{
-		if ( !GunfightCamera.Target.IsValid() ) 
+		if ( !GunfightCamera.Target.IsValid() )
 			return;
 
 		var ctrl = GunfightCamera.Target.Controller as PlayerController;
-		if ( ctrl == null ) 
+		if ( ctrl == null )
 			return;
 
 		var walkBob = MathF.Sin( Time.Now * 5f ) * GunfightCamera.Target.Velocity.Length.LerpInverse( 0, 350 );
@@ -49,7 +26,7 @@ public partial class CrosshairRender
 
 		var shootEase = Easing.EaseIn( lastAttack.LerpInverse( 0.2f, 0.0f ) );
 		var color = Color.Lerp( DisabledColor, StandardColor, lastAttack.LerpInverse( 0.0f, 0.4f ) );
-		var regularColor = color.WithAlpha( ( 0.4f + lastAttack.LerpInverse( 1.2f, 0 ) * 0.5f ) * alpha );
+		var regularColor = color.WithAlpha( (0.4f + lastAttack.LerpInverse( 1.2f, 0 ) * 0.5f) * alpha );
 
 		draw.BlendMode = BlendMode.Lighten;
 		draw.Color = regularColor;
@@ -69,7 +46,6 @@ public partial class CrosshairRender
 			draw.Line( thickness, newCenter - Vector2.Left * gap, newCenter - Vector2.Left * (length + gap) );
 
 			draw.Line( thickness, newCenter + Vector2.Up * gap, newCenter + Vector2.Up * (length + gap) );
-			draw.Line( thickness, newCenter - Vector2.Up * gap, newCenter - Vector2.Up * (length + gap) );
 		}
 
 		var reload = lastReload.Clamp( 0, 1 );

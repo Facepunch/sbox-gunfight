@@ -1,41 +1,16 @@
 namespace Facepunch.Gunfight;
 
-public enum CrosshairType
+public partial class ShotgunCrosshair : CrosshairRender
 {
-	Default,
-	Pistol,
-	Shotgun
-}
-
-public partial class CrosshairRender
-{
-	[ConVar.Client( "gunfight_crosshair_always_show" )]
-	public static bool AlwaysShow { get; set; } = false;
-
-	public virtual Color StandardColor => ThemeColor;
-	public virtual Color DisabledColor => Color.Red;
-	public Color ThemeColor => Color.Parse( "#ffffda" ) ?? Color.Red;
-
-	public static CrosshairRender From( CrosshairType type )
-	{
-		return type switch
-		{
-			CrosshairType.Pistol => new PistolCrosshair(),
-			CrosshairType.Shotgun => new ShotgunCrosshair(),
-			CrosshairType.Default => new CrosshairRender(),
-			_ => new CrosshairRender(),
-		};
-	}
-
 	float alpha = 0;
 
-	public virtual void RenderCrosshair( Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
+	public override void RenderCrosshair( Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
 	{
-		if ( !GunfightCamera.Target.IsValid() ) 
+		if ( !GunfightCamera.Target.IsValid() )
 			return;
 
 		var ctrl = GunfightCamera.Target.Controller as PlayerController;
-		if ( ctrl == null ) 
+		if ( ctrl == null )
 			return;
 
 		var walkBob = MathF.Sin( Time.Now * 5f ) * GunfightCamera.Target.Velocity.Length.LerpInverse( 0, 350 );
@@ -51,7 +26,7 @@ public partial class CrosshairRender
 
 		var shootEase = Easing.EaseIn( lastAttack.LerpInverse( 0.2f, 0.0f ) );
 		var color = Color.Lerp( DisabledColor, StandardColor, lastAttack.LerpInverse( 0.0f, 0.4f ) );
-		var regularColor = color.WithAlpha( ( 0.4f + lastAttack.LerpInverse( 1.2f, 0 ) * 0.5f ) * alpha );
+		var regularColor = color.WithAlpha( (0.4f + lastAttack.LerpInverse( 1.2f, 0 ) * 0.5f) * alpha );
 
 		draw.BlendMode = BlendMode.Lighten;
 		draw.Color = regularColor;
@@ -59,19 +34,14 @@ public partial class CrosshairRender
 		var length = 12.0f - shootEase * 2.0f;
 		var gap = 20.0f + shootEase * 30.0f;
 
-		gap += 50 * speed;
-		length += 8 * speed;
+		gap += 25 * speed;
 
 		var thickness = 2.0f;
 
 		var hideLines = ctrl.IsSprinting || !GunfightCamera.Target.GroundEntity.IsValid();
 		if ( !hideLines )
 		{
-			draw.Line( thickness, newCenter + Vector2.Left * gap, newCenter + Vector2.Left * (length + gap) );
-			draw.Line( thickness, newCenter - Vector2.Left * gap, newCenter - Vector2.Left * (length + gap) );
-
-			draw.Line( thickness, newCenter + Vector2.Up * gap, newCenter + Vector2.Up * (length + gap) );
-			draw.Line( thickness, newCenter - Vector2.Up * gap, newCenter - Vector2.Up * (length + gap) );
+			draw.Ring( newCenter, gap, gap - 2 );
 		}
 
 		var reload = lastReload.Clamp( 0, 1 );
@@ -93,8 +63,6 @@ public partial class CrosshairRender
 			draw.CircleEx( circleCenter, circleSize, 0, 32, startAng, finishAng * lastReload );
 
 		}
-
-		draw.Circle( newCenter, thickness, 32 );
 	}
 }
 

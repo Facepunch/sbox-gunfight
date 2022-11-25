@@ -266,7 +266,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 	}
 
 	int ISpawnPoint.GetSpawnPriority() => 10;
-	Transform? ISpawnPoint.GetSpawnTransform() => Transform;
+	Transform? ISpawnPoint.GetSpawnTransform() => SpawnPointSystem.GetSuitableSpawn( Transform );
 
 	bool ISpawnPoint.IsValidSpawn( GunfightPlayer player )
 	{

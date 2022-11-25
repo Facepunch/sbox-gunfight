@@ -179,6 +179,7 @@ public partial class WarGamemode : Gamemode
 
 	protected void DecideWinner()
 	{
+		WinningTeam = Scores.GetHighestTeam();
 		SetGameState( GameState.End );
 	}
 

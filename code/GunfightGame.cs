@@ -81,64 +81,25 @@ partial class GunfightGame : Game
 		var player = entity as GunfightPlayer;
 		var gamemode = GamemodeSystem.Current;
 
-		var gamemodeTransform = gamemode?.GetSpawn( player );
-		if ( gamemodeTransform is not null )
-		{
-			player.Transform = gamemodeTransform.Value;
-			return;
-		}
-
 		gamemode?.PreSpawn( player );
-		
-		// Firstly, evaluate Gunfight Spawn Points
-		var query = Entity.All.OfType<GunfightSpawnPoint>()
-			.Where( x => x.Team == player.Team && x.SupportedGamemodes.GetArray().Any( x => x == GamemodeSystem.SelectedGamemode || x is null ) );
 
-		Entity spawnpoint = query.OrderByDescending( x => SpawnpointWeight( player, x ) ).FirstOrDefault();
-		if ( spawnpoint == null )
+		var transform = gamemode?.GetDefaultSpawnPoint( player );
+		if ( transform is null )
 		{
-			// Fall back to S&box spawnpoints if we didn't find one
-			var legacySpawnPoints = Entity.All.OfType<SpawnPoint>();
-			var newQuery = legacySpawnPoints.Where( x => player.SpawnPointTag != null && x.Tags.Has( player.SpawnPointTag ) );
-			spawnpoint = newQuery.OrderByDescending( x => SpawnpointWeight( player, x ) ).FirstOrDefault();
+			// Look through legacy spawn points, as a last ditch effort
+			transform = Entity.All.OfType<SpawnPoint>()
+				.FirstOrDefault( x => player.SpawnPointTag != null && x.Tags.Has( player.SpawnPointTag ) )
+				.Transform;
 		}
 
-		// Otherwise, we fucked up
-		if ( spawnpoint == null )
+		// Did we fuck up?
+		if ( transform is null )
 		{
-			Log.Warning( $"Couldn't find spawnpoint for {player}!" );
+			Log.Warning( $"Couldn't find spawnpoint for {player}" );
 			return;
 		}
 
-		player.Transform = spawnpoint.Transform;
-
-		if ( entity is GunfightPlayer pl )
-		{
-			pl.SetViewAngles( entity.Rotation.Angles() );
-		}
-	}
-
-	/// <summary>
-	/// The higher the better
-	/// </summary>
-	public float SpawnpointWeight( Entity pawn, Entity spawnpoint )
-	{
-		// We want to find the closest player (worst weight)
-		float distance = float.MaxValue;
-
-		foreach ( var client in Client.All )
-		{
-			if ( client.Pawn == null ) continue;
-			if ( client.Pawn == pawn ) continue;
-			if ( client.Pawn.LifeState != LifeState.Alive ) continue;
-
-			var spawnDist = (spawnpoint.Position - client.Pawn.Position).Length;
-			distance = MathF.Min( distance, spawnDist );
-		}
-
-		//Log.Info( $"{spawnpoint} is {distance} away from any player" );
-
-		return distance;
+		player.Transform = transform.Value;
 	}
 
 	protected float FovOffset { get; set; } = 0f;

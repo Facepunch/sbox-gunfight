@@ -339,11 +339,11 @@ public partial class GunfightPlayer : Player, IHudMarker
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		if ( GamemodeSystem.Current.IsValid() && !GamemodeSystem.Current.AllowDamage() )
+		if ( GamemodeSystem.Current.IsValid() && !GamemodeSystem.Current.AllowDamage )
 			return;
 
 		var attacker = info.Attacker as GunfightPlayer;
-		if ( attacker.IsValid() && !GamemodeSystem.Current.AllowFriendlyFire() && Gamemode.FriendlyFireOverride == false )
+		if ( attacker.IsValid() && !GamemodeSystem.Current.AllowFriendlyFire && Gamemode.FriendlyFireOverride == false )
 		{
 			if ( attacker.Team == Team )
 				return;

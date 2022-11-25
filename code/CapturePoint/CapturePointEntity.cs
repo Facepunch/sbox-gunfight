@@ -7,7 +7,7 @@ namespace Facepunch.Gunfight;
 [Display( Name = "Capture Point"), Icon( "flag_circle" )]
 [Sphere( "TriggerRadius", 255, 255, 255, true )]
 [Solid]
-public partial class CapturePointEntity : BaseTrigger, IHudMarker
+public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 {
 	protected static int ArraySize => Enum.GetNames( typeof( Team ) ).Length - 1;
 	public Team Team { get => TeamComponent.Team; set => TeamComponent.Team = value; }
@@ -263,6 +263,14 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker
 		info.Classes = GetUIClasses();
 
 		return true;
+	}
+
+	int ISpawnPoint.GetSpawnPriority() => 10;
+	Transform? ISpawnPoint.GetSpawnTransform() => Transform;
+
+	bool ISpawnPoint.IsValidSpawn( GunfightPlayer player )
+	{
+		return TeamSystem.IsFriendly( player.Team, Team ) && ( GamemodeSystem.Current?.CapturePointsAreSpawnPoints ?? false );
 	}
 
 	public enum CaptureState

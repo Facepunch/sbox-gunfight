@@ -13,10 +13,15 @@ public partial class KillConfirmedGamemode : Gamemode
 
 	public TimeSpan TimeRemaining => TimeSpan.FromSeconds( TimeUntilNextState );
 	public string FormattedTimeRemaining => TimeRemaining.ToString( @"mm\:ss" );
-
 	protected string CachedTimeRemaining { get; set; }
-
+	
+	public override int MaximumScore => ConVarMaxScore;
+	public override Panel HudPanel => new UI.KillConfirmedHud();
 	public override List<Team> TeamSetup => new() { Team.BLUFOR, Team.OPFOR };
+	public override bool AllowMovement => State != GameState.RoundCountdown;
+	public override bool AllowDamage => State != GameState.RoundCountdown;
+	public override bool AllowFriendlyFire => false;
+	public override bool AllowSpectating => true;
 
 	// Stats
 	[ConVar.Server( "gunfight_kc_minimum_players" )]
@@ -33,13 +38,9 @@ public partial class KillConfirmedGamemode : Gamemode
 
 	protected float GameWonLength => 15f;
 
-	public override int MaximumScore => ConVarMaxScore;
-	public override Panel GetHudPanel() => new UI.KillConfirmedHud();
-
 	public override void Spawn()
 	{
 		base.Spawn();
-
 		LoadoutSystem.AllowCustomLoadouts = true;
 	}
 
@@ -47,10 +48,8 @@ public partial class KillConfirmedGamemode : Gamemode
 	{
 		var teamComponent = cl.Components.GetOrCreate<TeamComponent>();
 		teamComponent.Team = TeamSystem.GetLowestCount();
-
 		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, null, false );
 	}
-
 
 	public override void OnClientJoined( Client cl )
 	{
@@ -64,9 +63,7 @@ public partial class KillConfirmedGamemode : Gamemode
 		if ( State == GameState.WaitingForPlayers )
 		{
 			if ( PlayerCount >= MinimumPlayers )
-			{
 				SetGameState( GameState.RoundCountdown );
-			}
 		}
 	}
 
@@ -102,26 +99,6 @@ public partial class KillConfirmedGamemode : Gamemode
 		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
 		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
-		return true;
-	}
-
-	public override bool AllowMovement()
-	{
-		return State != GameState.RoundCountdown;
-	}
-
-	public override bool AllowDamage()
-	{
-		return State != GameState.RoundCountdown;
-	}
-
-	public override bool AllowFriendlyFire()
-	{
-		return false;
-	}
-
-	public override bool AllowSpectating()
-	{
 		return true;
 	}
 

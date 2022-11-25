@@ -325,10 +325,10 @@ public partial class GunfightPlayer : Player, IHudMarker
 		var ctrl = Controller as PlayerController;
 		if ( ctrl != null )
 		{
+			if ( ctrl.IsSprinting )
+				GunfightGame.AddedCameraFOV = 3f;
 			if ( ctrl.IsBurstSprinting )
-			{
-				GunfightGame.AddedCameraFOV = 10f;
-			}
+				GunfightGame.AddedCameraFOV = 6f;
 		}
 	}
 

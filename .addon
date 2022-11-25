@@ -127,7 +127,7 @@
           },
           {
             "Value": "WarGamemode",
-            "Name": "War (Conquest)"
+            "Name": "Conquest"
           },
           {
             "Value": "",
@@ -136,7 +136,7 @@
         ],
         "ConVarName": "gunfight_gamemode",
         "DisplayName": "Active Mode",
-        "DefaultValue": "KillConfirmedGamemode",
+        "DefaultValue": "WarGamemode",
         "Description": "The current gamemode.",
         "Group": "Important"
       },

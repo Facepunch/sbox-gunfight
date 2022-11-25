@@ -9,7 +9,7 @@
 		Model = resource:"models/akm/w_akm.vmdl"
 		ViewModel = resource:"models/akm/fp_akm.vmdl"
 		Icon = resource:"models/akm/w_akm.vmdl.png"
-		BaseFireRate = 0.12
+		BaseFireRate = 0.1
 		DefaultFireMode = "FullAuto"
 		DamageFlags = "Bullet"
 		SupportedFireModes = 
@@ -19,7 +19,7 @@
 		]
 		BulletSpread = 0.03
 		BulletForce = 2
-		BulletDamage = 18
+		BulletDamage = 16
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3
@@ -67,8 +67,8 @@
 		Recoil = 
 		{
 			Decay = "60,100"
-			BaseRecoilMinimum = "-2.5,7"
-			BaseRecoilMaximum = "2.5,8"
+			BaseRecoilMinimum = "-3,8"
+			BaseRecoilMaximum = "2.5,12"
 			SpreadDecay = "40,40"
 			MinimumSpread = "-4,-4"
 			MaximumSpread = "4,4"

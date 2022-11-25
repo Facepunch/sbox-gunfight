@@ -121,7 +121,6 @@ public partial class WarGamemode : Gamemode
 		Entity.All.OfType<CapturePointEntity>().ToList().ForEach( x => x.Initialize() );
 	}
 	
-
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{
 		TimeSinceStateChanged = 0;
@@ -129,16 +128,20 @@ public partial class WarGamemode : Gamemode
 		if ( after == GameState.WaitingForPlayers )
 		{
 			WinningTeam = Team.Unassigned;
-			var scores = GunfightGame.Current.Scores;
+			CleanupMap();
 			Initialize();
 			ResetCapturePoints();
 			ResetStats();
 			VerifyEnoughPlayers();
+			RespawnAllPlayers();
 		}
 		if ( after == GameState.Countdown )
 		{
 			var countdown = 10f;
 			CleanupMap();
+			Initialize();
+			ResetCapturePoints();
+			ResetStats();
 			TimeUntilNextState = countdown;
 			RespawnAllPlayers();
 
@@ -157,7 +160,7 @@ public partial class WarGamemode : Gamemode
 
 	public override void OnScoreChanged( Team team, int score, bool maxReached = false )
 	{
-		if ( score == 0 )
+		if ( score == 0 && State == GameState.Active )
 		{
 			var winner = team.GetOpponent();
 			WinningTeam = winner;

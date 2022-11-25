@@ -8,7 +8,7 @@ public partial class GunfightSpawnPoint : GamemodeSpecificEntity, ISpawnPoint
 	[Property] public Team Team { get; set; } = Team.Unassigned;
 
 	int ISpawnPoint.GetSpawnPriority() => 0;
-	Transform? ISpawnPoint.GetSpawnTransform() => Transform;
+	Transform? ISpawnPoint.GetSpawnTransform() => SpawnPointSystem.GetSuitableSpawn( Transform );
 
 	bool ISpawnPoint.IsValidSpawn( GunfightPlayer player )
 	{

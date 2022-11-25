@@ -86,6 +86,7 @@ public partial class WarGamemode : Gamemode
 	{
 		return State switch
 		{
+			GameState.WaitingForPlayers => "WAITING",
 			_ => FormattedTimeRemaining
 		};
 	}

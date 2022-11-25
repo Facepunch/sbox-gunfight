@@ -18,6 +18,11 @@ public partial class GunfightGamemode : Gamemode
 	protected string CachedTimeRemaining { get; set; }
 
 	public override List<Team> TeamSetup => new() { Team.BLUFOR, Team.OPFOR };
+	public override Panel HudPanel => new GunfightGamemodePanel();
+
+	public override bool AllowMovement => State != GameState.RoundCountdown;
+	public override bool AllowDamage => State != GameState.RoundCountdown;
+	public override bool AllowSpectating => true;
 
 	// Stats
 	protected int MinimumPlayers => 4;
@@ -26,8 +31,6 @@ public partial class GunfightGamemode : Gamemode
 	protected float FlagActiveLength => 10f;
 	protected float RoundOverLength => 10f;
 	protected float GameWonLength => 15f;
-
-	public override Panel GetHudPanel() => new GunfightGamemodePanel();
 
 	public override void Spawn()
 	{
@@ -90,21 +93,6 @@ public partial class GunfightGamemode : Gamemode
 		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
 		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
-		return true;
-	}
-
-	public override bool AllowMovement()
-	{
-		return State != GameState.RoundCountdown;
-	}
-
-	public override bool AllowDamage()
-	{
-		return State != GameState.RoundCountdown;
-	}
-
-	public override bool AllowSpectating()
-	{
 		return true;
 	}
 

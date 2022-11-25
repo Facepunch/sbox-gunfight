@@ -13,7 +13,7 @@ public abstract partial class Gamemode : Entity
 	/// Can specify a panel to be created when the gamemode is made.
 	/// </summary>
 	/// <returns></returns>
-	public virtual Panel GetHudPanel() => null;
+	public virtual Panel HudPanel => null;
 
 	/// <summary>
 	/// Gamemodes can define what pawn to create
@@ -32,6 +32,51 @@ public abstract partial class Gamemode : Entity
 	/// </summary>
 	public TeamScores Scores => GunfightGame.Current.Scores;
 
+
+	public virtual bool AllowSpectating => false;
+
+	/// <summary>
+	/// Decides whether or not players can move
+	/// </summary>
+	/// <returns></returns>
+	public virtual bool AllowMovement => true;
+
+	/// <summary>
+	/// Decides whether or not players can respawn
+	/// </summary>
+	/// <returns></returns>
+	public virtual bool AllowRespawning => true;
+
+	/// <summary>
+	/// Decides whether or not players can take damage
+	/// </summary>
+	/// <returns></returns>
+	public virtual bool AllowDamage => true;
+
+	[ConVar.Server( "gunfight_friendly_fire_override" )]
+	public static bool FriendlyFireOverride { get; set; } = false;
+
+	[ConVar.Replicated( "gunfight_thirdperson" )]
+	public static bool ThirdPersonConVar { get; set; } = false;
+
+	/// <summary>
+	/// Should third person be enabled? By default, it's controlled by a game ConVar.
+	/// </summary>
+	public virtual bool AllowThirdPerson => ThirdPersonConVar;
+
+	/// <summary>
+	/// Should you be able to shoot teammates?
+	/// </summary>
+	public virtual bool AllowFriendlyFire => true;
+
+	/// <summary>
+	/// Are capture points allowed to be used as spawn points?
+	/// </summary>
+	public virtual bool CapturePointsAreSpawnPoints => false;
+
+	/// <summary>
+	/// What's the max score for this game? Can be unused.
+	/// </summary>
 	public virtual int MaximumScore => 4;
 
 	public virtual string GetTimeLeftLabel()
@@ -47,7 +92,6 @@ public abstract partial class Gamemode : Entity
 	public virtual void CreatePawn( Client cl )
 	{
 		cl.Pawn?.Delete();
-
 		var pawn = GetPawn( cl );
 		cl.Pawn = pawn;
 		pawn.Respawn();
@@ -56,7 +100,6 @@ public abstract partial class Gamemode : Entity
 	public override void Spawn()
 	{
 		base.Spawn();
-
 		Transmit = TransmitType.Always;
 	}
 
@@ -67,22 +110,15 @@ public abstract partial class Gamemode : Entity
 	public virtual void OnClientJoined( Client cl )
 	{
 		PlayerCount++;
-		
 		AssignTeam( cl );
 	}
 	
 	public virtual void AssignTeam( Client cl )
 	{
-		// Do nothing for now	
 	}
 
 	public virtual void Initialize()
 	{
-	}
-
-	public virtual bool AllowSpectating()
-	{
-		return !AllowRespawning();
 	}
 
 	/// <summary>
@@ -134,14 +170,48 @@ public abstract partial class Gamemode : Entity
 		//
 	}
 
+	public float GetSpawnpointWeight( Entity pawn, Entity spawnpoint )
+	{
+		// We want to find the closest player (worst weight)
+		float distance = float.MaxValue;
+
+		foreach ( var client in Client.All )
+		{
+			if ( client.Pawn == null ) continue;
+			if ( client.Pawn == pawn ) continue;
+			if ( client.Pawn.LifeState != LifeState.Alive ) continue;
+
+			var spawnDist = (spawnpoint.Position - client.Pawn.Position).Length;
+			distance = MathF.Min( distance, spawnDist );
+		}
+
+		//Log.Info( $"{spawnpoint} is {distance} away from any player" );
+
+		return distance;
+	}
+
+	public IEnumerable<ISpawnPoint> GetValidSpawnPoints( GunfightPlayer player )
+	{
+		return Entity.All.OfType<ISpawnPoint>()
+			.Where( x => x.IsValidSpawn( player ) ).OrderByDescending( x => x.GetSpawnPriority() );
+	}
+
 	/// <summary>
 	/// Allows gamemodes to override player spawn locations
 	/// </summary>
 	/// <param name="player"></param>
 	/// <returns></returns>
-	public virtual Transform? GetSpawn( GunfightPlayer player )
+	public virtual Transform? GetDefaultSpawnPoint( GunfightPlayer player )
 	{
-		return null;
+		// Default behavior
+		var spawnPoints = GetValidSpawnPoints( player );
+		if ( spawnPoints.Count() < 1 ) return null;
+
+		Log.Info( $"{spawnPoints.Count()} valid spawn points found." );
+
+		var spawnPoint = spawnPoints.FirstOrDefault() as Entity;
+
+		return spawnPoint?.Transform;
 	}
 
 	public virtual void PreSpawn( GunfightPlayer player )
@@ -155,46 +225,6 @@ public abstract partial class Gamemode : Entity
 	}
 
 	/// <summary>
-	/// Decides whether or not players can move
-	/// </summary>
-	/// <returns></returns>
-	public virtual bool AllowMovement()
-	{
-		return true;
-	}
-
-	/// <summary>
-	/// Decides whether or not players can respawn
-	/// </summary>
-	/// <returns></returns>
-	public virtual bool AllowRespawning()
-	{
-		return true;
-	}
-
-	/// <summary>
-	/// Decides whether or not players can take damage
-	/// </summary>
-	/// <returns></returns>
-	public virtual bool AllowDamage()
-	{
-		return true;
-	}
-
-	[ConVar.Server( "gunfight_friendly_fire_override" )]
-	public static bool FriendlyFireOverride { get; set; } = false;
-
-	[ConVar.Replicated( "gunfight_thirdperson" )]
-	public static bool ThirdPersonConVar { get; set; } = false;
-
-	public virtual bool AllowThirdPerson => ThirdPersonConVar;
-
-	public virtual bool AllowFriendlyFire()
-	{
-		return true;
-	}
-
-	/// <summary>
 	/// Called on Client Tick, allows gamemodes to define custom post processing
 	/// </summary>
 	public virtual void PostProcessTick()
@@ -203,12 +233,11 @@ public abstract partial class Gamemode : Entity
 
 	public virtual void CleanupMap()
 	{
-		//
 	}
 
 	public override void BuildInput( InputBuilder input )
 	{
-		if ( !AllowMovement() )
+		if ( !AllowMovement )
 		{
 			input.InputDirection = Vector3.Zero;
 			input.ClearButton( InputButton.Jump );

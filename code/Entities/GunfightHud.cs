@@ -23,7 +23,7 @@ public partial class GunfightHud : HudEntity<HudRootPanel>
 		if ( CurrentHudPanel is not null ) return;
 
 		var gamemode = GamemodeSystem.Current;
-		CurrentHudPanel = gamemode.GetHudPanel();
+		CurrentHudPanel = gamemode.HudPanel;
 
 		if ( CurrentHudPanel is not null )
 			CurrentHudPanel.Parent = this.RootPanel;

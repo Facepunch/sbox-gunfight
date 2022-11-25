@@ -32,38 +32,20 @@ public partial class WarGamemode : Gamemode
 	[ConVar.Server( "gunfight_gamemode_war_maxscore" )]
 	private static int MaximumScoreConfig { get; set; } = 300;
 	public override int MaximumScore => MaximumScoreConfig;
-	public override Panel GetHudPanel() => new WarHud();
 	public override List<Team> TeamSetup => new() { Team.BLUFOR, Team.OPFOR };
-
-	public override bool AllowFriendlyFire()
-	{
-		return false;
-	}
-
-	public override bool AllowRespawning()
-	{
-		return true;
-	}
-
-	public override bool AllowSpectating()
-	{
-		return true;
-	}
-
-	public override bool AllowMovement()
-	{
-		return State != GameState.Countdown;
-	}
-
-	public override bool AllowDamage()
-	{
-		return State != GameState.Countdown;
-	}
+	public override bool AllowFriendlyFire => false;
+	public override bool AllowRespawning => true;
+	public override bool AllowSpectating => true;
+	public override bool AllowMovement => State != GameState.Countdown;
+	public override bool AllowDamage => State != GameState.Countdown;
+	public override bool CapturePointsAreSpawnPoints => true;
+	public override Panel HudPanel => new WarHud();
 
 	public override bool CanPlayerRegenerate( GunfightPlayer player )
 	{
 		return true;
 	}
+
 
 	public override void AssignTeam( Client cl )
 	{

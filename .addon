@@ -147,7 +147,16 @@
         "DisplayName": "Friendly Fire (Override)",
         "DefaultValue": "false",
         "Description": "If set on, friendly fire will always be active.",
-        "Group": "Miscellaneous"
+        "Group": "Game Rules"
+      },
+      {
+        "DisplayType": "Boolean",
+        "Choices": [],
+        "ConVarName": "gunfight_thirdperson",
+        "DisplayName": "Third Person (Override)",
+        "DefaultValue": "false",
+        "Description": "Should third person be available to use?",
+        "Group": "Game Rules"
       },
       {
         "DisplayType": "Integer",
@@ -194,6 +203,9 @@
         "Maximum": 300
       }
     ],
-    "DefaultLeaderboards": []
+    "DefaultLeaderboards": [],
+    "GeneralExtensions": false,
+    "TargettedExtensions": true,
+    "ExtensionApiVersion": 1001
   }
 }

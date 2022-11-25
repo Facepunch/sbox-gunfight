@@ -239,6 +239,8 @@ public partial class ViewModel : BaseViewModel
 		camSetup.FieldOfView -= 10f * aimLerp;
 		// TODO - Set this up in the viewmodel itself
 		camSetup.ViewModel.FieldOfView = 75f;
+		camSetup.ViewModel.FieldOfView += 10f * sprintLerp;
+		camSetup.ViewModel.FieldOfView += 10f * burstSprintLerp;
 	}
 
 	public void Initialize()

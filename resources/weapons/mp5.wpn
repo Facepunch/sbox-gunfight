@@ -20,7 +20,7 @@
 		]
 		BulletSpread = 0.03
 		BulletForce = 1.5
-		BulletDamage = 13
+		BulletDamage = 17
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3

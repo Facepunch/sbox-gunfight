@@ -9,7 +9,7 @@
     <div class="canvas">
         @foreach ( var spawnPoint in Entity.All.OfType<ISpawnPoint>().Where( x => x is not GunfightSpawnPoint ) )
         {
-            <SpawnOption SpawnPoint=@spawnPoint @onclick=@( () => Selected = spawnPoint ) />
+            <SpawnOption SpawnPoint=@spawnPoint @onclick=@( x => TrySelect( x ) ) />
         }
     </div>
 
@@ -34,6 +34,21 @@
 
             return $"RANDOM DEPLOY";
         }
+    }
+
+    public void TrySelect( PanelEvent e )
+    {
+        var option = e.This as SpawnOption;
+        var spawnPoint = option.SpawnPoint;
+
+        if ( !spawnPoint.IsValidSpawn( GunfightCamera.Target ) )
+        {
+            option.SetHint("You can't spawn here.");
+
+            return;
+        }
+
+        Selected = spawnPoint;
     }
 
     public void Spawn()

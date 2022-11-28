@@ -12,8 +12,12 @@ public partial class GunfightSpawnVolume : BaseTrigger, ISpawnPoint
 	string ISpawnPoint.GetIdentity() => NiceName;
 	int ISpawnPoint.GetSpawnPriority() => 0;
 	
-	// TODO - Random point inside volume
-	Transform? ISpawnPoint.GetSpawnTransform() => SpawnPointSystem.GetSuitableSpawn( Transform );
+	public Vector3 GetRandomPoint()
+	{
+		return CollisionBounds.RandomPointInside.WithZ( Position.z );
+	}
+
+	Transform? ISpawnPoint.GetSpawnTransform() => SpawnPointSystem.GetSuitableSpawn( Transform.WithPosition( GetRandomPoint() ) );
 
 	bool ISpawnPoint.IsValidSpawn( GunfightPlayer player )
 	{

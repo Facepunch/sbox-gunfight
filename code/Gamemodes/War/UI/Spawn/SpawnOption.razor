@@ -26,7 +26,7 @@
         BindClass( "enabled", IsEnabled );
         BindClass( "disabled", () => !string.IsNullOrEmpty( Hint ) );
     }
-
+    
     public string Hint;
     public ISpawnPoint SpawnPoint { get; set; }
     public bool IsCapturePoint => SpawnPoint is CapturePointEntity;
@@ -59,9 +59,6 @@
             SetHint( "You can't spawn here." );
             return;
         }
-
-        // TODO - Net ident parsing
-        WarGamemode.AskToRespawn();
     }
 
     public async void SetHint( string hint )

@@ -9,10 +9,7 @@
     <div class="entries">
 		@foreach( var capturePoint in CapturePointList )
         {
-            <div class="point @PointClasses( capturePoint )">
-                <div class="icon"></div>
-                <label class="identity">@capturePoint.Identity</label>
-            </div>
+            <CapturePoint Entity=@capturePoint />
         }
     </div>
 </root>

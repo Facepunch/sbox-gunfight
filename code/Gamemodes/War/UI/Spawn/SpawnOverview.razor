@@ -38,7 +38,7 @@
 
     public void Spawn()
     {
-        WarGamemode.AskToRespawn();
+        WarGamemode.AskToRespawn( ( Selected as Entity )?.NetworkIdent ?? 0 );
     }
 
     public void ToggleLoadoutMenu()

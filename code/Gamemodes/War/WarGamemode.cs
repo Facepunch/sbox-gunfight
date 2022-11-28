@@ -242,10 +242,16 @@ public partial class WarGamemode : Gamemode
 		var player = ConsoleSystem.Caller.Pawn as GunfightPlayer;
 		if ( player.LifeState != LifeState.Respawnable ) return;
 
-		// TODO - Check net ident to see if it's a spawnpoint and put them where they want 
-		if ( netIdent == 0 )
+		player.Respawn();
+
+		if ( netIdent != 0 )
 		{
-			player.Respawn();
+			if ( Entity.FindByIndex( netIdent ) is ISpawnPoint spawnPoint )
+			{
+				var newTransform = spawnPoint.GetSpawnTransform();
+				if ( newTransform != null )
+					player.Transform = newTransform.Value;
+			}
 		}
 
 		SendRespawnAnim( To.Single( player ) );

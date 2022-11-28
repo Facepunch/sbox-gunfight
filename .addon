@@ -206,6 +206,10 @@
     "DefaultLeaderboards": [],
     "GeneralExtensions": false,
     "TargettedExtensions": true,
-    "ExtensionApiVersion": 1001
+    "ExtensionApiVersion": 1001,
+    "Summary": "A fast paced first-person shooter game with a bunch of different gamemodes.",
+    "Description": "",
+    "ReplaceTags": "firstperson thirdperson action",
+    "Public": true
   }
 }

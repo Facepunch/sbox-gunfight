@@ -74,32 +74,42 @@ capturepoints {
     align-content: center;
 
     .just-captured {
+        top: 8px;
         transition: all 0.1s ease;
+
         &:intro {
             opacity: 0;
             transform: scale( 2 );
         }
 
         .name {
+            left: -5px;
             top: 3px;
             font-size: 18px;
             font-family: Oxanium;
         }
 
         .icon {
+            left: -14px;
+            width: 30px;
             font-size: 24px;
             font-family: MaterialIcons;
         }
 
-        color: $main-color;
+        color: white;
         font-weight: 600;
+        text-shadow: 1px 1px 10px rgba( white, 1 );
+        text-stroke-width: 5px;
+        text-stroke-color: rgba( black, 0.05 );
 
         &.friendly {
             color: $friendly;
+            text-shadow: 1px 1px 10px rgba( $friendly, 0.5 );
         }
 
         &.enemy {
             color: $enemy;
+            text-shadow: 1px 1px 10px rgba( $enemy, 0.5 );
         }
     }
 
@@ -114,8 +124,9 @@ capturepoints {
         capturepoint {
             margin-left: 10px;
             margin-right: 10px;
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
+            backdrop-filter-blur: 20px;
 
             label {
                 color: white;
@@ -131,34 +142,38 @@ capturepoints {
 
             .identity {
                 font-family: Oxanium;
-                padding-top: 3px;
-                padding-left: 1px;
-                font-size: 18px;
+                padding-top: 6px;
+                padding-left: 3.2px;
+                font-size: 23px;
                 text-shadow: 1px 1px 1px rgba( black, 0.4 );
             }
 
             .icon {
                 position: absolute;
-                width: 30px;
-                height: 30px;
+                width: 40px;
+                height: 40px;
                 background-color: rgba( white, 0.2 );
                 border: 1px solid rgba( white, 0.5 );
+                box-shadow: 1px 1px 50px rgba( darken( white, 80% ), 0.5 );
             }
 
             &.enemy {
                 .icon {
-                    transform: rotate(45deg);
+                    box-shadow: 1px 1px 50px rgba( darken( $enemy, 80% ), 0.5 );
+                    transform: rotate( 45deg );
                     background-color: rgba( $enemy, 0.2 );
                     border: 1px solid rgba( $enemy, 0.5 );
                 }
 
                 .bar-inner {
+                    transform: rotate( 45deg );
                     background-color: rgba( darken( $enemy, 10% ), 0.2 );
                 }
             }
 
             &.friendly {
                 .icon {
+                    box-shadow: 1px 1px 50px rgba( darken( $friendly, 80% ), 0.5 );
                     background-color: rgba( $friendly, 0.2 );
                     border: 1px solid rgba( $friendly, 0.5 );
                 }
@@ -170,14 +185,14 @@ capturepoints {
 
             &.capturing {
                 animation-name: flash;
-                animation-duration: 0.5s;
+                animation-duration: 1s;
                 animation-timing-function: linear;
                 animation-iteration-count: infinite;
             }
 
             &.contested {
                 animation-name: flash;
-                animation-duration: 0.5s;
+                animation-duration: 1s;
                 animation-timing-function: linear;
                 animation-iteration-count: infinite;
 

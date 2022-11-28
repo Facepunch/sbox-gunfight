@@ -52,10 +52,8 @@
     [ConCmd.Client( "capturepointtest" )]
     public static void CapturePointTest()
     {
-        Log.Info(Entity.All.OfType<CapturePointEntity>().Count());
-
         var capturePoint = Entity.All.OfType<CapturePointEntity>().FirstOrDefault();
-        _ = This.Captured(capturePoint);
+        _ = This.Captured( capturePoint );
     }
 
     public async Task Captured( CapturePointEntity point )

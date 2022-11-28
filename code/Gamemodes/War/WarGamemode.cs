@@ -1,3 +1,4 @@
+using Sandbox.Internal;
 using Sandbox.UI;
 using System.ComponentModel.DataAnnotations;
 
@@ -34,7 +35,7 @@ public partial class WarGamemode : Gamemode
 	public override int MaximumScore => MaximumScoreConfig;
 	public override List<Team> TeamSetup => new() { Team.BLUFOR, Team.OPFOR };
 	public override bool AllowFriendlyFire => false;
-	public override bool AllowRespawning => true;
+	public override bool AllowRespawning => false;
 	public override bool AllowSpectating => true;
 	public override bool AllowMovement => State != GameState.Countdown;
 	public override bool AllowDamage => State != GameState.Countdown;
@@ -219,5 +220,33 @@ public partial class WarGamemode : Gamemode
 				Scores.AddScore( otherTeam, -1 );
 			}
 		}
+	}
+
+	public override void OnPlayerKilled( GunfightPlayer player, DamageInfo damageInfo, out LifeState lifeState )
+	{
+		lifeState = LifeState.Dead;
+
+		_ = SendToOverview( player );
+	}
+
+	public async Task SendToOverview( GunfightPlayer player )
+	{
+		await GameTask.DelaySeconds( 5f );
+		player.LifeState = LifeState.Respawnable;
+		SpawnOverview.Send( To.Single( player ) );
+	}
+
+	[ConCmd.Server( "gunfight_war_respawn" )]
+	public static void AskToRespawn( int netIdent = 0 )
+	{
+		var player = ConsoleSystem.Caller.Pawn as GunfightPlayer;
+		if ( player.LifeState != LifeState.Respawnable ) return;
+
+		if ( netIdent == 0 )
+		{
+			player.Respawn();
+		}
+
+		// TODO - Check net ident to see if it's a spawnpoint and put them where they want 
 	}
 }

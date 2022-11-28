@@ -59,6 +59,9 @@
             SetHint( "You can't spawn here." );
             return;
         }
+
+        // TODO - Net ident parsing
+        WarGamemode.AskToRespawn();
     }
 
     public async void SetHint( string hint )

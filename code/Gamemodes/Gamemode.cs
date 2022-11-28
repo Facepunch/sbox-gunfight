@@ -32,7 +32,6 @@ public abstract partial class Gamemode : Entity
 	/// </summary>
 	public TeamScores Scores => GunfightGame.Current.Scores;
 
-
 	public virtual bool AllowSpectating => false;
 
 	/// <summary>

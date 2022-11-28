@@ -292,6 +292,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		var capturePoints = Entity.All.OfType<CapturePointEntity>().ToList();
 		foreach ( var team in Enum.GetValues<Team>() )
 		{
+			capturePoints[(int)team].Captured = 1f;
 			capturePoints[(int)team].Team = team;
 		}
 	}

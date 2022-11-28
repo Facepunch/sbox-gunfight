@@ -26,8 +26,8 @@
         BindClass( "enabled", IsEnabled );
         BindClass( "disabled", () => !string.IsNullOrEmpty( Hint ) );
     }
-    
-    public string Hint;
+
+    public string Hint { get; set; } = "";
     public ISpawnPoint SpawnPoint { get; set; }
     public bool IsCapturePoint => SpawnPoint is CapturePointEntity;
     public CapturePointEntity CapturePoint => SpawnPoint as CapturePointEntity;

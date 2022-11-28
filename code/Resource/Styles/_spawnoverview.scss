@@ -59,6 +59,12 @@ spawnoption {
         opacity: 0.5;
     }
 
+    &.disabled {
+        cursor: default;
+        transform: scale( 0.95 );
+        opacity: 0.5;
+    }
+
     &.enabled {
         &:hover {
             transform: scale( 1.05 );

@@ -61,6 +61,13 @@
 
 @code
 {
+    public static LoadoutSelector This;
+
+    public LoadoutSelector()
+    {
+        This = this;
+    }
+
     public Panel LoadoutsCanvas;
     public Loadout SelectedLoadout;
 
@@ -94,7 +101,7 @@
         Shutdown();
     }
 
-    protected void ToggleOpen()
+    public void ToggleOpen()
     {
         if ( !LoadoutSystem.AllowCustomLoadouts )
             return;

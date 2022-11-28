@@ -9,12 +9,40 @@
     <div class="canvas">
         @foreach ( var spawnPoint in Entity.All.OfType<ISpawnPoint>().Where( x => x is not GunfightSpawnPoint ) )
         {
-            <SpawnOption SpawnPoint=@spawnPoint />
+            <SpawnOption SpawnPoint=@spawnPoint @onclick=@( () => Selected = spawnPoint ) />
         }
+    </div>
+
+    <div class="actions">
+        <button class="" onclick=@ToggleLoadoutMenu><label class="text">CHANGE LOADOUT</label></button>
+        <button class="primary" onclick=@Spawn><label class="text">@DeployText</label></button>
     </div>
 </root>
 
 @code
 {
+    public ISpawnPoint Selected;
 
+    string DeployText
+    {
+        get
+        {
+            if ( Selected != null )
+            {
+                return $"DEPLOY AT {Selected.GetIdentity().ToUpperInvariant()}";
+            }
+
+            return $"RANDOM DEPLOY";
+        }
+    }
+
+    public void Spawn()
+    {
+        WarGamemode.AskToRespawn();
+    }
+
+    public void ToggleLoadoutMenu()
+    {
+        LoadoutSelector.This.ToggleOpen();
+    }
 }

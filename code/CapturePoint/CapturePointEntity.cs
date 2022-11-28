@@ -232,7 +232,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		}
 	}
 
-	private Dictionary<string, bool> GetUIClasses()
+	public Dictionary<string, bool> GetUIClasses()
 	{
 		var classes = new Dictionary<string, bool>();
 		var friendState = TeamSystem.GetFriendState( Team, TeamSystem.MyTeam );

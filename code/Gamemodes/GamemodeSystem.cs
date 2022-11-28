@@ -41,7 +41,7 @@ public static class GamemodeTypeMethods
 public partial class GamemodeSystem
 {
 	[ConVar.Server( "gunfight_gamemode" )]
-	public static string SelectedGamemode { get; set; } = "KillConfirmedGamemode";
+	public static string SelectedGamemode { get; set; } = "WarGamemode";
 
 	private static Gamemode current;
 	public static Gamemode Current

@@ -1,0 +1,34 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch.Gunfight.UI;
+
+@inherits Panel;
+@namespace Facepunch.Gunfight.War
+
+<root>
+    <div>
+        <div class="icon"><div class="bar-inner" @ref=@BarInner></div>
+        <label class="identity">@Entity.Identity</label>
+    </div>
+</root>
+
+@code
+{
+    public CapturePointEntity Entity;
+    public Panel BarInner;
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender( firstTime );
+
+        foreach ( var uiClass in Entity.GetUIClasses() )
+        {
+            SetClass( uiClass.Key, uiClass.Value );
+        }
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Entity.Identity, Entity.Captured, Entity.CurrentState, Entity.Occupants.Count );
+    }
+}

@@ -147,6 +147,15 @@ partial class GunfightGame : Game
 			var timeSinceDamage = localPlayer.TimeSinceDamage.Relative;
 			var damageUi = MathF.Pow( timeSinceDamage.LerpInverse( 0.8f, 0.0f, true ), 0.3f );
 			var shortDamageUi = timeSinceDamage.LerpInverse( 0.2f, 0.0f, true );
+			var hp = localPlayer.Health;
+
+			if ( localPlayer.LifeState == LifeState.Respawnable )
+			{
+				hp = 100;
+				damageUi = 0;
+				shortDamageUi = 0;
+			}
+
 			if ( damageUi > 0 )
 			{
 				postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, damageUi );
@@ -158,7 +167,7 @@ partial class GunfightGame : Game
 			postProcess.Saturation -= shortDamageUi * 0.1f;
 			postProcess.Pixelation = shortDamageUi * 0.05f;
 
-			var healthDelta = localPlayer.Health.LerpInverse( 0, localPlayer.MaxHealth, true );
+			var healthDelta = hp.LerpInverse( 0, localPlayer.MaxHealth, true );
 			healthDelta = MathF.Pow( healthDelta, 0.6f );
 
 			postProcess.Vignette.Color = Color.Lerp( postProcess.Vignette.Color, RedColor, 1 - healthDelta );

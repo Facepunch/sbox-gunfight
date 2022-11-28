@@ -2,6 +2,13 @@ namespace Facepunch.Gunfight.War;
 
 public partial class SpawnOverview
 {
+	public static SpawnOverview This;
+
+	public SpawnOverview()
+	{
+		This = this;
+	}
+
 	[Event( "gunfight.hudrender.post" )]
 	protected void HudRender()
 	{
@@ -18,7 +25,39 @@ public partial class SpawnOverview
 
 	public override void OnDeleted()
 	{
-		base.OnDeleted();
 		GunfightCamera.CameraOverride = null;
+		This = null;
+		base.OnDeleted();
+	}
+
+	public static void Create()
+	{
+		if ( This != null )
+		{
+			Log.Info( $"SpawnOverview already exists. What? {This}" );
+			return;
+		}
+
+		GunfightGame.Current.Hud.RootPanel.AddChild<SpawnOverview>();
+	}
+
+	[ClientRpc]
+	public static void Send()
+	{
+		Create();
+	}
+
+	public override void Tick()
+	{
+		var localPawn = Local.Pawn as GunfightPlayer;
+		if ( localPawn.IsValid() )
+		{
+			if ( localPawn.LifeState == LifeState.Alive )
+			{
+				Log.Info( "Delete, i'm alive!" );
+				Delete();
+				This = null;
+			}
+		}
 	}
 }

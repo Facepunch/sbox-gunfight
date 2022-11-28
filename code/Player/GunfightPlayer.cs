@@ -185,7 +185,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		Controller = null;
 
-		CameraMode = new GunfightDeathCamera( LastDamage.Attacker.IsValid() ? LastDamage.Attacker : this );
+//		CameraMode = new GunfightDeathCamera( LastDamage.Attacker.IsValid() ? LastDamage.Attacker : this );
 
 		EnableAllCollisions = false;
 		EnableDrawing = false;

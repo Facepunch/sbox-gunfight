@@ -66,9 +66,9 @@
 		}
 		Recoil = 
 		{
-			Decay = "60,100"
-			BaseRecoilMinimum = "-3,8"
-			BaseRecoilMaximum = "2.5,12"
+			Decay = "70,120"
+			BaseRecoilMinimum = "-4,12"
+			BaseRecoilMaximum = "4,16"
 			SpreadDecay = "40,40"
 			MinimumSpread = "-4,-4"
 			MaximumSpread = "4,4"

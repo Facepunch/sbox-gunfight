@@ -1,0 +1,69 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch.Gunfight.UI;
+
+@inherits Panel;
+@namespace Facepunch.Gunfight.War
+
+<root>
+    @if ( IsCapturePoint )
+    {
+        <CapturePoint Entity=@CapturePoint />
+    }
+
+    <label class="name">@SpawnPoint.GetIdentity()</label>
+
+    @if ( !string.IsNullOrEmpty( Hint ) )
+    {
+        <label class="hint">@Hint</label>
+    }
+</root>
+
+@code
+{
+    public SpawnOption()
+    {
+        BindClass( "enabled", IsEnabled );
+    }
+
+    public string Hint;
+    public ISpawnPoint SpawnPoint { get; set; }
+    public bool IsCapturePoint => SpawnPoint is CapturePointEntity;
+    public CapturePointEntity CapturePoint => SpawnPoint as CapturePointEntity;
+
+    public override void Tick()
+    {
+        var screenpos = (SpawnPoint as Entity).Transform.Position.ToScreen();
+        Style.Left = Length.Fraction( screenpos.x );
+        Style.Top = Length.Fraction( screenpos.y );
+    }
+
+    protected override int BuildHash()
+    {
+        if ( IsCapturePoint ) return HashCode.Combine( CapturePoint.Team, CapturePoint.CurrentState, Hint );
+
+        return Hint.GetHashCode();
+    }
+
+    protected bool IsEnabled()
+    {
+        if ( !IsCapturePoint ) return true;
+        return TeamSystem.IsFriendly( CapturePoint.Team, TeamSystem.MyTeam );
+    }
+
+    protected override void OnClick( MousePanelEvent e )
+    {
+        if ( !IsEnabled() )
+        {
+            SetHint( "You can't spawn here." );
+            return;
+        }
+    }
+
+    public async void SetHint( string hint )
+    {
+        Hint = hint;
+        await GameTask.DelaySeconds( 2f );
+        Hint = null;
+    }
+}

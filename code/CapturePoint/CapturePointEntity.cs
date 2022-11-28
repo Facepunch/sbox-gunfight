@@ -269,6 +269,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		return true;
 	}
 
+	string ISpawnPoint.GetIdentity() => NiceName;
 	int ISpawnPoint.GetSpawnPriority() => 10;
 	Transform? ISpawnPoint.GetSpawnTransform() => SpawnPointSystem.GetSuitableSpawn( Transform );
 
@@ -282,5 +283,16 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		None,
 		Contested,
 		Capturing
+	}
+
+
+	[ConCmd.Admin( "gunfight_capturepoint_test" )]
+	public static void Test()
+	{
+		var capturePoints = Entity.All.OfType<CapturePointEntity>().ToList();
+		foreach ( var team in Enum.GetValues<Team>() )
+		{
+			capturePoints[(int)team].Team = team;
+		}
 	}
 }

@@ -292,7 +292,7 @@ public abstract partial class Gamemode : Entity
 
 	public virtual void UpdateHudRenderState()
 	{
-		//
+		Event.Run( "gunfight.hudrender.post" );
 	}
 
 	[Event.Tick.Server]

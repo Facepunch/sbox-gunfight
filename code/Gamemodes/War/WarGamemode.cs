@@ -246,7 +246,7 @@ public partial class WarGamemode : Gamemode
 
 		if ( netIdent != 0 )
 		{
-			if ( Entity.FindByIndex( netIdent ) is ISpawnPoint spawnPoint )
+			if ( Entity.FindByIndex( netIdent ) is ISpawnPoint spawnPoint && spawnPoint.IsValidSpawn( player ) )
 			{
 				var newTransform = spawnPoint.GetSpawnTransform();
 				if ( newTransform != null )

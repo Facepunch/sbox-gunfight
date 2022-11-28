@@ -17,6 +17,8 @@ internal class GunfightCamera : CameraMode
 		}
 	}
 
+	public static Transform? CameraOverride { get; set; }
+
 	public static bool IsSpectator => Target.IsValid() && !Target.IsLocalPawn;
 	public static bool IsLocal => !IsSpectator;
 
@@ -50,6 +52,16 @@ internal class GunfightCamera : CameraMode
 
 	public override void Update()
 	{
+		if ( CameraOverride != null )
+		{
+			Position = CameraOverride.Value.Position;
+			Rotation = CameraOverride.Value.Rotation;
+			Viewer = null;
+			Sound.Listener = CameraOverride;
+
+			return;
+		}
+
 		if ( !Target.IsValid() )
 			Target = GetPlayers().FirstOrDefault();
 

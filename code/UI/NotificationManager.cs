@@ -22,4 +22,24 @@ public partial class NotificationManager
         AddNotification( NotificationDockType.BottomMiddle, "Bottom Middle dock notification" );
         AddNotification( NotificationDockType.TopMiddle, "Top Middle dock notification" );
     }
+
+	TimeSince LastHint;
+
+	public List<string> Hints = new()
+	{
+		"Press Q to change your loadout if you don't like the one you currently have.",
+		"Press E+R to switch fire modes if your weapon supports it.",
+		"Everything in Gunfight is subject to change."
+	};
+
+	[Event.Tick.Client]
+	protected void TickHints()
+	{
+		if ( LastHint > 60f )
+		{
+			var randHint = Rand.FromList( Hints );
+			Current?.Add( NotificationDockType.BottomMiddle, randHint, 5 );
+			LastHint = 0;
+		}
+	}
 }

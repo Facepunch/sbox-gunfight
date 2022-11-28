@@ -68,6 +68,41 @@ hudmarker {
 }
 
 capturepoints {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    .just-captured {
+        transition: all 0.1s ease;
+        &:intro {
+            opacity: 0;
+            transform: scale( 2 );
+        }
+
+        .name {
+            top: 3px;
+            font-size: 18px;
+            font-family: Oxanium;
+        }
+
+        .icon {
+            font-size: 24px;
+            font-family: MaterialIcons;
+        }
+
+        color: $main-color;
+        font-weight: 600;
+
+        &.friendly {
+            color: $friendly;
+        }
+
+        &.enemy {
+            color: $enemy;
+        }
+    }
+
     > .entries {
         height: 50px;
         width: 500px;
@@ -124,13 +159,11 @@ capturepoints {
 
             &.friendly {
                 .icon {
-                    border-radius: 100px;
                     background-color: rgba( $friendly, 0.2 );
                     border: 1px solid rgba( $friendly, 0.5 );
                 }
 
                 .bar-inner {
-                    border-radius: 100px;
                     background-color: rgba( darken( $friendly, 10% ), 0.2 );
                 }
             }

@@ -12,19 +12,56 @@
             <CapturePoint Entity=@capturePoint />
         }
     </div>
+
+    @if ( JustCaptured.IsValid() )
+    {
+        <div class="just-captured @CapturedClasses()">
+            <label class="icon">flag</label>
+            <label class="name">CAPTURED @JustCaptured.Identity</label>
+        </div>
+    }
 </root>
 
 @code
 {
+    public static CapturePoints This;
+    public CapturePointEntity JustCaptured;
+
+    public CapturePoints()
+    {
+        This = this;   
+    }
+
     public IEnumerable<CapturePointEntity> CapturePointList => Entity.All.OfType<CapturePointEntity>().OrderBy( x => x.Identity );
 
     protected override int BuildHash()
     {
-        return HashCode.Combine(CapturePointList);
+        return HashCode.Combine( CapturePointList, JustCaptured );
     }
 
     protected string PointClasses( CapturePointEntity capturePoint )
     {
         return capturePoint.UIClasses;
+    }
+
+    protected string CapturedClasses()
+    {
+        return JustCaptured.UIClasses;
+    }
+
+    [ConCmd.Client( "capturepointtest" )]
+    public static void CapturePointTest()
+    {
+        Log.Info(Entity.All.OfType<CapturePointEntity>().Count());
+
+        var capturePoint = Entity.All.OfType<CapturePointEntity>().FirstOrDefault();
+        _ = This.Captured(capturePoint);
+    }
+
+    public async Task Captured( CapturePointEntity point )
+    {
+        JustCaptured = point;
+        await GameTask.DelaySeconds( 5f );
+        JustCaptured = null;
     }
 }

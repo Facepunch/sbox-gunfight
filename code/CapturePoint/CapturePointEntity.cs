@@ -123,6 +123,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		if ( Host.IsServer && other is GunfightPlayer player )
 		{
 			AddPlayer( player );
+			player.PlayerLocation = NiceName;
 		}
 	}
 
@@ -133,6 +134,9 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		if ( Host.IsServer && other is GunfightPlayer player )
 		{
 			RemovePlayer( player );
+
+			if ( player.PlayerLocation == NiceName )
+				player.PlayerLocation = "";
 		}
 	}
 

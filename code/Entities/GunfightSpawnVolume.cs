@@ -10,7 +10,7 @@ public partial class GunfightSpawnVolume : BaseTrigger, ISpawnPoint
 	[Property] public string NiceName { get; set; } = "Base";
 
 	string ISpawnPoint.GetIdentity() => NiceName;
-	int ISpawnPoint.GetSpawnPriority() => 0;
+	int ISpawnPoint.GetSpawnPriority() => 1;
 	
 	public Vector3 GetRandomPoint()
 	{

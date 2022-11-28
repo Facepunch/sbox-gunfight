@@ -94,6 +94,7 @@ public partial class WarGamemode : Gamemode
 	public override void OnFlagCaptured( CapturePointEntity flag, Team team )
 	{
 		UI.GunfightChatbox.AddInformation( To.Everyone, $"{team.GetName()} captured {flag.NiceName}" );
+		War.CapturePoints.MarkCapture( To.Everyone, flag );
 	}
 
 	public void SetGameState( GameState newState )

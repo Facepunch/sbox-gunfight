@@ -41,10 +41,6 @@
                 }
             }
         }
-
-        > InputHint {
-            margin-right: 8px;
-        }
     }
 </style>
 
@@ -54,11 +50,6 @@
 
         @if ( Player.IsValid() && Player.LifeState != LifeState.Alive )
             return;
-
-        @if ( Weapon.WeaponDefinition.SupportedFireModes.Count() != 1 )
-        {
-            <InputHint Button="View" />
-        }
 
        <div class="firemode active">
            <img src=@GetImage( Weapon.CurrentFireMode ) />

@@ -101,6 +101,7 @@ public partial class SpawnPointSystem
 
 public interface ISpawnPoint
 {
+	public string GetIdentity();
 	public int GetSpawnPriority();
 	public bool IsValidSpawn( GunfightPlayer player );
 	public Transform? GetSpawnTransform();

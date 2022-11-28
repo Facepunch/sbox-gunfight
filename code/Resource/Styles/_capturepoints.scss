@@ -31,7 +31,6 @@ hudmarker {
 
         &.enemy {
             .icon {
-                transform: rotate(45deg);
                 background-color: rgba( $enemy, 0.2 );
                 border: 1px solid rgba( $enemy, 0.5 );
             }
@@ -59,7 +58,6 @@ hudmarker {
             animation-iteration-count: infinite;
 
             .icon {
-                transform: rotate(45deg);
                 background-color: rgba( $main-color, 0.2 );
                 border: 1px solid rgba( $main-color, 0.5 );
             }
@@ -120,88 +118,85 @@ capturepoints {
         justify-content: center;
         align-items: center;
         align-content: center;
+    }
+}
 
-        capturepoint {
-            margin-left: 10px;
-            margin-right: 10px;
-            width: 40px;
-            height: 40px;
-            backdrop-filter-blur: 20px;
+capturepoint {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    backdrop-filter-blur: 20px;
 
-            label {
-                color: white;
-                font-weight: 900;
-            }
+    label {
+        color: white;
+        font-weight: 900;
+    }
 
-            .bar-inner {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                background-color: rgba( white, 0.2 );
-            }
+    .bar-inner {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba( white, 0.2 );
+    }
 
-            .identity {
-                font-family: Oxanium;
-                padding-top: 6px;
-                padding-left: 3.2px;
-                font-size: 23px;
-                text-shadow: 1px 1px 1px rgba( black, 0.4 );
-            }
+    .identity {
+        font-family: Oxanium;
+        padding-top: 7px;
+        padding-left: 4.5px;
+        font-size: 23px;
+        text-shadow: 1px 1px 1px rgba( black, 0.4 );
+    }
 
-            .icon {
-                position: absolute;
-                width: 40px;
-                height: 40px;
-                background-color: rgba( white, 0.2 );
-                border: 1px solid rgba( white, 0.5 );
-                box-shadow: 1px 1px 50px rgba( darken( white, 80% ), 0.5 );
-            }
+    .icon {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background-color: rgba( white, 0.2 );
+        border: 1px solid rgba( white, 0.5 );
+        box-shadow: 1px 1px 50px rgba( darken( white, 80% ), 0.5 );
+    }
 
-            &.enemy {
-                .icon {
-                    box-shadow: 1px 1px 50px rgba( darken( $enemy, 80% ), 0.5 );
-                    transform: rotate( 45deg );
-                    background-color: rgba( $enemy, 0.2 );
-                    border: 1px solid rgba( $enemy, 0.5 );
-                }
+    &.enemy {
+        .icon {
+            box-shadow: 1px 1px 50px rgba( darken( $enemy, 80% ), 0.5 );
+            background-color: rgba( $enemy, 0.2 );
+            border: 1px solid rgba( $enemy, 0.5 );
+        }
 
-                .bar-inner {
-                    transform: rotate( 45deg );
-                    background-color: rgba( darken( $enemy, 10% ), 0.2 );
-                }
-            }
+        .bar-inner {
+            background-color: rgba( darken( $enemy, 10% ), 0.2 );
+        }
+    }
 
-            &.friendly {
-                .icon {
-                    box-shadow: 1px 1px 50px rgba( darken( $friendly, 80% ), 0.5 );
-                    background-color: rgba( $friendly, 0.2 );
-                    border: 1px solid rgba( $friendly, 0.5 );
-                }
+    &.friendly {
+        .icon {
+            box-shadow: 1px 1px 50px rgba( darken( $friendly, 80% ), 0.5 );
+            background-color: rgba( $friendly, 0.2 );
+            border: 1px solid rgba( $friendly, 0.5 );
+        }
 
-                .bar-inner {
-                    background-color: rgba( darken( $friendly, 10% ), 0.2 );
-                }
-            }
+        .bar-inner {
+            background-color: rgba( darken( $friendly, 10% ), 0.2 );
+        }
+    }
 
-            &.capturing {
-                animation-name: flash;
-                animation-duration: 1s;
-                animation-timing-function: linear;
-                animation-iteration-count: infinite;
-            }
+    &.capturing {
+        animation-name: flash;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
 
-            &.contested {
-                animation-name: flash;
-                animation-duration: 1s;
-                animation-timing-function: linear;
-                animation-iteration-count: infinite;
+    &.contested {
+        animation-name: flash;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
 
-                .icon {
-                    transform: rotate(45deg);
-                    background-color: rgba( $main-color, 0.2 );
-                    border: 1px solid rgba( $main-color, 0.5 );
-                }
-            }
+        .icon {
+            background-color: rgba( $main-color, 0.2 );
+            border: 1px solid rgba( $main-color, 0.5 );
         }
     }
 }

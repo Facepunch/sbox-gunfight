@@ -1,0 +1,20 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch.Gunfight.UI;
+
+@inherits Panel;
+@namespace Facepunch.Gunfight.War
+
+<root>
+    <div class="canvas">
+        @foreach ( var spawnPoint in Entity.All.OfType<ISpawnPoint>().Where( x => x is not GunfightSpawnPoint ) )
+        {
+            <SpawnOption SpawnPoint=@spawnPoint />
+        }
+    </div>
+</root>
+
+@code
+{
+
+}

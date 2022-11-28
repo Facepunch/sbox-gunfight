@@ -34,7 +34,7 @@
 
     public override void Tick()
     {
-        var screenpos = (SpawnPoint as Entity).Transform.Position.ToScreen();
+        var screenpos = ( SpawnPoint as Entity ).Transform.Position.ToScreen();
         Style.Left = Length.Fraction( screenpos.x );
         Style.Top = Length.Fraction( screenpos.y );
     }
@@ -48,17 +48,7 @@
 
     protected bool IsEnabled()
     {
-        if ( !IsCapturePoint ) return true;
-        return TeamSystem.IsFriendly( CapturePoint.Team, TeamSystem.MyTeam );
-    }
-
-    protected override void OnClick( MousePanelEvent e )
-    {
-        if ( !IsEnabled() )
-        {
-            SetHint( "You can't spawn here." );
-            return;
-        }
+        return SpawnPoint.IsValidSpawn( GunfightCamera.Target );
     }
 
     public async void SetHint( string hint )

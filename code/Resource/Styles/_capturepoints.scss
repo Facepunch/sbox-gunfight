@@ -70,16 +70,17 @@ hudmarker {
 capturepoints {
     > .entries {
         height: 50px;
+        width: 500px;
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        align-content: center;
 
         capturepoint {
-            width: 70px;
-            height: 70px;
-            justify-content: center;
-            align-items: center;
-            align-content: center;
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
 
             label {
                 color: white;
@@ -95,8 +96,8 @@ capturepoints {
 
             .identity {
                 font-family: Oxanium;
-                padding-top: 1px;
-                padding-right: 4px;
+                padding-top: 3px;
+                padding-left: 1px;
                 font-size: 18px;
                 text-shadow: 1px 1px 1px rgba( black, 0.4 );
             }

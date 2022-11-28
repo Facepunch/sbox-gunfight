@@ -24,6 +24,7 @@
     public SpawnOption()
     {
         BindClass( "enabled", IsEnabled );
+        BindClass( "disabled", () => !string.IsNullOrEmpty( Hint ) );
     }
 
     public string Hint;

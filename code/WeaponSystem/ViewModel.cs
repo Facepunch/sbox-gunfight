@@ -113,10 +113,11 @@ public partial class ViewModel : BaseViewModel
 		var up = camSetup.Rotation.Up;
 		var forward = camSetup.Rotation.Forward;
 		var avoidanceTrace = Trace.Ray( camSetup.Position, camSetup.Position + forward * 50f )
-						.UseHitboxes()
-						.Ignore( Owner )
-						.Ignore( this )
-						.Run();
+					.WorldAndEntities()
+					.WithoutTags( "trigger" )
+					.Ignore( Owner )
+					.Ignore( this )
+					.Run();
 
 		var sprint = controller.IsSprinting;
 		var burstSprint = controller.IsBurstSprinting;

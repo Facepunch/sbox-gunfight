@@ -67,35 +67,10 @@ public partial class KillConfirmedGamemode : Gamemode
 		}
 	}
 
-	protected static Loadout GetRandomLoadout()
-	{
-		var loadouts = Loadout.WithTag( "generic" ).ToList();
-		var index = Rand.Int( 1, loadouts.Count() ) - 1;
-		var loadout = loadouts[index];
-
-		return loadout;
-	}
-
-	protected void RandomizeLoadout()
-	{
-		var oldLoadout = LoadoutSystem.MatchLoadout;
-		
-		Loadout newLoadout = null;
-		while ( newLoadout == null )
-		{
-			var randomLoadout = GetRandomLoadout();
-			if ( randomLoadout == oldLoadout ) continue;
-
-			newLoadout = randomLoadout;
-		}
-
-		LoadoutSystem.MatchLoadout = newLoadout;
-	}
 
 	public override bool PlayerLoadout( GunfightPlayer player )
 	{
 		RandomizeLoadout();
-
 		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
 		GunfightStatusPanel.RpcUpdate( To.Everyone );
 

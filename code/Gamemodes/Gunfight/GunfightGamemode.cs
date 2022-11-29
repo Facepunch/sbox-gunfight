@@ -90,6 +90,7 @@ public partial class GunfightGamemode : Gamemode
 
 	public override bool PlayerLoadout( GunfightPlayer player )
 	{
+		RandomizeLoadout();
 		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
 		GunfightStatusPanel.RpcUpdate( To.Everyone );
 

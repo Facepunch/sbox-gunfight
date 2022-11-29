@@ -217,7 +217,7 @@ public partial class ViewModel : BaseViewModel
 		// Sliding
 		rotationOffsetTarget *= Rotation.From( SlideAngleOffset * slideLerp );
 		ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
-		camSetup.Rotation *= Rotation.From( new Angles( -1f, 0, -3f ) * slideLerp );
+		camSetup.Rotation *= Rotation.From( new Angles( -1f, 0, -6f ) * slideLerp );
 
 		// Recoil
 		LerpRecoil = LerpRecoil.LerpTo( weapon.WeaponSpreadRecoil, Time.Delta * 5f );

@@ -208,7 +208,7 @@ public partial class ViewModel : BaseViewModel
 			{
 				var offset = lookDownDot < 0 ? -1 : 1;
 				var f = lookDownDot - 0.5f * offset;
-				var positionScale = f.Remap( 0f, 0.5f, 0f, 10f );
+				var positionScale = f.Remap( 0f, 0.5f, 0f, 10f ) * ( 1 - aimLerp );
 
 				rotationOffsetTarget *= Rotation.From( new Angles( -positionScale, 0, -positionScale ) );
 			}

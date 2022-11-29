@@ -60,7 +60,10 @@ public partial class WarGamemode : Gamemode
 
 	public override bool PlayerLoadout( GunfightPlayer player )
 	{
-		return base.PlayerLoadout( player );
+		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
+		GunfightStatusPanel.RpcUpdate( To.Everyone );
+
+		return true;
 	}
 
 	public override void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )

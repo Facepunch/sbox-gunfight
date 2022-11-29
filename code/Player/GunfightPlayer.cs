@@ -315,21 +315,24 @@ public partial class GunfightPlayer : Player, IHudMarker
 		var left = setup.Rotation.Left;
 		var up = setup.Rotation.Up;
 
-		if ( GroundEntity != null )
-			WalkBob += Time.Delta * 10f * speed;
-
-		setup.Position += up * MathF.Sin( WalkBob ) * speed * 2;
-		setup.Position += left * MathF.Sin( WalkBob ) * speed * -1f;
-
 		GunfightGame.AddedCameraFOV = 0f;
 		var ctrl = Controller as PlayerController;
 		if ( ctrl != null )
 		{
+			if ( ctrl.Slide.IsActive )
+				speed *= 0.1f;
+
 			if ( ctrl.IsSprinting )
 				GunfightGame.AddedCameraFOV = 3f;
 			if ( ctrl.IsBurstSprinting )
 				GunfightGame.AddedCameraFOV = 6f;
 		}
+
+		if ( GroundEntity != null )
+			WalkBob += Time.Delta * 10f * speed * 1.5f;
+
+		setup.Position += up * MathF.Sin( WalkBob ) * speed * 4;
+		setup.Position += left * MathF.Sin( WalkBob ) * speed * -1f;
 	}
 
 	DamageInfo LastDamage;

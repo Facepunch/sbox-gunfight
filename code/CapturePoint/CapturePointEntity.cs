@@ -275,7 +275,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 
 	bool ISpawnPoint.IsValidSpawn( GunfightPlayer player )
 	{
-		return TeamSystem.IsFriendly( player.Team, Team ) && ( GamemodeSystem.Current?.CapturePointsAreSpawnPoints ?? false );
+		return CurrentState == CaptureState.None && TeamSystem.IsFriendly( player.Team, Team ) && ( GamemodeSystem.Current?.CapturePointsAreSpawnPoints ?? false );
 	}
 
 	public enum CaptureState

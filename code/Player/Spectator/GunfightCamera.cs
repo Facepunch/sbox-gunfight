@@ -1,6 +1,6 @@
 namespace Facepunch.Gunfight;
 
-internal class GunfightCamera : CameraMode
+public class GunfightCamera : CameraMode
 {
 	private static GunfightPlayer target;
 	public static GunfightPlayer Target

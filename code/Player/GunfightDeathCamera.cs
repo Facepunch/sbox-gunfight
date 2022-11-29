@@ -1,6 +1,6 @@
 namespace Facepunch.Gunfight;
 
-public partial class GunfightDeathCamera : CameraMode
+public partial class GunfightDeathCamera : GunfightCamera
 {
 	public GunfightDeathCamera() { }
 
@@ -23,6 +23,8 @@ public partial class GunfightDeathCamera : CameraMode
 
 	public override void Update()
 	{
+		if ( CameraOverride != null ) { base.Update(); return; }
+
 		var player = Local.Client;
 		if ( player == null ) return;
 

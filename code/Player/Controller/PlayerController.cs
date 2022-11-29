@@ -317,7 +317,7 @@ public partial class PlayerController : BasePlayerController
 			{
 				var trForward = Trace.Ray( Pawn.EyePosition, Pawn.EyePosition + Pawn.EyeRotation.Forward * 50f ).WithTag( "solid" ).Radius( 5f ).Ignore( Pawn ).Run();
 
-				if ( trForward.Entity is DoorEntity door )
+				if ( trForward.Entity is DoorEntity door && ( door.State == DoorEntity.DoorState.Closed || door.State == DoorEntity.DoorState.Closing ) )
 				{
 					door.Speed = 500f;
 					door.Open( Pawn );

@@ -15,7 +15,9 @@ public partial class GunfightSpawnVolume : BaseTrigger, ISpawnPoint
 	
 	public Vector3 GetRandomPoint()
 	{
-		return CollisionBounds.RandomPointInside.WithZ( Position.z );
+		var randOffset = CollisionBounds.RandomPointInside;
+
+		return Transform.Position + randOffset.WithZ( 0f );
 	}
 
 	Transform? ISpawnPoint.GetSpawnTransform() => SpawnPointSystem.GetSuitableSpawn( Transform.WithPosition( GetRandomPoint() ) );

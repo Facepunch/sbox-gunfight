@@ -116,7 +116,7 @@ public partial class WarGamemode : Gamemode
 	{
 		if ( State == GameState.WaitingForPlayers )
 		{
-			if ( PlayerCount >= 2 )
+			if ( PlayerCount >= 4 )
 			{
 				SetGameState( GameState.Countdown );
 			}

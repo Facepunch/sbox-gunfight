@@ -36,6 +36,9 @@ public partial class Progression
     [ClientRpc]
     public static void RpcGiveAward( string awardTitle )
     {
-        // TODO - Hook up to UI
+        if ( awardTitle == "Kill" )
+		{
+			Sound.FromScreen( "sounds/guns/kill.sound" );
+		}
     }
 }

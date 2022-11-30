@@ -19,6 +19,8 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 	public bool IsAiming => (Controller as PlayerController)?.IsAiming ?? false;
 
+	Sound HeartbeatSound { get; set; }
+
 	public override void Respawn()
 	{
 		SetModel( "models/citizen/citizen.vmdl" );
@@ -56,6 +58,15 @@ public partial class GunfightPlayer : Player, IHudMarker
 		Tags.Add( "player" );
 
 		base.Respawn();
+	}
+
+	public GunfightPlayer()
+	{
+		if ( IsClient )
+		{
+			HeartbeatSound = Sound.FromScreen( "sounds/heartbeat.sound" );
+			HeartbeatSound.SetVolume( 0f );
+		}
 	}
 
 	public void GiveAll()
@@ -122,10 +133,10 @@ public partial class GunfightPlayer : Player, IHudMarker
 		StopUsing();
 		Client?.AddInt( "deaths", 1 );
 
-		if ( LastDamage.Attacker.IsValid() )
+		if ( LastDamage.Attacker.IsValid() && LastDamage.Attacker is GunfightPlayer player )
 		{
-			Progression.GiveAward( LastDamage.Attacker.Client, "Kill" );
-			( LastDamage.Attacker as GunfightPlayer )?.AddKill();
+			Progression.GiveAward( player.Client, "Kill" );
+			player.AddKill();
 		}
 
 		if ( CapturePoint.IsValid() )
@@ -173,6 +184,15 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		// Inform the active gamemode
 		GamemodeSystem.Current?.PostPlayerKilled( this, LastDamage );
+	}
+
+	[Event.Tick.Client]
+	protected void HeartbeatTick()
+	{
+		if ( this != Local.Pawn ) return;
+
+		var vol = 1 - Health.LerpInverse( 0, 25f, true ).Remap( 0, 1, 0.5f, 1 );
+		HeartbeatSound.SetVolume( vol );
 	}
 
 	TimeSince TimeSinceKilled;

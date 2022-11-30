@@ -17,6 +17,8 @@ public partial class GunfightPlayer : Player, IHudMarker
 	public bool IsRegen { get; set; }
 	public new PlayerInventory Inventory => PlayerInventory;
 
+	public bool IsAiming => (Controller as PlayerController)?.IsAiming ?? false;
+
 	public override void Respawn()
 	{
 		SetModel( "models/citizen/citizen.vmdl" );
@@ -260,15 +262,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 			if ( weapon.AmmoClip <= 0 )
 				weapon.Delete();
 		}
-	}
-
-	private bool OverrideViewAngles = false;
-	private Angles NewViewAngles;
-	[ClientRpc]
-	public void SetViewAngles( Angles angles )
-	{
-		OverrideViewAngles = true;
-		NewViewAngles = angles;
 	}
 
 	public override void PostCameraSetup( ref CameraSetup setup )

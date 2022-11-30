@@ -14,36 +14,6 @@ public partial class SlideMechanic : BaseMoveMechanic
 	public SlideMechanic() { }
 	public SlideMechanic( PlayerController ctrl ) : base( ctrl ) { }
 
-	protected override void OnActiveChanged( bool before, bool after )
-	{
-		if ( Host.IsServer ) return;
-		if ( Controller == null ) return;
-
-		if ( after )
-			StartSliding();
-		else
-			StopSliding();
-	}
-
-	public Particles SlidingParticles { get; set; }
-	public Sound SlidingSound { get; set; }
-
-	protected void StartSliding()
-	{
-		Host.AssertClient();
-
-		var player = Controller.Pawn as GunfightPlayer;
-		player.StartSlidingEffects();
-	}
-
-	protected void StopSliding()
-	{
-		Host.AssertClient();
-
-		var player = Controller.Pawn as GunfightPlayer;
-		player.StopSlidingEffects();
-	}
-
 	protected bool ShouldSlide()
 	{
 		if ( Controller.GroundEntity == null ) return false;

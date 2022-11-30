@@ -91,7 +91,11 @@
 		Say( msg );
 	}
 
-    public void AddEntry( string name, string message, long playerId = 0, string lobbyState = null, bool isMessage = true )
+    Queue<ChatboxRow> Rows = new();
+    protected int MaxItems => 100;
+    protected float MessageLifetime => 10f;
+
+    public void AddEntry( string name, string message, long playerId = 0, bool isMessage = true )
 	{
 		var e = Canvas.AddChild<ChatboxRow>();
 		e.IsChatMessage = isMessage;
@@ -110,11 +114,14 @@
 			e.SetClass( "noavatar", playerId == 0 );
 		}
 
-		if ( lobbyState == "ready" || lobbyState == "staging" )
-		{
-			e.SetClass( "is-lobby", true );
-		}
+        e.BindClass( "stale", () => e.Lifetime > MessageLifetime );
 
-		Canvas.TryScrollToBottom();
+    	Rows.Enqueue( e );
+
+		// Kill an item if we need to
+		if ( Rows.Count > MaxItems )
+			Rows.Dequeue().Delete();
+
+        Canvas.TryScrollToBottom();
 	}
 }

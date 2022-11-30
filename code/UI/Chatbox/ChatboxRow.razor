@@ -23,12 +23,11 @@
 
 @code
 {
-	public string Name { get; set; }
-	public string Message { get; set; }
-	public long PlayerId { get; set; }
-	public bool IsChatMessage { get; set; }
-
-	protected TimeSince Lifetime = 0;
+    public string Name { get; set; }
+    public string Message { get; set; }
+    public long PlayerId { get; set; }
+    public bool IsChatMessage { get; set; }
+    public TimeSince Lifetime { get; init; } = 0;
 
 	public string PlayerClasses()
 	{
@@ -54,13 +53,5 @@
 		if ( friendState == TeamSystem.FriendlyStatus.Neutral ) return "neutral";
 
 		return "";
-	}
-
-	public override void Tick()
-	{
-		base.Tick();
-
-		if ( Lifetime > 10f && !IsDeleting )
-			Delete();
 	}
 }

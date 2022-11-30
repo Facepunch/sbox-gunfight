@@ -34,7 +34,7 @@ GunfightChatbox {
             height: 51px;
             aspect-ratio: 1;
             border-left: 2px solid rgba(0, 0, 0, 0.1);
-            
+
             label {
                 position: absolute;
                 width: 100%;
@@ -47,7 +47,6 @@ GunfightChatbox {
                 align-content: center;
                 color: $main-color;
             }
-
         }
     }
 
@@ -74,6 +73,13 @@ GunfightChatbox {
 
         .faded {
             opacity: 1;
+        }
+
+        .canvas {
+            ChatboxRow {
+                transition: opacity 0.1s ease;
+                opacity: 1;
+            }
         }
     }
 }
@@ -181,5 +187,10 @@ ChatboxRow {
         .avatar {
             border: 2px solid rgba( $enemy, 0.8 );
         }
+    }
+
+    &.stale {
+        transition: opacity 1s ease;
+        opacity: 0;
     }
 }

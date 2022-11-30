@@ -23,7 +23,7 @@ public partial class GunfightPlayer
         if ( CurrentMultikill == 3 )
             Progression.GiveAward( Client, "TripleKill" );
         if ( CurrentMultikill == 4 )
-            Progression.GiveAward( Client, "QuadKill" );
+            Progression.GiveAward( Client, "UltraKill" );
     }
 
     public void ClearKillStreak()

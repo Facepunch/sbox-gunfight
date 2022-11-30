@@ -28,6 +28,7 @@ public partial class WarGamemode : Gamemode
 	{
 		Scores.SetScore( Team.BLUFOR, MaximumScore );
 		Scores.SetScore( Team.OPFOR, MaximumScore );
+		LastKilledPlayer = null;
 	}
 
 	[ConVar.Server( "gunfight_gamemode_war_maxscore" )]
@@ -69,6 +70,11 @@ public partial class WarGamemode : Gamemode
 
 	public override void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )
 	{
+		if ( !LastKilledPlayer.IsValid() )
+		{
+			Progression.GiveAward( lastDamage.Attacker.Client, "FirstBlood" );
+		}
+
 		base.PostPlayerKilled( player, lastDamage );
 
 		var team = player.Team;

@@ -87,6 +87,8 @@ public abstract partial class Gamemode : Entity
 	/// </summary>
 	public virtual int MaximumScore => 4;
 
+	protected GunfightPlayer LastKilledPlayer;
+
 	public virtual string GetTimeLeftLabel()
 	{
 		return "00:00";
@@ -200,7 +202,7 @@ public abstract partial class Gamemode : Entity
 
 	public virtual void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )
 	{
-		//
+		LastKilledPlayer = player;
 	}
 
 	public float GetSpawnpointWeight( Entity pawn, Entity spawnpoint )

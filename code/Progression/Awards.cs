@@ -25,6 +25,12 @@ public partial class Awards
 	{
 	}
 
+	[Award( Title = "First Blood", PointsGiven = 100, Description = "First blood" )]
+	public static void FirstBlood( GunfightPlayer player )
+	{
+		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_firstblood.sound" );
+	}
+
 	[Award( Title = "Kill Denied", PointsGiven = 25, Description = "Kill Denied" )]
 	public static void KillDenied( GunfightPlayer player )
 	{
@@ -55,6 +61,7 @@ public partial class Awards
 	{
 		KillFeedMessage( To.Everyone, player.Client.PlayerId, player.Client.Name, "got a Double Kill!" );
 		player.Client.AddInt( "stat_doublekills", 1 );
+		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_doublekill.sound" );
 	}
 
 	[Award( Title = "Triple Kill", PointsGiven = 200, Description = "Triple Kill" )]
@@ -62,16 +69,18 @@ public partial class Awards
 	{
 		KillFeedMessage( To.Everyone, player.Client.PlayerId, player.Client.Name, "got a Triple Kill!" );
 		player.Client.AddInt( "stat_triplekills", 1 );
+		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_triplekill.sound" );
 	}
 
-	[Award( Title = "Quad Kill", PointsGiven = 500, Description = "Quad Kill" )]
+	[Award( Title = "Ultra Kill", PointsGiven = 500, Description = "Ultra Kill" )]
 	public static void QuadKill( GunfightPlayer player )
 	{
-		KillFeedMessage( To.Everyone, player.Client.PlayerId, player.Client.Name, "got a Quad Kill!" );
-		player.Client.AddInt( "stat_quadkills", 1 );
+		KillFeedMessage( To.Everyone, player.Client.PlayerId, player.Client.Name, "got a Ultra Kill!" );
+		player.Client.AddInt( "stat_ultrakills", 1 );
+		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_ultrakill.sound" );
 	}
 
-    public static MethodDescription? Get( string title )
+	public static MethodDescription? Get( string title )
 	{
 		return TypeLibrary.FindStaticMethods<AwardAttribute>( title ).FirstOrDefault();
 	}

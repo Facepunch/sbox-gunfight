@@ -60,8 +60,8 @@
 			SprintAngleOffset = "-45,0,0"
 			BurstSprintPositionOffset = "-0.5,0,1"
 			BurstSprintAngleOffset = "10,0,0"
-			AimPositionOffset = "-3,1.6,0.8"
-			AimAngleOffset = "0,-0.5,4.5"
+			AimPositionOffset = "-0.9680001,1.7,0.889"
+			AimAngleOffset = "0.814,-1.012,4.124"
 		}
 		Recoil = 
 		{

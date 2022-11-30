@@ -142,6 +142,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		BurstCount = 0;
 		IsReloading = false;
 		StopDecaying();
+
+		Sound.FromEntity( "sounds/guns/switch/weapon_switch.sound", ent );
 	}
 
 	public override void Spawn()

@@ -58,6 +58,15 @@ public abstract partial class Gamemode : Entity
 	[ConVar.Replicated( "gunfight_thirdperson" )]
 	public static bool ThirdPersonConVar { get; set; } = false;
 
+	// Stats
+	[ConVar.Server( "gunfight_minimum_players" )]
+	protected static int MinimumPlayersConVar { get; set; } = 2;
+
+	/// <summary>
+	/// How many players should be in the game before it starts?
+	/// </summary>
+	public virtual int MinimumPlayers => MinimumPlayersConVar;
+
 	/// <summary>
 	/// Should third person be enabled? By default, it's controlled by a game ConVar.
 	/// </summary>

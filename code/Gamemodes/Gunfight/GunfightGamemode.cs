@@ -25,7 +25,6 @@ public partial class GunfightGamemode : Gamemode
 	public override bool AllowSpectating => true;
 
 	// Stats
-	protected int MinimumPlayers => 4;
 	protected float RoundCountdownLength => 10f;
 	protected float RoundLength => 40f;
 	protected float FlagActiveLength => 10f;

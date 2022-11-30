@@ -17,7 +17,7 @@
 			"Semi",
 			"FullAuto",
 		]
-		BulletSpread = 0.03
+		BulletSpread = 0.06
 		BulletForce = 2
 		BulletDamage = 21
 		BulletSize = 3

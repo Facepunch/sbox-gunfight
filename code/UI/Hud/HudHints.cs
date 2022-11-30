@@ -1,3 +1,4 @@
+using Sandbox.Component;
 using Sandbox.UI;
 
 namespace Facepunch.Gunfight;
@@ -19,6 +20,32 @@ public partial class HudHints : Panel
 	public Panel SpectatorHint { get; set; }
 	// @text
 	public string SpectatorTarget => GunfightCamera.Target?.Client?.Name ?? "nobody";
+
+	Entity lastObserved;
+	protected Entity LastObserved
+	{
+		get => lastObserved;
+		set
+		{
+			if ( lastObserved != value && lastObserved.IsValid() )
+			{
+				var glow = lastObserved.Components.Get<Glow>();
+				if ( glow != null )
+					glow.Enabled = false;
+			}
+
+			lastObserved = value;
+
+			if ( lastObserved.IsValid() )
+			{
+				var glow = lastObserved.Components.GetOrCreate<Glow>();
+				glow.Enabled = true;
+				glow.Width = 0.25f;
+				glow.Color = new Color( 255, 207, 38, 0.001f );
+				glow.ObscuredColor = new Color( 225, 170, 38, 0.0001f );
+			}
+		}
+	}
 
 	public override void Tick()
 	{
@@ -51,14 +78,14 @@ public partial class HudHints : Panel
 			.WithAnyTags( "solid", "weapon" )
 			.Run();
 
-		if ( tr.Distance > 128f )
-		{
-			PickupHint.SetClass( "show", false );
-		}
-		else
-		{
-			PickupHint.SetClass( "show", tr.Hit && tr.Entity is IUse use && use.IsUsable( player ) );
 
+		var isUsable = tr.Hit && tr.Entity is IUse use && use.IsUsable( player ) && tr.Distance < 128f;
+
+		LastObserved = isUsable ? tr.Entity : null;
+		PickupHint.SetClass( "show", isUsable );
+
+		if ( isUsable )
+		{
 			if ( tr.Entity.IsValid() && tr.Entity is GunfightWeapon wpn )
 				PickupLabel.Text = wpn.Name;
 			else

@@ -191,7 +191,10 @@ public partial class GunfightPlayer : Player, IHudMarker
 	{
 		if ( this != Local.Pawn ) return;
 
-		var vol = 1 - Health.LerpInverse( 0, 25f, true ).Remap( 0, 1, 0.5f, 1 );
+		var hp = Health;
+		if ( LifeState != LifeState.Alive ) hp = 100;
+
+		var vol = 1 - hp.LerpInverse( 0, 25f, true ).Remap( 0, 1, 0.5f, 1 );
 		HeartbeatSound.SetVolume( vol );
 	}
 

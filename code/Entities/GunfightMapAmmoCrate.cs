@@ -20,6 +20,8 @@ public partial class GunfightMapAmmoCrate : GamemodeSpecificEntity, IUse
 				player.GiveAmmo( wpn.AmmoType, player.MaxAmmo( wpn.AmmoType ) );
 			}
 
+			Sound.FromEntity( "sounds/interactions/loot_box.sound", this );
+
 			UI.NotificationManager.AddNotification( To.Single( player ), UI.NotificationDockType.BottomMiddle, $"All of your ammo was refilled", 4 );
 		}
 

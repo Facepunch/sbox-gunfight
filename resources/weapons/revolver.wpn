@@ -9,7 +9,7 @@
 		Model = resource:"models/revolver/w_revolver.vmdl"
 		ViewModel = resource:"models/revolver/fp_revolver.vmdl"
 		Icon = resource:"models/revolver/w_revolver.vmdl.png"
-		BaseFireRate = 0.2
+		BaseFireRate = 0.4
 		DefaultFireMode = "Semi"
 		DamageFlags = "Bullet"
 		SupportedFireModes = 

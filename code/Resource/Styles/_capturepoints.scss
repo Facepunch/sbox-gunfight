@@ -62,6 +62,13 @@ hudmarker {
                 border: 1px solid rgba( $main-color, 0.5 );
             }
         }
+
+        transition: transform 0.1s ease, opacity 0.1s ease;
+        &.isfocused
+        {
+            opacity: 0.1;
+            transform: scale( 0.9 );
+        }
     }
 }
 

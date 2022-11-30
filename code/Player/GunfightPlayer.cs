@@ -102,33 +102,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 	[ClientRpc]
 	public void ClearEffects()
 	{
-		StopSlidingEffects();
-	}
-
-	public Particles SlidingParticles { get; set; }
-	public Sound SlidingSound { get; set; }
-	bool SlidingEffectsActive { get; set; } = false;
-
-	public void StartSlidingEffects()
-	{
-		if ( SlidingEffectsActive ) return;
-
-		SlidingEffectsActive = true;
-		SlidingParticles?.Destroy( true );
-		SlidingParticles = Particles.Create( "particles/gameplay/player/slide/slide.vpcf", this, true );
-
-		SlidingSound.Stop();
-		SlidingSound = Sound.FromEntity( "sounds/player/foley/slide/ski.loop.sound", this );
-	}
-
-	public void StopSlidingEffects( bool stopSound = true )
-	{
-		SlidingEffectsActive = false;
-		SlidingParticles?.Destroy( true );
-		SlidingSound.Stop();
-
-		if ( stopSound )
-			Sound.FromEntity( "sounds/player/foley/slide/ski.stop.sound", this );
+		// STUB
 	}
 
 	public override void OnKilled()

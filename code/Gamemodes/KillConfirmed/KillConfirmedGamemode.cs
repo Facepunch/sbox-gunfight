@@ -23,10 +23,6 @@ public partial class KillConfirmedGamemode : Gamemode
 	public override bool AllowFriendlyFire => false;
 	public override bool AllowSpectating => true;
 
-	// Stats
-	[ConVar.Server( "gunfight_kc_minimum_players" )]
-	protected static int MinimumPlayers { get; set; } = 2;
-
 	[ConVar.Server( "gunfight_kc_round_countdown" )]
 	protected static float RoundCountdownLength { get; set; } = 10f;
 

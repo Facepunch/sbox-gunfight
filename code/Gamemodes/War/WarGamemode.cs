@@ -127,6 +127,12 @@ public partial class WarGamemode : Gamemode
 	{
 		Entity.All.OfType<CapturePointEntity>().ToList().ForEach( x => x.Initialize() );
 	}
+
+	[ClientRpc]
+	protected void TimerSound()
+	{
+		Sound.FromScreen( "sounds/ui/ten_seconds.sound" );
+	}
 	
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{
@@ -151,6 +157,7 @@ public partial class WarGamemode : Gamemode
 			ResetStats();
 			TimeUntilNextState = countdown;
 			RespawnAllPlayers();
+			TimerSound( To.Everyone );
 
 			UI.GamemodeIdentity.RpcShow( To.Everyone, countdown.CeilToInt() );
 		}

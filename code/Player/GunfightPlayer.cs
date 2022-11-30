@@ -351,6 +351,11 @@ public partial class GunfightPlayer : Player, IHudMarker
 			info.Damage *= 2.5f;
 		}
 
+		if ( info.Flags.HasFlag( DamageFlags.Bullet ) )
+		{
+			Sound.FromScreen( To.Single( Client ), "sounds/player/damage_taken_shot.sound" );
+		}
+
 		this.ProceduralHitReaction( info );
 
 		LastAttacker = info.Attacker;

@@ -90,4 +90,12 @@ public class GunfightCamera : CameraMode
 			Rotation = Target.EyeRotation
 		};
 	}
+
+	public override void BuildInput( InputBuilder input )
+	{
+		if ( GunfightCamera.Target.IsAiming )
+			input.AnalogLook *= 0.5f;
+
+		base.BuildInput( input );
+	}
 }

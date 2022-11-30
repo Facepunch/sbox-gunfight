@@ -35,11 +35,5 @@ public partial class GunfightPlayer
 		TrySlotFromInput( input, InputButton.Slot3 );
 		TrySlotFromInput( input, InputButton.Slot4 );
 		TrySlotFromInput( input, InputButton.Slot5 );
-
-		if ( OverrideViewAngles )
-		{
-			OverrideViewAngles = false;
-			input.ViewAngles = NewViewAngles;
-		}
 	}
 }

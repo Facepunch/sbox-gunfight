@@ -18,7 +18,7 @@
 			"FullAuto",
 			"Burst",
 		]
-		BulletSpread = 0.03
+		BulletSpread = 0.09
 		BulletForce = 1.5
 		BulletDamage = 17
 		BulletSize = 3

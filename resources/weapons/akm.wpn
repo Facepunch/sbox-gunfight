@@ -9,7 +9,7 @@
 		Model = resource:"models/akm/w_akm.vmdl"
 		ViewModel = resource:"models/akm/fp_akm.vmdl"
 		Icon = resource:"models/akm/w_akm.vmdl.png"
-		BaseFireRate = 0.1
+		BaseFireRate = 0.12
 		DefaultFireMode = "FullAuto"
 		DamageFlags = "Bullet"
 		SupportedFireModes = 
@@ -19,7 +19,7 @@
 		]
 		BulletSpread = 0.03
 		BulletForce = 2
-		BulletDamage = 23
+		BulletDamage = 21
 		BulletSize = 3
 		BulletCount = 1
 		BurstAmount = 3

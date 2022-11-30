@@ -10,7 +10,8 @@
 		Decibels = 140
 		Sounds = 
 		[
-			resource:"sounds/guns/akm/ar1_shoot 01.vsnd",
+			resource:"sounds/guns/akm/ak_shoot_1.vsnd",
+			resource:"sounds/guns/akm/ak_shoot_2.vsnd",
 		]
 		SelectionMode = "Random"
 		MaximumDistance = 4479.734

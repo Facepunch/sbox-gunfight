@@ -29,6 +29,9 @@ partial class GunfightGame : Game
 
 			Global.TickRate = 30;
 		}
+
+		Audio.ReverbScale = 0f;
+		Audio.ReverbVolume = 0f;
 	}
 
 	[Event.Entity.PostSpawn]

@@ -20,6 +20,7 @@ public partial class BaseMoveMechanic : BaseNetworkable
 	public virtual bool AlwaysSimulate => false;
 	public virtual bool TakesOverControl => false;
 	public TimeSince TimeSinceActivate { get; protected set; }
+	public GunfightPlayer Player => ctrl.Player;
 
 	private PlayerController ctrl;
 	protected PlayerController Controller

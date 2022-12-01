@@ -44,13 +44,13 @@ public partial class GunfightDeathCamera : GunfightCamera
 		Local.Pawn.Components.Add( new GunfightSpectatorCamera() );
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
-		base.BuildInput( input );
+		base.BuildInput();
 
 		var gamemode = GamemodeSystem.Current;
 
-		if ( input.Pressed( InputButton.Jump ) && gamemode.IsValid() && gamemode.AllowSpectating )
+		if ( Input.Pressed( InputButton.Jump ) && gamemode.IsValid() && gamemode.AllowSpectating )
 		{
 			Spectate();
 		}

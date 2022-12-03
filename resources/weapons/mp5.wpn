@@ -71,5 +71,6 @@
 			SpreadDecay = "15,15"
 		}
 		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
+		DeployTime = 0.5
 	}
 }

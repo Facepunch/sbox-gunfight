@@ -66,5 +66,6 @@
 			BaseRecoilMaximum = "0.05,20"
 		}
 		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
+		DeployTime = 0.8
 	}
 }

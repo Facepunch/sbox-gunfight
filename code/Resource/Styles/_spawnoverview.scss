@@ -18,7 +18,8 @@ spawnoverview {
         justify-content: center;
         flex-direction: column;
         padding-bottom: 16px;
-
+        padding-left: 16px;
+        background-image: linear-gradient( 300deg, rgba( $main-color, 0.1 ), rgba( 0, 0, 0, 0 ) );
 
         > .header {
             height: 2px;

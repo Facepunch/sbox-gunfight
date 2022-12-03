@@ -74,5 +74,6 @@
 			MaximumSpread = "4,4"
 		}
 		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
+		DeployTime = 0.6
 	}
 }

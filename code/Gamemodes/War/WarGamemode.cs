@@ -70,7 +70,7 @@ public partial class WarGamemode : Gamemode
 
 	public override void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )
 	{
-		if ( !LastKilledPlayer.IsValid() )
+		if ( !LastKilledPlayer.IsValid() && lastDamage.Attacker.IsValid() )
 		{
 			Progression.GiveAward( lastDamage.Attacker.Client, "FirstBlood" );
 		}

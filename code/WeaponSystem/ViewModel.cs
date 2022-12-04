@@ -46,7 +46,7 @@ public partial class ViewModel : BaseViewModel
 	Vector3 acceleration;
 	Vector2 LerpRecoil;
 
-	float VelocityClamp => 10f;
+	float VelocityClamp => 20f;
 	float walkBob = 0;
 	float upDownOffset = 0;
 	float avoidance = 0;
@@ -103,7 +103,7 @@ public partial class ViewModel : BaseViewModel
 			return;
 
 		var frac = controller.IsAiming ? 1 : 0;
-		LerpTowards( ref aimLerp, frac, 20f );
+		LerpTowards( ref aimLerp, frac, controller.IsAiming ? 30f : 10f );
 
 		SmoothedVelocity += (Owner.Velocity - SmoothedVelocity) * 5f * DeltaTime;
 
@@ -216,7 +216,7 @@ public partial class ViewModel : BaseViewModel
 					MathF.Abs( MathF.Sin( cycle ) * 2.0f ),
 					MathF.Cos( cycle ), 
 					0 
-				) * sprintLerp * 0.3f );
+				) * sprintLerp * 0.35f );
 
 			// Apply the same offset as above for a nicer sprint bob
 			float sprintBob = MathF.Pow( MathF.Sin( cycle ) * 0.5f + 0.5f, 2.0f );

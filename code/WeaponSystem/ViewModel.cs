@@ -56,6 +56,7 @@ public partial class ViewModel : BaseViewModel
 	float crouchLerp = 0;
 	float airLerp = 0;
 	float slideLerp = 0;
+	float sideLerp = 0;
 
 	public override void PostCameraSetup( ref CameraSetup camSetup )
 	{
@@ -108,6 +109,7 @@ public partial class ViewModel : BaseViewModel
 		var isGrounded = Owner.GroundEntity != null;
 		var weapon = Weapon as GunfightWeapon;
 		var speed = Owner.Velocity.Length.LerpInverse( 0, 750 );
+		var sideSpeed = Owner.Velocity.Length.LerpInverse( 0, 350 );
 		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -250, 700 );
 		var left = camSetup.Rotation.Left;
 		var up = camSetup.Rotation.Up;
@@ -136,6 +138,9 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );
 		LerpTowards( ref slideLerp, sliding ? TimeSincePrimaryAttack.Remap( 0, 0.2f, 0, 1 ).Clamp( 0, 1 ) : 0, 7f );
 		LerpTowards( ref airLerp, isGrounded ? 0 : 1, 10f );
+
+		var leftAmt = left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal );
+		LerpTowards( ref sideLerp, leftAmt * ( 1 - aimLerp ), 5f );
 
 		bobSpeed *= 1 - sprintLerp * 0.25f;
 		bobSpeed *= 1 - burstSprintLerp * 2f;
@@ -231,6 +236,8 @@ public partial class ViewModel : BaseViewModel
 		rotationOffsetTarget *= Rotation.From( GetAimAngle() * aimLerp );
 		ApplyPositionOffset( GetAimOffset(), aimLerp, camSetup );
 
+		rotationOffsetTarget *= Rotation.From( 0f, sideLerp * -5f, sideLerp * -5f );
+
 		realRotationOffset = rotationOffsetTarget;
 		realPositionOffset = positionOffsetTarget;
 
@@ -242,6 +249,7 @@ public partial class ViewModel : BaseViewModel
 		camSetup.ViewModel.FieldOfView = 75f;
 		camSetup.ViewModel.FieldOfView += 10f * sprintLerp;
 		camSetup.ViewModel.FieldOfView += 10f * burstSprintLerp;
+
 	}
 
 	public void Initialize()

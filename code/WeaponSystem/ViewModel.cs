@@ -87,6 +87,12 @@ public partial class ViewModel : BaseViewModel
 		return hasLaser ? Setup.LaserAngleOffset : Setup.AimAngleOffset;
 	}
 
+	private Angles CalcRoll( Vector3 velocity, Vector3 left, float rollAngle )
+	{
+		var roll = velocity.Dot( left ) * rollAngle;
+		return Angles.Zero.WithRoll( roll );
+	}
+
 	private void AddCameraEffects( ref CameraSetup camSetup )
 	{
 		if ( !Owner.IsValid() )
@@ -102,7 +108,7 @@ public partial class ViewModel : BaseViewModel
 			return;
 
 		var frac = controller.IsAiming ? 1 : 0;
-		LerpTowards( ref aimLerp, frac, 10f );
+		LerpTowards( ref aimLerp, frac, 20f );
 
 		SmoothedVelocity += (Owner.Velocity - SmoothedVelocity) * 5f * DeltaTime;
 
@@ -207,6 +213,15 @@ public partial class ViewModel : BaseViewModel
 			rotationOffsetTarget *= Rotation.From( BurstSprintAngleOffset * burstSprintLerp );
 			ApplyPositionOffset( BurstSprintPositionOffset, burstSprintLerp, camSetup );
 
+			// Sprinting cycle
+			float cycle = Time.Now * 10.0f;
+			camSetup.Rotation *= Rotation.From( 
+				new Angles( 
+					MathF.Abs( MathF.Sin( cycle ) * 2.0f ),
+					MathF.Cos( cycle ), 
+					0 
+				) * sprintLerp * 0.3f );
+
 			// Vertical Look
 			var lookDownDot = camSetup.Rotation.Forward.Dot( Vector3.Down );
 			if ( MathF.Abs( lookDownDot ) > 0.5f )
@@ -222,7 +237,9 @@ public partial class ViewModel : BaseViewModel
 		// Sliding
 		rotationOffsetTarget *= Rotation.From( SlideAngleOffset * slideLerp );
 		ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
-		camSetup.Rotation *= Rotation.From( new Angles( -1f, 0, -6f ) * slideLerp );
+		var a = CalcRoll( velocity.WithZ(0), left.WithZ(0), 10.0f ) * 100.0f;
+		//Log.Info( left.WithZ(0).ToString() + velocity.WithZ(0).ToString() );
+		camSetup.Rotation *= Rotation.From( a * slideLerp );
 
 		// Recoil
 		LerpRecoil = LerpRecoil.LerpTo( weapon.WeaponSpreadRecoil, Time.Delta * 5f );
@@ -235,6 +252,9 @@ public partial class ViewModel : BaseViewModel
 		// Aim
 		rotationOffsetTarget *= Rotation.From( GetAimAngle() * aimLerp );
 		ApplyPositionOffset( GetAimOffset(), aimLerp, camSetup );
+
+		// Move your view a bit down as you move like in CSGO
+		//ApplyPositionOffset( new Vector3( 0, 0, -5.5f ), velocity.Length > 10 ? 1.0f : 0.0f , camSetup );
 
 		rotationOffsetTarget *= Rotation.From( 0f, sideLerp * -5f, sideLerp * -5f );
 

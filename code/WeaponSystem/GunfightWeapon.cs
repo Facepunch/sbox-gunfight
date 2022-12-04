@@ -387,7 +387,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( Player.IsHolstering ) return false;
 		if ( TimeSinceDeployed < 0.2f ) return false;
 		if ( !PlayerController.AimFireDelay ) return false;
-		if ( PlayerController.Slide.IsActive ) return false;
+		//if ( PlayerController.Slide.IsActive ) return false;
 		if ( IsSprinting ) return false;
 		if ( IsReloading ) return false;
 		if ( PlayerController.SinceStoppedSprinting <= PostSprintAttackDelay ) return false;

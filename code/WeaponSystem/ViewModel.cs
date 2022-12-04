@@ -218,6 +218,12 @@ public partial class ViewModel : BaseViewModel
 					0 
 				) * sprintLerp * 0.3f );
 
+			// Apply the same offset as above for a nicer sprint bob
+			float sprintBob = MathF.Pow( MathF.Sin( cycle ) * 0.5f + 0.5f, 2.0f );
+			float sprintBob2 = MathF.Pow( MathF.Cos( cycle ) * 0.5f + 0.5f, 3.0f );
+			rotationOffsetTarget *= Rotation.From( SprintAngleOffset * sprintLerp * sprintBob * 0.2f );
+			ApplyPositionOffset( -SprintPositionOffset * sprintBob2 * 0.3f, sprintLerp, camSetup );
+
 			camSetup.FieldOfView += 5f * sprintLerp;
 
 			// Vertical Look
@@ -236,7 +242,7 @@ public partial class ViewModel : BaseViewModel
 		rotationOffsetTarget *= Rotation.From( SlideAngleOffset * slideLerp );
 		ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
 
-		camSetup.Rotation *= Rotation.From( Angles.Zero.WithRoll( leftAmt ) * slideLerp * 25.0f );
+		camSetup.Rotation *= Rotation.From( Angles.Zero.WithRoll( leftAmt ) * slideLerp * -15.0f );
 		camSetup.FieldOfView += 5f * slideLerp;
 
 		// Recoil

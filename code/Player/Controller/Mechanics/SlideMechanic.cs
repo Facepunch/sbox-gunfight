@@ -11,9 +11,12 @@ public partial class SlideMechanic : BaseMoveMechanic
 	public float WishDirectionFactor => 1200f;
 	public float SlideIntensity => 1 + (TimeSinceActivate / BoostTime);
 	public float SlideSpeed => 750.0f;
+	private Sound SlideSound;
 
 	public SlideMechanic() { }
-	public SlideMechanic( PlayerController ctrl ) : base( ctrl ) { }
+	public SlideMechanic( PlayerController ctrl ) : base( ctrl ) 
+	{
+	}
 
 	protected bool ShouldSlide()
 	{
@@ -39,7 +42,17 @@ public partial class SlideMechanic : BaseMoveMechanic
 		if( Controller.Velocity.Length < 300.0f )
 			Controller.Velocity += slopeForward * 50.0f;
 
+		Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.stop.sound" );
+		SlideSound = Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.loop.sound");
+		SlideSound.SetVolume( 2.0f );
+
 		return true;
+	}
+
+	public override void StopTry()
+	{
+		SlideSound.Stop();
+		base.StopTry();
 	}
 
 	public override void PreSimulate()
@@ -57,6 +70,9 @@ public partial class SlideMechanic : BaseMoveMechanic
 
 		if( Controller.Velocity.Length < SlideSpeed )
 			Controller.Velocity += slopeForward * Time.Delta * SlideSpeed;
+
+		// Doesn't work?
+		SlideSound.SetPitch( Controller.Velocity.Length / Controller.SprintSpeed );
 
 		Controller.SetTag( "sliding" );
 	}

@@ -4,12 +4,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 {
 	protected bool Wish { get; set; }
 
-	public float BoostTime => 1f;
-	// You can only slide once every X
-	public float Cooldown => 1f;
-	public float MinimumSpeed => 120f;
-	public float WishDirectionFactor => 1200f;
-	public float SlideIntensity => 1 + (TimeSinceActivate / BoostTime);
+	public float MinimumSpeed => 100f;
 	public float SlideSpeed => 750.0f;
 	private Sound SlideSound;
 
@@ -33,14 +28,11 @@ public partial class SlideMechanic : BaseMoveMechanic
 		if ( Controller.Velocity.Length < Controller.DefaultSpeed ) return false;
 		if ( !Wish ) return false;
 		if ( !ShouldSlide() ) return false;
-		if ( TimeSinceActivate < Cooldown ) return false;
-
-		TimeSinceActivate = 0;
 
 		// Give it an initial boost
 		var slopeForward = new Vector3( Controller.Velocity.x, Controller.Velocity.y, 0 ).Normal;
 		if( Controller.Velocity.Length < 300.0f )
-			Controller.Velocity += slopeForward * 50.0f;
+			Controller.Velocity += slopeForward * 120.0f;
 
 		Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.stop.sound" );
 		SlideSound = Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.loop.sound");

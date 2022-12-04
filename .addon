@@ -21,9 +21,11 @@
     "MaxPlayers": 16,
     "MinPlayers": 1,
     "GameNetworkType": "Multiplayer",
-    "MapSelect": "Unrestricted",
+    "MapSelect": "Official",
     "MapList": [
-      "baks.training_arena"
+      "gvar.metro",
+      "baks.training_arena",
+      "facepunch.prison"
     ],
     "RankType": "None",
     "PerMapRanking": false,

@@ -88,7 +88,7 @@ public partial class PlayerController : BasePlayerController
 	{
 		var girth = BodyGirth * 0.5f;
 		var mins = new Vector3( -girth, -girth, 0 ) * Pawn.Scale;
-		var maxs = new Vector3( +girth, +girth, BodyHeight ) * Pawn.Scale;
+		var maxs = new Vector3( +girth, +girth, RealEyeHeight + 6f ) * Pawn.Scale;
 
 		CurrentMechanic?.UpdateBBox( ref mins, ref maxs, Pawn.Scale );
 
@@ -137,13 +137,16 @@ public partial class PlayerController : BasePlayerController
 		return true;
 	}
 
+	public float RealEyeHeight { get; set; }
+
 	public override void Simulate()
 	{
-		EyeLocalPosition = Vector3.Up * (GetEyeHeight() * Pawn.Scale);
-		UpdateBBox();
-
+		RealEyeHeight = RealEyeHeight.LerpTo( GetEyeHeight(), Time.Delta * 10f );
+		EyeLocalPosition = Vector3.Up * RealEyeHeight * Pawn.Scale;
 		EyeLocalPosition += TraceOffset;
 		EyeRotation = Input.Rotation;
+
+		UpdateBBox();
 
 		if ( Input.Down( InputButton.SecondaryAttack ) )
 		{

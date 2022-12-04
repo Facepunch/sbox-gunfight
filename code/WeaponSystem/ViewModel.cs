@@ -137,7 +137,7 @@ public partial class ViewModel : BaseViewModel
 		//LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 30f );
 		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );
 		LerpTowards( ref slideLerp, sliding ? TimeSincePrimaryAttack.Remap( 0, 0.2f, 0, 1 ).Clamp( 0, 1 ) : 0, 7f );
-		LerpTowards( ref airLerp, isGrounded ? 0 : 1, 10f );
+		LerpTowards( ref airLerp, ( isGrounded ? 0 : 1 ) * ( 1 - aimLerp ), 10f );
 
 		var leftAmt = left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal );
 		LerpTowards( ref sideLerp, leftAmt * ( 1 - aimLerp ), 5f );

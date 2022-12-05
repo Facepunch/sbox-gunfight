@@ -255,6 +255,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	public override void BuildInput()
 	{
+		if ( !Player.IsValid() ) return;
+
 		var viewAngles = Player.ViewAngles;
 		viewAngles.pitch -= CameraRecoil.y * Time.Delta;
 		viewAngles.yaw -= CameraRecoil.x * Time.Delta;

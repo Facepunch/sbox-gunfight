@@ -76,6 +76,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 
 	public override float? GetGroundFriction()
 	{
-		return 0.7f;
+		// Slide further if we are aiming down sights
+		return Controller.IsAiming ? 0.5f : 0.7f;
 	}
 }

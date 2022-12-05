@@ -19,6 +19,10 @@ public partial class PlayerController : BasePlayerController
 	[Net] public float Gravity { get; set; } = 700.0f;
 	[Net] public float AirControl { get; set; } = 30.0f;
 
+	[Net, Predicted] public TimeUntil JumpWindup { get; set; }
+	[Net, Predicted] public bool JumpWinding { get; set; }
+	[Net, Predicted] public TimeSince TimeSinceJumped { get; set; }
+
 	[Net, Predicted] public bool IsAiming { get; set; }
 	[Net, Predicted] public TimeUntil AimFireDelay { get; set; } = 0;
 	[Net, Predicted] public bool Swimming { get; set; }
@@ -84,7 +88,7 @@ public partial class PlayerController : BasePlayerController
 	{
 		var girth = BodyGirth * 0.5f;
 		var mins = new Vector3( -girth, -girth, 0 ) * Pawn.Scale;
-		var maxs = new Vector3( +girth, +girth, BodyHeight ) * Pawn.Scale;
+		var maxs = new Vector3( +girth, +girth, RealEyeHeight + 6f ) * Pawn.Scale;
 
 		CurrentMechanic?.UpdateBBox( ref mins, ref maxs, Pawn.Scale );
 
@@ -133,13 +137,16 @@ public partial class PlayerController : BasePlayerController
 		return true;
 	}
 
+	public float RealEyeHeight { get; set; }
+
 	public override void Simulate()
 	{
-		EyeLocalPosition = Vector3.Up * (GetEyeHeight() * Pawn.Scale);
-		UpdateBBox();
-
+		RealEyeHeight = RealEyeHeight.LerpTo( GetEyeHeight(), Time.Delta * 10f );
+		EyeLocalPosition = Vector3.Up * RealEyeHeight * Pawn.Scale;
 		EyeLocalPosition += TraceOffset;
 		EyeRotation = Player.ViewAngles.ToRotation();
+
+		UpdateBBox();
 
 		if ( Input.Down( InputButton.SecondaryAttack ) )
 		{
@@ -188,6 +195,9 @@ public partial class PlayerController : BasePlayerController
 		if ( Input.Down( InputButton.PrimaryAttack ) || Input.Down( InputButton.SecondaryAttack) )
 			IsSprinting = false;
 
+		if ( Duck.IsActive || Slide.IsActive )
+			IsSprinting = false;
+
 		if ( !IsSprinting )
 			IsBurstSprinting = false;
 
@@ -202,10 +212,15 @@ public partial class PlayerController : BasePlayerController
 			BaseVelocity = BaseVelocity.WithZ( 0 );
 		}
 
-		if ( Input.Pressed( InputButton.Jump ) )
+		if ( CanJump() && Input.Pressed( InputButton.Jump ) && !JumpWinding )
 		{
-			CheckJumpButton();
+			JumpWinding = true;
+			JumpWindup = 0.125f;
+			_ = new ScreenShake.Jump();
 		}
+
+		if ( JumpWindup && JumpWinding )
+			CheckJumpButton();
 
 		// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor,
 		//  we don't slow when standing still, relative to the conveyor.
@@ -560,10 +575,22 @@ public partial class PlayerController : BasePlayerController
 		}
 	}
 
-	public virtual void CheckJumpButton()
+	protected bool CanJump()
 	{
 		if ( Slide.TimeSinceActivate < 0.3f )
-			return;
+			return false;
+		if ( GroundEntity == null )
+			return false;
+
+		return true;
+	}
+
+	public virtual void CheckJumpButton()
+	{
+		if ( !CanJump() ) return;
+
+		JumpWinding = false;
+		TimeSinceJumped = 0;
 		
 		// If we are in the water most of the way...
 		if ( Swimming )
@@ -574,9 +601,6 @@ public partial class PlayerController : BasePlayerController
 
 			return;
 		}
-
-		if ( GroundEntity == null )
-			return;
 
 		ClearGroundEntity();
 

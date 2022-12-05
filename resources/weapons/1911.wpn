@@ -62,13 +62,16 @@
 			AimAngleOffset = "0.26,0.03,0.9"
 			LaserPositionOffset = "-2.67,1.92,-4.72"
 			LaserAngleOffset = "-2.21,4.53,-58.4"
+			SlidePositionOffset = "-1,2,-1"
+			SlideAngleOffset =  "0,0,-35"
 		}
 		Recoil = 
 		{
-			Decay = "30,50"
-			BaseRecoilMinimum = "-2,4"
-			BaseRecoilMaximum = "2,4"
+			Decay = "60,100"
+			BaseRecoilMinimum = "-4,10"
+			BaseRecoilMaximum = "4,12"
 		}
 		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
+		DeployTime = 0.3
 	}
 }

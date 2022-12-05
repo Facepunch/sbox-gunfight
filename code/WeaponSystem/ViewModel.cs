@@ -46,7 +46,7 @@ public partial class ViewModel : BaseViewModel
 	Vector3 acceleration;
 	Vector2 LerpRecoil;
 
-	float VelocityClamp => 10f;
+	float VelocityClamp => 20f;
 	float walkBob = 0;
 	float upDownOffset = 0;
 	float avoidance = 0;
@@ -56,6 +56,9 @@ public partial class ViewModel : BaseViewModel
 	float crouchLerp = 0;
 	float airLerp = 0;
 	float slideLerp = 0;
+	float sideLerp = 0;
+	float speedLerp = 0;
+	float vaultLerp = 0;
 
 	public override void PostCameraSetup( ref CameraSetup camSetup )
 	{
@@ -101,13 +104,14 @@ public partial class ViewModel : BaseViewModel
 			return;
 
 		var frac = controller.IsAiming ? 1 : 0;
-		LerpTowards( ref aimLerp, frac, 10f );
+		LerpTowards( ref aimLerp, frac, controller.IsAiming ? 30f : 10f );
 
 		SmoothedVelocity += (Owner.Velocity - SmoothedVelocity) * 5f * DeltaTime;
 
 		var isGrounded = Owner.GroundEntity != null;
 		var weapon = Weapon as GunfightWeapon;
 		var speed = Owner.Velocity.Length.LerpInverse( 0, 750 );
+		var sideSpeed = Owner.Velocity.Length.LerpInverse( 0, 350 );
 		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -250, 700 );
 		var left = camSetup.Rotation.Left;
 		var up = camSetup.Rotation.Up;
@@ -124,18 +128,24 @@ public partial class ViewModel : BaseViewModel
 		var aim = controller.IsAiming;
 		var crouched = controller?.Duck?.IsActive ?? false;
 		var sliding = controller?.Slide?.IsActive ?? false;
+		var vaulting = controller?.Vault?.IsActive ?? false;
 
 		var avoidanceVal = avoidanceTrace.Hit ? (1f - avoidanceTrace.Fraction) : 0;
 		avoidanceVal *= 1 - ( aimLerp * 0.8f );
 
 		LerpTowards( ref avoidance, avoidanceVal, 10f );
-		LerpTowards( ref sprintLerp, sprint && !burstSprint ? 1 : 0, 10f );
-		LerpTowards( ref burstSprintLerp, burstSprint ? 1 : 0, 8f );
+		LerpTowards( ref sprintLerp, sprint && !burstSprint && !sliding ? 1 : 0, 10f );
+		LerpTowards( ref burstSprintLerp, burstSprint && !sliding ? 1 : 0, 8f );
 
 		//LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 30f );
 		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );
 		LerpTowards( ref slideLerp, sliding ? TimeSincePrimaryAttack.Remap( 0, 0.2f, 0, 1 ).Clamp( 0, 1 ) : 0, 7f );
-		LerpTowards( ref airLerp, isGrounded ? 0 : 1, 10f );
+		LerpTowards( ref airLerp, ( isGrounded ? 0 : 1 ) * ( 1 - aimLerp ), 10f );
+		LerpTowards( ref speedLerp, ( aim || sliding || sprint ) ? 0.0f : speed, 10f );
+		LerpTowards( ref vaultLerp, ( vaulting ) ? 1.0f : 0.0f , 10f );
+
+		var leftAmt = left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal );
+		LerpTowards( ref sideLerp, leftAmt * ( 1 - aimLerp ), 5f );
 
 		bobSpeed *= 1 - sprintLerp * 0.25f;
 		bobSpeed *= 1 - burstSprintLerp * 2f;
@@ -202,6 +212,23 @@ public partial class ViewModel : BaseViewModel
 			rotationOffsetTarget *= Rotation.From( BurstSprintAngleOffset * burstSprintLerp );
 			ApplyPositionOffset( BurstSprintPositionOffset, burstSprintLerp, camSetup );
 
+			// Sprinting cycle
+			float cycle = Time.Now * 10.0f;
+			camSetup.Rotation *= Rotation.From( 
+				new Angles( 
+					MathF.Abs( MathF.Sin( cycle ) * 2.0f ),
+					MathF.Cos( cycle ), 
+					0 
+				) * sprintLerp * 0.35f );
+
+			// Apply the same offset as above for a nicer sprint bob
+			float sprintBob = MathF.Pow( MathF.Sin( cycle ) * 0.5f + 0.5f, 2.0f );
+			float sprintBob2 = MathF.Pow( MathF.Cos( cycle ) * 0.5f + 0.5f, 3.0f );
+			rotationOffsetTarget *= Rotation.From( SprintAngleOffset * sprintLerp * sprintBob * 0.2f );
+			ApplyPositionOffset( -SprintPositionOffset * sprintBob2 * 0.3f, sprintLerp, camSetup );
+
+			camSetup.FieldOfView += 5f * sprintLerp;
+
 			// Vertical Look
 			var lookDownDot = camSetup.Rotation.Forward.Dot( Vector3.Down );
 			if ( MathF.Abs( lookDownDot ) > 0.5f )
@@ -214,10 +241,23 @@ public partial class ViewModel : BaseViewModel
 			}
 		}
 
+		// Vaulting
+		rotationOffsetTarget *= Rotation.From( new Angles(40,0,0) * vaultLerp );
+
 		// Sliding
-		rotationOffsetTarget *= Rotation.From( SlideAngleOffset * slideLerp );
-		ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
-		camSetup.Rotation *= Rotation.From( new Angles( -1f, 0, -6f ) * slideLerp );
+		var slideRotationOffset = Rotation.From( Angles.Zero.WithRoll( leftAmt ) * slideLerp * -15.0f );
+
+		if( !aim )
+		{
+			rotationOffsetTarget *= Rotation.From( SlideAngleOffset * slideLerp );
+			ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
+		}
+		else
+			rotationOffsetTarget *= slideRotationOffset;
+
+		
+		camSetup.Rotation *= slideRotationOffset;
+		camSetup.FieldOfView += 5f * slideLerp;
 
 		// Recoil
 		LerpRecoil = LerpRecoil.LerpTo( weapon.WeaponSpreadRecoil, Time.Delta * 5f );
@@ -231,6 +271,11 @@ public partial class ViewModel : BaseViewModel
 		rotationOffsetTarget *= Rotation.From( GetAimAngle() * aimLerp );
 		ApplyPositionOffset( GetAimOffset(), aimLerp, camSetup );
 
+		// Move your view a bit down as you move like in CSGO
+		positionOffsetTarget += new Vector3( 0, 0, -2.5f ) * speedLerp;
+
+		rotationOffsetTarget *= Rotation.From( 0f, sideLerp * -5f, sideLerp * -5f );
+
 		realRotationOffset = rotationOffsetTarget;
 		realPositionOffset = positionOffsetTarget;
 
@@ -242,6 +287,7 @@ public partial class ViewModel : BaseViewModel
 		camSetup.ViewModel.FieldOfView = 75f;
 		camSetup.ViewModel.FieldOfView += 10f * sprintLerp;
 		camSetup.ViewModel.FieldOfView += 10f * burstSprintLerp;
+
 	}
 
 	public void Initialize()

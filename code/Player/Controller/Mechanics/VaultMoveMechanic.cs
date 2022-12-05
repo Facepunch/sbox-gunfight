@@ -15,7 +15,8 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 	public bool CanActivate( bool assignValues = false )
 	{
-		var wall = GetWallInfo( Controller.WishVelocity.Normal );
+		// Todo: Our dot to movment wish direction (not actual velocity) should be positive to that vector 
+		var wall = GetWallInfo( Controller.Rotation.Forward );
 
 		if ( wall == null ) return false;
 		if ( wall.Height == 0 ) return false;
@@ -41,12 +42,14 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 			Controller.Velocity = Controller.Velocity.WithZ( 0 );
 		}
 
+		Controller.Pawn.PlaySound("sounds/footsteps/footstep-concrete-jump.sound").SetVolume( 2.0f );
+
 		return true;
 	}
 
 	protected override bool TryActivate()
 	{
-		if ( !Input.Pressed( InputButton.Jump ) ) return false;
+		if ( !Input.Pressed( InputButton.Jump ) && Controller.GroundEntity.IsValid() ) return false;
 
 		return CanActivate( true );
 	}
@@ -79,10 +82,12 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 	public Vector3 GetNextStepPos()
 	{
-		if ( !ReachedZ() )
-			return Controller.Position.LerpTo( Controller.Position.WithZ( vaultEnd.z ), Time.Delta * 10f );
+		Controller.Velocity = Controller.Velocity.WithZ( 0 ); // Null gravity
 
-		return Controller.Position.LerpTo( vaultEnd, Time.Delta * 7f );
+		if ( !ReachedZ() )
+			return Controller.Position.LerpTo( Controller.Position.WithZ( vaultEnd.z ), Time.Delta * 7f );
+
+		return Controller.Position.LerpTo( vaultEnd, Time.Delta * 10f );
 	}
 
 	public override void Simulate()
@@ -95,7 +100,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 		if ( !CloseEnough() )
 		{
 			var nextPos = GetNextStepPos();
-			if ( IsStuck( nextPos ) )
+			if ( IsStuck( vaultEnd ) )
 			{
 				Stop();
 				return;

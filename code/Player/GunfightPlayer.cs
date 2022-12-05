@@ -323,6 +323,8 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		setup.Position += up * MathF.Sin( WalkBob ) * speed * 4;
 		setup.Position += left * MathF.Sin( WalkBob ) * speed * -1f;
+
+		// Probably let the mechanics handle this too
 	}
 
 	DamageInfo LastDamage;

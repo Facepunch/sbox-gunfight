@@ -185,6 +185,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Effects" ), ResourceType( "vpcf" )]
 	public string ShootTrailParticleEffect { get; set; } = "particles/gameplay/guns/trail/trail_smoke.vpcf";
 
+	[Category( "Shooting" )]
+	public float DeployTime { get; set; } = 0.6f;
+
 	protected override void PostLoad()
 	{
 		base.PostLoad();

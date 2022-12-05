@@ -57,6 +57,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public string GunIcon => WeaponDefinition.Icon;
 	public float PostSprintAttackDelay => 0.15f;
 	public float BaseAimTime => WeaponDefinition.BaseAimTime;
+	public float DeployTime => WeaponDefinition.DeployTime;
 
 	// @event
 	protected void FireModeChanged( FireMode before, FireMode after )
@@ -269,7 +270,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	{
 		SimulateAttachments( cl );
 
-		if ( TimeSinceDeployed < 0.6f )
+		if ( TimeSinceDeployed < DeployTime )
 			return;
 
 		if ( Input.Down( InputButton.Use ) && Input.Pressed( InputButton.Reload ) )
@@ -388,7 +389,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( Player.IsHolstering ) return false;
 		if ( TimeSinceDeployed < 0.2f ) return false;
 		if ( !PlayerController.AimFireDelay ) return false;
-		if ( PlayerController.Slide.IsActive ) return false;
+		//if ( PlayerController.Slide.IsActive ) return false;
 		if ( IsSprinting ) return false;
 		if ( IsReloading ) return false;
 		if ( PlayerController.SinceStoppedSprinting <= PostSprintAttackDelay ) return false;

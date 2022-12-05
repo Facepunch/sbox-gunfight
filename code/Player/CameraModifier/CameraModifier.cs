@@ -8,11 +8,19 @@ public abstract class CameraModifier
 	{
 		for ( int i = List.Count; i > 0; i-- )
 		{
-			var keep = List[i - 1].Update( ref setup );
+			var entry = List[i - 1];
+			var keep = entry.Update( ref setup );
 
 			if ( !keep )
+			{
+				entry.OnRemove( ref setup );
 				List.RemoveAt( i - 1 );
+			}
 		}
+	}
+
+	protected virtual void OnRemove( ref CameraSetup setup )
+	{
 	}
 
 	public static void ClearAll()
@@ -29,5 +37,4 @@ public abstract class CameraModifier
 	}
 
 	public abstract bool Update( ref CameraSetup setup );
-
 }

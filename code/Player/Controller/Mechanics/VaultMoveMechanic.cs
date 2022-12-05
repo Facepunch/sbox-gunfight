@@ -15,12 +15,13 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 	public bool CanActivate( bool assignValues = false )
 	{
-		var wall = GetWallInfo( Controller.WishVelocity.Normal );
+		var wall = GetWallInfo( Controller.Rotation.Forward );
 
 		if ( wall == null ) return false;
 		if ( wall.Height == 0 ) return false;
 		if ( wall.Distance > Controller.BodyGirth * 1 ) return false;
-		//if ( Vector3.Dot( Controller.WishVelocity.Normal, wall.Normal ) > -.f ) return false;
+		
+		if ( Vector3.Dot( Controller.WishVelocity.Normal, wall.Normal ) > 0.0f ) return false;
 
 		var posFwd = Controller.Position - wall.Normal * (Controller.BodyGirth + wall.Distance);
 		var floorTraceStart = posFwd.WithZ( wall.AbsoluteHeight );
@@ -41,14 +42,22 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 			Controller.Velocity = Controller.Velocity.WithZ( 0 );
 		}
 
+		Vector3 vaultTop = Controller.Position.WithZ( vaultEnd.z );
+		if ( IsStuck( vaultEnd ) || IsStuck( vaultTop ) ) return false;
+
 		return true;
 	}
 
 	protected override bool TryActivate()
 	{
-		if ( !Input.Pressed( InputButton.Jump ) ) return false;
+		if ( !Input.Pressed( InputButton.Jump ) && Controller.GroundEntity.IsValid() ) return false;
 
-		return CanActivate( true );
+		if( !CanActivate( true ) )
+			return false;
+
+		Controller.Pawn.PlaySound("sounds/footsteps/footstep-concrete-jump.sound").SetVolume( 2.0f );
+
+		return true;
 	}
 
 	protected bool CloseEnough()
@@ -79,10 +88,12 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 	public Vector3 GetNextStepPos()
 	{
-		if ( !ReachedZ() )
-			return Controller.Position.LerpTo( Controller.Position.WithZ( vaultEnd.z ), Time.Delta * 10f );
+		Controller.Velocity = Controller.Velocity.WithZ( 0 ); // Null gravity
 
-		return Controller.Position.LerpTo( vaultEnd, Time.Delta * 7f );
+		if ( !ReachedZ() )
+			return Controller.Position.LerpTo( Controller.Position.WithZ( vaultEnd.z ), Time.Delta * 7f );
+
+		return Controller.Position.LerpTo( vaultEnd, Time.Delta * 10f );
 	}
 
 	public override void Simulate()
@@ -95,11 +106,6 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 		if ( !CloseEnough() )
 		{
 			var nextPos = GetNextStepPos();
-			if ( IsStuck( nextPos ) )
-			{
-				Stop();
-				return;
-			}
 
 			Controller.Position = nextPos;
 			Controller.Velocity = Vector3.Zero;

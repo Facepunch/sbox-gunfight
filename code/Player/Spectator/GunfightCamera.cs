@@ -100,6 +100,9 @@ public class GunfightCamera : CameraMode
 		if ( GunfightCamera.Target.IsAiming )
 			Input.AnalogLook *= 0.5f;
 
+		if ( CameraOverride != null )
+			Input.AnalogLook = Angles.Zero;
+
 		base.BuildInput();
 	}
 }

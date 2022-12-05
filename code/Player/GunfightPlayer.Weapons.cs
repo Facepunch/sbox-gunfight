@@ -19,7 +19,6 @@ public partial class GunfightPlayer
 		var wpn = CurrentWeapon;
 		if ( wpn != null )
 		{
-			if ( wpn.IsReloading ) return false;
 			if ( wpn.IsBurstFiring ) return false;
 		}
 

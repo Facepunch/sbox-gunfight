@@ -1,0 +1,81 @@
+crosshair {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateX( -50% ) translateY( -50% );
+	mix-blend-mode: lighten;
+	width: 1px;
+	height: 1px;
+
+	.element {
+		position: absolute;
+	}
+
+	opacity: 0.4;
+	transition: opacity 0.2s ease-out;
+
+	.el0, .el1, .el2, .el3 {
+		background-color: $main-color;
+		border-radius: 0;
+		transition: all 0.5s ease-out;
+	}
+
+	.el0, .el1 {
+		width: 10px;
+		top: -1px;
+		height: 2px;
+		border-radius: 2px;
+	}
+
+	.el2, .el3 {
+		width: 2px;
+		left: -1px;
+		height: 10px;
+		border-radius: 2px;
+	}
+
+	.el0 {
+		right: 8px;
+	}
+
+	.el1 {
+		left: 8px;
+	}
+
+	.el2 {
+		bottom: 8px;
+	}
+
+	.el3 {
+		top: 8px;
+	}
+
+
+	&.fire {
+		transition: all 0.01s ease-out;
+
+		.el0, .el1, .el2, .el3 {
+			transition: all 0.01s ease-in;
+		}
+
+		.el0 {
+			right: 60px;
+			width: 2px;
+		}
+
+		.el1 {
+			left: 60px;
+			width: 2px;
+		}
+
+		.el2 {
+			bottom: 60px;
+			height: 2px;
+		}
+
+		.el3 {
+			top: 60px;
+			height: 2px;
+		}
+	}
+}

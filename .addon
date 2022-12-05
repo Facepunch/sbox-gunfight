@@ -25,7 +25,8 @@
     "MapList": [
       "gvar.metro",
       "baks.training_arena",
-      "facepunch.prison"
+      "facepunch.prison",
+      "gvar.stalkyard"
     ],
     "RankType": "None",
     "PerMapRanking": false,

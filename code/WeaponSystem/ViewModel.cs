@@ -139,7 +139,7 @@ public partial class ViewModel : BaseViewModel
 
 		//LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 30f );
 		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );
-		LerpTowards( ref slideLerp, ( sliding && !aim ) ? TimeSincePrimaryAttack.Remap( 0, 0.2f, 0, 1 ).Clamp( 0, 1 ) : 0, 7f );
+		LerpTowards( ref slideLerp, sliding ? TimeSincePrimaryAttack.Remap( 0, 0.2f, 0, 1 ).Clamp( 0, 1 ) : 0, 7f );
 		LerpTowards( ref airLerp, ( isGrounded ? 0 : 1 ) * ( 1 - aimLerp ), 10f );
 		LerpTowards( ref speedLerp, ( aim || sliding || sprint ) ? 0.0f : speed, 10f );
 		LerpTowards( ref vaultLerp, ( vaulting ) ? 1.0f : 0.0f , 10f );
@@ -245,10 +245,18 @@ public partial class ViewModel : BaseViewModel
 		rotationOffsetTarget *= Rotation.From( new Angles(40,0,0) * vaultLerp );
 
 		// Sliding
-		rotationOffsetTarget *= Rotation.From( SlideAngleOffset * slideLerp );
-		ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
+		var slideRotationOffset = Rotation.From( Angles.Zero.WithRoll( leftAmt ) * slideLerp * -15.0f );
 
-		camSetup.Rotation *= Rotation.From( Angles.Zero.WithRoll( leftAmt ) * slideLerp * -15.0f );
+		if( !aim )
+		{
+			rotationOffsetTarget *= Rotation.From( SlideAngleOffset * slideLerp );
+			ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
+		}
+		else
+			rotationOffsetTarget *= slideRotationOffset;
+
+		
+		camSetup.Rotation *= slideRotationOffset;
 		camSetup.FieldOfView += 5f * slideLerp;
 
 		// Recoil

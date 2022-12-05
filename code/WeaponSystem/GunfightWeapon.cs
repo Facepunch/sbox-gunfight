@@ -253,10 +253,12 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		WeaponSpreadRecoil += new Vector2( randSpreadX, randSpreadY ) * recoilScale;
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
-		input.ViewAngles.pitch -= CameraRecoil.y * Time.Delta;
-		input.ViewAngles.yaw -= CameraRecoil.x * Time.Delta;
+		var viewAngles = Player.ViewAngles;
+		viewAngles.pitch -= CameraRecoil.y * Time.Delta;
+		viewAngles.yaw -= CameraRecoil.x * Time.Delta;
+		Player.ViewAngles = viewAngles;
 	}
 
 	public override void FrameSimulate( Client cl )

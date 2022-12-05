@@ -15,25 +15,25 @@ public partial class GunfightPlayer
 		};
 	}
 
-	protected void TrySlotFromInput( InputBuilder input, InputButton slot )
+	protected void TrySlotFromInput( InputButton slot )
 	{
 		if ( Input.Pressed( slot ) )
 		{
-			input.SuppressButton( slot );
+			Input.SuppressButton( slot );
 
 			if ( Inventory.GetSlot( GetSlotIndexFromInput( slot ) ) is Entity weapon )
-				input.ActiveChild = weapon;
+				ActiveChildInput = weapon;
 		}
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
-		base.BuildInput( input );
+		base.BuildInput();
 
-		TrySlotFromInput( input, InputButton.Slot1 );
-		TrySlotFromInput( input, InputButton.Slot2 );
-		TrySlotFromInput( input, InputButton.Slot3 );
-		TrySlotFromInput( input, InputButton.Slot4 );
-		TrySlotFromInput( input, InputButton.Slot5 );
+		TrySlotFromInput( InputButton.Slot1 );
+		TrySlotFromInput( InputButton.Slot2 );
+		TrySlotFromInput( InputButton.Slot3 );
+		TrySlotFromInput( InputButton.Slot4 );
+		TrySlotFromInput( InputButton.Slot5 );
 	}
 }

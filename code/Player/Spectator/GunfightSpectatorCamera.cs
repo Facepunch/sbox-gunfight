@@ -71,38 +71,38 @@ internal class GunfightSpectatorCamera : GunfightCamera
 		}
 	}
 
-	float GetSpeedMultiplier( InputBuilder input )
+	float GetSpeedMultiplier()
 	{
-		if ( input.Down( InputButton.Run ) )
+		if ( Input.Down( InputButton.Run ) )
 			return 2f;
-		if ( input.Down( InputButton.Duck ) )
+		if ( Input.Down( InputButton.Duck ) )
 			return 0.3f;
 
 		return 1f;
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
-		if ( input.Pressed( InputButton.Jump ) )
+		if ( Input.Pressed( InputButton.Jump ) )
 			ToggleFree();
 
-		if ( input.Pressed( InputButton.Menu ) )
+		if ( Input.Pressed( InputButton.Menu ) )
 			SpectateNextPlayer( false );
 
-		if ( input.Pressed( InputButton.Use ) )
+		if ( Input.Pressed( InputButton.Use ) )
 			SpectateNextPlayer();
 
-		MoveMultiplier = GetSpeedMultiplier( input );
+		MoveMultiplier = GetSpeedMultiplier();
 
 		if ( IsFree )
 		{
-			MoveInput = input.AnalogMove;
-			LookAngles += input.AnalogLook;
+			MoveInput = Input.AnalogMove;
+			LookAngles += Input.AnalogLook;
 			LookAngles.roll = 0;
 		}
 		else
 		{
-			base.BuildInput( input );
+			base.BuildInput();
 		}
 	}
 

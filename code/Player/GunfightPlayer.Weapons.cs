@@ -36,9 +36,9 @@ public partial class GunfightPlayer
 		//
 		// Input requested a weapon switch
 		//
-		if ( Input.ActiveChild != null && ActiveChild != Input.ActiveChild )
+		if ( ActiveChildInput != null && ActiveChild != ActiveChildInput )
 		{
-			QueuedActiveChild = Input.ActiveChild;
+			QueuedActiveChild = ActiveChildInput;
 		}
 
 		// Start the holstering procedure

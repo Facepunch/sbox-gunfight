@@ -98,13 +98,13 @@ public partial class PlayerController : BasePlayerController
 	protected float SurfaceFriction;
 
 	// Accessors
-	protected GunfightPlayer Player => Pawn as GunfightPlayer;
-	protected GunfightWeapon Weapon => Player?.ActiveChild as GunfightWeapon;
+	public GunfightPlayer Player => Pawn as GunfightPlayer;
+	public GunfightWeapon Weapon => Player?.ActiveChild as GunfightWeapon;
 
 	public override void FrameSimulate()
 	{
 		base.FrameSimulate();
-		EyeRotation = Input.Rotation;
+		EyeRotation = Player.ViewAngles.ToRotation();
 	}
 
 	protected void OnStoppedSprinting()
@@ -144,7 +144,7 @@ public partial class PlayerController : BasePlayerController
 		RealEyeHeight = RealEyeHeight.LerpTo( GetEyeHeight(), Time.Delta * 10f );
 		EyeLocalPosition = Vector3.Up * RealEyeHeight * Pawn.Scale;
 		EyeLocalPosition += TraceOffset;
-		EyeRotation = Input.Rotation;
+		EyeRotation = Player.ViewAngles.ToRotation();
 
 		UpdateBBox();
 
@@ -166,7 +166,7 @@ public partial class PlayerController : BasePlayerController
 
 		if ( IsSprinting && Input.Pressed( InputButton.Run ) && SinceBurstEnded > 5f )
 		{
-			if ( Input.Forward > 0.5f )
+			if ( Player.InputDirection.x > 0.5f )
 			{
 				IsBurstSprinting = !IsBurstSprinting;
 
@@ -185,11 +185,11 @@ public partial class PlayerController : BasePlayerController
 		{
 			if ( !IsSprinting )
 				IsSprinting = true;
-			else if ( IsSprinting && Input.Forward < 0.5f )
+			else if ( IsSprinting && Player.InputDirection.x < 0.5f )
 				IsSprinting = false;
 		}
 
-		if ( !IsBurstSprinting && IsSprinting && Velocity.Length < 40 || Input.Forward < 0.5f )
+		if ( !IsBurstSprinting && IsSprinting && Velocity.Length < 40 || Player.InputDirection.x < 0.5f )
 			IsSprinting = false;
 
 		if ( Input.Down( InputButton.PrimaryAttack ) || Input.Down( InputButton.SecondaryAttack) )
@@ -239,9 +239,9 @@ public partial class PlayerController : BasePlayerController
 		//
 		// Work out wish velocity.. just take input, rotate it to view, clamp to -1, 1
 		//
-		WishVelocity = new Vector3( Input.Forward, Input.Left * ( IsSprinting ? 0.5f : 1f ), 0 );
+		WishVelocity = new Vector3( Player.InputDirection.x, Player.InputDirection.y * ( IsSprinting ? 0.5f : 1f ), 0 );
 		var inSpeed = WishVelocity.Length.Clamp( 0, 1 );
-		WishVelocity *= Input.Rotation.Angles().WithPitch( 0 ).ToRotation();
+		WishVelocity *= Player.ViewAngles.WithPitch( 0 ).ToRotation();
 
 		if ( !Swimming && !IsTouchingLadder )
 		{
@@ -649,8 +649,8 @@ public partial class PlayerController : BasePlayerController
 
 	public virtual void CheckLadder()
 	{
-		var wishvel = new Vector3( Input.Forward, Input.Left, 0 );
-		wishvel *= Input.Rotation.Angles().WithPitch( 0 ).ToRotation();
+		var wishvel = new Vector3( Player.InputDirection.x, Player.InputDirection.y, 0 );
+		wishvel *= Player.ViewAngles.WithPitch( 0 ).ToRotation();
 		wishvel = wishvel.Normal;
 
 		if ( IsTouchingLadder )

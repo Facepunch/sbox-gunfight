@@ -73,9 +73,13 @@ public class GunfightCamera : CameraMode
 
 		Position = Target.EyePosition;
 
+		var rotation = Target.EyeRotation;
+		if ( Target.IsLocalPawn )
+			rotation = Target.ViewAngles.ToRotation();
+
 		float distance = CurrentDistance * Target.Scale;
-		var targetPos = Position + Input.Rotation.Right * ((Target.CollisionBounds.Maxs.x + RightOffset) * Target.Scale) * (CurrentDistance / CameraDistance);
-		targetPos += Input.Rotation.Forward * -distance;
+		var targetPos = Position + rotation.Right * ((Target.CollisionBounds.Maxs.x + RightOffset) * Target.Scale) * (CurrentDistance / CameraDistance);
+		targetPos += rotation.Forward * -distance;
 
 		Position = targetPos;
 
@@ -91,14 +95,14 @@ public class GunfightCamera : CameraMode
 		};
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
 		if ( GunfightCamera.Target.IsAiming )
-			input.AnalogLook *= 0.5f;
+			Input.AnalogLook *= 0.5f;
 
 		if ( CameraOverride != null )
-			input.AnalogLook = Angles.Zero;
+			Input.AnalogLook = Angles.Zero;
 
-		base.BuildInput( input );
+		base.BuildInput();
 	}
 }

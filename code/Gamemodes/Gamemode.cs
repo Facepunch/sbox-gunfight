@@ -268,16 +268,15 @@ public abstract partial class Gamemode : Entity
 	{
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
 		if ( !AllowMovement )
 		{
-			input.InputDirection = Vector3.Zero;
-			input.ClearButton( InputButton.Jump );
-			input.ClearButton( InputButton.Duck );
-			input.ClearButton( InputButton.PrimaryAttack );
-
-			input.StopProcessing = true;
+			Input.AnalogMove = Vector3.Zero;
+			Input.ClearButton( InputButton.Jump );
+			Input.ClearButton( InputButton.Duck );
+			Input.ClearButton( InputButton.PrimaryAttack );
+			Input.StopProcessing = true;
 		}
 	}
 

@@ -290,12 +290,12 @@ partial class GunfightGame : Game
 		}
 	}
 
-	public override void BuildInput( InputBuilder input )
+	public override void BuildInput()
 	{
-		base.BuildInput( input );
+		base.BuildInput();
 		
-		if ( input.StopProcessing ) return;
+		if ( Input.StopProcessing ) return;
 
-		GamemodeSystem.Current?.BuildInput( input );
+		GamemodeSystem.Current?.BuildInput();
 	}
 }

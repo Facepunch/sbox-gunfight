@@ -58,6 +58,8 @@
 			SprintAngleOffset = "5,25,0"
 			AimPositionOffset = "0.5699999,1.9,0.8020002"
 			AimAngleOffset = "0.2,-0.35,5.366"
+			SlidePositionOffset = "-1,2,-1"
+			SlideAngleOffset =  "0,0,-35"
 		}
 		Recoil = 
 		{

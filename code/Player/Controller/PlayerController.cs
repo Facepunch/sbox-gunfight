@@ -195,6 +195,9 @@ public partial class PlayerController : BasePlayerController
 		if ( Input.Down( InputButton.PrimaryAttack ) || Input.Down( InputButton.SecondaryAttack) )
 			IsSprinting = false;
 
+		if ( Duck.IsActive || Slide.IsActive )
+			IsSprinting = false;
+
 		if ( !IsSprinting )
 			IsBurstSprinting = false;
 

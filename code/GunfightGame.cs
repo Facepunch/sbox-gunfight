@@ -79,6 +79,13 @@ partial class GunfightGame : Game
 		GamemodeSystem.Current?.OnClientLeft( cl, reason );
 	}
 
+	public override void OnVoicePlayed( Client cl )
+	{
+		base.OnVoicePlayed( cl );
+
+		GunVoiceList.Current.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
+	}
+
 	public override void MoveToSpawnpoint( Entity entity )
 	{
 		var player = entity as GunfightPlayer;

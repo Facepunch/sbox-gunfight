@@ -1,4 +1,9 @@
-﻿<root>
+﻿@using Sandbox.UI;
+@namespace Facepunch.Gunfight.UI
+@inherits RootPanel;
+@attribute [StyleSheet( "/Resource/Styles/hud.scss" )]
+
+<root>
     <div class="main-game-hud">
         <div class="bottom-left">
             <!--<ArmourHud></ArmourHud>
@@ -36,3 +41,22 @@
     <GunfightScoreboard />
     <GunfightChatbox />
 </root>
+
+@code
+{
+    public static HudRootPanel Current;
+
+    public HudRootPanel()
+    {
+        Current = this;
+    }
+
+	public override void Tick()
+	{
+		GunfightHud.HudState = HudVisibilityState.Visible; 
+		Event.Run( "gunfight.hudrender" );
+
+		SetClass( "disable-hud", GunfightHud.HudState == HudVisibilityState.Invisible );
+		SetClass( "almost-disable-hud", GunfightHud.HudState == HudVisibilityState.AlmostVisible );
+	}
+}

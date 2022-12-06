@@ -52,10 +52,10 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 	{
 		if ( !Input.Pressed( InputButton.Jump ) && Controller.GroundEntity.IsValid() ) return false;
 
-		if( !CanActivate( true ) )
+		if ( !CanActivate( true ) )
 			return false;
 
-		Controller.Pawn.PlaySound("sounds/footsteps/footstep-concrete-jump.sound").SetVolume( 2.0f );
+		Controller.Pawn.PlaySound( "sounds/footsteps/footstep-concrete-jump.sound" );
 
 		return true;
 	}

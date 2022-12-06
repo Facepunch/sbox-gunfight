@@ -13,15 +13,17 @@ public partial class DuckMechanic : BaseMoveMechanic
 	{
 		Wish = Input.Down( InputButton.Duck );
 
-		if ( !Wish )
-		{
-			var test = Controller.TraceBBox( Controller.Position, Controller.Position + Vector3.Up * 10f );
-			if ( test.Hit )
-			{
-				return true;
-			}
-			return false;
-		}
+		//if ( !Wish )
+		//{
+		//	var test = Controller.TraceBBox( Controller.Position, Controller.Position + Vector3.Up * 10f );
+		//	if ( test.Hit )
+		//	{
+		//		return true;
+		//	}
+		//	return false;
+		//}
+
+		if ( !Wish ) return false;
 
 		if ( Controller.Slide.IsActive ) return false;
 

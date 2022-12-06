@@ -28,6 +28,7 @@ public class Crosshair : Panel
 			return;
 		}
 
+		SetClass( "aiming", wpn.IsAiming );
 		SetClass( "fire", wpn.TimeSincePrimaryAttack < 0.2f );
 	}
 }

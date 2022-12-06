@@ -59,23 +59,28 @@ crosshair {
 		}
 
 		.el0 {
-			right: 60px;
-			width: 2px;
+			right: 40px;
+			width: 10px;
 		}
 
 		.el1 {
-			left: 60px;
-			width: 2px;
+			left: 40px;
+			width: 10px;
 		}
 
 		.el2 {
-			bottom: 60px;
-			height: 2px;
+			bottom: 40px;
+			height: 10px;
 		}
 
 		.el3 {
-			top: 60px;
-			height: 2px;
+			top: 40px;
+			height: 10px;
 		}
+	}
+
+	&.aiming {
+		transition: opacity 0.1s ease;
+		opacity: 0;
 	}
 }

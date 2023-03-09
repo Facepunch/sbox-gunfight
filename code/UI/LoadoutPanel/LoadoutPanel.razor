@@ -38,7 +38,7 @@
 
 @code
 {
-    public Loadout Loadout => LoadoutSystem.GetLoadout( Local.Client );
+    public Loadout Loadout => LoadoutSystem.GetLoadout( Game.LocalClient );
 
     protected override void OnAfterTreeRender( bool firstTime )
     {

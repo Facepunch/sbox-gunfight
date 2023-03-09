@@ -7,7 +7,7 @@ public class Stance : Panel
 {
 	public Image Icon;
 	
-	protected GunfightPlayer Player => Local.Pawn as GunfightPlayer;
+	protected GunfightPlayer Player => Game.LocalPawn as GunfightPlayer;
 	protected PlayerController PlayerController => Player?.Controller as PlayerController;
 	
 	public Stance()

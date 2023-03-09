@@ -40,14 +40,14 @@ public partial class KillConfirmedGamemode : Gamemode
 		LoadoutSystem.AllowCustomLoadouts = true;
 	}
 
-	public override void AssignTeam( Client cl )
+	public override void AssignTeam( IClient cl )
 	{
 		var teamComponent = cl.Components.GetOrCreate<TeamComponent>();
 		teamComponent.Team = TeamSystem.GetLowestCount();
-		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, false );
+		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.SteamId, false );
 	}
 
-	public override void OnClientJoined( Client cl )
+	public override void OnClientJoined( IClient cl )
 	{
 		base.OnClientJoined( cl );
 
@@ -170,7 +170,7 @@ public partial class KillConfirmedGamemode : Gamemode
 		}
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	protected void Frame()
 	{
 		if ( CachedTimeRemaining != FormattedTimeRemaining )
@@ -179,9 +179,9 @@ public partial class KillConfirmedGamemode : Gamemode
 		}
 	}
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		if ( TimeUntilNextState )
 		{
@@ -249,12 +249,12 @@ public partial class KillConfirmedGamemode : Gamemode
 
 	protected override void TickServer()
 	{
-		Global.TimeScale = 1;
+		Game.TimeScale = 1;
 
 		if ( State == GameState.GameWon )
 		{
 			float timeSince = TimeSinceStateChanged;
-			Global.TimeScale = 1 - timeSince.Remap( 0, 5, 0f, 0.75f ).Clamp( 0, 0.75f );
+			Game.TimeScale = 1 - timeSince.Remap( 0, 5, 0f, 0.75f ).Clamp( 0, 0.75f );
 		}
 	}
 

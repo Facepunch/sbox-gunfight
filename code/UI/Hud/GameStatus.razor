@@ -131,7 +131,7 @@
 
 @code
 {
-    public string PlayerLocation => Local.Client.GetLocation();
+    public string PlayerLocation => Game.LocalClient.GetLocation();
     public string TimeLeft => GamemodeSystem.Current?.GetTimeLeftLabel() ?? "00:00";
 
 	protected int BoxAmount => GunfightGame.Current.Scores.MaximumScore;

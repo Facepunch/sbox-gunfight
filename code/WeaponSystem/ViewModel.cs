@@ -60,11 +60,6 @@ public partial class ViewModel : BaseViewModel
 	float speedLerp = 0;
 	float vaultLerp = 0;
 
-	public override void PostCameraSetup( ref CameraSetup camSetup )
-	{
-		AddCameraEffects( ref camSetup );
-	}
-
 	protected float MouseDeltaLerpX;
 	protected float MouseDeltaLerpY;
 
@@ -76,20 +71,15 @@ public partial class ViewModel : BaseViewModel
 
 	public Vector3 GetAimOffset()
 	{
-		var hasLaser = (Weapon as GunfightWeapon).HasAttachment<LaserSightAttachment>();
-		if ( Setup.LaserPositionOffset.IsNearlyZero() ) return Setup.AimPositionOffset;
-
-		return hasLaser ? Setup.LaserPositionOffset : Setup.AimPositionOffset;
+		return Setup.AimPositionOffset;
 	}
 
 	public Angles GetAimAngle()
 	{
-		var hasLaser = (Weapon as GunfightWeapon).HasAttachment<LaserSightAttachment>();
-		if ( Setup.LaserAngleOffset.IsNearlyZero() ) return Setup.AimAngleOffset;
-		return hasLaser ? Setup.LaserAngleOffset : Setup.AimAngleOffset;
+		return Setup.AimAngleOffset;
 	}
 
-	private void AddCameraEffects( ref CameraSetup camSetup )
+	public override void PlaceViewmodel()
 	{
 		if ( !Owner.IsValid() )
 		{
@@ -97,8 +87,8 @@ public partial class ViewModel : BaseViewModel
 			return;
 		}
 
-		var owner = Owner as Player;
-		var controller = owner.Controller as PlayerController;
+		var owner = Owner as GunfightPlayer;
+		var controller = owner.Controller;
 
 		if ( controller == null )
 			return;
@@ -113,10 +103,10 @@ public partial class ViewModel : BaseViewModel
 		var speed = Owner.Velocity.Length.LerpInverse( 0, 750 );
 		var sideSpeed = Owner.Velocity.Length.LerpInverse( 0, 350 );
 		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -250, 700 );
-		var left = camSetup.Rotation.Left;
-		var up = camSetup.Rotation.Up;
-		var forward = camSetup.Rotation.Forward;
-		var avoidanceTrace = Trace.Ray( camSetup.Position, camSetup.Position + forward * 50f )
+		var left = Camera.Rotation.Left;
+		var up = Camera.Rotation.Up;
+		var forward = Camera.Rotation.Forward;
+		var avoidanceTrace = Trace.Ray( Camera.Position, Camera.Position + forward * 50f )
 					.WorldAndEntities()
 					.WithoutTags( "trigger" )
 					.Ignore( Owner )
@@ -182,8 +172,8 @@ public partial class ViewModel : BaseViewModel
 
 		velocity = velocity.Normal * Math.Clamp( velocity.Length, 0, VelocityClamp );
 
-		Position = camSetup.Position;
-		Rotation = camSetup.Rotation;
+		Position = Camera.Position;
+		Rotation = Camera.Rotation;
 
 		positionOffsetTarget = Vector3.Zero;
 		rotationOffsetTarget = Rotation.Identity;
@@ -197,24 +187,24 @@ public partial class ViewModel : BaseViewModel
 
 			// Crouching
 			rotationOffsetTarget *= Rotation.From( CrouchAnglesOffset * crouchLerp );
-			ApplyPositionOffset( CrouchPositionOffset, crouchLerp, camSetup );
+			ApplyPositionOffset( CrouchPositionOffset, crouchLerp );
 
 			// Avoidance
 			rotationOffsetTarget *= Rotation.From( AvoidanceAngleOffset * avoidance );
-			ApplyPositionOffset( AvoidancePositionOffset, avoidance, camSetup );
+			ApplyPositionOffset( AvoidancePositionOffset, avoidance );
 			//Position += forward * avoidance * -5f;
 
 			// Sprinting
 			rotationOffsetTarget *= Rotation.From( SprintAngleOffset * sprintLerp );
-			ApplyPositionOffset( SprintPositionOffset, sprintLerp, camSetup );
+			ApplyPositionOffset( SprintPositionOffset, sprintLerp );
 
 			// Sprinting
 			rotationOffsetTarget *= Rotation.From( BurstSprintAngleOffset * burstSprintLerp );
-			ApplyPositionOffset( BurstSprintPositionOffset, burstSprintLerp, camSetup );
+			ApplyPositionOffset( BurstSprintPositionOffset, burstSprintLerp );
 
 			// Sprinting cycle
 			float cycle = Time.Now * 10.0f;
-			camSetup.Rotation *= Rotation.From( 
+			Camera.Rotation *= Rotation.From( 
 				new Angles( 
 					MathF.Abs( MathF.Sin( cycle ) * 2.0f ),
 					MathF.Cos( cycle ), 
@@ -225,12 +215,12 @@ public partial class ViewModel : BaseViewModel
 			float sprintBob = MathF.Pow( MathF.Sin( cycle ) * 0.5f + 0.5f, 2.0f );
 			float sprintBob2 = MathF.Pow( MathF.Cos( cycle ) * 0.5f + 0.5f, 3.0f );
 			rotationOffsetTarget *= Rotation.From( SprintAngleOffset * sprintLerp * sprintBob * 0.2f );
-			ApplyPositionOffset( -SprintPositionOffset * sprintBob2 * 0.3f, sprintLerp, camSetup );
+			ApplyPositionOffset( -SprintPositionOffset * sprintBob2 * 0.3f, sprintLerp );
 
-			camSetup.FieldOfView += 5f * sprintLerp;
+			Camera.FieldOfView += 5f * sprintLerp;
 
 			// Vertical Look
-			var lookDownDot = camSetup.Rotation.Forward.Dot( Vector3.Down );
+			var lookDownDot = Camera.Rotation.Forward.Dot( Vector3.Down );
 			if ( MathF.Abs( lookDownDot ) > 0.5f )
 			{
 				var offset = lookDownDot < 0 ? -1 : 1;
@@ -250,14 +240,13 @@ public partial class ViewModel : BaseViewModel
 		if( !aim )
 		{
 			rotationOffsetTarget *= Rotation.From( SlideAngleOffset * slideLerp );
-			ApplyPositionOffset( SlidePositionOffset, slideLerp, camSetup );
+			ApplyPositionOffset( SlidePositionOffset, slideLerp );
 		}
 		else
 			rotationOffsetTarget *= slideRotationOffset;
-
 		
-		camSetup.Rotation *= slideRotationOffset;
-		camSetup.FieldOfView += 5f * slideLerp;
+		Camera.Rotation *= slideRotationOffset;
+		Camera.FieldOfView += 5f * slideLerp;
 
 		// Recoil
 		LerpRecoil = LerpRecoil.LerpTo( weapon.WeaponSpreadRecoil, Time.Delta * 5f );
@@ -265,11 +254,11 @@ public partial class ViewModel : BaseViewModel
 
 		// In air
 		rotationOffsetTarget *= Rotation.From( new Angles( -2, 0, -7f ) * airLerp );
-		ApplyPositionOffset( new Vector3( 0, 0, 0.5f ), airLerp, camSetup );
+		ApplyPositionOffset( new Vector3( 0, 0, 0.5f ), airLerp );
 
 		// Aim
 		rotationOffsetTarget *= Rotation.From( GetAimAngle() * aimLerp );
-		ApplyPositionOffset( GetAimOffset(), aimLerp, camSetup );
+		ApplyPositionOffset( GetAimOffset(), aimLerp );
 
 		// Move your view a bit down as you move like in CSGO
 		positionOffsetTarget += new Vector3( 0, 0, -2.5f ) * speedLerp;
@@ -282,24 +271,15 @@ public partial class ViewModel : BaseViewModel
 		Rotation *= realRotationOffset;
 		Position += realPositionOffset;
 
-		camSetup.FieldOfView -= 10f * aimLerp;
-		// TODO - Set this up in the viewmodel itself
-		camSetup.ViewModel.FieldOfView = 75f;
-		camSetup.ViewModel.FieldOfView += 10f * sprintLerp;
-		camSetup.ViewModel.FieldOfView += 10f * burstSprintLerp;
-
+		Camera.FieldOfView -= 10f * aimLerp;
+		Camera.Main.SetViewModelCamera( 85f, 1, 2048 );
 	}
 
-	public void Initialize()
+	protected void ApplyPositionOffset( Vector3 offset, float delta )
 	{
-		SetupAttachments();
-	}
-
-	protected void ApplyPositionOffset( Vector3 offset, float delta, CameraSetup camSetup )
-	{
-		var left = camSetup.Rotation.Left;
-		var up = camSetup.Rotation.Up;
-		var forward = camSetup.Rotation.Forward;
+		var left = Camera.Rotation.Left;
+		var up = Camera.Rotation.Up;
+		var forward = Camera.Rotation.Forward;
 
 		positionOffsetTarget += forward * offset.x * delta;
 		positionOffsetTarget += left * offset.y * delta;
@@ -348,25 +328,5 @@ public partial class ViewModel : BaseViewModel
 			var drop = magnitude * damping * DeltaTime;
 			value *= Math.Max( magnitude - drop, 0 ) / magnitude;
 		}
-	}
-
-	public void SetupAttachments()
-	{
-		var wpn = Weapon as GunfightWeapon;
-		foreach( var attachment in wpn.Attachments )
-		{
-			OnAttachmentAdded( attachment );
-		}
-	}
-
-	public void OnAttachmentAdded( WeaponAttachment attachment )
-	{
-		Log.Info( $"[ViewModel] Recognized Attachment added: {attachment}" );
-		attachment.Mirror( this );
-	}
-
-	public void OnAttachmentRemoved( WeaponAttachment attachment )
-	{
-		Log.Info( $"[ViewModel] Recognized Attachment removed: {attachment}" );
 	}
 }

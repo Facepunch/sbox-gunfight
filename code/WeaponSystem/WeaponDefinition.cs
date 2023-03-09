@@ -20,14 +20,12 @@ public partial class WeaponDefinition : GameResource
 	[ConCmd.Admin( "gunfight_createweapon" )]
 	public static void Cmd_CreateWeapon( string weaponId )
 	{
-		Host.AssertServer();
-
 		var player = ConsoleSystem.Caller.Pawn as GunfightPlayer;
 
 		var wpn = CreateWeapon( weaponId );
 		if ( wpn.IsValid() )
 		{
-			var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 100000f )
+			var tr = Trace.Ray( player.AimRay.Position, player.AimRay.Position + player.AimRay.Forward * 100000f )
 				.WorldAndEntities()
 				.WithAnyTags( "solid" )
 				.Run();
@@ -45,8 +43,8 @@ public partial class WeaponDefinition : GameResource
 	public static WeaponDefinition Random( IList<WeaponDefinition> weapons )
 	{
 		if ( weapons.Count() == 0 ) return null;
-		Rand.SetSeed( Time.Tick );
-		var index = Rand.Int( 0, weapons.Count() - 1 );
+		Game.SetRandomSeed( Time.Tick );
+		var index = Game.Random.Int( 0, weapons.Count() - 1 );
 		return weapons[index];
 	}
 
@@ -114,7 +112,7 @@ public partial class WeaponDefinition : GameResource
 	public FireMode DefaultFireMode { get; set; } = FireMode.FullAuto;
 
 	[Category( "Shooting" )]
-	public DamageFlags DamageFlags { get; set; } = DamageFlags.Bullet;
+	public List<string> DamageFlags { get; set; }
 
 	[Category( "Shooting" )]
 	public List<FireMode> SupportedFireModes { get; set; }

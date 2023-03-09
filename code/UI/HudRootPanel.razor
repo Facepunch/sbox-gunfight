@@ -50,12 +50,21 @@
         Current = this;
     }
 
-	public override void Tick()
-	{
-		GunfightHud.HudState = HudVisibilityState.Visible; 
-		Event.Run( "gunfight.hudrender" );
+    public override void Tick()
+    {
+        GunfightHud.HudState = HudVisibilityState.Visible; 
+        Event.Run( "gunfight.hudrender" );
 
-		SetClass( "disable-hud", GunfightHud.HudState == HudVisibilityState.Invisible );
-		SetClass( "almost-disable-hud", GunfightHud.HudState == HudVisibilityState.AlmostVisible );
-	}
+        SetClass( "disable-hud", GunfightHud.HudState == HudVisibilityState.Invisible );
+        SetClass( "almost-disable-hud", GunfightHud.HudState == HudVisibilityState.AlmostVisible );
+    }
+
+    [ConVar.Client( "gunfight_ui_scale" )]
+    public static float UIScale { get; set; } = 0.8f;
+
+    protected override void UpdateScale( Rect screenSize )
+    {
+        base.UpdateScale( screenSize );
+        Scale *= UIScale;
+    }
 }

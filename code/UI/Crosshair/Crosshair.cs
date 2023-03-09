@@ -16,8 +16,6 @@ public class Crosshair : Panel
 			var p = Add.Panel( "element" );
 			p.AddClass( $"el{i}" );
 		}
-
-		Style.PixelSnap = 0;
 	}
 
 	public override void Tick()

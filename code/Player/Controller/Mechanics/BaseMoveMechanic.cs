@@ -27,10 +27,10 @@ public partial class BaseMoveMechanic : BaseNetworkable
 	{
 		get
 		{
-			if ( Host.IsClient )
+			if ( Game.IsClient )
 			{
-				var player = Local.Pawn as GunfightPlayer;
-				return player.Controller as PlayerController;
+				var player = Game.LocalPawn as GunfightPlayer;
+				return player.Controller;
 			}
 			else
 			{

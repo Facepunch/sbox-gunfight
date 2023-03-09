@@ -1,3 +1,5 @@
+using Sandbox.Utility;
+
 namespace Facepunch.Gunfight.ScreenShake;
 
 public class Perlin : CameraModifier
@@ -17,12 +19,12 @@ public class Perlin : CameraModifier
 		Speed = speed;
 		Size = size;
 		RotationAmount = rotation;
-		NoiseZ = Rand.Float( -10000, 10000 );
+		NoiseZ = Game.Random.Float( -10000, 10000 );
 
-		pos = Rand.Float( 0, 100000 );
+		pos = Game.Random.Float( 0, 100000 );
 	}
 
-	public override bool Update( ref CameraSetup cam )
+	public override bool Update()
 	{
 		var delta = ((float)lifeTime).LerpInverse( 0, Length, true );
 		delta = Easing.EaseOut( delta );
@@ -33,9 +35,9 @@ public class Perlin : CameraModifier
 		float x = Noise.Perlin( pos, 0, NoiseZ );
 		float y = Noise.Perlin( pos, 3.0f, NoiseZ );
 
-		cam.Position += (cam.Rotation.Right * x + cam.Rotation.Up * y) * invdelta * Size;
-		cam.Rotation *= Rotation.FromAxis( Vector3.Up, x * Size * invdelta * RotationAmount );
-		cam.Rotation *= Rotation.FromAxis( Vector3.Right, y * Size * invdelta * RotationAmount );
+		Camera.Position += (Camera.Rotation.Right * x + Camera.Rotation.Up * y) * invdelta * Size;
+		Camera.Rotation *= Rotation.FromAxis( Vector3.Up, x * Size * invdelta * RotationAmount );
+		Camera.Rotation *= Rotation.FromAxis( Vector3.Right, y * Size * invdelta * RotationAmount );
 
 		return lifeTime < Length;
 	}

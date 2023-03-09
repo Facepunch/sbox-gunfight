@@ -1,6 +1,6 @@
 namespace Facepunch.Gunfight;
 
-public class GunfightCamera : CameraMode
+public class GunfightCamera
 {
 	private static GunfightPlayer target;
 	public static GunfightPlayer Target
@@ -36,27 +36,17 @@ public class GunfightCamera : CameraMode
 
 	private void UpdateDistance()
 	{
-		var player = Target;
-
 		CurrentDistance = CurrentDistance.LerpTo( IsThirdPerson ? CameraDistance : 0, Time.Delta * CameraChangeSpeed );
-
-		if ( CurrentDistance < 8 )
-		{
-			Viewer = player;
-		}
-		else
-		{
-			Viewer = null;
-		}
+		Camera.FirstPersonViewer = CurrentDistance < 8 ? Target : null;
 	}
 
-	public override void Update()
+	public virtual void Update()
 	{
 		if ( CameraOverride != null )
 		{
-			Position = CameraOverride.Value.Position;
-			Rotation = CameraOverride.Value.Rotation;
-			Viewer = null;
+			Camera.Position = CameraOverride.Value.Position;
+			Camera.Rotation = CameraOverride.Value.Rotation;
+			Camera.FirstPersonViewer = null;
 			Sound.Listener = CameraOverride;
 
 			return;
@@ -71,38 +61,36 @@ public class GunfightCamera : CameraMode
 
 		UpdateDistance();
 
-		Position = Target.EyePosition;
+		Camera.Position = Target.AimRay.Position;
 
-		var rotation = Target.EyeRotation;
+		var rotation = Rotation.LookAt( Target.AimRay.Forward );
 		if ( Target.IsLocalPawn )
 			rotation = Target.ViewAngles.ToRotation();
 
 		float distance = CurrentDistance * Target.Scale;
-		var targetPos = Position + rotation.Right * ((Target.CollisionBounds.Maxs.x + RightOffset) * Target.Scale) * (CurrentDistance / CameraDistance);
+		var targetPos = Camera.Position + rotation.Right * ((Target.CollisionBounds.Maxs.x + RightOffset) * Target.Scale) * (CurrentDistance / CameraDistance);
 		targetPos += rotation.Forward * -distance;
 
-		Position = targetPos;
+		Camera.Position = targetPos;
 
 		if ( IsLocal )
-			Rotation = target.EyeRotation;
+			Camera.Rotation = rotation;
 		else
-			Rotation = Rotation.Slerp( Rotation, target.EyeRotation, Time.Delta * 20f );
+			Camera.Rotation = Rotation.Slerp( Camera.Rotation, rotation, Time.Delta * 20f );
 
 		Sound.Listener = new()
 		{
-			Position = Target.EyePosition,
-			Rotation = Target.EyeRotation
+			Position = Camera.Position,
+			Rotation = Camera.Rotation
 		};
 	}
 
-	public override void BuildInput()
+	public virtual void BuildInput()
 	{
-		if ( GunfightCamera.Target.IsAiming )
+		if ( Target.IsAiming )
 			Input.AnalogLook *= 0.5f;
 
 		if ( CameraOverride != null )
 			Input.AnalogLook = Angles.Zero;
-
-		base.BuildInput();
 	}
 }

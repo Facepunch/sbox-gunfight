@@ -87,8 +87,6 @@ public partial class Loadout : GameResource
 	[ConCmd.Admin( "gunfight_giveloadout" )]
 	public static void Cmd_GiveLoadout( string name )
 	{
-		Host.AssertServer();
-
 		var player = ConsoleSystem.Caller.Pawn as GunfightPlayer;
 
 		var first = All.FirstOrDefault( x => x.ResourceName == name );

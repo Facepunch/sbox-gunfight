@@ -1,10 +1,10 @@
 ﻿namespace Facepunch.Gunfight;
 
-public partial class GunfightPlayer : Player, IHudMarker
+public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 {
 	[Net] public float Armour { get; set; }
 	[Net] public float MaxHealth { get; set; }
-	[Net] public PlayerInventory PlayerInventory { get; set; }
+	[Net] public PlayerInventory Inventory { get; set; }
 	[Net, Predicted] public TimeSince TimeSinceDropped { get; set; }
 	[Net] public CapturePointEntity CapturePoint { get; set; }
 	[Net] public string PlayerLocation { get; set; } = "";
@@ -12,25 +12,62 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 	[Net, Predicted] public TimeUntil TimeUntilHolstered { get; set; } = -1;
 	[Net, Predicted] public bool IsHolstering { get; set; } = false;
+	[Net, Predicted] public PlayerController Controller { get; set; }
 
-	public bool SupressPickupNotices { get; private set; }
+	[Net, Predicted] public Entity ActiveChild { get; set; }
+	[ClientInput] public Vector3 InputDirection { get; protected set; }
+	[ClientInput] public Entity ActiveChildInput { get; set; }
+	[ClientInput] public Angles ViewAngles { get; set; }
+
 	public bool IsRegen { get; set; }
-	public new PlayerInventory Inventory => PlayerInventory;
 
-	public bool IsAiming => (Controller as PlayerController)?.IsAiming ?? false;
+	public bool IsAiming => Controller?.IsAiming ?? false;
 
 	Sound HeartbeatSound { get; set; }
 
-	public override void Respawn()
+	public override Ray AimRay => new Ray( Position + Vector3.Up * ( Controller?.GetEyeHeight() ?? 64 ), ViewAngles.Forward );
+
+	public GunfightCamera PlayerCamera { get; set; } = new();
+
+	/// <summary>
+	/// Create a physics hull for this player. The hull stops physics objects and players passing through
+	/// the player. It's basically a big solid box. It also what hits triggers and stuff.
+	/// The player doesn't use this hull for its movement size.
+	/// </summary>
+	public virtual void CreateHull()
 	{
+		SetupPhysicsFromAABB( PhysicsMotionType.Keyframed, new Vector3( -16, -16, 0 ), new Vector3( 16, 16, 72 ) );
+
+		//var capsule = new Capsule( new Vector3( 0, 0, 16 ), new Vector3( 0, 0, 72 - 16 ), 32 );
+		//var phys = SetupPhysicsFromCapsule( PhysicsMotionType.Keyframed, capsule );
+
+
+		//	phys.GetBody(0).RemoveShadowController();
+
+		// TODO - investigate this? if we don't set movetype then the lerp is too much. Can we control lerp amount?
+		// if so we should expose that instead, that would be awesome.
+		EnableHitboxes = true;
+	}
+
+	public void Respawn()
+	{
+		Game.AssertServer();
+
+		MaxHealth = 100;
+		LifeState = LifeState.Alive;
+		Health = MaxHealth;
+		Velocity = Vector3.Zero;
+
+		CreateHull();
+
+		ResetInterpolation();
+
 		SetModel( "models/citizen/citizen.vmdl" );
 
-		Animator = new PlayerAnimator();
-		CameraMode = new GunfightPlayerCamera();
 		Controller = new PlayerController();
 
-		PlayerInventory?.DeleteContents();
-		PlayerInventory = new PlayerInventory( this );
+		Inventory?.DeleteContents();
+		Inventory = new PlayerInventory( this );
 
 		EnableAllCollisions = true;
 		EnableDrawing = true;
@@ -40,29 +77,19 @@ public partial class GunfightPlayer : Player, IHudMarker
 		ClearAmmo();
 		Clothing.DressEntity( this );
 
-		SupressPickupNotices = true;
-
-		Inventory.DeleteContents();
-
 		GiveAll();
 		ClearEffects();
 		ClearKillStreak();
 
-		SupressPickupNotices = false;
-
 		Transmit = TransmitType.Always;
-		MaxHealth = 100;
-		Health = 100;
-		Armour = 0;
-
 		Tags.Add( "player" );
 
-		base.Respawn();
+		GameManager.Current?.MoveToSpawnpoint( this );
 	}
 
 	public GunfightPlayer()
 	{
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			HeartbeatSound = Sound.FromScreen( "sounds/heartbeat.sound" );
 			HeartbeatSound.SetVolume( 0f );
@@ -94,10 +121,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 	{
 		var wpn = WeaponDefinition.CreateWeapon( name );
 		Inventory.Add( wpn, makeActive );
-
-		foreach ( var str in attachments )
-			wpn.CreateAttachment( str );
-
 		return wpn;
 	}
 
@@ -105,10 +128,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 	{
 		var wpn = WeaponDefinition.CreateWeapon( def );
 		Inventory.Add( wpn, makeActive );
-
-		foreach( var str in attachments )
-			wpn.CreateAttachment( str );
-
 		return wpn;
 	}
 
@@ -120,7 +139,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 	public override void OnKilled()
 	{
-		Game.Current?.OnKilled( this );
+		GameManager.Current?.OnKilled( this );
 
 		// Default life state is Respawning, this means the player will handle respawning after a few seconds
 		LifeState newLifeState = LifeState.Respawning;
@@ -152,7 +171,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		Inventory.DeleteContents();
 
-		if ( LastDamage.Flags.HasFlag( DamageFlags.Blast ) )
+		if ( LastDamage.HasTag( "blast" ) )
 		{
 			using ( Prediction.Off() )
 			{
@@ -165,14 +184,14 @@ public partial class GunfightPlayer : Player, IHudMarker
 		}
 		else
 		{
-			BecomeRagdollOnClient( Velocity, LastDamage.Flags, LastDamage.Position, LastDamage.Force, LastDamage.BoneIndex );
+			BecomeRagdollOnClient( Velocity, LastDamage.Position, LastDamage.Force, LastDamage.BoneIndex );
 		}
 
 		ClearEffects();
 
 		Controller = null;
 
-		CameraMode = new GunfightDeathCamera( LastDamage.Attacker.IsValid() ? LastDamage.Attacker : this );
+		// CameraMode = new GunfightDeathCamera( LastDamage.Attacker.IsValid() ? LastDamage.Attacker : this );
 
 		EnableAllCollisions = false;
 		EnableDrawing = false;
@@ -189,7 +208,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 	[Event.Tick.Client]
 	protected void HeartbeatTick()
 	{
-		if ( this != Local.Pawn ) return;
+		if ( this != Game.LocalPawn ) return;
 
 		var hp = Health;
 		if ( LifeState != LifeState.Alive ) hp = 100;
@@ -198,12 +217,75 @@ public partial class GunfightPlayer : Player, IHudMarker
 		HeartbeatSound.SetVolume( vol );
 	}
 
+	Entity lastWeapon;
+	void SimulateAnimation( PlayerController controller )
+	{
+		if ( controller == null )
+			return;
+
+		// where should we be rotated to
+		var turnSpeed = 0.02f;
+
+		Rotation rotation;
+
+		// If we're a bot, spin us around 180 degrees.
+		if ( Client.IsBot )
+			rotation = ViewAngles.WithYaw( ViewAngles.yaw + 180f ).ToRotation();
+		else
+			rotation = ViewAngles.ToRotation();
+
+		var idealRotation = Rotation.LookAt( rotation.Forward.WithZ( 0 ), Vector3.Up );
+		Rotation = Rotation.Slerp( Rotation, idealRotation, controller.WishVelocity.Length * Time.Delta * turnSpeed );
+		Rotation = Rotation.Clamp( idealRotation, 45.0f, out var shuffle ); // lock facing to within 45 degrees of look direction
+
+		CitizenAnimationHelper animHelper = new CitizenAnimationHelper( this );
+
+		animHelper.WithWishVelocity( controller.WishVelocity );
+		animHelper.WithVelocity( controller.Velocity );
+		animHelper.WithLookAt( AimRay.Position + AimRay.Forward * 100.0f, 1.0f, 1.0f, 0.5f );
+		animHelper.AimAngle = rotation;
+		animHelper.FootShuffle = shuffle;
+		animHelper.DuckLevel = MathX.Lerp( animHelper.DuckLevel, controller.HasTag( "ducked" ) ? 1 : 0, Time.Delta * 10.0f );
+		animHelper.VoiceLevel = ( Game.IsClient && Client.IsValid() ) ? Client.Voice.LastHeard < 0.5f ? Client.Voice.CurrentLevel : 0.0f : 0.0f;
+		animHelper.IsGrounded = GroundEntity != null;
+		animHelper.IsSitting = controller.HasTag( "sitting" );
+		animHelper.IsNoclipping = controller.HasTag( "noclip" );
+		animHelper.IsClimbing = controller.HasTag( "climbing" );
+		animHelper.IsSwimming = this.GetWaterLevel() >= 0.5f;
+		animHelper.IsWeaponLowered = false;
+
+		if ( controller.HasEvent( "jump" ) ) animHelper.TriggerJump();
+		if ( ActiveChild != lastWeapon ) animHelper.TriggerDeploy();
+
+		if ( ActiveChild is BaseCarriable carry )
+		{
+			carry.SimulateAnimator( animHelper );
+		}
+		else
+		{
+			animHelper.HoldType = CitizenAnimationHelper.HoldTypes.None;
+			animHelper.AimBodyWeight = 0.5f;
+		}
+
+		lastWeapon = ActiveChild;
+	}
+
+	/// <summary>
+	/// Applies flashbang-like ear ringing effect to the player.
+	/// </summary>
+	/// <param name="strength">Can be approximately treated as duration in seconds.</param>
+	[ClientRpc]
+	public void Deafen( float strength )
+	{
+		Audio.SetEffect( "flashbang", strength, velocity: 20.0f, fadeOut: 4.0f * strength );
+	}
+
 	TimeSince TimeSinceKilled;
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		if ( LifeState == LifeState.Respawning )
 		{
-			if ( TimeSinceKilled > 3 && IsServer )
+			if ( TimeSinceKilled > 3 && Game.IsServer )
 			{
 				Respawn();
 			}
@@ -211,8 +293,8 @@ public partial class GunfightPlayer : Player, IHudMarker
 			return;
 		}
 
-		var controller = GetActiveController();
-		controller?.Simulate( cl, this, GetActiveAnimator() );
+		Controller?.Simulate( cl, this );
+		SimulateAnimation( Controller );
 
 		if ( Input.Pressed( InputButton.View ) )
 		{
@@ -227,7 +309,6 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 		TickPlayerUse();
 		SimulateWeapons( cl );
-		SimulatePing( cl );
 
 		if ( TimeSinceDamage > 5f && ( GamemodeSystem.Current?.CanPlayerRegenerate( this ) ?? true ) )
 		{
@@ -253,15 +334,14 @@ public partial class GunfightPlayer : Player, IHudMarker
 		Health = Health.Clamp( 0, MaxHealth );
 	}
 
-	public void SwitchToBestWeapon()
+	public override void OnChildAdded( Entity child )
 	{
-		var best = Children.Select( x => x as GunfightWeapon )
-			.Where( x => x.IsValid() && x.IsUsable() )
-			.FirstOrDefault();
+		Inventory?.OnChildAdded( child );
+	}
 
-		if ( best == null ) return;
-
-		ActiveChild = best;
+	public override void OnChildRemoved( Entity child )
+	{
+		Inventory?.OnChildRemoved( child );
 	}
 
 	public override void StartTouch( Entity other )
@@ -287,44 +367,49 @@ public partial class GunfightPlayer : Player, IHudMarker
 		}
 	}
 
-	public override void PostCameraSetup( ref CameraSetup setup )
+	public override void BuildInput()
 	{
-		base.PostCameraSetup( ref setup );
+		InputDirection = Input.AnalogMove;
+		var look = Input.AnalogLook;
+		var viewAngles = ViewAngles;
+		viewAngles += look;
+		ViewAngles = viewAngles.Normal;
 
-		if ( setup.Viewer != null )
-		{
-			AddCameraEffects( ref setup );
-		}
+		ActiveChild?.BuildInput();
+		Controller?.BuildInput();
 	}
 
 	float WalkBob = 0;
-	private void AddCameraEffects( ref CameraSetup setup )
-	{
-		var speed = Velocity.Length.LerpInverse( 0, 350 );
 
-		var left = setup.Rotation.Left;
-		var up = setup.Rotation.Up;
+	[Event.Client.PostCamera]
+	public void PostCameraSetup()
+	{
+		Camera.FieldOfView = Game.Preferences.FieldOfView;
+
+		if ( !Camera.FirstPersonViewer.IsValid() )
+			return;
+
+		var speed = Velocity.Length.LerpInverse( 0, 350 );
+		var left = Camera.Rotation.Left;
+		var up = Camera.Rotation.Up;
 
 		GunfightGame.AddedCameraFOV = 0f;
-		var ctrl = Controller as PlayerController;
-		if ( ctrl != null )
+		if ( Controller != null )
 		{
-			if ( ctrl.Slide.IsActive )
+			if ( Controller.Slide.IsActive )
 				speed *= 0.1f;
 
-			if ( ctrl.IsSprinting )
+			if ( Controller.IsSprinting )
 				GunfightGame.AddedCameraFOV = 3f;
-			if ( ctrl.IsBurstSprinting )
+			if ( Controller.IsBurstSprinting )
 				GunfightGame.AddedCameraFOV = 6f;
 		}
 
 		if ( GroundEntity != null )
 			WalkBob += Time.Delta * 10f * speed * 1.5f;
 
-		setup.Position += up * MathF.Sin( WalkBob ) * speed * 4;
-		setup.Position += left * MathF.Sin( WalkBob ) * speed * -1f;
-
-		// Probably let the mechanics handle this too
+		Camera.Position += up * MathF.Sin( WalkBob ) * speed * 4;
+		Camera.Position += left * MathF.Sin( WalkBob ) * speed * -1f;
 	}
 
 	DamageInfo LastDamage;
@@ -353,7 +438,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 			info.Damage *= 2.5f;
 		}
 
-		if ( info.Flags.HasFlag( DamageFlags.Bullet ) )
+		if ( info.HasTag( "bullet" ) )
 		{
 			Sound.FromScreen( To.Single( Client ), "sounds/player/damage_taken_shot.sound" );
 		}
@@ -363,7 +448,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		LastAttacker = info.Attacker;
 		LastAttackerWeapon = info.Weapon;
 
-		if ( IsServer && Armour > 0 )
+		if ( Game.IsServer && Armour > 0 )
 		{
 			Armour -= info.Damage;
 
@@ -378,7 +463,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 			}
 		}
 
-		if ( info.Flags.HasFlag( DamageFlags.Blast ) )
+		if ( info.HasTag( "blast" ) )
 		{
 			Deafen( To.Single( Client ), info.Damage.LerpInverse( 0, 60 ) );
 		}
@@ -449,7 +534,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 
 	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
 	{
-		if ( !IsServer )
+		if ( !Game.IsServer )
 			return;
 
 		if ( LifeState != LifeState.Alive )
@@ -464,7 +549,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 		if ( ctrl.Slide.IsActive )
 			return;
 
-		volume *= FootstepVolume();
+		volume *= Velocity.WithZ( 0 ).Length.LerpInverse( 0.0f, 200.0f ) * 0.2f;
 
 		timeSinceLastFootstep = 0;
 
@@ -502,7 +587,7 @@ public partial class GunfightPlayer : Player, IHudMarker
 	[ConCmd.Admin( "gunfight_debug_sethp" )]
 	public static void Debug_SetHP( int hp )
 	{
-		var pawn = ConsoleSystem.Caller?.Pawn;
+		var pawn = ConsoleSystem.Caller.Pawn as GunfightPlayer;
 		if ( pawn.IsValid() )
 		{
 			pawn.Health = hp;
@@ -511,10 +596,17 @@ public partial class GunfightPlayer : Player, IHudMarker
 	[ConCmd.Admin( "gunfight_debug_damage" )]
 	public static void Debug_Damage( int amt )
 	{
-		var pawn = ConsoleSystem.Caller?.Pawn;
+		var pawn = ConsoleSystem.Caller.Pawn as GunfightPlayer;
 		if ( pawn.IsValid() )
 		{
 			pawn.TakeDamage( DamageInfo.FromBullet( pawn.Position, 100f, amt ) );
 		}
+	}
+
+	[ConCmd.Server( "kill" )]
+	public static void Suicide()
+	{
+		var pawn = ConsoleSystem.Caller.Pawn as GunfightPlayer;
+		pawn?.TakeDamage( DamageInfo.Generic( pawn.MaxHealth ) );
 	}
 }

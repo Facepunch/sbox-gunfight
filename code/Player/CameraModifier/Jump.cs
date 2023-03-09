@@ -1,4 +1,5 @@
 using Sandbox.UI;
+using Sandbox.Utility;
 
 namespace Facepunch.Gunfight.ScreenShake;
 
@@ -15,18 +16,18 @@ public class Jump : CameraModifier
 		Pitch = pitch;
 	}
 
-	public override bool Update( ref CameraSetup cam )
+	public override bool Update()
 	{
 		var pl = GunfightCamera.Target;
-		var ctrl = pl.Controller as PlayerController;
+		var ctrl = pl.Controller;
 		if ( ctrl == null ) return false;
 
-		cam.Rotation *= Rotation.From( Easing.BounceInOut( ctrl.JumpWindup.Fraction ) * Pitch, 0, 0 );
+		Camera.Rotation *= Rotation.From( Easing.BounceInOut( ctrl.JumpWindup.Fraction ) * Pitch, 0, 0 );
 		var delta = ((float)ctrl.TimeSinceJumped).LerpInverse( 0, Time / 2, true );
 
 		if ( !ctrl.GroundEntity.IsValid() )
 		{
-			cam.Rotation *= Rotation.From( delta * -Pitch, 0, 0 );
+			Camera.Rotation *= Rotation.From( delta * -Pitch, 0, 0 );
 		}
 
 		return lifeTime < Time;

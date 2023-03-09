@@ -16,7 +16,6 @@
   ],
   "HasCode": true,
   "CodePath": "/code/",
-  "RootNamespace": "Sandbox",
   "Metadata": {
     "MaxPlayers": 16,
     "MinPlayers": 1,

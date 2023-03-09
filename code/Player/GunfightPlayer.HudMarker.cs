@@ -8,9 +8,9 @@ public partial class GunfightPlayer
 	}
 	bool CalculateVisibility()
 	{
-		var tr = Trace.Ray( CurrentView.Position, EyePosition )
+		var tr = Trace.Ray( Camera.Position, AimRay.Position )
 			.WorldAndEntities()
-			.Ignore( Local.Pawn )
+			.Ignore( Game.LocalPawn )
 			.Run();
 
 		if ( tr.Hit && tr.Entity == this )
@@ -24,7 +24,7 @@ public partial class GunfightPlayer
 		if ( !this.IsValid() )
 			return false;
 
-		if ( this == Local.Pawn ) 
+		if ( this == Game.LocalPawn ) 
 			return false;
 
 		if ( LifeState != LifeState.Alive )
@@ -41,7 +41,7 @@ public partial class GunfightPlayer
 		builder.Text = $"{Client.Name}";
 		builder.MaxDistance = isEnemy ? 1000000f : 10000000f;
 		builder.DistanceScale = 0.5f;
-		builder.Position = EyePosition + Vector3.Up * 15f;
+		builder.Position = AimRay.Position + Vector3.Up * 15f;
 
 		// Classes
 		builder.Classes["friendly"] = friendState == TeamSystem.FriendlyStatus.Friendly;

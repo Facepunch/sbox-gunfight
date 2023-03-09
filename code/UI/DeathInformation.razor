@@ -63,7 +63,7 @@
     <div class="main">
         @if ( Attacker.IsValid() )
         {
-            <PlayerCard PlayerId="@Attacker.PlayerId" />
+            <PlayerCard PlayerId="@Attacker.SteamId" />
         }
         else
         {
@@ -74,7 +74,7 @@
 
 @code
 {
-    public Client Attacker { get; set; }
+    public IClient Attacker { get; set; }
 
     protected override int BuildHash()
     {

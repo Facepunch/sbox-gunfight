@@ -6,7 +6,7 @@ public partial class PlayerInventory : BaseNetworkable
 
 	public virtual int MaxGadgets => 2;
 
-	[Net] public Player Owner { get; set; }
+	[Net] public GunfightPlayer Owner { get; set; }
 
 	// 0
 	[Net] public GunfightWeapon PrimaryWeapon { get; set; }
@@ -36,7 +36,7 @@ public partial class PlayerInventory : BaseNetworkable
 	}
 
 	public PlayerInventory() { }
-	public PlayerInventory( Player player )
+	public PlayerInventory( GunfightPlayer player )
 	{
 		Owner = player;
 	}
@@ -56,8 +56,6 @@ public partial class PlayerInventory : BaseNetworkable
 
 	public bool Add( Entity ent, bool makeactive = false )
 	{
-		Host.AssertServer();
-
 		var carriable = ent as GunfightWeapon;
 
 		if ( !CanAdd( ent ) )
@@ -128,7 +126,7 @@ public partial class PlayerInventory : BaseNetworkable
 
 	public void DeleteContents()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		PrimaryWeapon?.Delete();
 		SecondaryWeapon?.Delete();
@@ -141,7 +139,7 @@ public partial class PlayerInventory : BaseNetworkable
 
 	public bool Drop( Entity ent )
 	{
-		if ( !Host.IsServer )
+		if ( !Game.IsServer )
 			return false;
 
 		if ( !Contains( ent ) )
@@ -161,7 +159,7 @@ public partial class PlayerInventory : BaseNetworkable
 
 	public Entity DropActive()
 	{
-		if ( !Host.IsServer ) return null;
+		if ( !Game.IsServer ) return null;
 
 		var ac = Owner.ActiveChild;
 		if ( !ac.IsValid() ) return null;
@@ -217,8 +215,6 @@ public partial class PlayerInventory : BaseNetworkable
 		if ( child is not GunfightWeapon weapon )
 			return;
 		
-		Log.Info( $"{Host.Name}: {weapon}" );
-
 		switch ( weapon.Slot )
 		{
 			case WeaponSlot.Primary:

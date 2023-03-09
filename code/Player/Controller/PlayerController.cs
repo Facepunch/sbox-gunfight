@@ -112,7 +112,7 @@ public partial class PlayerController : BasePlayerController
 		SinceStoppedSprinting = 0;
 	}
 
-	protected float GetEyeHeight()
+	public virtual float GetEyeHeight()
 	{
 		return CurrentMechanic?.GetEyeHeight() ?? 64;
 	}
@@ -162,7 +162,7 @@ public partial class PlayerController : BasePlayerController
 		}
 
 		CheckLadder();
-		Swimming = Pawn.WaterLevel > 0.6f;
+		Swimming = Pawn.GetWaterLevel() > 0.6f;
 
 		if ( IsSprinting && Input.Pressed( InputButton.Run ) && SinceBurstEnded > 5f )
 		{
@@ -314,9 +314,8 @@ public partial class PlayerController : BasePlayerController
 			DebugOverlay.Box( Position, mins, maxs, Color.Blue );
 
 			var lineOffset = 0;
-			if ( Host.IsServer ) lineOffset = 15;
+			if ( Game.IsServer ) lineOffset = 15;
 
-			DebugOverlay.ScreenText( $"        Host: {Host.Name}", lineOffset + 0 );
 			DebugOverlay.ScreenText( $"        Velocity: {Velocity}", lineOffset + 1 );
 			DebugOverlay.ScreenText( $"    BaseVelocity: {BaseVelocity}", lineOffset + 2 );
 			DebugOverlay.ScreenText( $"    GroundEntity: {GroundEntity} [{GroundEntity?.Velocity}]", lineOffset + 3 );
@@ -326,11 +325,11 @@ public partial class PlayerController : BasePlayerController
 			DebugOverlay.ScreenText( $"    Duck: {Duck?.IsActive ?? false}", lineOffset + 7 );
 		}
 
-		if ( Host.IsServer )
+		if ( Game.IsServer )
 		{
 			if ( IsSprinting || Slide.IsActive )
 			{
-				var trForward = Trace.Ray( Pawn.EyePosition, Pawn.EyePosition + Pawn.EyeRotation.Forward * 50f ).WithTag( "solid" ).Radius( 5f ).Ignore( Pawn ).Run();
+				var trForward = Trace.Ray( Pawn.AimRay.Position, Pawn.AimRay.Position + Pawn.AimRay.Forward * 50f ).WithTag( "solid" ).Radius( 5f ).Ignore( Pawn ).Run();
 
 				if ( trForward.Entity is DoorEntity door && ( door.State == DoorEntity.DoorState.Closed || door.State == DoorEntity.DoorState.Closing ) )
 				{

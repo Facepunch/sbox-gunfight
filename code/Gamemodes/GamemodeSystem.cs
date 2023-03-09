@@ -48,7 +48,7 @@ public partial class GamemodeSystem
 	{
 		get
 		{
-			if ( Host.IsServer ) return current;
+			if ( Game.IsServer ) return current;
 
 			if ( !current.IsValid() )
 				current = Entity.All.FirstOrDefault( x => x is Gamemode ) as Gamemode;

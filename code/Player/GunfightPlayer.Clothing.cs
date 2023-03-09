@@ -10,11 +10,11 @@ public partial class GunfightPlayer
 	/// <summary>
 	/// Set the clothes to whatever the player is wearing
 	/// </summary>
-	public void UpdateClothes( Client cl )
+	public void UpdateClothes( IClient cl )
 	{
 		Clothing = new();
 
-		var outfit = Client.All.Count() % 2 == 0 ? armyOutfitJson : terrorOutfitJson;
+		var outfit = Game.Clients.Count() % 2 == 0 ? armyOutfitJson : terrorOutfitJson;
 		Clothing.Deserialize( outfit );
 	}
 }

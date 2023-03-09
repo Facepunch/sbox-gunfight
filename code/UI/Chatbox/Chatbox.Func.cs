@@ -8,7 +8,7 @@ public partial class GunfightChatbox
 		Current?.AddEntry( name, message, long.Parse( playerId ), isMessage );
 
 		// Only log clientside if we're not the listen server host
-		if ( !Global.IsListenServer )
+		if ( !Game.IsListenServer )
 		{
 			Log.Info( $"{name}: {message}" ); 
 		}
@@ -24,7 +24,7 @@ public partial class GunfightChatbox
 	{
 		var cl = ConsoleSystem.Caller;
 
-		GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.PlayerId, false );
+		GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, "has joined the game", cl.SteamId, false );
 	}
 
 	[ConCmd.Admin( "gunfight_debug_chat_other" )]
@@ -43,13 +43,11 @@ public partial class GunfightChatbox
 	[ConCmd.Server( "gunfight_say" )]
 	public static void Say( string message )
 	{
-		Assert.NotNull( ConsoleSystem.Caller );
-
 		// todo - reject more stuff
 		if ( message.Contains( '\n' ) || message.Contains( '\r' ) )
 			return;
 
 		Log.Info( $"{ConsoleSystem.Caller}: {message}" );
-		AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, ConsoleSystem.Caller.PlayerId );
+		AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, ConsoleSystem.Caller.SteamId );
 	}
 }

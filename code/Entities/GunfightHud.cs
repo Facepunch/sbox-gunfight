@@ -30,7 +30,7 @@ public partial class GunfightHud : HudEntity<HudRootPanel>
 	}
 
 	[ClientRpc]
-	public static void ShowDeathInformation( Client attacker )
+	public static void ShowDeathInformation( IClient attacker )
 	{
 		var deathInfo = GunfightGame.Current.Hud.RootPanel.AddChild<DeathInformation>();
 		deathInfo.Attacker = attacker;

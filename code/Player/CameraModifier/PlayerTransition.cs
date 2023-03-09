@@ -1,3 +1,5 @@
+using Sandbox.Utility;
+
 namespace Facepunch.Gunfight;
 
 public class PlayerTransition : CameraModifier
@@ -21,15 +23,15 @@ public class PlayerTransition : CameraModifier
 			0.0f ) );
 	}
 
-	public override bool Update( ref CameraSetup cam )
+	public override bool Update()
 	{
 		var delta = Easing.EaseIn( Completed.Fraction );
 		var pawn = GunfightCamera.Target;
-		var targetPos = pawn.EyePosition;
+		var targetPos = pawn.AimRay.Position;
 
-		cam.Position = StartPos.LerpTo( targetPos, delta );
-		cam.Viewer = null;
-		cam.Rotation = LookAt( targetPos, cam.Position );
+		Camera.Position = StartPos.LerpTo( targetPos, delta );
+		Camera.FirstPersonViewer = null;
+		Camera.Rotation = LookAt( targetPos, Camera.Position );
 
 		return !delta.AlmostEqual( 1f );
 	}

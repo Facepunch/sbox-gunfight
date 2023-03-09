@@ -100,12 +100,12 @@
 		var e = Canvas.AddChild<ChatboxRow>();
 		e.IsChatMessage = isMessage;
 
-		var player = Local.Pawn;
+		var player = Game.LocalPawn;
 		if ( player == null ) return;
-		if ( Local.Pawn is GunfightPlayer pl )
+		if ( Game.LocalPawn is GunfightPlayer pl )
 		{
 			if ( playerId > 0 )
-				e.PlayerId = playerId;
+				e.SteamId = playerId;
 
 			e.Message = message;
 			e.Name = $"{name}";

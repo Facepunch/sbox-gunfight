@@ -21,8 +21,8 @@ public partial class SpawnPointSystem
 
 	protected static Vector3 GeneratePoint( Vector3 origin )
 	{
-		var angle = Rand.Int( 0, 360 );
-		var radius = Rand.Float( Range.x, Range.y );
+		var angle = Game.Random.Int( 0, 360 );
+		var radius = Game.Random.Float( Range.x, Range.y );
 		var x = radius * MathF.Cos( angle );
 		var y = radius * MathF.Sin( angle );
 

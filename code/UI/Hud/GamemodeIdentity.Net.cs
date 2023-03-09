@@ -14,8 +14,6 @@ public partial class GamemodeIdentity
     [ClientRpc]
     public static void RpcShow( int seconds = 5 )
     {
-        Host.AssertClient();
-
         var panel = GunfightGame.Current.Hud.RootPanel.AddChild<GamemodeIdentity>();
         _ = Decay( panel, seconds );
     }

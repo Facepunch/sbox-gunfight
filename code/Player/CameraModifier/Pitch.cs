@@ -1,3 +1,5 @@
+using Sandbox.Utility;
+
 namespace Facepunch.Gunfight.ScreenShake;
 
 public class Pitch : CameraModifier
@@ -13,12 +15,12 @@ public class Pitch : CameraModifier
 		Size = size;
 	}
 
-	public override bool Update( ref CameraSetup cam )
+	public override bool Update()
 	{
 		var delta = ((float)lifeTime).LerpInverse( 0, Length, true );
 		delta = Easing.EaseOut( delta );
 
-		cam.Rotation *= Rotation.From( new( Size * ( 1 - delta ), 0, Size * ( 1 - delta ) ) );
+		Camera.Rotation *= Rotation.From( new( Size * ( 1 - delta ), 0, Size * ( 1 - delta ) ) );
 
 		return lifeTime < Length;
 	}

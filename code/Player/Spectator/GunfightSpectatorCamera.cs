@@ -5,8 +5,8 @@ internal class GunfightSpectatorCamera : GunfightCamera
 	[ConCmd.Admin( "gunfight_debug_togglespectator", Help = "Toggles spectator mode" )]
 	public static void ToggleSpectator()
 	{
-		var cl = ConsoleSystem.Caller;
-		cl.Pawn.Components.Add( new GunfightSpectatorCamera() );
+		//var cl = ConsoleSystem.Caller;
+		//cl.Pawn.Components.Add( new GunfightSpectatorCamera() );
 	}
 
 	public bool IsFree { get; set; } = false;
@@ -44,13 +44,6 @@ internal class GunfightSpectatorCamera : GunfightCamera
 		return SelectPlayerIndex( asc ? playerIndex + 1 : playerIndex - 1 );
 	}
 
-	public void ResetInterpolation()
-	{
-		// Force eye rotation to avoid lerping when switching targets
-		if ( Target.IsValid() )
-			Rotation = Target.EyeRotation;
-	}
-
 	protected void ToggleFree()
 	{
 		IsFree ^= true;
@@ -58,16 +51,15 @@ internal class GunfightSpectatorCamera : GunfightCamera
 		if ( IsFree )
 		{
 			if ( Target.IsValid() )
-				Position = Target.EyePosition;
+				Camera.Position = Target.AimRay.Position;
 
 			vm?.Delete();
 			cachedWeapon = null;
-			Viewer = null;
+			Camera.FirstPersonViewer = null;
 		}
 		else
 		{
-			ResetInterpolation();
-			Viewer = Target;
+			Camera.FirstPersonViewer = Target;
 		}
 	}
 
@@ -137,7 +129,6 @@ internal class GunfightSpectatorCamera : GunfightCamera
 		var curWeapon = newTarget?.ActiveChild as GunfightWeapon;
 		cachedWeapon = curWeapon;
 
-		ResetInterpolation();
 		UpdateViewModel( curWeapon );
 	}
 
@@ -150,9 +141,9 @@ internal class GunfightSpectatorCamera : GunfightCamera
 
 		if ( IsFree )
 		{
-			var mv = MoveInput.Normal * BaseMoveSpeed * RealTime.Delta * Rotation * MoveMultiplier;
-			Position += mv;
-			Rotation = Rotation.From( LookAngles );
+			var mv = MoveInput.Normal * BaseMoveSpeed * RealTime.Delta * Camera.Rotation * MoveMultiplier;
+			Camera.Position += mv;
+			Camera.Rotation = Rotation.From( LookAngles );
 		}
 		else
 		{

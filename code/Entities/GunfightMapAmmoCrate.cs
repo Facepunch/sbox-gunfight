@@ -15,7 +15,7 @@ public partial class GunfightMapAmmoCrate : GamemodeSpecificEntity, IUse
 		var player = user as GunfightPlayer;
 		if ( player.IsValid() )
 		{
-			foreach( var wpn in player.PlayerInventory.GetAll() )
+			foreach( var wpn in player.Inventory.GetAll() )
 			{
 				player.GiveAmmo( wpn.AmmoType, player.MaxAmmo( wpn.AmmoType ) );
 			}

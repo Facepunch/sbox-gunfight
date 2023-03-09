@@ -49,12 +49,12 @@ public partial class WarGamemode : Gamemode
 	}
 
 
-	public override void AssignTeam( Client cl )
+	public override void AssignTeam( IClient cl )
 	{
 		var teamComponent = cl.Components.GetOrCreate<TeamComponent>();
 		teamComponent.Team = TeamSystem.GetLowestCount();
 
-		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, false );
+		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.SteamId, false );
 
 		VerifyEnoughPlayers();
 	}
@@ -199,11 +199,11 @@ public partial class WarGamemode : Gamemode
 		SetGameState( GameState.End );
 	}
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
 
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			SimulateTickets();
 

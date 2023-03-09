@@ -37,7 +37,7 @@ public partial class NotificationManager
 	{
 		if ( LastHint > 60f )
 		{
-			var randHint = Rand.FromList( Hints );
+			var randHint = Game.Random.FromList( Hints );
 			Current?.Add( NotificationDockType.BottomMiddle, randHint, 5 );
 			LastHint = 0;
 		}

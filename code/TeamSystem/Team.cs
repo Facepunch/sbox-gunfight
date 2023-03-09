@@ -19,9 +19,9 @@ public static class TeamExtensions
 		return AllClients( team ).Count();
 	}
 
-	public static IEnumerable<Client> AllClients( this Team team )
+	public static IEnumerable<IClient> AllClients( this Team team )
 	{
-		return Client.All.Where( x => TeamSystem.GetTeam( x ) == team );
+		return Game.Clients.Where( x => TeamSystem.GetTeam( x ) == team );
 	}
 
 	public static IEnumerable<GunfightPlayer> AllPlayers( this Team team )
@@ -34,12 +34,12 @@ public static class TeamExtensions
 		return team.AllPlayers().Where( x => x.LifeState == LifeState.Alive );
 	}
 
-	public static Team GetTeam( this Client cl )
+	public static Team GetTeam( this IClient cl )
 	{
 		return TeamSystem.GetTeam( cl );
 	}
 
-	public static string GetLocation( this Client cl )
+	public static string GetLocation( this IClient cl )
 	{
 		var pawn = cl.Pawn as GunfightPlayer;
 
@@ -82,7 +82,7 @@ public static class TeamSystem
 		return (T) Enum.Parse( typeof( T ), enumString );
 	}
 
-	public static Team MyTeam => Local.Client.Components.Get<TeamComponent>()?.Team ?? Team.Unassigned;
+	public static Team MyTeam => Game.LocalClient.Components.Get<TeamComponent>()?.Team ?? Team.Unassigned;
 
 	public enum FriendlyStatus
 	{
@@ -102,7 +102,7 @@ public static class TeamSystem
 		return FriendlyStatus.Friendly;
 	}
 
-	public static FriendlyStatus GetFriendState( Client one, Client two )
+	public static FriendlyStatus GetFriendState( IClient one, IClient two )
 	{
 		var teamOne = one.GetTeam();
 		var teamTwo = two.GetTeam();
@@ -110,7 +110,7 @@ public static class TeamSystem
 		return GetFriendState( teamOne, teamTwo );
 	}
 
-	public static FriendlyStatus GetFriendState( Client client, Team team )
+	public static FriendlyStatus GetFriendState( IClient client, Team team )
 	{
 		return GetFriendState( GetTeam( client ), team );
 	}
@@ -162,7 +162,7 @@ public static class TeamSystem
 		return "Unassigned";
 	}
 
-	public static Team GetTeam( Client cl )
+	public static Team GetTeam( IClient cl )
 	{
 		return cl.Components.Get<TeamComponent>()?.Team ?? Team.Unassigned;
 	}

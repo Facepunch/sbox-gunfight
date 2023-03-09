@@ -12,7 +12,9 @@ public partial class TeamComponent : EntityComponent
 			var previous = team;
 			team = value;
 
-			SetupTags( Entity is Client cl ? cl.Pawn : Entity, previous, team );
+			var cl = Entity as IClient;
+			var pawn = cl?.Pawn as Entity;
+			SetupTags( pawn ?? Entity, previous, team );
 		}
 	}
 

@@ -21,7 +21,7 @@ public partial class DogtagEntity : BaseTrigger
 	{
 		base.StartTouch( other );
 
-		if ( Host.IsServer && other is GunfightPlayer player )
+		if ( Game.IsServer && other is GunfightPlayer player )
 		{
 			Take( player );
 		}

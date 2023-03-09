@@ -13,9 +13,9 @@ public partial class KillFeed : Panel
 		StyleSheet.Load( "/ui/killfeed/KillFeed.scss" );
 	}
 
-	protected Client GetClient( long steamId )
+	protected IClient GetClient( long steamId )
 	{
-		return Client.All.FirstOrDefault( x => x.PlayerId == steamId );
+		return Game.Clients.FirstOrDefault( x => x.SteamId == steamId );
 	}
 
 	public virtual Panel AddEntry( long lsteamid, string left, long rsteamid, string right, string method )
@@ -23,7 +23,7 @@ public partial class KillFeed : Panel
 		var e = Current.AddChild<KillFeedEntry>();
 
 		e.Left.Text = left;
-		e.Left.SetClass( "me", lsteamid == Local.PlayerId );
+		e.Left.SetClass( "me", lsteamid == Game.SteamId );
 
 		e.AddClass( method );
 
@@ -36,7 +36,7 @@ public partial class KillFeed : Panel
 			e.Method.Text = method;
 
 		e.Right.Text = right;
-		e.Right.SetClass( "me", rsteamid == Local.PlayerId );
+		e.Right.SetClass( "me", rsteamid == Game.SteamId );
 
 		if ( lsteamid != 0 )
 		{
@@ -60,7 +60,7 @@ public partial class KillFeed : Panel
 		var e = Current.AddChild<KillFeedEntry>();
 
 		e.Left.Text = left;
-		e.Left.SetClass( "me", lsteamid == Local.PlayerId );
+		e.Left.SetClass( "me", lsteamid == Game.SteamId );
 
 		e.AddClass( method );
 

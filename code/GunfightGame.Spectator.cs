@@ -22,18 +22,19 @@ public partial class GunfightGame
 		}
 		else
 		{
-			cl.Pawn?.TakeDamage( DamageInfo.Generic( 5000f ) );
-			cl.Pawn.Delete();
+			var pawn = cl.Pawn as Entity;
+			pawn?.TakeDamage( DamageInfo.Generic( 5000f ) );
+			pawn.Delete();
 			cl.Pawn = null;
 
             // Set team to unassigned
             cl.Components.GetOrCreate<TeamComponent>().Team = Team.Unassigned;
 
-			var pawn = new GunfightSpectatorPlayer();
-			cl.Pawn = pawn;
-			pawn.Respawn();
+			var newPawn = new GunfightSpectatorPlayer();
+			cl.Pawn = newPawn;
+			newPawn.Respawn();
 
-		    UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"became a spectator", cl.PlayerId, false );
+		    UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"became a spectator", cl.SteamId, false );
 		}
 	}
 }

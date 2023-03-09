@@ -4,23 +4,24 @@ public abstract class CameraModifier
 {
 	internal static List<CameraModifier> List = new();
 
-	internal static void Apply( ref CameraSetup setup )
+	internal static void Apply()
 	{
 		for ( int i = List.Count; i > 0; i-- )
 		{
 			var entry = List[i - 1];
-			var keep = entry.Update( ref setup );
+			var keep = entry.Update();
 
 			if ( !keep )
 			{
-				entry.OnRemove( ref setup );
+				entry.OnRemove();
 				List.RemoveAt( i - 1 );
 			}
 		}
 	}
 
-	protected virtual void OnRemove( ref CameraSetup setup )
+	protected virtual void OnRemove()
 	{
+		//
 	}
 
 	public static void ClearAll()
@@ -36,5 +37,5 @@ public abstract class CameraModifier
 		}
 	}
 
-	public abstract bool Update( ref CameraSetup setup );
+	public abstract bool Update();
 }

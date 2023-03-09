@@ -43,7 +43,7 @@ public partial class LoadoutSystem : Entity
 		UI.NotificationManager.AddNotification( To.Single( cl ), UI.NotificationDockType.BottomMiddle, $"Your loadout will be set to {first.LoadoutName} when you next respawn.", 5 );
     }
 
-    public static Loadout GetLoadout( Client cl )
+    public static Loadout GetLoadout( IClient cl )
     {
         if ( !AllowCustomLoadouts )
         {
@@ -53,7 +53,7 @@ public partial class LoadoutSystem : Entity
         return GetPreference( cl ) ?? MatchLoadout;
     }
 
-    public static Loadout GetPreference( Client cl )
+    public static Loadout GetPreference( IClient cl )
     {
         return cl.GetLoadoutComponent().Loadout;
     }

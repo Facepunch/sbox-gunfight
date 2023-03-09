@@ -32,13 +32,13 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 	}
 
 	// @Server
-	public Dictionary<Team, HashSet<Player>> Occupants { get; protected set; } = new();
+	public Dictionary<Team, HashSet<GunfightPlayer>> Occupants { get; protected set; } = new();
 
 	public CapturePointEntity() { }
 
 	public void Initialize()
 	{
-		if ( Host.IsServer )
+		if ( Game.IsServer )
 		{
 			// Create a TeamComponent
 			Components.GetOrCreate<TeamComponent>();
@@ -120,7 +120,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 	{
 		base.StartTouch( other );
 
-		if ( Host.IsServer && other is GunfightPlayer player )
+		if ( Game.IsServer && other is GunfightPlayer player )
 		{
 			AddPlayer( player );
 			player.PlayerLocation = NiceName;
@@ -131,7 +131,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 	{
 		base.EndTouch( other );
 
-		if ( Host.IsServer && other is GunfightPlayer player )
+		if ( Game.IsServer && other is GunfightPlayer player )
 		{
 			RemovePlayer( player );
 
@@ -258,7 +258,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		if ( !this.IsValid() )
 			return false;
 
-		if ( Local.Pawn is GunfightPlayer player && player.CapturePoint == this )
+		if ( Game.LocalPawn is GunfightPlayer player && player.CapturePoint == this )
 			return false;
 
 		info.Text = Identity;

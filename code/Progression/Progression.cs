@@ -2,19 +2,19 @@ namespace Facepunch.Gunfight;
 
 public partial class Progression
 {
-    public static void GiveXP( Client cl, int amount, string reason )
+    public static void GiveXP( IClient cl, int amount, string reason )
     {
         UI.ExperienceHints.RpcSend( To.Single( cl ), amount, reason );
     }
 
-    public static void GiveScore( Client cl, int amount )
+    public static void GiveScore( IClient cl, int amount )
     {
         if ( amount < 1 ) return;
 
         cl.AddInt( "score", amount );
     }
 
-    public static void GiveAward( Client cl, string awardTitle )
+    public static void GiveAward( IClient cl, string awardTitle )
     {
         var award = Awards.Get( awardTitle );
 		if ( award is null )

@@ -117,7 +117,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		TimeSinceFireModeSwitch = 0;
 
-		if ( Host.IsServer )
+		if ( Game.IsServer )
 		{
 			UI.NotificationManager.AddNotification( To.Single( Owner ), UI.NotificationDockType.BottomMiddle, $"Fire Mode: {CurrentFireMode}", 1 );
 		}
@@ -207,7 +207,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		return Input.Down( InputButton.Reload );
 	}
 
-	protected virtual void SimulateRecoil( Client owner )
+	protected virtual void SimulateRecoil( IClient owner )
 	{
 		CameraRecoil -= RecoilDecay * Time.Delta;
 		// Clamp down to zero
@@ -220,12 +220,12 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	protected virtual void ApplyRecoil()
 	{
-		Rand.SetSeed( Time.Tick );
+		Game.SetRandomSeed( Time.Tick );
 
-		var randX = Rand.Float( WeaponDefinition.Recoil.BaseRecoilMinimum.x, WeaponDefinition.Recoil.BaseRecoilMaximum.x );
-		var randY = Rand.Float( WeaponDefinition.Recoil.BaseRecoilMinimum.y, WeaponDefinition.Recoil.BaseRecoilMaximum.y );
-		var randSpreadX = Rand.Float( WeaponDefinition.Recoil.MinimumSpread.x, WeaponDefinition.Recoil.MaximumSpread.x );
-		var randSpreadY = Rand.Float( WeaponDefinition.Recoil.MinimumSpread.y, WeaponDefinition.Recoil.MaximumSpread.y );
+		var randX = Game.Random.Float( WeaponDefinition.Recoil.BaseRecoilMinimum.x, WeaponDefinition.Recoil.BaseRecoilMaximum.x );
+		var randY = Game.Random.Float( WeaponDefinition.Recoil.BaseRecoilMinimum.y, WeaponDefinition.Recoil.BaseRecoilMaximum.y );
+		var randSpreadX = Game.Random.Float( WeaponDefinition.Recoil.MinimumSpread.x, WeaponDefinition.Recoil.MaximumSpread.x );
+		var randSpreadY = Game.Random.Float( WeaponDefinition.Recoil.MinimumSpread.y, WeaponDefinition.Recoil.MaximumSpread.y );
 
 		var recoilScale = 1f;
 		bool isInAir = !PlayerController.GroundEntity.IsValid();
@@ -263,15 +263,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		Player.ViewAngles = viewAngles;
 	}
 
-	public override void FrameSimulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
-		FrameSimulateAttachments( cl );
-	}
-
-	public override void Simulate( Client cl )
-	{
-		SimulateAttachments( cl );
-
 		if ( TimeSinceDeployed < DeployTime )
 			return;
 
@@ -343,7 +336,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	public void Holster()
 	{
-		if ( IsServer )
+		if ( Game.IsServer )
 			RpcHolster( To.Single( Owner ) );
 	}
 
@@ -477,7 +470,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	[ClientRpc]
 	protected virtual void ShootEffects()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		ViewModelEntity?.SetAnimParameter( "fire", true );
 		CrosshairLastShoot = 0;
@@ -501,7 +494,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	protected bool ShouldPenetrate()
 	{
-		if ( !WeaponDefinition.DamageFlags.HasFlag( DamageFlags.Bullet ) )
+		if ( !WeaponDefinition.DamageFlags.Contains( "bullet" ) )
 			return false;
 
 		return true;
@@ -577,13 +570,6 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public virtual float GetAimTime()
 	{
 		var aimTime = BaseAimTime;
-
-		// Allow attachments to have a say here.
-		foreach( var attachment in Attachments )
-		{
-			aimTime += attachment.AimSpeedModifier;
-		}
-
 		return aimTime.Clamp( 0, 1 );
 	}
 
@@ -614,11 +600,11 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		//
 		// Seed rand using the tick, so bullet cones match on client and server
 		//
-		Rand.SetSeed( Time.Tick );
+		Game.SetRandomSeed( Time.Tick );
 
 		for ( int i = 0; i < bulletCount; i++ )
 		{
-			var rot = Owner.EyeRotation;
+			var rot = Rotation.LookAt( Owner.AimRay.Forward );
 			var weaponRecoil = WeaponSpreadRecoil;
 			rot *= Rotation.From( new Angles( -weaponRecoil.y, -weaponRecoil.x, 0 ) );
 
@@ -630,22 +616,21 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 			Vector3 LastImpact = Vector3.Zero;
 			int count = 0;
-			foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * bulletRange, bulletSize, ref damage ) )
+			foreach ( var tr in TraceBullet( Owner.AimRay.Position, Owner.AimRay.Position + forward * bulletRange, bulletSize, ref damage ) )
 			{
 				tr.Surface.DoBulletImpact( tr );
 
-				if ( !IsServer ) continue;
+				if ( !Game.IsServer ) continue;
 				if ( !tr.Entity.IsValid() ) continue;
 
 				var damageInfo = DamageInfo.FromBullet( tr.EndPosition, forward * 100 * force, damage )
 					.UsingTraceResult( tr )
 					.WithAttacker( Owner )
-					.WithFlag( WeaponDefinition.DamageFlags )
 					.WithWeapon( this );
 
 				tr.Entity.TakeDamage( damageInfo );
 
-				if ( WeaponDefinition.DamageFlags.HasFlag( DamageFlags.Bullet ) )
+				if ( WeaponDefinition.DamageFlags.Contains( "bullet" ) )
 					DoTracer( tr.StartPosition, tr.EndPosition, tr.Distance, count );
 
 				if ( count == 1 )

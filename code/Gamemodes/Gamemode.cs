@@ -20,7 +20,7 @@ public abstract partial class Gamemode : Entity
 	/// </summary>
 	/// <param name="cl"></param>
 	/// <returns></returns>
-	public virtual GunfightPlayer GetPawn( Client cl ) => new GunfightPlayer();
+	public virtual GunfightPlayer GetPawn( IClient cl ) => new GunfightPlayer();
 
 	/// <summary>
 	/// Lets gamemodes define what teams are available in a gamemode
@@ -99,7 +99,7 @@ public abstract partial class Gamemode : Entity
 		return "N/A";
 	}
 
-	public virtual void CreatePawn( Client cl )
+	public virtual void CreatePawn( IClient cl )
 	{
 		cl.Pawn?.Delete();
 		var pawn = GetPawn( cl );
@@ -117,13 +117,13 @@ public abstract partial class Gamemode : Entity
 	/// Called when a client joins the game
 	/// </summary>
 	/// <param name="cl"></param>
-	public virtual void OnClientJoined( Client cl )
+	public virtual void OnClientJoined( IClient cl )
 	{
 		PlayerCount++;
 		AssignTeam( cl );
 	}
 	
-	public virtual void AssignTeam( Client cl )
+	public virtual void AssignTeam( IClient cl )
 	{
 	}
 
@@ -136,7 +136,7 @@ public abstract partial class Gamemode : Entity
 	/// </summary>
 	/// <param name="cl"></param>
 	/// <param name="reason"></param>
-	public virtual void OnClientLeft( Client cl, NetworkDisconnectionReason reason )
+	public virtual void OnClientLeft( IClient cl, NetworkDisconnectionReason reason )
 	{
 		PlayerCount--;
 	}
@@ -154,7 +154,7 @@ public abstract partial class Gamemode : Entity
 	protected static Loadout GetRandomLoadout()
 	{
 		var loadouts = Loadout.WithTag( "gunfight" ).ToList();
-		var index = Rand.Int( 1, loadouts.Count() ) - 1;
+		var index = Game.Random.Int( 1, loadouts.Count() ) - 1;
 		var loadout = loadouts[index];
 
 		return loadout;
@@ -205,16 +205,17 @@ public abstract partial class Gamemode : Entity
 		LastKilledPlayer = player;
 	}
 
-	public float GetSpawnpointWeight( Entity pawn, Entity spawnpoint )
+	public float GetSpawnpointWeight( GunfightPlayer pawn, Entity spawnpoint )
 	{
 		// We want to find the closest player (worst weight)
 		float distance = float.MaxValue;
 
-		foreach ( var client in Client.All )
+		foreach ( var client in Game.Clients )
 		{
-			if ( client.Pawn == null ) continue;
-			if ( client.Pawn == pawn ) continue;
-			if ( client.Pawn.LifeState != LifeState.Alive ) continue;
+			var player = client.Pawn as GunfightPlayer;
+			if ( player == null ) continue;
+			if ( player == pawn ) continue;
+			if ( player.LifeState != LifeState.Alive ) continue;
 
 			var spawnDist = (spawnpoint.Position - client.Pawn.Position).Length;
 			distance = MathF.Min( distance, spawnDist );
@@ -282,7 +283,7 @@ public abstract partial class Gamemode : Entity
 
 	public virtual void ResetStats()
 	{
-		foreach( var client in Client.All )
+		foreach( var client in Game.Clients )
 		{
 			client.SetInt( "frags", 0 );
 			client.SetInt( "deaths", 0 );

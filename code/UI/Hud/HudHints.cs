@@ -49,9 +49,9 @@ public partial class HudHints : Panel
 
 	public override void Tick()
 	{
-		var player = Local.Pawn as GunfightPlayer;
+		var player = Game.LocalPawn as GunfightPlayer;
 
-		SpectatorHint.SetClass( "active", GunfightCamera.Target != Local.Pawn );
+		SpectatorHint.SetClass( "active", GunfightCamera.Target != Game.LocalPawn );
 
 		if ( !player.IsValid() ) 
 			return;
@@ -73,7 +73,7 @@ public partial class HudHints : Panel
 		cover.Style.Left = Length.Fraction( screenPos.x );
 		cover.Style.Top = Length.Fraction( screenPos.y );
 
-		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 100000f )
+		var tr = Trace.Ray( Camera.Position, Camera.Position + Camera.Rotation.Forward * 100000f )
 			.WorldAndEntities()
 			.WithAnyTags( "solid", "weapon" )
 			.Run();

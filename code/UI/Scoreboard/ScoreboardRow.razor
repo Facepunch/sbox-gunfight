@@ -6,7 +6,7 @@
 <root class="@RootClasses()">
     @if ( Client.IsValid() )
     {
-        <img class="avatar" src="avatar:@Client.PlayerId" />
+        <img class="avatar" src="avatar:@Client.SteamId" />
         <label class="name">@Client.Name</label>
         <label class="kills">@Kills</label>
         <label class="deaths">@Deaths</label>
@@ -21,23 +21,23 @@
 
 @code
 {
-    public Client Client { get; protected set; }
+    public IClient Client { get; protected set; }
 
     public int Kills => Client.GetInt( "frags", 0 );
     public int Deaths => Client.GetInt( "deaths", 0 );
     public int Score => Client.GetInt( "score", 0 );
 
-    public void SetClient( Client cl )
+    public void SetClient( IClient cl )
     {
         Client = cl;
-        SetClass( "me", cl == Local.Client );
+        SetClass( "me", cl == Game.LocalClient );
 
         StateHasChanged();
     }
 
 	public string RootClasses()
 	{
-		var cl = Client.All.FirstOrDefault( x => x.PlayerId == Client.PlayerId );
+		var cl = Game.Clients.FirstOrDefault( x => x.SteamId == Client.SteamId );
 		if ( cl == null ) return "disconnected";
 
 		var friendState = TeamSystem.GetFriendState( cl.GetTeam(), TeamSystem.MyTeam );

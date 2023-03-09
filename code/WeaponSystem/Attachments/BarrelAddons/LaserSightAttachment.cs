@@ -18,7 +18,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 	{
 		base.OnNewModel( model );
 
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			DotParticles = Particles.Create( "particles/laserdot.vpcf" );
 			LaserParticles = Particles.Create( "particles/laserline.vpcf" );
@@ -29,7 +29,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 	{
 		base.OnDestroy();
 
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			DotParticles?.Destroy( true );
 			LaserParticles?.Destroy( true );
@@ -72,7 +72,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 		if ( !Weapon.IsValid() || !Weapon.Owner.IsValid() ) return;
 
 		var pos = TraceStartPosition;
-		var rot = Weapon.Owner.EyeRotation;
+		var rot = Rotation.LookAt( Weapon.Owner.AimRay.Forward );
 
 		var trace = Trace.Ray( pos, pos + rot.Forward * 4096f )
 			.UseHitboxes()
@@ -85,7 +85,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 		EyeEndPosition = trace.EndPosition;
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	protected void Update()
 	{
 		if ( Weapon.IsValid() && Weapon.EnableDrawing )

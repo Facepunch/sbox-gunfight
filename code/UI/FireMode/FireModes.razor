@@ -48,6 +48,8 @@
         @if ( !Weapon.IsValid() ) 
             return;
 
+        @if (Weapon.WeaponDefinition == null) return; 
+
         @if ( Player.IsValid() && Player.LifeState != LifeState.Alive )
             return;
 

@@ -1,3 +1,5 @@
+using Sandbox.Utility;
+
 namespace Facepunch.Gunfight.ScreenShake;
 
 public class Random : CameraModifier
@@ -15,7 +17,7 @@ public class Random : CameraModifier
 		Size = size;
 	}
 
-	public override bool Update( ref CameraSetup cam )
+	public override bool Update()
 	{
 		var delta = ((float)lifeTime).LerpInverse( 0, Length, true );
 		delta = Easing.EaseOut( delta );
@@ -24,7 +26,7 @@ public class Random : CameraModifier
 		rand.z = 0;
 		rand = rand.Normal;
 
-		cam.Position += (cam.Rotation.Right * rand.x + cam.Rotation.Up * rand.y) * (1 - delta) * Size;
+		Camera.Position += (Camera.Rotation.Right * rand.x + Camera.Rotation.Up * rand.y) * (1 - delta) * Size;
 
 		return lifeTime < Length;
 	}

@@ -37,15 +37,15 @@ public partial class GunfightGamemode : Gamemode
 		RandomizeLoadout();
 	}
 
-	public override void AssignTeam( Client cl )
+	public override void AssignTeam( IClient cl )
 	{
 		var teamComponent = cl.Components.GetOrCreate<TeamComponent>();
 		teamComponent.Team = TeamSystem.GetLowestCount();
 
-		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.PlayerId, false );
+		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.SteamId, false );
 	}
 
-	public override void OnClientJoined( Client cl )
+	public override void OnClientJoined( IClient cl )
 	{
 		base.OnClientJoined( cl );
 		VerifyEnoughPlayers();
@@ -122,7 +122,7 @@ public partial class GunfightGamemode : Gamemode
 		var markers = GamemodeMarker.WithTag( "capturepoint" ).ToList();
 		if ( markers.Count > 0 )
 		{
-			var rand = Rand.Int( 0, markers.Count - 1 );
+			var rand = Game.Random.Int( 0, markers.Count - 1 );
 			var marker = markers[rand];
 
 			// Make the flag
@@ -214,7 +214,7 @@ public partial class GunfightGamemode : Gamemode
 		}
 	}
 
-	[Event.Frame]
+	[Event.Client.Frame]
 	protected void Frame()
 	{
 		if ( CachedTimeRemaining != FormattedTimeRemaining )
@@ -223,9 +223,9 @@ public partial class GunfightGamemode : Gamemode
 		}
 	}
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
-		if ( !IsServer ) return;
+		if ( !Game.IsServer ) return;
 
 		if ( TimeUntilNextState )
 		{

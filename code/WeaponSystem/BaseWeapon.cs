@@ -28,7 +28,7 @@ public partial class BaseWeapon : BaseCarriable
 
 	protected virtual void InitializeWeapon( WeaponDefinition def )
 	{
-		Log.Info( $"{Host.Name}: Set up this weapon {def}" );
+		Log.Info( $"Set up this weapon {def}" );
 		Model = def.CachedModel;
 	}
 
@@ -50,7 +50,7 @@ public partial class BaseWeapon : BaseCarriable
 
 	public override void OnCarryStart( Entity carrier )
 	{
-		if ( IsClient ) return;
+		if ( Game.IsClient ) return;
 
 		SetParent( carrier, true );
 		Owner = carrier;
@@ -58,16 +58,16 @@ public partial class BaseWeapon : BaseCarriable
 		EnableDrawing = false;
 	}
 
-	public override void SimulateAnimator( PawnAnimator anim )
-	{
-		anim.SetAnimParameter( "holdtype", WeaponDefinition?.HoldType.ToInt() ?? 1 );
-		anim.SetAnimParameter( "aim_body_weight", 1.0f );
-		anim.SetAnimParameter( "holdtype_handedness", 0 );
-	}
+	//public override void SimulateAnimator( PawnAnimator anim )
+	//{
+	//	anim.SetAnimParameter( "holdtype", WeaponDefinition?.HoldType.ToInt() ?? 1 );
+	//	anim.SetAnimParameter( "aim_body_weight", 1.0f );
+	//	anim.SetAnimParameter( "holdtype_handedness", 0 );
+	//}
 
 	public override void OnCarryDrop( Entity dropper )
 	{
-		if ( IsClient ) return;
+		if ( Game.IsClient ) return;
 
 		SetParent( null );
 		Owner = null;
@@ -84,13 +84,13 @@ public partial class BaseWeapon : BaseCarriable
 	{
 		EnableDrawing = true;
 
-		if ( ent is Player player )
+		if ( ent is GunfightPlayer player )
 		{
-			var animator = player.GetActiveAnimator();
-			if ( animator != null )
-			{
-				SimulateAnimator( animator );
-			}
+			//var animator = player.GetActiveAnimator();
+			//if ( animator != null )
+			//{
+			//	SimulateAnimator( animator );
+			//}
 		}
 
 		//
@@ -122,7 +122,7 @@ public partial class BaseWeapon : BaseCarriable
 			EnableDrawing = false;
 		}
 
-		if ( IsClient )
+		if ( Game.IsClient )
 		{
 			DestroyViewModel();
 			DestroyHudElements();
@@ -133,7 +133,7 @@ public partial class BaseWeapon : BaseCarriable
 	{
 		base.OnDestroy();
 
-		if ( IsClient && ViewModelEntity.IsValid() )
+		if ( Game.IsClient && ViewModelEntity.IsValid() )
 		{
 			DestroyViewModel();
 			DestroyHudElements();
@@ -146,8 +146,6 @@ public partial class BaseWeapon : BaseCarriable
 	/// </summary>
 	public override void CreateViewModel()
 	{
-		Host.AssertClient();
-
 		ViewModelEntity?.Delete();
 
 		var vm = new ViewModel();
@@ -160,8 +158,6 @@ public partial class BaseWeapon : BaseCarriable
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;
 		ViewModelEntity.EnableViewmodelRendering = true;
-
-		vm.Initialize();
 	}
 
 	/// <summary>

@@ -26,10 +26,8 @@ public partial class GunfightPlayer
 		}
 	}
 
-	public override void BuildInput()
+	public void BuildWeaponInput()
 	{
-		base.BuildInput();
-
 		TrySlotFromInput( InputButton.Slot1 );
 		TrySlotFromInput( InputButton.Slot2 );
 		TrySlotFromInput( InputButton.Slot3 );

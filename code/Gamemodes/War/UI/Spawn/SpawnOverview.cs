@@ -49,7 +49,7 @@ public partial class SpawnOverview
 
 	public override void Tick()
 	{
-		var localPawn = Local.Pawn as GunfightPlayer;
+		var localPawn = Game.LocalPawn as GunfightPlayer;
 		if ( localPawn.IsValid() )
 		{
 			if ( localPawn.LifeState == LifeState.Alive )

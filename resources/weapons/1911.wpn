@@ -1,77 +1,41 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
 {
-	data = 
-	{
-		WeaponName = "M1911"
-		WeaponShortName = "1911"
-		Slot = "Secondary"
-		HoldType = "Pistol"
-		Model = resource:"models/m1911/w_m1911.vmdl"
-		ViewModel = resource:"models/m1911/fp_m1911.vmdl"
-		Icon = resource:"models/m1911/w_m1911.vmdl.png"
-		BaseFireRate = 0.15
-		DefaultFireMode = "Semi"
-		DamageFlags = "Bullet"
-		SupportedFireModes = 
-		[
-			"Semi",
-		]
-		BulletSpread = 0
-		BulletForce = 1.5
-		BulletDamage = 25
-		BulletSize = 3
-		BulletCount = 1
-		BurstAmount = 3
-		BurstFireRate = 0.08
-		BurstCooldown = 0.3
-		FireSound = resource:"sounds/guns/m1911/pistol_shoot.sound"
-		DryFireSound = resource:"sounds/guns/gun_dryfire.sound"
-		AimingDisabled = false
-		BaseAimTime = 0.2
-		BulletRange = 5000
-		AmmoType = "Pistol"
-		ClipSize = 7
-		StandardClip = 7
-		ReloadTime = 2
-		ReloadSingle = false
-		MaxEffectiveRange = 1024
-		Crosshair = "Pistol"
-		ViewModelSetup = 
-		{
-			OverallWeight = 0.1
-			WeightReturnForce = 100
-			WeightDamping = 18
-			AccelerationDamping = 1
-			VelocityScale = 10
-			RotationalPivotForce = 10
-			RotationalScale = 5
-			WalkCycleOffset = "-2,25,0"
-			BobAmount = "25,50"
-			GlobalLerpPower = 1
-			GlobalPositionOffset = "-5,0,1"
-			GlobalAngleOffset = "-1,0,-2"
-			CrouchPositionOffset = "-3,1,0"
-			CrouchAngleOffset = "2,0,-15"
-			AvoidancePositionOffset = "-3,0,0"
-			AvoidanceAngleOffset = "2,0,-25"
-			SprintPositionOffset = "0,-2,-1"
-			SprintAngleOffset = "5,25,0"
-			BurstSprintPositionOffset = "0,-2,-5"
-			BurstSprintAngleOffset = "-25,0,-10"
-			AimPositionOffset = "-1.17,2.66,1.48"
-			AimAngleOffset = "0.26,0.03,0.9"
-			LaserPositionOffset = "-2.67,1.92,-4.72"
-			LaserAngleOffset = "-2.21,4.53,-58.4"
-			SlidePositionOffset = "-1,2,-1"
-			SlideAngleOffset =  "0,0,-35"
-		}
-		Recoil = 
-		{
-			Decay = "60,100"
-			BaseRecoilMinimum = "-4,10"
-			BaseRecoilMaximum = "4,12"
-		}
-		ShootTrailParticleEffect = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
-		DeployTime = 0.3
-	}
+  "WeaponName": "1911",
+  "WeaponShortName": "1911",
+  "Slot": "Primary",
+  "HoldType": "Pistol",
+  "Model": "models/m1911/w_m1911.vmdl",
+  "ViewModel": "models/m1911/fp_m1911.vmdl",
+  "Icon": "models/m1911/w_m1911.vmdl.png",
+  "BaseFireRate": 1,
+  "DefaultFireMode": "Semi",
+  "DamageFlags": [
+    "bullet"
+  ],
+  "SupportedFireModes": [
+    "Semi"
+  ],
+  "BulletSpread": 0.1,
+  "BulletForce": 1.5,
+  "BulletDamage": 12,
+  "BulletSize": 3,
+  "BulletCount": 1,
+  "BurstAmount": 3,
+  "BurstFireRate": 0.08,
+  "BurstCooldown": 0.3,
+  "FireSound": "sounds/guns/m1911/pistol_shoot.sound",
+  "DryFireSound": "sounds/guns/gun_dryfire.sound",
+  "AimingDisabled": false,
+  "BaseAimTime": 0.2,
+  "BulletRange": 5000,
+  "AmmoType": "Pistol",
+  "ClipSize": 0,
+  "StandardClip": 0,
+  "ReloadTime": 3,
+  "ReloadSingle": false,
+  "MaxEffectiveRange": 2048,
+  "Crosshair": "Default",
+  "ViewModelSetup": {},
+  "Recoil": {},
+  "ShootTrailParticleEffect": "particles/gameplay/guns/trail/trail_smoke.vpcf",
+  "DeployTime": 0.6
 }

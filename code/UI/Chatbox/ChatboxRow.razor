@@ -5,10 +5,10 @@
 @namespace Facepunch.Gunfight.UI
 
 <root class="@PlayerClasses() @MessageClasses() @HeaderClasses()">
-	@if ( PlayerId != 0 )
+    @if (SteamId != 0)
 	{
 		<div class="avatar">
-			<img class="image" src="avatar:@PlayerId"/>
+            <img class="image" src="avatar:@SteamId" />
 		</div>
 	}
 
@@ -25,13 +25,13 @@
 {
     public string Name { get; set; }
     public string Message { get; set; }
-    public long PlayerId { get; set; }
+    public long SteamId { get; set; }
     public bool IsChatMessage { get; set; }
     public TimeSince Lifetime { get; init; } = 0;
 
 	public string PlayerClasses()
 	{
-		if ( Local.PlayerId != PlayerId ) return "not-me";
+        if ( Game.SteamId != SteamId ) return "not-me";
 		return "";
 	}
 
@@ -43,7 +43,7 @@
 
 	public string HeaderClasses()
 	{
-		var cl = Client.All.FirstOrDefault( x => x.PlayerId == PlayerId );
+        var cl = Game.Clients.FirstOrDefault( x => x.SteamId == SteamId );
 		if ( cl == null ) return "disconnected";
 
 		var friendState = TeamSystem.GetFriendState( cl.GetTeam(), TeamSystem.MyTeam );

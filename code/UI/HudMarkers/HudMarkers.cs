@@ -127,7 +127,7 @@ public partial class HudMarkers : Panel
 		var maxDistance = info.MaxDistance;
 		if ( current is not null && maxDistance != 0 )
 		{
-			var dist = CurrentView.Position.DistanceSquared( info.Position );
+			var dist = Camera.Position.DistanceSquared( info.Position );
 			current.CurrentDistance = dist;
 
 			if ( dist > maxDistance )

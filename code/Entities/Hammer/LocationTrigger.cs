@@ -28,7 +28,7 @@ internal partial class LocationTrigger : BaseTrigger
 	{
 		base.Touch( other );
 
-		if ( !other.IsServer ) return;
+		if ( !Game.IsServer ) return;
 		if ( other is not GunfightPlayer pl ) return;
 		pl.PlayerLocation = LocationName;
 	}

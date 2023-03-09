@@ -1,5 +1,5 @@
 ﻿global using Sandbox;
-global using SandboxEditor;
+global using Editor;
 global using System;
 global using System.Collections.Generic;
 global using System.Linq;
@@ -7,9 +7,9 @@ global using System.Threading.Tasks;
 
 namespace Facepunch.Gunfight;
 
-partial class GunfightGame : Game
+partial class GunfightGame : GameManager
 {
-	public static new GunfightGame Current => Game.Current as GunfightGame;
+	public static new GunfightGame Current => GameManager.Current as GunfightGame;
 
 	[Net] public GunfightHud Hud { get; set; }
 	[Net] public TeamScores Scores { get; set; }
@@ -20,14 +20,14 @@ partial class GunfightGame : Game
 		// Create the HUD entity. This is always broadcast to all clients
 		// and will create the UI panels clientside.
 		//
-		if ( IsServer )
+		if ( Game.IsServer )
 		{
 			Hud = new GunfightHud();
 			_ = new LoadoutSystem();
 
 			Scores = new();
 
-			Global.TickRate = 30;
+			Game.TickRate = 30;
 		}
 
 		Audio.ReverbScale = 0f;
@@ -41,17 +41,17 @@ partial class GunfightGame : Game
 		GamemodeSystem.SetupGamemode();
 	}
 
-	public Player CreatePawn( Client cl )
+	public GunfightPlayer CreatePawn( IClient cl )
 	{
 		cl.Pawn?.Delete();
 
 		var gamemode = GamemodeSystem.Current;
-		GunfightPlayer player;
+		GunfightPlayer player = null;
 
 		if ( gamemode.IsValid() )
 			player = gamemode.GetPawn( cl );
 		else
-			player = new GunfightPlayer();
+			player = new();
 
 		player.UpdateClothes( cl );
 		cl.Pawn = player;
@@ -59,7 +59,7 @@ partial class GunfightGame : Game
 		return player;
 	}
 
-	public override void ClientJoined( Client cl )
+	public override void ClientJoined( IClient cl )
 	{
 		base.ClientJoined( cl );
 
@@ -71,7 +71,7 @@ partial class GunfightGame : Game
 		player.Respawn();
 	}
 
-	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+	public override void ClientDisconnect( IClient cl, NetworkDisconnectionReason reason )
 	{
 		base.ClientDisconnect( cl, reason );
 
@@ -79,11 +79,11 @@ partial class GunfightGame : Game
 		GamemodeSystem.Current?.OnClientLeft( cl, reason );
 	}
 
-	public override void OnVoicePlayed( Client cl )
+	public override void OnVoicePlayed( IClient cl )
 	{
 		base.OnVoicePlayed( cl );
 
-		GunVoiceList.Current.OnVoicePlayed( cl.PlayerId, cl.VoiceLevel );
+		GunVoiceList.Current.OnVoicePlayed( cl.SteamId, cl.Voice.CurrentLevel );
 	}
 
 	public override void MoveToSpawnpoint( Entity entity )
@@ -99,7 +99,7 @@ partial class GunfightGame : Game
 			// Look through legacy spawn points, as a last ditch effort
 			transform = Entity.All.OfType<SpawnPoint>()
 				.FirstOrDefault( x => player.SpawnPointTag != null && x.Tags.Has( player.SpawnPointTag ) )
-				.Transform;
+				?.Transform;
 		}
 
 		// Did we fuck up?
@@ -115,19 +115,17 @@ partial class GunfightGame : Game
 	protected float FovOffset { get; set; } = 0f;
 	public static float AddedCameraFOV { get; set; } = 0f;
 
-	public override void PostCameraSetup( ref CameraSetup camSetup )
+	[Event.Client.PostCamera]
+	public void PostCameraSetup()
 	{
-		base.PostCameraSetup( ref camSetup );
-
 		FovOffset = FovOffset.LerpTo( AddedCameraFOV, Time.Delta * 10f, true );
-		camSetup.FieldOfView += FovOffset;
+		Camera.FieldOfView += FovOffset;
 
-		CameraModifier.Apply( ref camSetup );
-
-		camSetup.ZNear = 5f;
+		CameraModifier.Apply();
+		Camera.ZNear = 5f;
 	}
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
 
@@ -139,13 +137,13 @@ partial class GunfightGame : Game
 
 	// TODO - Delete this
 	TimeUntil ActivateHack = 2f;
-	public override void FrameSimulate( Client cl )
+	public override void FrameSimulate( IClient cl )
 	{
 		base.FrameSimulate( cl );
 
 		if ( GunfightCamera.Target is GunfightPlayer localPlayer && ActivateHack )
 		{
-			var postProcess = Map.Camera.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
+			var postProcess = Camera.Main.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
 			postProcess.Sharpen = 0.1f;
 			postProcess.Vignette.Intensity = 0.5f;
 			postProcess.Vignette.Roundness = 1.5f;
@@ -236,7 +234,7 @@ partial class GunfightGame : Game
 			var force = (forceScale * distanceMul) * ent.PhysicsBody.Mass;
 			var forceDir = (targetPos - position).Normal;
 
-			var damageInfo = DamageInfo.Explosion( position, forceDir * force, dmg )
+			var damageInfo = DamageInfo.FromExplosion( position, forceDir * force, dmg )
 				.WithWeapon( weapon )
 				.WithAttacker( owner );
 
@@ -261,9 +259,9 @@ partial class GunfightGame : Game
 	/// <summary>
 	/// An entity, which is a pawn, and has a client, has been killed.
 	/// </summary>
-	public override void OnKilled( Client client, Entity pawn )
+	public override void OnKilled( IClient client, Entity pawn )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		Log.Info( $"{client.Name} was killed." );
 
@@ -276,22 +274,22 @@ partial class GunfightGame : Game
 				var wep = pawn.LastAttackerWeapon as GunfightWeapon;
 				if ( wep != null )
 				{
-					OnKilledMessage( pawn.LastAttacker.Client.PlayerId, pawn.LastAttacker.Client.Name, client.PlayerId, client.Name, wep.WeaponDefinition.WeaponShortName );
+					OnKilledMessage( pawn.LastAttacker.Client.SteamId, pawn.LastAttacker.Client.Name, client.SteamId, client.Name, wep.WeaponDefinition.WeaponShortName );
 				}
 				else
 				{
-					OnKilledMessage( pawn.LastAttacker.Client.PlayerId, pawn.LastAttacker.Client.Name, client.PlayerId, client.Name, pawn.LastAttackerWeapon?.ClassName );
+					OnKilledMessage( pawn.LastAttacker.Client.SteamId, pawn.LastAttacker.Client.Name, client.SteamId, client.Name, pawn.LastAttackerWeapon?.ClassName );
 
 				}
 			}
 			else
 			{
-				OnKilledMessage( pawn.LastAttacker.NetworkIdent, pawn.LastAttacker.ToString(), client.PlayerId, client.Name, "killed" );
+				OnKilledMessage( pawn.LastAttacker.NetworkIdent, pawn.LastAttacker.ToString(), client.SteamId, client.Name, "killed" );
 			}
 		}
 		else
 		{
-			OnKilledMessage( 0, "", client.PlayerId, client.Name, "died" );
+			OnKilledMessage( 0, "", client.SteamId, client.Name, "died" );
 
 			GunfightHud.ShowDeathInformation( To.Single( client ), client );
 		}

@@ -14,7 +14,7 @@ public partial class LoadoutComponent : EntityComponent
 
 public static class ClientExtensions
 {
-    public static LoadoutComponent GetLoadoutComponent( this Client cl )
+    public static LoadoutComponent GetLoadoutComponent( this IClient cl )
     {
         return cl.Components.GetOrCreate<LoadoutComponent>();
     }

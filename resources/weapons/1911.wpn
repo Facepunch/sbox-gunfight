@@ -6,7 +6,7 @@
   "Model": "models/m1911/w_m1911.vmdl",
   "ViewModel": "models/m1911/fp_m1911.vmdl",
   "Icon": "models/m1911/w_m1911.vmdl.png",
-  "BaseFireRate": 1,
+  "BaseFireRate": 0.2,
   "DefaultFireMode": "Semi",
   "DamageFlags": [
     "bullet"
@@ -28,14 +28,32 @@
   "BaseAimTime": 0.2,
   "BulletRange": 5000,
   "AmmoType": "Pistol",
-  "ClipSize": 0,
-  "StandardClip": 0,
-  "ReloadTime": 3,
+  "ClipSize": 7,
+  "StandardClip": 7,
+  "ReloadTime": 2,
   "ReloadSingle": false,
   "MaxEffectiveRange": 2048,
   "Crosshair": "Default",
-  "ViewModelSetup": {},
-  "Recoil": {},
+  "ViewModelSetup": {
+    "OverallWeight": 0.1,
+    "WeightReturnForce": 100,
+    "WeightDamping": 18,
+    "AccelerationDamping": 1,
+    "VelocityScale": 10,
+    "RotationalPivotForce": 10,
+    "RotationalScale": 5,
+    "WalkCycleOffset": "-2,25,0",
+    "BobAmount": "25,50",
+    "GlobalLerpPower": 1,
+    "GlobalPositionOffset": "-5,0,1",
+    "GlobalAngleOffset": "-1,0,-2",
+    "CrouchPositionOffset": "-3,1,0"
+  },
+  "Recoil": {
+    "Decay": "60,100",
+    "BaseRecoilMinimum": "-4,10",
+    "BaseRecoilMaximum": "4,12"
+  },
   "ShootTrailParticleEffect": "particles/gameplay/guns/trail/trail_smoke.vpcf",
   "DeployTime": 0.6
 }

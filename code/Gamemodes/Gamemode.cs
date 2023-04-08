@@ -151,9 +151,11 @@ public abstract partial class Gamemode : Entity
 		return false;
 	}
 
-	protected static Loadout GetRandomLoadout()
+	protected static Loadout GetRandomLoadout( bool unique = true )
 	{
-		var loadouts = Loadout.WithTag( "gunfight" ).Where( x => x != LoadoutSystem.MatchLoadout ).ToList();
+		var loadouts = Loadout.WithTag( "gunfight" ).ToList();
+		if ( unique ) loadouts = loadouts.Where( x => x != LoadoutSystem.MatchLoadout ).ToList();
+
 		if ( loadouts.Count < 1 ) return null;
 
 		var index = Game.Random.Int( 1, loadouts.Count() ) - 1;
@@ -162,9 +164,9 @@ public abstract partial class Gamemode : Entity
 		return loadout;
 	}
 
-	protected void RandomizeLoadout()
+	protected void RandomizeLoadout( bool unique = true )
 	{
-		LoadoutSystem.MatchLoadout = GetRandomLoadout();
+		LoadoutSystem.MatchLoadout = GetRandomLoadout( unique );
 	}
 
 	/// <summary>

@@ -41,7 +41,7 @@ public static class GamemodeTypeMethods
 public partial class GamemodeSystem
 {
 	[ConVar.Replicated( "gunfight_gamemode" )]
-	public static string SelectedGamemode { get; set; } = "WarGamemode";
+	public static string SelectedGamemode { get; set; } = "GunfightGamemode";
 
 	private static Gamemode current;
 	public static Gamemode Current

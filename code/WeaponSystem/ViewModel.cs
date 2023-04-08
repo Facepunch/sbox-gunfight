@@ -114,7 +114,7 @@ public partial class ViewModel : BaseViewModel
 					.Run();
 
 		var sprint = controller.IsSprinting;
-		var burstSprint = controller.IsBurstSprinting;
+		var burstSprint = false;
 		var aim = controller.IsAiming;
 		var crouched = controller?.Duck?.IsActive ?? false;
 		var sliding = controller?.Slide?.IsActive ?? false;

@@ -5,7 +5,6 @@ namespace Facepunch.Gunfight;
 public partial class PlayerController : BasePlayerController
 {
 	[Net] public float SprintSpeed { get; set; } = 250.0f;
-	[Net] public float BurstSprintSpeed { get; set; } = 300f;
 	[Net] public float WalkSpeed { get; set; } = 120.0f;
 	[Net] public float DefaultSpeed { get; set; } = 175.0f;
 	[Net] public float Acceleration { get; set; } = 8.0f;
@@ -122,10 +121,6 @@ public partial class PlayerController : BasePlayerController
 		return CurrentMechanic?.GetGroundFriction() ?? 8f;
 	}
 
-	[Net, Predicted] public TimeSince SinceBurstActivated { get; set; } = -5;
-	[Net, Predicted] public TimeSince SinceBurstEnded { get; set; } = -5;
-	public float BurstStaminaDuration => 2f;
-
 	protected bool CanAim()
 	{
 		if ( !Weapon.IsValid() ) return false;
@@ -164,32 +159,9 @@ public partial class PlayerController : BasePlayerController
 		CheckLadder();
 		Swimming = Pawn.GetWaterLevel() > 0.6f;
 
-		if ( IsSprinting && Input.Pressed( InputButton.Run ) && SinceBurstEnded > 5f )
-		{
-			if ( Player.InputDirection.x > 0.5f )
-			{
-				IsBurstSprinting = !IsBurstSprinting;
+		IsSprinting = Input.Down( InputButton.Run );
 
-				if ( IsBurstSprinting )
-					SinceBurstActivated = 0;
-			}
-		}
-
-		if ( IsBurstSprinting && SinceBurstActivated > BurstStaminaDuration )
-		{
-			IsBurstSprinting = false;
-			SinceBurstEnded = 0;
-		}
-
-		if ( Input.Pressed( InputButton.Run ) )
-		{
-			if ( !IsSprinting )
-				IsSprinting = true;
-			else if ( IsSprinting && Player.InputDirection.x < 0.5f )
-				IsSprinting = false;
-		}
-
-		if ( !IsBurstSprinting && IsSprinting && Velocity.Length < 40 || Player.InputDirection.x < 0.5f )
+		if ( IsSprinting && Velocity.Length < 40 || Player.InputDirection.x < 0.5f )
 			IsSprinting = false;
 
 		if ( Input.Down( InputButton.PrimaryAttack ) || Input.Down( InputButton.SecondaryAttack) )
@@ -197,9 +169,6 @@ public partial class PlayerController : BasePlayerController
 
 		if ( Duck.IsActive || Slide.IsActive )
 			IsSprinting = false;
-
-		if ( !IsSprinting )
-			IsBurstSprinting = false;
 
 		//
 		// Start Gravity
@@ -435,14 +404,12 @@ public partial class PlayerController : BasePlayerController
 	public bool IsSprinting { get => _IsSprinting; protected set { if ( _IsSprinting && !value ) SinceSprintStopped = 0; _IsSprinting = value; } }
 	
 	[Net, Predicted] public TimeSince SinceSprintStopped { get; set; }
-	[Net, Predicted] public bool IsBurstSprinting { get; protected set; }
 
 	public virtual float GetWishSpeed()
 	{
 		var mechanicSpeed = CurrentMechanic?.GetWishSpeed();
 		if ( mechanicSpeed != null ) return mechanicSpeed.Value;
 
-		if ( IsBurstSprinting ) return BurstSprintSpeed;
 		if ( IsSprinting ) return SprintSpeed;
 		if ( Input.Down( InputButton.Walk ) ) return WalkSpeed;
 

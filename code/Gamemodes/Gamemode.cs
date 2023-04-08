@@ -153,7 +153,9 @@ public abstract partial class Gamemode : Entity
 
 	protected static Loadout GetRandomLoadout()
 	{
-		var loadouts = Loadout.WithTag( "gunfight" ).ToList();
+		var loadouts = Loadout.WithTag( "gunfight" ).Where( x => x != LoadoutSystem.MatchLoadout ).ToList();
+		if ( loadouts.Count < 1 ) return null;
+
 		var index = Game.Random.Int( 1, loadouts.Count() ) - 1;
 		var loadout = loadouts[index];
 
@@ -162,18 +164,7 @@ public abstract partial class Gamemode : Entity
 
 	protected void RandomizeLoadout()
 	{
-		var oldLoadout = LoadoutSystem.MatchLoadout;
-
-		Loadout newLoadout = null;
-		while ( newLoadout == null )
-		{
-			var randomLoadout = GetRandomLoadout();
-			if ( randomLoadout == oldLoadout ) continue;
-
-			newLoadout = randomLoadout;
-		}
-
-		LoadoutSystem.MatchLoadout = newLoadout;
+		LoadoutSystem.MatchLoadout = GetRandomLoadout();
 	}
 
 	/// <summary>

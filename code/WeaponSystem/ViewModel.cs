@@ -272,7 +272,7 @@ public partial class ViewModel : BaseViewModel
 		Position += realPositionOffset;
 
 		Camera.FieldOfView -= 10f * aimLerp;
-		Camera.Main.SetViewModelCamera( 85f, 1, 2048 );
+		Camera.Main.SetViewModelCamera( 90f, 1, 2048 );
 	}
 
 	protected void ApplyPositionOffset( Vector3 offset, float delta )

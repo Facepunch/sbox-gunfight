@@ -5,14 +5,14 @@
     "gunfight"
   ],
   "PrimaryWeapon": {
-    "WeaponName": "",
+    "WeaponName": "MP5",
     "Attachments": []
   },
   "SecondaryWeapon": {
     "WeaponName": "1911"
   },
   "Ammo": {
-    "Rifle": 60,
+    "SMG": 90,
     "Pistol": 21
   }
 }

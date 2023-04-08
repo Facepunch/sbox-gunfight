@@ -379,37 +379,22 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		Controller?.BuildInput();
 	}
 
-	float WalkBob = 0;
-
 	[Event.Client.PostCamera]
 	public void PostCameraSetup()
 	{
-		Camera.FieldOfView = Game.Preferences.FieldOfView;
+		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
 
 		if ( !Camera.FirstPersonViewer.IsValid() )
 			return;
 
-		var speed = Velocity.Length.LerpInverse( 0, 350 );
-		var left = Camera.Rotation.Left;
-		var up = Camera.Rotation.Up;
-
 		GunfightGame.AddedCameraFOV = 0f;
 		if ( Controller != null )
 		{
-			if ( Controller.Slide.IsActive )
-				speed *= 0.1f;
-
 			if ( Controller.IsSprinting )
 				GunfightGame.AddedCameraFOV = 3f;
 			if ( Controller.IsBurstSprinting )
 				GunfightGame.AddedCameraFOV = 6f;
 		}
-
-		if ( GroundEntity != null )
-			WalkBob += Time.Delta * 10f * speed * 1.5f;
-
-		Camera.Position += up * MathF.Sin( WalkBob ) * speed * 4;
-		Camera.Position += left * MathF.Sin( WalkBob ) * speed * -1f;
 	}
 
 	DamageInfo LastDamage;

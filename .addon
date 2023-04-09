@@ -16,6 +16,7 @@
   ],
   "HasCode": true,
   "CodePath": "/code/",
+  "PackageReferences": [],
   "Metadata": {
     "MaxPlayers": 16,
     "MinPlayers": 1,
@@ -211,7 +212,8 @@
     "ExtensionApiVersion": 1001,
     "Summary": "A fast paced first-person shooter game with a bunch of different gamemodes.",
     "Description": "",
-    "ReplaceTags": "firstperson thirdperson action",
-    "Public": true
+    "ReplaceTags": "firstperson thirdperson action fps shooter",
+    "Public": true,
+    "CsProjName": ""
   }
 }

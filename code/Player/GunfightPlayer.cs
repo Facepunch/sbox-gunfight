@@ -254,6 +254,8 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		animHelper.IsSwimming = this.GetWaterLevel() >= 0.5f;
 		animHelper.IsWeaponLowered = false;
 
+		SetAnimParameter( "skid", controller.Slide.IsActive ? 1 : 0 );
+
 		if ( controller.HasEvent( "jump" ) ) animHelper.TriggerJump();
 		if ( ActiveChild != lastWeapon ) animHelper.TriggerDeploy();
 

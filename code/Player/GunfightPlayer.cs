@@ -382,6 +382,8 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 
 		ActiveChild?.BuildInput();
 		Controller?.BuildInput();
+
+		BuildWeaponInput();
 	}
 
 	[Event.Client.PostCamera]

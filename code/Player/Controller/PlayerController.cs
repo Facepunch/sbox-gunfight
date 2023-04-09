@@ -159,7 +159,7 @@ public partial class PlayerController : BasePlayerController
 
 		UpdateBBox();
 
-		if ( Input.Down( InputButton.SecondaryAttack ) )
+		if ( Weapon.IsValid() && Input.Down( InputButton.SecondaryAttack ) )
 		{
 			if ( !IsAiming )
 			{

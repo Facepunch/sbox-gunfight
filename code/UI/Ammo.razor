@@ -1,0 +1,46 @@
+﻿@using Sandbox.UI;
+@using Sandbox.UI.Construct;
+
+@namespace Facepunch.Gunfight
+@inherits Panel
+
+<root>
+    @if ( Weapon.IsValid() )
+    {
+        <image class="icon" src=@Weapon.GunIcon />
+        <div class="info">
+            <label class="currentammo">@Weapon.AmmoClip</label>
+            <label class="inventory">@Weapon.AvailableAmmo()</label>
+        </div>
+
+        <label class="gunname">@Weapon.Name</label>
+    }
+</root>
+
+@code
+{
+    public GunfightWeapon Weapon => GunfightCamera.Target?.ActiveChild as GunfightWeapon;
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Weapon, Weapon.AmmoClip, GunfightCamera.Target, GunfightCamera.Target.LifeState );
+    }
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        base.OnAfterTreeRender( firstTime );
+
+        var player = GunfightCamera.Target;
+        var weapon = Weapon;
+
+        SetClass( "active", weapon != null && player.LifeState == LifeState.Alive );
+
+        if ( weapon == null ) return;
+
+        var inv = weapon.AvailableAmmo();
+        var current = weapon.AmmoClip;
+
+        SetClass( "active", inv >= 0 );
+        SetClass( "low", weapon.IsLowAmmo() );
+    }
+}

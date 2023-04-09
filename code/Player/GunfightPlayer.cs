@@ -377,6 +377,9 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		viewAngles += look;
 		ViewAngles = viewAngles.Normal;
 
+		// Since we're a FPS game, let's clamp the player's pitch between -90, and 90.
+		ViewAngles = viewAngles.WithPitch( viewAngles.pitch.Clamp( -90f, 90f ) );
+
 		ActiveChild?.BuildInput();
 		Controller?.BuildInput();
 	}

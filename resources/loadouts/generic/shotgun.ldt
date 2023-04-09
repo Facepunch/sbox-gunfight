@@ -1,0 +1,17 @@
+{
+  "LoadoutName": "Shotgunner",
+  "Tags": [
+    "gunfight",
+    "generic"
+  ],
+  "PrimaryWeapon": {
+    "WeaponName": "shotgun"
+  },
+  "SecondaryWeapon": {
+    "WeaponName": "1911"
+  },
+  "Ammo": {
+    "Shotgun": 18,
+    "Pistol": 21
+  }
+}

@@ -58,13 +58,6 @@ public partial class BaseWeapon : BaseCarriable
 		EnableDrawing = false;
 	}
 
-	//public override void SimulateAnimator( PawnAnimator anim )
-	//{
-	//	anim.SetAnimParameter( "holdtype", WeaponDefinition?.HoldType.ToInt() ?? 1 );
-	//	anim.SetAnimParameter( "aim_body_weight", 1.0f );
-	//	anim.SetAnimParameter( "holdtype_handedness", 0 );
-	//}
-
 	public override void OnCarryDrop( Entity dropper )
 	{
 		if ( Game.IsClient ) return;

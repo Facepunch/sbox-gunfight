@@ -259,15 +259,16 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		if ( controller.HasEvent( "jump" ) ) animHelper.TriggerJump();
 		if ( ActiveChild != lastWeapon ) animHelper.TriggerDeploy();
 
-		if ( ActiveChild is BaseCarriable carry )
+		if ( ActiveChild is GunfightWeapon weapon )
 		{
-			carry.SimulateAnimator( animHelper );
+			SetAnimParameter( "holdtype", weapon.WeaponDefinition?.HoldType.ToInt() ?? 1 );
 		}
 		else
 		{
 			animHelper.HoldType = CitizenAnimationHelper.HoldTypes.None;
 			animHelper.AimBodyWeight = 0.5f;
 		}
+
 
 		lastWeapon = ActiveChild;
 	}

@@ -25,7 +25,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 
 	Sound HeartbeatSound { get; set; }
 
-	public override Ray AimRay => new Ray( Position + Vector3.Up * ( Controller?.GetEyeHeight() ?? 64 ), ViewAngles.Forward );
+	public override Ray AimRay => new Ray( Position + Controller.EyeLocalPosition, ViewAngles.Forward );
 
 	public GunfightCamera PlayerCamera { get; set; } = new();
 

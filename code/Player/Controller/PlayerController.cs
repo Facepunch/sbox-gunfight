@@ -103,7 +103,7 @@ public partial class PlayerController : BasePlayerController
 	public override void FrameSimulate()
 	{
 		base.FrameSimulate();
-		EyeRotation = Player.ViewAngles.ToRotation();
+		SimulateEyes();
 	}
 
 	protected void OnStoppedSprinting()
@@ -134,12 +134,28 @@ public partial class PlayerController : BasePlayerController
 
 	public float RealEyeHeight { get; set; }
 
+	protected void SimulateEyes()
+	{
+		var target = GetEyeHeight();
+		// Magic number :sad:
+		var trace = TraceBBox( Position, Position, 0, 10f );
+		if ( trace.Hit && target > RealEyeHeight )
+		{
+			// We hit something, that means we can't increase our eye height because something's in the way.
+		}
+		else
+		{
+			RealEyeHeight = RealEyeHeight.LerpTo( target, Time.Delta * 10f );
+		}
+
+		EyeRotation = Player.ViewAngles.ToRotation();
+		EyeLocalPosition = Vector3.Up * RealEyeHeight;
+	}
+
+
 	public override void Simulate()
 	{
-		RealEyeHeight = RealEyeHeight.LerpTo( GetEyeHeight(), Time.Delta * 10f );
-		EyeLocalPosition = Vector3.Up * RealEyeHeight * Pawn.Scale;
-		EyeLocalPosition += TraceOffset;
-		EyeRotation = Player.ViewAngles.ToRotation();
+		SimulateEyes();
 
 		UpdateBBox();
 

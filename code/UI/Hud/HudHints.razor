@@ -42,7 +42,7 @@
 
     <div class="pickup" @ref=PickupHint>
         <InputHint Button="Use" />
-        <label class="name" @ref=PickupLabel>object</label>
+        <label class="name" @ref=PickupLabel />
     </div>
 </root>
 
@@ -83,8 +83,9 @@
                 var glow = lastObserved.Components.GetOrCreate<Glow>();
                 glow.Enabled = true;
                 glow.Width = 0.25f;
-                glow.Color = new Color( 255, 207, 38, 0.001f );
-                glow.ObscuredColor = new Color( 225, 170, 38, 0.0001f );
+                glow.Color = Color.FromBytes( 255, 207, 38, 125 );
+                glow.ObscuredColor = Color.FromBytes( 255, 207, 38, 5 );
+                glow.InsideObscuredColor = Color.FromBytes( 255, 207, 38, 2 );
             }
         }
     }

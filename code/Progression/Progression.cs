@@ -40,5 +40,9 @@ public partial class Progression
 		{
 			Sound.FromScreen( "sounds/guns/kill.sound" );
 		}
+		if ( awardTitle == "Kill Confirmed" )
+		{
+			Sound.FromEntity( "sounds/kc/coin.pickup.sound", Game.LocalPawn );
+		}
     }
 }

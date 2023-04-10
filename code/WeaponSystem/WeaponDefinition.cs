@@ -174,9 +174,6 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Shooting" )]
 	public float MaxEffectiveRange { get; set; } = 2048f;
 
-	[Category( "UI" )]
-	public CrosshairType Crosshair { get; set; } = CrosshairType.Default;
-
 	public ViewModelSetup ViewModelSetup { get; set; }
 	public RecoilSetup Recoil { get; set; }
 

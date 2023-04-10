@@ -564,21 +564,6 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		tr.Surface.DoFootstep( this, tr, foot, volume * 20 );
 	}
 
-	public void RenderHud( Vector2 screenSize )
-	{
-		if ( LifeState != LifeState.Alive )
-			return;
-
-		var camera = Client.Components.Get<DevCamera>( false );
-		if ( camera is not null )
-			return;
-
-		if ( ActiveChild is GunfightWeapon weapon )
-		{
-			weapon.RenderHud( screenSize );
-		}
-	}
-
 	[ConCmd.Admin( "gunfight_debug_sethp" )]
 	public static void Debug_SetHP( int hp )
 	{

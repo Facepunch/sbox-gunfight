@@ -25,7 +25,6 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	[Net, Predicted] public Vector2 CameraRecoil { get; set; }
 	[Net, Predicted] public Vector2 WeaponSpreadRecoil { get; set; }
 
-	public CrosshairRender Crosshair { get; protected set; }
 	public PickupTrigger PickupTrigger { get; protected set; }
 
 	protected GunfightPlayer Player => Owner as GunfightPlayer;
@@ -323,7 +322,6 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		AmmoClip = def.StandardClip;
 		CurrentFireMode = def.DefaultFireMode;
-		Crosshair = CrosshairRender.From( def.Crosshair );
 	}
 
 
@@ -710,18 +708,6 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	protected TimeSince CrosshairLastShoot { get; set; }
 
 	public Task DeleteTask { get; set; }
-
-	public virtual void RenderHud( in Vector2 screensize )
-	{
-		var center = screensize * 0.5f;
-
-		RenderCrosshair( center, CrosshairLastShoot.Relative, IsReloading ? TimeSinceReload / ReloadTime : 0, Owner?.Velocity.Length ?? 0, IsAiming );
-	}
-
-	public virtual void RenderCrosshair( Vector2 center, float lastAttack, float lastReload, float speed, bool ads = false )
-	{
-		Crosshair?.RenderCrosshair( center, lastAttack, lastReload, speed, ads );
-	}
 
 	public override string ToString()
 	{

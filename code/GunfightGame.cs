@@ -248,14 +248,6 @@ partial class GunfightGame : GameManager
 		KillFeed.Current?.AddEntry( leftid, left, rightid, right, method );
 	}
 
-	public override void RenderHud()
-	{
-		var player = GunfightCamera.Target;
-		if ( !player.IsValid() ) return;
-
-		player.RenderHud( Screen.Size );
-	}
-
 	/// <summary>
 	/// An entity, which is a pawn, and has a client, has been killed.
 	/// </summary>

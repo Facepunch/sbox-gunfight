@@ -249,7 +249,7 @@ public partial class PlayerController : BasePlayerController
 		if ( SinceLastFall < FallRecoveryTime )
 		{
 			float sinceFall = SinceLastFall;
-			var speedMult = sinceFall.Remap( 0, FallRecoveryTime, 0.2f, 1 );
+			var speedMult = sinceFall.Remap( 0, FallRecoveryTime, 0.5f, 1 );
 			WishVelocity *= speedMult;
 		}
 
@@ -320,6 +320,7 @@ public partial class PlayerController : BasePlayerController
 				{
 					door.Speed = 500f;
 					door.Open( Pawn );
+					door.PlaySound( "sounds/world/impact/door.metal.slam.sound" );
 				
 					SendDoorSlamEffect( To.Single( Pawn.Client ) );
 

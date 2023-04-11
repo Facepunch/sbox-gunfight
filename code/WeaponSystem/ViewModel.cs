@@ -242,8 +242,8 @@ public partial class ViewModel : BaseViewModel
 			rotationOffsetTarget *= Rotation.From( SlideAngleOffset * slideLerp );
 			ApplyPositionOffset( SlidePositionOffset, slideLerp );
 		}
-		else
-			rotationOffsetTarget *= slideRotationOffset;
+		
+		rotationOffsetTarget *= slideRotationOffset;
 		
 		Camera.Rotation *= slideRotationOffset;
 		Camera.FieldOfView += 5f * slideLerp;

@@ -50,7 +50,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-		if ( !Input.Pressed( InputButton.Jump ) && Controller.GroundEntity.IsValid() ) return false;
+		if ( !Input.Down( InputButton.Jump ) ) return false;
 
 		if ( !CanActivate( true ) )
 			return false;

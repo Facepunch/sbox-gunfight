@@ -27,7 +27,6 @@ public partial class NotificationManager
 
 	public List<string> Hints = new()
 	{
-		"Press Q to change your loadout if you don't like the one you currently have.",
 		"Press E+R to switch fire modes if your weapon supports it.",
 		"Everything in Gunfight is subject to change."
 	};

@@ -8,6 +8,11 @@ public partial class GunfightPlayer
     [Net] public int CurrentKillStreak { get; set; } = 0;
     [Net] public int CurrentMultikill { get; set; } = 0;
 
+	/// <summary>
+	/// The person who killed this player last
+	/// </summary>
+	[Net] public IEntity LastKiller { get; set; }
+
     public void AddKill()
     {
         if ( TimeSinceLastKill > KillStreakTime )

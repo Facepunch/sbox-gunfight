@@ -47,6 +47,12 @@ public partial class Awards
 	{
 		player.Client.AddInt( "captures", 1 );
 	}
+
+	[Award( Title = "Payback", PointsGiven = 0, Description = "Killed the player who killed you last" )]
+	public static void Payback( GunfightPlayer player )
+	{
+		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_payback.sound" );
+	}
 	
 	// Multi Kill
 

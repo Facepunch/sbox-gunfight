@@ -196,6 +196,19 @@ public abstract partial class Gamemode : Entity
 	public virtual void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )
 	{
 		LastKilledPlayer = player;
+
+		// Payback
+		if ( lastDamage.Attacker is GunfightPlayer attacker )
+		{
+			if ( attacker.LastKiller == player )
+			{
+				Progression.GiveAward( attacker.Client, "Payback" );
+				attacker.LastKiller = null;
+			}
+		}
+
+		// Let the player know who killed them last
+		player.LastKiller = lastDamage.Attacker;
 	}
 
 	public float GetSpawnpointWeight( GunfightPlayer pawn, Entity spawnpoint )

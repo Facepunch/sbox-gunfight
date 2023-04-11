@@ -403,7 +403,10 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		if ( Controller != null )
 		{
 			if ( Controller.IsSprinting )
-				GunfightGame.AddedCameraFOV = 3f;
+				GunfightGame.AddedCameraFOV += 3f;
+
+			if ( Controller.IsAiming )
+				GunfightGame.AddedCameraFOV += -10f;
 		}
 	}
 

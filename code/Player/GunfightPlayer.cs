@@ -372,7 +372,10 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 
 	public override void BuildInput()
 	{
-		InputDirection = Input.AnalogMove;
+		if ( GamemodeSystem.Current?.AllowMovement ?? true )
+		{
+			InputDirection = Input.AnalogMove;
+		}
 
 		if ( !Input.StopProcessing )
 		{

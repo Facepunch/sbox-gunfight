@@ -121,16 +121,12 @@
         "DisplayType": "Choice",
         "Choices": [
           {
-            "Value": "GunfightGamemode",
-            "Name": "Gunfight: Trios"
-          },
-          {
             "Value": "KillConfirmedGamemode",
             "Name": "Kill Confirmed"
           },
           {
             "Value": "WarGamemode",
-            "Name": "Conquest"
+            "Name": "Ground War"
           },
           {
             "Value": "",
@@ -139,7 +135,7 @@
         ],
         "ConVarName": "gunfight_gamemode",
         "DisplayName": "Active Mode",
-        "DefaultValue": "WarGamemode",
+        "DefaultValue": "KillConfirmedGamemode",
         "Description": "The current gamemode.",
         "Group": "Important"
       },

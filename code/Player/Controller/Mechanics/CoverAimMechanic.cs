@@ -39,7 +39,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-		Wish = Input.Pressed( InputButton.Use );
+		Wish = Input.Pressed( InputButton.Flashlight );
 
 		if ( !Controller.IsAiming ) return false;
 		if ( !Wish ) return false;

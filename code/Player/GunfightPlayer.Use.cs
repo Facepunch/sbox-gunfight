@@ -18,7 +18,7 @@ public partial class GunfightPlayer
 		// Turn prediction off
 		using ( Prediction.Off() )
 		{
-			if ( Input.Pressed( InputButton.Use ) )
+			if ( Input.Pressed( InputButton.Flashlight ) )
 			{
 				Using = FindUsable();
 
@@ -29,7 +29,7 @@ public partial class GunfightPlayer
 				}
 			}
 
-			if ( !Input.Down( InputButton.Use ) )
+			if ( !Input.Down( InputButton.Flashlight ) )
 			{
 				StopUsing();
 				return;

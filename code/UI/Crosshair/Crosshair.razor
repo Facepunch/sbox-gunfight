@@ -87,5 +87,21 @@
         var isAiming = player?.IsAiming ?? false;
 
         SetClass( "visible", !isAiming );
+
+        var speed = player?.Velocity.Length.LerpInverse( 0, 350, true ) ?? 0;
+        if ( player?.Controller.Slide.IsActive ?? false ) speed = 0;
+
+        // Sprinting cycle
+        float cycle = Time.Now * 8f;
+        var rotation = new Angles(
+                MathF.Abs( MathF.Sin( cycle ) * 2.0f ),
+                MathF.Cos( cycle ),
+                0
+            ) * speed * 5f;
+
+        var tr = new PanelTransform();
+        tr.AddTranslateX( rotation.yaw );
+        tr.AddTranslateY( rotation.pitch );
+        Style.Transform = tr;
     }
 }

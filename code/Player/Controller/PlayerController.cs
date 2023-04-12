@@ -2,7 +2,7 @@
 namespace Facepunch.Gunfight;
 
 [Library]
-public partial class PlayerController : BasePlayerController
+public partial class PlayerController : PawnController
 {
 	[Net] public float SprintSpeed { get; set; } = 250.0f;
 	[Net] public float WalkSpeed { get; set; } = 120.0f;
@@ -781,7 +781,7 @@ public partial class PlayerController : BasePlayerController
 	/// LiftFeet will move the start position up by this amount, while keeping the top of the bbox at the same 
 	/// position. This is good when tracing down because you won't be tracing through the ceiling above.
 	/// </summary>
-	public override TraceResult TraceBBox( Vector3 start, Vector3 end, Vector3 mins, Vector3 maxs, float liftFeet = 0.0f )
+	public virtual TraceResult TraceBBox( Vector3 start, Vector3 end, Vector3 mins, Vector3 maxs, float liftFeet = 0.0f, float liftHead = 0.0f )
 	{
 		if ( liftFeet > 0 )
 		{
@@ -789,15 +789,28 @@ public partial class PlayerController : BasePlayerController
 			maxs = maxs.WithZ( maxs.z - liftFeet );
 		}
 
-		var tr = Trace.Ray( start + TraceOffset, end + TraceOffset )
+		if ( liftHead > 0 )
+		{
+			end += Vector3.Up * liftHead;
+		}
+
+		var tr = Trace.Ray( start, end )
 					.Size( mins, maxs )
 					.WithAnyTags( "solid", "playerclip", "passbullets" )
-					.WithoutTags( "player" )
-					.Ignore( Pawn )
+					.Ignore( Player )
 					.Run();
 
-		tr.EndPosition -= TraceOffset;
 		return tr;
+	}
+
+	/// <summary>
+	/// This calls TraceBBox with the right sized bbox. You should derive this in your controller if you 
+	/// want to use the built in functions
+	/// </summary>
+	public virtual TraceResult TraceBBox( Vector3 start, Vector3 end, float liftFeet = 0.0f, float liftHead = 0.0f )
+	{
+		var hull = GetHull();
+		return TraceBBox( start, end, hull.Mins, hull.Maxs, liftFeet, liftHead );
 	}
 
 	/// <summary>

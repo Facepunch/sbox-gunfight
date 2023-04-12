@@ -12,17 +12,6 @@ public partial class DuckMechanic : BaseMoveMechanic
 	protected override bool TryActivate()
 	{
 		Wish = Input.Down( InputButton.Duck );
-
-		//if ( !Wish )
-		//{
-		//	var test = Controller.TraceBBox( Controller.Position, Controller.Position + Vector3.Up * 10f );
-		//	if ( test.Hit )
-		//	{
-		//		return true;
-		//	}
-		//	return false;
-		//}
-
 		if ( !Wish ) return false;
 
 		if ( Controller.Slide.IsActive ) return false;
@@ -39,7 +28,7 @@ public partial class DuckMechanic : BaseMoveMechanic
 
 	public override float GetWishSpeed()
 	{
-		return 100f;
+		return 120f;
 	}
 
 	public override float? GetEyeHeight()

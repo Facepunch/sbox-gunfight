@@ -86,6 +86,10 @@
         var weapon = player?.ActiveChild as GunfightWeapon;
         var isAiming = player?.IsAiming ?? false;
 
+        if ( !player.IsValid() ) return;
+        if ( !weapon.IsValid() ) return;
+        if ( player.Controller == null ) return;
+
         SetClass( "visible", !isAiming );
 
         var speed = player?.Velocity.Length.LerpInverse( 0, 350, true ) ?? 0;

@@ -65,9 +65,9 @@ internal class GunfightSpectatorCamera : GunfightCamera
 
 	float GetSpeedMultiplier()
 	{
-		if ( Input.Down( InputButton.Run ) )
+		if ( Input.Down( "Run" ) )
 			return 2f;
-		if ( Input.Down( InputButton.Duck ) )
+		if ( Input.Down( "Duck" ) )
 			return 0.3f;
 
 		return 1f;
@@ -75,13 +75,13 @@ internal class GunfightSpectatorCamera : GunfightCamera
 
 	public override void BuildInput()
 	{
-		if ( Input.Pressed( InputButton.Jump ) )
+		if ( Input.Pressed( "Jump" ) )
 			ToggleFree();
 
-		if ( Input.Pressed( InputButton.Menu ) )
+		if ( Input.Pressed( "Menu" ) )
 			SpectateNextPlayer( false );
 
-		if ( Input.Pressed( InputButton.Flashlight ) )
+		if ( Input.Pressed( "Interact" ) )
 			SpectateNextPlayer();
 
 		MoveMultiplier = GetSpeedMultiplier();

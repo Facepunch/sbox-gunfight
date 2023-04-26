@@ -203,7 +203,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	public virtual bool WantsReload()
 	{
-		return Input.Down( InputButton.Reload );
+		return Input.Down( "Reload" );
 	}
 
 	protected virtual void SimulateRecoil( IClient owner )
@@ -267,7 +267,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( TimeSinceDeployed < DeployTime )
 			return;
 
-		if ( Input.Down( InputButton.Flashlight ) && Input.Pressed( InputButton.Reload ) )
+		if ( Input.Down( "Interact" ) && Input.Pressed( "Reload" ) )
 		{
 			CycleFireMode();
 			return;
@@ -392,12 +392,12 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	protected bool CanPrimaryAttackSemi()
 	{
-		return Input.Pressed( InputButton.PrimaryAttack );
+		return Input.Pressed( "Attack1" );
 	}
 
 	protected bool CanPrimaryAttackBurst()
 	{
-		if ( Input.Down( InputButton.PrimaryAttack ) && TimeSinceBurstFinished >= WeaponDefinition.BurstCooldown )
+		if ( Input.Down( "Attack1" ) && TimeSinceBurstFinished >= WeaponDefinition.BurstCooldown )
 			IsBurstFiring = true;
 
 		if ( !IsBurstFiring ) return false;
@@ -422,7 +422,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			return CanPrimaryAttackBurst();
 		}
 
-		return TimeSincePrimaryAttack >= PrimaryFireRate && Input.Down( InputButton.PrimaryAttack );
+		return TimeSincePrimaryAttack >= PrimaryFireRate && Input.Down( "Attack1" );
 	}
 
 	public virtual void AttackPrimary()
@@ -431,7 +431,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		if ( !IsUnlimitedAmmo() && !TakeAmmo( 1 ) )
 		{
-			if ( Input.Pressed( InputButton.PrimaryAttack ) )
+			if ( Input.Pressed( "Attack1" ) )
 			{
 				DryFire();
 			}

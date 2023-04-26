@@ -299,7 +299,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		Controller?.Simulate( cl, this );
 		SimulateAnimation( Controller );
 
-		if ( Input.Pressed( InputButton.View ) )
+		if ( Input.Pressed( "View" ) )
 		{
 			if ( GamemodeSystem.Current?.AllowThirdPerson ?? false )
 			{

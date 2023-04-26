@@ -159,7 +159,7 @@ public partial class PlayerController : PawnController
 
 		UpdateBBox();
 
-		if ( Weapon.IsValid() && Input.Down( InputButton.SecondaryAttack ) )
+		if ( Weapon.IsValid() && Input.Down( "Attack2" ) )
 		{
 			if ( !IsAiming )
 			{
@@ -175,12 +175,12 @@ public partial class PlayerController : PawnController
 		CheckLadder();
 		Swimming = Pawn.GetWaterLevel() > 0.6f;
 
-		IsSprinting = Input.Down( InputButton.Run );
+		IsSprinting = Input.Down( "Run" );
 
 		if ( IsSprinting && Velocity.Length < 40 || Player.InputDirection.x < 0.5f )
 			IsSprinting = false;
 
-		if ( Input.Down( InputButton.PrimaryAttack ) || Input.Down( InputButton.SecondaryAttack) )
+		if ( Input.Down( "Attack1" ) || Input.Down( "Attack2" ) )
 			IsSprinting = false;
 
 		if ( Duck.IsActive || Slide.IsActive )
@@ -197,7 +197,7 @@ public partial class PlayerController : PawnController
 			BaseVelocity = BaseVelocity.WithZ( 0 );
 		}
 
-		if ( CanJump() && Input.Pressed( InputButton.Jump ) && !JumpWinding )
+		if ( CanJump() && Input.Pressed( "Jump" ) && !JumpWinding )
 		{
 			JumpWinding = true;
 			JumpWindup = 0.125f;
@@ -428,7 +428,7 @@ public partial class PlayerController : PawnController
 		if ( mechanicSpeed != null ) return mechanicSpeed.Value;
 
 		if ( IsSprinting ) return SprintSpeed;
-		if ( Input.Down( InputButton.Walk ) ) return WalkSpeed;
+		if ( Input.Down( "Walk" ) ) return WalkSpeed;
 
 		return DefaultSpeed;
 	}
@@ -638,7 +638,7 @@ public partial class PlayerController : PawnController
 
 		if ( IsTouchingLadder )
 		{
-			if ( Input.Pressed( InputButton.Jump ) )
+			if ( Input.Pressed( "Jump" ) )
 			{
 				Velocity = LadderNormal * 100.0f;
 				IsTouchingLadder = false;

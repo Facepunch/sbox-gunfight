@@ -39,7 +39,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-		Wish = Input.Pressed( InputButton.Flashlight );
+		Wish = Input.Pressed( "Interact" );
 
 		if ( !Controller.IsAiming ) return false;
 		if ( !Wish ) return false;
@@ -57,7 +57,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 	public override void PreSimulate()
 	{
 		bool shouldStop = false;
-		if ( !Player.InputDirection.x.AlmostEqual( 0f ) || !Player.InputDirection.y.AlmostEqual( 0f ) || Input.Pressed( InputButton.Jump ) )
+		if ( !Player.InputDirection.x.AlmostEqual( 0f ) || !Player.InputDirection.y.AlmostEqual( 0f ) || Input.Pressed( "Jump" ) )
 			shouldStop = true;
 
 		if ( Vector3.Dot( Controller.EyeRotation.Forward.Normal, CachedWallInfo.Normal ) > - 0.5f )

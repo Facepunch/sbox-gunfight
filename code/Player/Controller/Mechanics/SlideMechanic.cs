@@ -23,7 +23,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-		Wish = Input.Down( InputButton.Duck );
+		Wish = Input.Down( "Duck" );
 
 		if ( Controller.Velocity.Length < Controller.DefaultSpeed ) return false;
 		if ( !Wish ) return false;

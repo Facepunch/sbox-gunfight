@@ -280,9 +280,9 @@ public abstract partial class Gamemode : Entity
 		if ( !AllowMovement )
 		{
 			Input.AnalogMove = Vector3.Zero;
-			Input.ClearButton( InputButton.Jump );
-			Input.ClearButton( InputButton.Duck );
-			Input.ClearButton( InputButton.PrimaryAttack );
+			Input.Clear( "Jump" );
+			Input.Clear( "Duck" );
+			Input.Clear( "Attack1" );
 			Input.StopProcessing = true;
 		}
 	}

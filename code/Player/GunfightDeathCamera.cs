@@ -44,7 +44,7 @@ public partial class GunfightDeathCamera : GunfightCamera
 
 		var gamemode = GamemodeSystem.Current;
 
-		if ( Input.Pressed( InputButton.Jump ) && gamemode.IsValid() && gamemode.AllowSpectating )
+		if ( Input.Pressed( "Jump" ) && gamemode.IsValid() && gamemode.AllowSpectating )
 		{
 			Spectate();
 		}

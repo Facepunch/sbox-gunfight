@@ -68,9 +68,7 @@
 
     public void SetButton( string value )
     {
-        var btn = Enum.Parse<InputButton>( value, true );
-
-        var texture = Input.GetGlyph( btn, InputGlyphSize.Medium, GlyphStyle.Dark.WithSolidABXY().WithNeutralColorABXY() );
+        var texture = Input.GetGlyph( value, InputGlyphSize.Medium, GlyphStyle.Dark.WithSolidABXY().WithNeutralColorABXY() );
         if ( texture is null ) return;
 
         Glyph.Texture = texture;

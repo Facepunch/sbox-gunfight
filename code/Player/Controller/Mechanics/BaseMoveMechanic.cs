@@ -68,11 +68,6 @@ public partial class BaseMoveMechanic : BaseNetworkable
 		if ( IsActive )
 		{
 			TimeSinceActivate = 0;
-
-			if ( BasePlayerController.Debug )
-			{
-				Log.Info( "ACTIVATED: " + GetType().Name );
-			}
 		}
 
 		return IsActive;
@@ -129,9 +124,6 @@ public partial class BaseMoveMechanic : BaseNetworkable
 			var trace = Trace.Ray( startPos, startPos - wallNormal * maxDist )
 				.WorldOnly()
 				.Run();
-
-			if ( BasePlayerController.Debug )
-				DebugOverlay.TraceResult( trace );
 
 			if ( !trace.Hit && !foundWall ) continue;
 			if ( trace.Hit )

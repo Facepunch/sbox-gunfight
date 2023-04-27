@@ -267,7 +267,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( TimeSinceDeployed < DeployTime )
 			return;
 
-		if ( Input.Down( "Interact" ) && Input.Pressed( "Reload" ) )
+		if ( Input.Pressed( "FireMode" ) )
 		{
 			CycleFireMode();
 			return;

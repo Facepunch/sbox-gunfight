@@ -39,9 +39,8 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-		Wish = Input.Pressed( "Interact" );
+		Wish = Input.Pressed( "Mount" );
 
-		if ( !Controller.IsAiming ) return false;
 		if ( !Wish ) return false;
 		if ( !CanMountWall() ) return false;
 		if ( Controller.Slide.IsActive ) return false;

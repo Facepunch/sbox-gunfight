@@ -381,6 +381,16 @@
           "Name": "Chat",
           "KeyboardCode": "enter",
           "GroupName": "Other"
+        },
+        {
+          "Name": "Mount",
+          "KeyboardCode": "T",
+          "GroupName": "Other"
+        },
+        {
+          "Name": "FireMode",
+          "KeyboardCode": "B",
+          "GroupName": "Other"
         }
       ]
     }

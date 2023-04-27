@@ -12,6 +12,8 @@
         align-items: center;
         align-content: center;
 
+        gap: 8px;
+
         > .firemode {
             margin-right: 4px;
             width: 35px;
@@ -52,6 +54,8 @@
 
         @if ( Player.IsValid() && Player.LifeState != LifeState.Alive )
             return;
+
+        <InputHint Button="FireMode" />
 
        <div class="firemode active">
            <img src=@GetImage( Weapon.CurrentFireMode ) />

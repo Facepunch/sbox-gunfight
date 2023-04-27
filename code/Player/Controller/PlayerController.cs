@@ -560,7 +560,7 @@ public partial class PlayerController : PawnController
 
 	protected bool CanJump()
 	{
-		if ( Slide.TimeSinceActivate < 0.3f )
+		if ( Slide.TimeSinceActivate < 0.1f )
 			return false;
 		if ( GroundEntity == null )
 			return false;

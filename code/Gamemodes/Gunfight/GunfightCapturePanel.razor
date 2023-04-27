@@ -1,0 +1,55 @@
+@using Sandbox.UI;
+
+@namespace Facepunch.Gunfight
+@inherits Panel
+@attribute [StyleSheet( "Gamemodes/Gunfight/GunfightCapturePanel.scss" )]
+
+<root>
+    @if ( ShouldShow() )
+    {
+        <label class="title">SECURING</label>
+        <div class="main">
+            <label class="icon">flag</label>
+            <div class="bar">
+                <div class="bar-inner" @ref="Bar"></div>
+            </div>
+        </div>
+    }
+</root>
+
+@code
+{
+    public CapturePointEntity Flag => (Game.LocalPawn as GunfightPlayer)?.CapturePoint;
+    public float CaptureAmount => Flag?.Captured ?? 0f;
+
+    // @ref
+    public Panel Bar { get; set; }
+
+    bool ShouldShow()
+    {
+        if ( !Flag.IsValid() ) return false;
+        if ( Flag.CurrentState == CapturePointEntity.CaptureState.None && Flag.Team == TeamSystem.MyTeam ) return false;
+
+        return true;
+    }
+
+    public void Update()
+    {
+        BindClass( "show", ShouldShow );
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Flag, Flag?.CurrentState, Flag?.Captured );
+    }
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        Update();
+
+        if ( Flag.IsValid() )
+        {
+            Bar.Style.Width = Length.Fraction( CaptureAmount );
+        }
+    }
+}

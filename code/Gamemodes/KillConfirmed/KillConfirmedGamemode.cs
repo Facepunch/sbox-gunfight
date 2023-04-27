@@ -68,7 +68,6 @@ public partial class KillConfirmedGamemode : Gamemode
 	{
 		RandomizeLoadout();
 		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
-		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
 		return true;
 	}
@@ -114,8 +113,6 @@ public partial class KillConfirmedGamemode : Gamemode
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{
 		TimeSinceStateChanged = 0;
-
-		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
 		if ( after == GameState.WaitingForPlayers )
 		{

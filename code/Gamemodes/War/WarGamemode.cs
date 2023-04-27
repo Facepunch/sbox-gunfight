@@ -63,7 +63,6 @@ public partial class WarGamemode : Gamemode
 	{
 		RandomizeLoadout( false );
 		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
-		GunfightStatusPanel.RpcUpdate( To.Everyone );
 
 		return true;
 	}

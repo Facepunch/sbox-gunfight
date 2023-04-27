@@ -395,25 +395,6 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		BuildWeaponInput();
 	}
 
-	[Event.Client.PostCamera]
-	public void PostCameraSetup()
-	{
-		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
-
-		if ( !Camera.FirstPersonViewer.IsValid() )
-			return;
-
-		GunfightGame.AddedCameraFOV = 0f;
-		if ( Controller != null )
-		{
-			if ( Controller.IsSprinting )
-				GunfightGame.AddedCameraFOV += 3f;
-
-			if ( Controller.IsAiming )
-				GunfightGame.AddedCameraFOV += -10f;
-		}
-	}
-
 	DamageInfo LastDamage;
 
 	public override void TakeDamage( DamageInfo info )

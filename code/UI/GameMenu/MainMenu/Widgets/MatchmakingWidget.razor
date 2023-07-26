@@ -1,0 +1,45 @@
+@using Sandbox
+@using Sandbox.Razor
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	<div class="background"/>
+
+	<div class="icon-container">
+		<div class="icon"/>
+	</div>
+
+	<div class="main">
+		<label>@CurrentState</label>
+        <label class="large">@TimeString</label>
+	</div>
+</root>
+
+@code
+{
+	TimeSince Time { get; set; } = 0;
+	
+	public string CurrentState
+	{
+		get
+		{
+			return "Searching for a match...";
+		}
+	}
+
+	public string TimeString
+	{
+		get
+		{
+			return TimeSpan.FromSeconds( Time ).ToString( @"mm\:ss" );
+		}
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( TimeString, CurrentState );
+	}
+}

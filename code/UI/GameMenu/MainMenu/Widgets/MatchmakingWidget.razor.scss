@@ -1,0 +1,83 @@
+@import "/Resource/Styles/hud.scss";
+
+$queue-color: #c27b00;
+
+MatchmakingWidget
+{
+  width: 512px;
+  height: 96px;
+
+  justify-content: center;
+  align-items: center;
+
+  >.background
+  {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-size: contain;
+    mask-mode: luminance;
+    background-color: $queue-color;
+    opacity: 0.5;
+    mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+  }
+  
+  label
+  {
+    font-family: $main-font-semibold;
+    text-transform: uppercase;
+    height: 24px;
+    
+    &.large
+    {
+      font-family: $main-font-bold;
+      
+      height: 50px;
+      font-size: 50px;
+    }
+  }
+  
+  > .main
+  {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  > .icon-container
+  {
+    position: absolute;
+    overflow: hidden;
+    top: 0px;
+    
+    > .icon
+    {
+      width: 512px;
+      height: 512px;
+      background-image: radial-gradient( $queue-color, rgba( $queue-color, 0 ), transparent );
+      animation-name: jump;
+      animation-duration: 3s;
+      animation-timing-function: ease-in-out;
+    }
+  }
+}
+
+@keyframes jump
+{
+  0% {
+    transform: scale( 1 );
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale( 1.5 );
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale( 1 );
+    opacity: 0;
+  }
+}

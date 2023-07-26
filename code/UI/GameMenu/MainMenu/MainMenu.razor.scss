@@ -83,5 +83,14 @@ MainMenu
     background-color: green;
     flex-shrink: 0;
   }
+  
+  > .matchmaking
+  {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
 }
 

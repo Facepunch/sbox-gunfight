@@ -2,7 +2,9 @@
 @using Sandbox.UI
 
 @implements INavigatorPage
+@inherits Panel
 @attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
 
 <root>
 	<div class="main">
@@ -48,8 +50,11 @@
             		Maps
             	</Title>
             	<Body>
-            	<div style="gap:16px; font-size: 16px;">
-            		maps maps maps
+            	<div class="package-list" style="gap:16px; font-size: 16px;">
+            		@foreach ( var package in MapPackages )
+		            {
+			            <PackageCard Package=@package />
+		            }
             	</div>
             	</Body>
             </ExpandWidget>
@@ -71,6 +76,27 @@
 	public List<string> SelectedMaps { get; set; } = new();
 	public string SelectedMode { get; set; } = "kc";
 
+	List<Package> MapPackages { get; set; } = new();
+
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		_ = RunQuery();
+	}
+
+	async Task RunQuery()
+	{
+		var query = "type:map game:facepunch.gunfight";
+		var result = await Package.FindAsync( query, 100, 0 );
+
+		if ( result != null )
+		{
+			var packages = result.Packages;
+			MapPackages = packages.ToList();
+			
+			StateHasChanged();
+		}
+	}
+
 	void Search()
 	{
 		//
@@ -79,5 +105,10 @@
 	void Return()
 	{
 		this.Navigate( "/" );
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( MapPackages.Count );
 	}
 }

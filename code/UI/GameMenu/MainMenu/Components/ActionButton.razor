@@ -6,7 +6,7 @@
 @attribute [StyleSheet]
 
 <root>
-	<div class="background"/>
+	<div class="background" @ref=Background />
 
 	<div class="main">
 		<div class="title">
@@ -28,10 +28,23 @@
 	public RenderFragment Title { get; set; }
 	public RenderFragment Description { get; set; }
 	public RenderFragment Extra { get; set; }
-	public bool WithBackground { get; set; } = false;
-
+	public string WithBackground { get; set; } = null;
+	public string Blend { get; set; } = null;
+	
+	Panel Background { get; set; }
+	
 	protected override void OnAfterTreeRender( bool firstTime )
 	{
-		SetClass( "has-background", WithBackground );
+		SetClass( "has-background", !string.IsNullOrEmpty( WithBackground ) );
+
+		if ( HasClass( "has-background" ) )
+		{
+			Background.Style.MaskImage = Texture.Load( WithBackground );
+		}
+
+		if ( !string.IsNullOrEmpty( Blend ) )
+		{
+			Background.Style.BackgroundColor = Blend;
+		}
 	}
 }

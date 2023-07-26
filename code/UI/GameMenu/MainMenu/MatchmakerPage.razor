@@ -1,0 +1,83 @@
+@using Sandbox
+@using Sandbox.UI
+
+@implements INavigatorPage
+@attribute [StyleSheet]
+
+<root>
+	<div class="main">
+		<div class="left column grow">
+			<div class="game-title">
+				Gunfight
+			</div>
+
+			<div class="game-subtitle">
+				Dying to get into the action?
+			</div>
+			
+			<div style="flex-grow: 1;"/>
+			
+			<ExpandWidget>
+				<Title>
+					Modes
+				</Title>
+				<Body>
+				<div style="gap:16px; font-size: 16px;">
+					modes modes modes
+				</div>
+				</Body>
+			</ExpandWidget>
+
+			<ActionButton onclick=@Return>
+				<Title>
+					Return
+				</Title>
+				<Extra>
+					<Panel class="new"/>
+				</Extra>
+			</ActionButton>
+		</div>
+		
+		<div style="flex-grow: 1;"/>
+
+		<div class="right column grow">
+			<div style="flex-grow: 1;"/>
+
+			<ExpandWidget>
+            	<Title>
+            		Maps
+            	</Title>
+            	<Body>
+            	<div style="gap:16px; font-size: 16px;">
+            		maps maps maps
+            	</div>
+            	</Body>
+            </ExpandWidget>
+
+			<ActionButton onclick=@Search>
+				<Title>
+					Search
+				</Title>
+				<Extra>
+					<i>search</i>
+				</Extra>
+			</ActionButton>
+		</div>
+	</div>
+</root>
+
+@code
+{
+	public List<string> SelectedMaps { get; set; } = new();
+	public string SelectedMode { get; set; } = "kc";
+
+	void Search()
+	{
+		//
+	}
+	
+	void Return()
+	{
+		this.Navigate( "/" );
+	}
+}

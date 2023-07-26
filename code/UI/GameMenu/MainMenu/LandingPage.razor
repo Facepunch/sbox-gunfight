@@ -35,7 +35,7 @@
 
 			<div style="flex-grow: 1;"/>
 
-			<ActionButton WithBackground="https://files.facepunch.com/tony/1b1311b1/boxes.webm">
+			<ActionButton WithBackground="https://files.facepunch.com/tony/1b1311b1/boxes.webm" onclick=@Matchmake>
 				<Title>
 					Quick Play
 				</Title>
@@ -43,7 +43,7 @@
 					Start queueing for a game quickly!
 				</Description>
 			</ActionButton>
-			<ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange">
+			<ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@Matchmake>
 				<Title>
 					War Room
 				</Title>
@@ -54,7 +54,7 @@
 					<Panel class="new"/>
 				</Extra>
 			</ActionButton>
-			<ActionButton>
+			<ActionButton onclick=@Matchmake>
 				<Title>
 					Kill Confirmed
 				</Title>
@@ -62,7 +62,7 @@
 					<Panel class="new"/>
 				</Extra>
 			</ActionButton>
-			<ActionButton>
+			<ActionButton onclick=@Matchmake>
 				<Title>
 					Gunfight (2v2)
 				</Title>
@@ -90,14 +90,16 @@
 	        </ExpandWidget>
         </div>
         
-        <div class="column">
+        <div class="column" style="left:24px;">
 	        <FriendsList />
         </div>
 	</div>
-
-	<div class="footer">
-		<div style="flex-grow: 1;"/>
-		<label>Developed by Facepunch Studios</label>
-		<div class="logo" />
-	</div>
 </root>
+
+@code
+{
+	void Matchmake( PanelEvent e )
+	{
+		this.Navigate( "/find" );
+	}
+}

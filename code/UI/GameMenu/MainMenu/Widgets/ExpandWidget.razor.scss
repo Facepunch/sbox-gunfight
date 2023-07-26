@@ -2,7 +2,7 @@
 
 ExpandWidget
 {
-  width: 450px;
+  min-width: 450px;
   flex-direction: column;
 
   &.is-hidden

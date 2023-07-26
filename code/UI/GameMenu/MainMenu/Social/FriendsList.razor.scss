@@ -1,0 +1,47 @@
+FriendsList
+{
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  width: 68px;
+  height: 100%;
+  
+  flex-direction: column;
+  overflow: scroll;
+  
+  .entry
+  {
+    width: 68px;
+    height: 64px;
+    flex-shrink: 0;
+    opacity: 0.3;
+
+    &.playing
+    {
+      opacity: 1;
+      
+      .online-status
+      {
+        background-color: green;
+      }
+    }   
+    
+    &.online
+    {
+      opacity: 1;
+      
+     .online-status
+     {
+       background-color: rgba( 0, 125, 255 );
+     }
+    }
+
+    .online-status
+    {
+      flex-shrink: 0;
+      
+      width: 4px;
+    }
+  }
+}

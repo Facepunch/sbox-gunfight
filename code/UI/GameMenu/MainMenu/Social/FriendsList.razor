@@ -1,0 +1,38 @@
+﻿@using Sandbox
+@using Sandbox.Razor
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	@foreach ( var friend in GroupedFriends )
+	{
+		<div class="entry @GetClasses(friend)">
+			<div class="online-status" />
+			<img src="avatar:@friend.Id" tooltip=@friend.Name/>
+		</div>
+	}
+</root>
+
+@code
+{
+	public IEnumerable<Sandbox.Friend> GroupedFriends
+	{
+		get
+		{
+			var orderedFriends = Game.Menu.Friends.OrderByDescending( x => x.IsPlayingThisGame )
+				.ThenByDescending( x => x.IsOnline );
+			
+			return orderedFriends;
+		}
+	}
+
+	public string GetClasses( Sandbox.Friend friend )
+	{
+		var str = "";
+		if ( friend.IsPlayingThisGame ) str += " playing";
+		else if ( friend.IsOnline ) str += " online";
+		return str;
+	}
+}

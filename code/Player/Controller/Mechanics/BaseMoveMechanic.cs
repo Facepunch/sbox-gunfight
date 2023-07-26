@@ -122,7 +122,7 @@ public partial class BaseMoveMechanic : BaseNetworkable
 			startPos.z += step;
 			currentHeight += step;
 			var trace = Trace.Ray( startPos, startPos - wallNormal * maxDist )
-				.WorldOnly()
+				.StaticOnly()
 				.Run();
 
 			if ( !trace.Hit && !foundWall ) continue;

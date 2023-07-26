@@ -9,7 +9,6 @@ public partial class GunfightPlayer
 	bool CalculateVisibility()
 	{
 		var tr = Trace.Ray( Camera.Position, AimRay.Position )
-			.WorldAndEntities()
 			.Ignore( Game.LocalPawn )
 			.Run();
 

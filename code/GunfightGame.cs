@@ -24,14 +24,11 @@ partial class GunfightGame : GameManager
 		{
 			Hud = new GunfightHud();
 			_ = new LoadoutSystem();
-
 			Scores = new();
-
-			Game.TickRate = 30;
 		}
 	}
 
-	[Event.Entity.PostSpawn]
+	[GameEvent.Entity.PostSpawn]
 	public void PostEntitySpawn()
 	{
 		// Try to set up the active gamemode
@@ -112,7 +109,7 @@ partial class GunfightGame : GameManager
 	protected float FovOffset { get; set; } = 0f;
 	public static float AddedCameraFOV { get; set; } = 0f;
 
-	[Event.Client.PostCamera]
+	[GameEvent.Client.PostCamera]
 	public void PostCameraSetup()
 	{
 		FovOffset = FovOffset.LerpTo( AddedCameraFOV, Time.Delta * 10f, true );
@@ -220,7 +217,7 @@ partial class GunfightGame : GameManager
 
 			var tr = Trace.Ray( position, targetPos )
 				.Ignore( weapon )
-				.WorldOnly()
+				.StaticOnly()
 				.Run();
 
 			if ( tr.Fraction < 0.98f )

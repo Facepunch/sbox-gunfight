@@ -107,7 +107,6 @@ public partial class ViewModel : BaseViewModel
 		var up = Camera.Rotation.Up;
 		var forward = Camera.Rotation.Forward;
 		var avoidanceTrace = Trace.Ray( Camera.Position, Camera.Position + forward * 50f )
-					.WorldAndEntities()
 					.WithoutTags( "trigger" )
 					.Ignore( Owner )
 					.Ignore( this )

@@ -86,7 +86,7 @@ public partial class Awards
 		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_ultrakill.sound" );
 	}
 
-	public static MethodDescription? Get( string title )
+	public static MethodDescription Get( string title )
 	{
 		return TypeLibrary.FindStaticMethods<AwardAttribute>( title ).FirstOrDefault();
 	}

@@ -39,7 +39,7 @@ public partial class SpawnPointSystem
 
 		var tr = Trace.Ray( start, end )
 			.Size( mins, maxs )
-			.WorldOnly()
+			.StaticOnly()
 			.Run();
 
 		return tr;

@@ -26,7 +26,6 @@ public partial class WeaponDefinition : GameResource
 		if ( wpn.IsValid() )
 		{
 			var tr = Trace.Ray( player.AimRay.Position, player.AimRay.Position + player.AimRay.Forward * 100000f )
-				.WorldAndEntities()
 				.WithAnyTags( "solid" )
 				.Run();
 

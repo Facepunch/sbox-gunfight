@@ -80,7 +80,7 @@
     }
 </style>
 
-<root class="@Classes()">
+<root class="@GetClasses()">
     @if ( Definition != null )
     {
         <img class="icon" src="@Definition.Icon" />
@@ -109,7 +109,7 @@
         return HashCode.Combine( Definition );
     }
 
-    public string Classes()
+    public string GetClasses()
     {
         if ( HideName ) return "no-name";
 

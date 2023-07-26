@@ -16,7 +16,7 @@ public partial class GunfightHud : HudEntity<HudRootPanel>
 	
 	public static HudVisibilityState HudState = HudVisibilityState.Visible;
 
-	[Event.Tick.Client]
+	[GameEvent.Tick.Client]
 	protected void DoTick()
 	{
 		if ( !GamemodeSystem.Current.IsValid() ) return;

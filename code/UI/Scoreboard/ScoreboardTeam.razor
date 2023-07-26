@@ -4,7 +4,7 @@
 @namespace Facepunch.Gunfight.UI
 @inherits Panel;
 
-<root class="@Classes()">
+<root class="@GetClasses()">
     @if ( Team != Team.Unassigned )
     {
         <div class="header">
@@ -95,7 +95,7 @@
 		return p;
 	}
 
-    protected string Classes()
+    protected string GetClasses()
     {
         var friendState = TeamSystem.GetFriendState( Team, TeamSystem.MyTeam );
 

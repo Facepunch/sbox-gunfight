@@ -85,7 +85,7 @@ public partial class LaserSightAttachment : BarrelAddonAttachment
 		EyeEndPosition = trace.EndPosition;
 	}
 
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	protected void Update()
 	{
 		if ( Weapon.IsValid() && Weapon.EnableDrawing )

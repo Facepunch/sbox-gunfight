@@ -145,7 +145,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		return OccupantCounts[(int)team];
 	}
 
-	[Event.Tick.Server]
+	[GameEvent.Tick.Server]
 	public void Tick()
 	{
 		if ( Occupants is null || OccupantCounts is null )

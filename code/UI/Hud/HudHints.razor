@@ -122,7 +122,6 @@
 		cover.Style.Top = Length.Fraction( screenPos.y );
 
 		var tr = Trace.Ray( Camera.Position, Camera.Position + Camera.Rotation.Forward * 100000f )
-			.WorldAndEntities()
 			.WithAnyTags( "solid", "weapon" )
 			.Run();
 

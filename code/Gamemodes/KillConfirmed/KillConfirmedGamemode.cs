@@ -167,7 +167,7 @@ public partial class KillConfirmedGamemode : Gamemode
 		}
 	}
 
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	protected void Frame()
 	{
 		if ( CachedTimeRemaining != FormattedTimeRemaining )

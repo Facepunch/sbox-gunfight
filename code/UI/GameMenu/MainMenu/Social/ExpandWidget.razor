@@ -1,0 +1,45 @@
+﻿@using Sandbox
+@using Sandbox.Razor
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	<div class="header">
+		<div class="background" />
+		
+		<div class="row">
+			<label>
+				@Title
+			</label>
+			<div style="flex-grow: 1;"/>
+			<i class="expand-icon">expand_more</i>
+		</div>
+	</div>
+	
+	<div class="main">
+		@Body
+	</div>
+</root>
+
+@code
+{
+	public RenderFragment Title { get; set; }
+	public RenderFragment Body { get; set; }
+	
+	bool IsExpanded { get; set; } = false;
+
+	public ExpandWidget()
+	{
+		SetClass( "is-hidden", !IsExpanded );
+	}
+
+	protected override void OnClick( MousePanelEvent e )
+	{
+		IsExpanded ^= true;
+		SetClass( "is-hidden", !IsExpanded );
+		
+		Log.Info(IsExpanded );
+	}
+}

@@ -1,0 +1,87 @@
+﻿@import "/Resource/Styles/hud.scss";
+
+ExpandWidget
+{
+  width: 450px;
+  flex-direction: column;
+
+  &.is-hidden
+  {
+    .expand-icon
+    {
+      transform: rotate(-90deg);
+    }
+    
+    .main
+    {
+      height: 0px;
+      padding: 0px;
+      
+      > * 
+      {
+        opacity: 0;
+      }
+    }
+  }
+  
+  .expand-icon
+  {
+    transition: transform 0.25s ease;
+  }
+  
+  i
+  {
+    width: 24px;
+    height: 24px;
+    font-family: "Material Icons";
+  }
+  
+  .header
+  {
+    background-color: rgba( 25, 25, 25, 0.5 );
+    padding: 12px;
+    align-items: center;
+    cursor: pointer;
+    
+    .row
+    {
+      width: 100%;
+    }
+    
+    > .background
+    {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      
+      background-size: contain;
+      mask-mode: luminance;
+      background-color: $main-color;
+      opacity: 0.5;
+      mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+    }
+    
+    label
+    {
+      font-size: 20px;
+      font-family: $main-font-bold;
+      text-transform: uppercase;
+      height: 20px;
+      opacity: 1;
+    }
+  }
+  
+  .main
+  {
+    transition: height 0.2s ease;
+    height: 300px;
+    flex-grow: 1;
+    background-color: rgba( 25, 25, 25, 0.3 );
+    padding: 16px;
+    
+    > *
+    {
+      opacity: 1;
+    }
+  }
+}

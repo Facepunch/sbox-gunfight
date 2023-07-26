@@ -1,0 +1,68 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@implements INavigatorPage
+@attribute [StyleSheet]
+
+<style>
+	.new
+	{
+		width: 16px;
+		height: 16px;
+		background-color: #7cab6a;
+	}
+</style>
+
+<root>
+	<div class="main">
+		<div class="left column">
+        	<div style="flex-grow: 1;"/>
+    
+        	<ActionButton WithBackground=@true>
+        		<Title>
+        			Quick Play
+        		</Title>
+        		<Description>
+        			Start queueing for a game quickly!
+        		</Description>
+        	</ActionButton>
+        	<ActionButton>
+	            <Title>
+		            War
+	            </Title>
+	            <Extra>
+		            <Panel class="new" />
+	            </Extra>
+        	</ActionButton>
+        	<ActionButton>
+	            <Title>
+		            Kill Confirmed
+	            </Title>
+	            <Extra>
+		            <Panel class="new" />
+	            </Extra>
+        	</ActionButton>
+        	<ActionButton>
+	            <Title>
+		            Gunfight (2v2)
+	            </Title>
+	            <Extra>
+		            <Panel class="new" />
+	            </Extra>
+            </ActionButton>
+        </div>
+    
+        <div style="flex-grow: 1;"/>
+    
+        <div class="right column">
+        </div>
+	</div>
+
+	<div class="footer">
+		<label>Lobby: 1 / 16</label>
+		
+		<div style="flex-grow: 1;"/>
+
+		<label>Gunfight - developed by Facepunch Studios</label>
+	</div>
+</root>

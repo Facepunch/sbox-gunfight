@@ -1,0 +1,40 @@
+@using Sandbox
+@using Sandbox.Razor
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	@if ( WithBackground )
+	{
+		<div class="background" />
+	}
+	
+	<div class="main">
+		<div class="title">
+			@Title
+		</div>
+		
+		<div class="description">
+			@Description
+		</div>
+	</div>
+
+	<div class="extra">
+		@Extra
+	</div>
+</root>
+
+@code
+{
+	public RenderFragment Title { get; set; }
+	public RenderFragment Description { get; set; }
+	public RenderFragment Extra { get; set; }
+	public bool WithBackground { get; set; } = false;
+
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		SetClass( "has-background", WithBackground );
+	}
+}

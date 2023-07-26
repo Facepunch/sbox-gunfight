@@ -1,0 +1,38 @@
+﻿@import "/Resource/Styles/hud.scss";
+
+LandingPage
+{
+  flex-direction: column;
+  font-size: 25px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  
+  > .main
+  {
+    padding: 64px;
+    flex-grow: 1;
+    flex-direction: row;
+
+    .left, .right
+    {
+      gap: 16px;
+    }
+  }
+  
+  > .footer
+  {
+    padding: 16px 64px;
+
+    label {
+      font-family: $main-font-bold;
+      text-transform: uppercase;
+      font-size: 18px;
+    }
+  }
+  
+  .column
+  {
+    flex-direction: column;
+  }
+}

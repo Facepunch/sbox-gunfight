@@ -1,7 +1,7 @@
 @using Sandbox.UI;
 @using Sandbox;
 
-@inherits Panel;
+@inherits Panel
 @namespace Facepunch.Gunfight.UI
 
 <style>
@@ -47,8 +47,7 @@
 </style>
 
 <root>
-        @if ( !Weapon.IsValid() ) 
-            return;
+        @if ( !Weapon.IsValid() ) return;
 
         @if (Weapon.WeaponDefinition == null) return; 
 

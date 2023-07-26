@@ -1,0 +1,87 @@
+﻿@import "/Resource/Styles/hud.scss";
+
+MainMenu
+{
+  opacity: 1;
+  flex-direction: column;
+  font-size: 25px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: all 0.3s ease-out;
+  color: rgba( white, 0.8 );
+  
+  > .background
+  {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url( https://files.facepunch.com/tony/1b2611b1/sbox_XilmgXb4DS.jpg );
+    opacity: 0.6;
+    background-size: cover;
+    mask: linear-gradient( 90deg, black, white, white, white, white );
+    background-repeat: no-repeat;
+  }
+  
+  >.overlay
+  {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    
+    opacity: 0.3;
+    background-color: $main-color;
+    mask-image: linear-gradient( 90deg, white, lightgrey, white );
+    backdrop-filter: blur(50px);
+  }
+  
+  &:intro
+  {
+    opacity: 0;
+    transform: scaleX( 1.1 );
+  }
+
+  &.ingame
+  {
+    background-color: #262934ee;
+    backdrop-filter: blur(10px);
+
+    .background
+    {
+      opacity: 0;
+    }
+  }
+
+  > .navigator-canvas
+  {
+    flex-direction: column;
+    height: 100%;
+    flex-grow: 1;
+    z-index: 100;
+  }
+
+  .navigator-body
+  {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    transition: opacity 0.15s ease-out;
+
+    &.hidden
+    {
+      opacity: 0;
+    }
+  }
+  
+  >.header
+  {
+    width: 100%;
+    height: 120px;
+    background-color: green;
+    flex-shrink: 0;
+  }
+}
+

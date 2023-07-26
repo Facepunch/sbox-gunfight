@@ -1,12 +1,6 @@
 FriendsList
 {
-  position: absolute;
-  right: 0;
-  top: 0;
-
-  width: 68px;
-  height: 100%;
-  
+  flex-grow: 1;
   flex-direction: column;
   overflow: scroll;
   
@@ -16,6 +10,7 @@ FriendsList
     height: 64px;
     flex-shrink: 0;
     opacity: 0.3;
+    cursor: pointer;
 
     &.playing
     {

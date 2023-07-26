@@ -11,9 +11,12 @@ LandingPage
   > .main
   {
     padding: 64px;
-    padding-right: 96px;
+    padding-right: 32px;
+    padding-bottom: 0;
     flex-grow: 1;
     flex-direction: row;
+    
+    gap: 16px;
 
     .left, .right
     {
@@ -23,13 +26,16 @@ LandingPage
   
   > .footer
   {
-    padding: 16px 64px;
-    padding-right: 96px;
+    height: 48px;
+    flex-shrink: 0;
+    padding-right: 32px;
 
     label {
       font-family: $main-font-bold;
       text-transform: uppercase;
       font-size: 18px;
+      height: 48px;
+      align-items: center;
     }
   }
   

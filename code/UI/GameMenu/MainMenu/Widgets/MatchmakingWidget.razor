@@ -5,7 +5,7 @@
 @inherits Panel
 @attribute [StyleSheet]
 
-<root>
+<root class="@GetClasses()">
 	<div class="background"/>
 
 	<div class="icon-container">
@@ -38,6 +38,15 @@
 		}
 	}
 
+	public string GetClasses()
+	{
+		var str = "";
+		// Test behaviour
+		if ( Time > 10f ) str = $"{str} finished";
+		
+		return str;
+	}
+	
 	protected override int BuildHash()
 	{
 		return HashCode.Combine( TimeString, CurrentState );

@@ -1,6 +1,7 @@
 @import "/Resource/Styles/hud.scss";
 
 $queue-color: #c27b00;
+$finished-color: #06c200;
 
 MatchmakingWidget
 {
@@ -12,6 +13,7 @@ MatchmakingWidget
 
   >.background
   {
+    transition: all 0.1s ease;
     pointer-events: none;
     position: absolute;
     width: 100%;
@@ -62,9 +64,45 @@ MatchmakingWidget
       animation-timing-function: ease-in-out;
     }
   }
+
+  &.finished
+  {
+    > .background
+    {
+      background-color: $finished-color;
+    }
+    
+    > .icon-container
+    {
+      > .icon
+      {
+        background-image: radial-gradient( $finished-color, rgba( $finished-color, 0 ), transparent );
+        animation-name: freakout;
+        animation-duration: 0.2s;
+        animation-timing-function: linear;
+      }
+    }
+  }
 }
 
 @keyframes jump
+{
+  0% {
+    transform: scale( 1 );
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale( 1.5 );
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale( 1 );
+    opacity: 0;
+  }
+}
+@keyframes freakout
 {
   0% {
     transform: scale( 1 );

@@ -35,4 +35,15 @@
 		if ( friend.IsPlayingThisGame ) str += " playing";
 		return str;
 	}
+
+	
+	TimeSince TimeSinceUpdated = 5;
+	public override void Tick()
+	{
+		if ( TimeSinceUpdated > 5 )
+		{
+			TimeSinceUpdated = 0;
+			StateHasChanged();
+		}
+	}
 }

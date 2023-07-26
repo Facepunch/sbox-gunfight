@@ -6,7 +6,7 @@
 @attribute [StyleSheet]
 
 <root>
-	<div class="header">
+	<div class="header"  @onclick=@DoClick>
 		<div class="background" />
 		
 		<div class="row">
@@ -35,11 +35,9 @@
 		SetClass( "is-hidden", !IsExpanded );
 	}
 
-	protected override void OnClick( MousePanelEvent e )
+	protected void DoClick( PanelEvent e )
 	{
 		IsExpanded ^= true;
 		SetClass( "is-hidden", !IsExpanded );
-		
-		Log.Info(IsExpanded );
 	}
 }

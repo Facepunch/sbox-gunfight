@@ -53,7 +53,7 @@
             	<div class="package-list" style="gap:16px; font-size: 16px;">
             		@foreach ( var package in MapPackages )
 		            {
-			            <PackageCard Package=@package />
+			            <PackageCard OnLaunch=@(() => ToggleMap( package )) class="@GetPackageClasses( package )" Package=@package />
 		            }
             	</div>
             	</Body>
@@ -73,10 +73,26 @@
 
 @code
 {
-	public List<string> SelectedMaps { get; set; } = new();
-	public string SelectedMode { get; set; } = "kc";
-
 	List<Package> MapPackages { get; set; } = new();
+	List<Package> SelectedMaps { get; set; } = new();
+
+	void ToggleMap( Package package )
+	{
+		if ( SelectedMaps.Contains( package ) )
+		{
+			SelectedMaps.Remove( package );
+			return;
+		}
+		
+		SelectedMaps.Add( package );
+	}
+
+	string GetPackageClasses( Package package )
+	{
+		if ( SelectedMaps.Contains( package ) ) return "selected";
+
+		return "";
+	}
 
 	protected override void OnAfterTreeRender( bool firstTime )
 	{
@@ -92,7 +108,7 @@
 		{
 			var packages = result.Packages;
 			MapPackages = packages.ToList();
-			
+
 			StateHasChanged();
 		}
 	}

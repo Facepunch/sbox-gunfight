@@ -4,7 +4,7 @@
 @namespace Facepunch.Gunfight.MainMenu
 @attribute [StyleSheet]
 
-<root class="card card-vertical card-package @FavouriteClass @RatingClass">
+<root class="card card-vertical card-package">
 
     <div class="card-image" onclick=@OnCardClicked style="background-image: url( @Package.Thumb )">
 
@@ -54,24 +54,8 @@
     /// </summary>
     public System.Action OnLaunch { get; set; }
 
-
-    public string HoverIcon { get; set; } = "play_arrow";
-
     public bool Decorated { get; set; } = true;
-
-    string FavouriteClass => Package.Interaction.Favourite ? "is-favourite" : "";
-    string RatingClass
-    {
-        get
-        {
-            if (Package.Interaction.Rating == null) return "";
-            if (Package.Interaction.Rating == 0) return "is-rated-up";
-            if (Package.Interaction.Rating == 1) return "is-rated-down";
-
-            return "";
-        }
-    }
-
+	
     public string FormatHoursPlayed()
     {
         double minutes = Package.Interaction.Seconds / 60.0;
@@ -86,24 +70,7 @@
 
         return hours.ToString("0.#h");
     }
-
-    public string UpdatedString()
-    {
-        System.TimeSpan span = System.DateTimeOffset.UtcNow - Package.Updated.LocalDateTime;
-
-        if (span.TotalHours < 6) return "just now";
-        if (span.TotalHours < 24) return "today";
-        if (span.TotalHours < 48) return "yesterday";
-        if (span.TotalDays < 8) return "this week";
-        if (span.TotalDays < 15) return "last week";
-        if (span.TotalDays < 30) return "this month";
-        if (span.TotalDays < 60) return "last month";
-        if (span.TotalDays < 365) return "this year";
-        if (span.TotalDays < 365 * 2) return "last year";
-
-        return "ages ago";
-    }
-
+	
     void OnCardClicked()
     {
         OnLaunch?.Invoke();

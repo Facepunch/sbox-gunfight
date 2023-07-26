@@ -3,7 +3,7 @@
 $outline: #fff;
 $highlight: #5c5;
 
-.card-package {
+PackageCard {
   max-width: 259px;
   min-width: 250px;
   border: 1px solid transparent;
@@ -12,6 +12,8 @@ $highlight: #5c5;
   font-family: $main-font-bold;
   font-weight: 100;
   background-color: darken( $main-color, 0.5 );
+  
+  opacity: 0.6;
 
   .card-image {
     border-radius: 1px;
@@ -40,8 +42,9 @@ $highlight: #5c5;
     bottom: 0;
     flex-shrink: 0;
     font-size: 13px;
-    flex-direction: row;
+    flex-direction: row;  
     margin-top: 12px;
+    pointer-events: none;
   }
 
   .body-content {
@@ -94,9 +97,11 @@ $highlight: #5c5;
   }
 
   &.selected {
+    opacity: 1;
+    transform: scale(1.03);
+    
     .card-image {
-      border: 1px solid $main-color;
-      border-bottom: 3px solid $main-color;
+      border: 4px solid $main-color;
     }
   }
 }

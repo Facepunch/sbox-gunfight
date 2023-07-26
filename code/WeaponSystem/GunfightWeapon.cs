@@ -76,7 +76,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		TimeUntilDecay = 0f;
 	}
 	
-	[Event.Tick.Server]
+	[GameEvent.Tick.Server]
 	protected void TickServer()
 	{
 		if ( !IsDecaying ) return;

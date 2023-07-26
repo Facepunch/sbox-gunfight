@@ -31,7 +31,7 @@ public partial class NotificationManager
 		"Everything in Gunfight is subject to change."
 	};
 
-	[Event.Tick.Client]
+	[GameEvent.Tick.Client]
 	protected void TickHints()
 	{
 		if ( LastHint > 60f )

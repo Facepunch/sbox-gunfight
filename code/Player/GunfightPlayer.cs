@@ -205,7 +205,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		GamemodeSystem.Current?.PostPlayerKilled( this, LastDamage );
 	}
 
-	[Event.Tick.Client]
+	[GameEvent.Tick.Client]
 	protected void HeartbeatTick()
 	{
 		if ( this != Game.LocalPawn ) return;

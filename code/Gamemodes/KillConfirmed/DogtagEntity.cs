@@ -52,7 +52,7 @@ public partial class DogtagEntity : BaseTrigger
         Delete();
     }
 
-    [Event.Tick.Server]
+    [GameEvent.Tick.Server]
     public void TickServer()
     {
         if ( TimeSinceCreated > Lifetime )

@@ -336,7 +336,7 @@ public abstract partial class Gamemode : Entity
 		Event.Run( "gunfight.hudrender.post" );
 	}
 
-	[Event.Tick.Server]
+	[GameEvent.Tick.Server]
 	protected void EventServerTick()
 	{
 		TickServer();

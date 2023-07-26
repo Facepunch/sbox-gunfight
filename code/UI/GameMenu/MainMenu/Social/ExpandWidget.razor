@@ -27,17 +27,16 @@
 {
 	public RenderFragment Title { get; set; }
 	public RenderFragment Body { get; set; }
-	
-	bool IsExpanded { get; set; } = false;
+	public bool Expanded { get; set; } = true;
 
 	public ExpandWidget()
 	{
-		SetClass( "is-hidden", !IsExpanded );
+		SetClass( "is-hidden", !Expanded );
 	}
 
 	protected void DoClick( PanelEvent e )
 	{
-		IsExpanded ^= true;
-		SetClass( "is-hidden", !IsExpanded );
+		Expanded ^= true;
+		SetClass( "is-hidden", !Expanded );
 	}
 }

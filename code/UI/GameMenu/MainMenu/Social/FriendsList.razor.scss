@@ -11,32 +11,46 @@ FriendsList
     flex-shrink: 0;
     opacity: 0.3;
     cursor: pointer;
+    
+    &:not( .online )
+    {
+      img
+      {
+        mask-mode: luminance;
+        background-color: rgba( 0, 0, 50, 1 );
+        mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+      }
+
+      .online-status
+      {
+        opacity: 0;
+      }
+    }
+
+    &.online
+    {
+      opacity: 0.8;
+
+      .online-status
+      {
+        background-color: rgba( 0, 125, 255 );
+      }
+    }
 
     &.playing
     {
-      opacity: 1;
+      opacity: 0.8;
       
       .online-status
       {
         background-color: green;
       }
-    }   
-    
-    &.online
-    {
-      opacity: 1;
-      
-     .online-status
-     {
-       background-color: rgba( 0, 125, 255 );
-     }
     }
 
     .online-status
     {
       flex-shrink: 0;
-      
-      width: 4px;
+      width: 3px;
     }
   }
 }

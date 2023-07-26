@@ -16,41 +16,58 @@
 <root>
 	<div class="main">
 		<div class="left column">
-        	<div style="flex-grow: 1;"/>
-    
-        	<ActionButton WithBackground=@true>
-        		<Title>
-        			Quick Play
-        		</Title>
-        		<Description>
-        			Start queueing for a game quickly!
-        		</Description>
-        	</ActionButton>
-        	<ActionButton>
-	            <Title>
-		            War
-	            </Title>
-	            <Extra>
-		            <Panel class="new" />
-	            </Extra>
-        	</ActionButton>
-        	<ActionButton>
-	            <Title>
-		            Kill Confirmed
-	            </Title>
-	            <Extra>
-		            <Panel class="new" />
-	            </Extra>
-        	</ActionButton>
-        	<ActionButton>
-	            <Title>
-		            Gunfight (2v2)
-	            </Title>
-	            <Extra>
-		            <Panel class="new" />
-	            </Extra>
-            </ActionButton>
-        </div>
+			<div class="game-title">
+				Gunfight
+			</div>
+			
+			<ExpandWidget>
+				<Title>
+					Message Of The Day
+				</Title>
+				<Body>
+				<div style="gap:16px; font-size: 16px;">
+					<i>waving_hand</i>
+
+					Gunfight is a work in progress game. If you run into bugs, feel free to report them. Have fun!
+				</div>
+				</Body>
+			</ExpandWidget>
+
+			<div style="flex-grow: 1;"/>
+
+			<ActionButton WithBackground=@true>
+				<Title>
+					Quick Play
+				</Title>
+				<Description>
+					Start queueing for a game quickly!
+				</Description>
+			</ActionButton>
+			<ActionButton>
+				<Title>
+					War Room
+				</Title>
+				<Extra>
+					<Panel class="new"/>
+				</Extra>
+			</ActionButton>
+			<ActionButton>
+				<Title>
+					Kill Confirmed
+				</Title>
+				<Extra>
+					<Panel class="new"/>
+				</Extra>
+			</ActionButton>
+			<ActionButton>
+				<Title>
+					Gunfight (2v2)
+				</Title>
+				<Extra>
+					<Panel class="new"/>
+				</Extra>
+			</ActionButton>
+		</div>
     
         <div style="flex-grow: 1;"/>
     
@@ -61,8 +78,11 @@
 			        Lobbies
 		        </Title>
 				
-		        <Body>
-		        <i>waving_hand</i>
+				<Body>
+					<div style="gap:16px; font-size: 16px;">	
+				        <i>travel_explore</i>
+						There aren't any lobbies for you to join right now.
+					</div>
 		        </Body>
 	        </ExpandWidget>
         </div>
@@ -74,6 +94,7 @@
 
 	<div class="footer">
 		<div style="flex-grow: 1;"/>
-		<label>Gunfight - developed by Facepunch Studios</label>
+		<label>Developed by Facepunch Studios</label>
+		<div class="logo" />
 	</div>
 </root>

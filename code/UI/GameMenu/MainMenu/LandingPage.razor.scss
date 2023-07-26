@@ -8,6 +8,13 @@ LandingPage
   height: 100%;
   position: absolute;
   
+  .game-title
+  {
+    font-family: $main-font-bold;
+    font-size: 48px;
+    text-transform: uppercase;
+  }
+  
   > .main
   {
     padding: 64px;
@@ -28,14 +35,31 @@ LandingPage
   {
     height: 48px;
     flex-shrink: 0;
-    padding-right: 32px;
-
-    label {
+    padding-right: 26px;
+    align-items: center;
+    gap: 8px;
+    
+    label
+    {
       font-family: $main-font-bold;
       text-transform: uppercase;
       font-size: 18px;
       height: 48px;
       align-items: center;
+      opacity: 0.05;
+    }
+    
+    .logo
+    {
+      width: 32px;
+      height: 32px;
+      mask-mode: luminance;
+      background-color: rgba( 255, 255, 255, 1 );
+      
+      mask-position: center;
+      mask-size: 32px;
+      opacity: 0.3;
+      mask-image: url( https://files.facepunch.com/tony/1b2611b1/marque.png );
     }
   }
   

@@ -31,8 +31,8 @@
 	public string GetClasses( Sandbox.Friend friend )
 	{
 		var str = "";
+		if ( friend.IsOnline ) str += " online";
 		if ( friend.IsPlayingThisGame ) str += " playing";
-		else if ( friend.IsOnline ) str += " online";
 		return str;
 	}
 }

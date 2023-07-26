@@ -7,13 +7,8 @@
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "ResourcePaths": [
-    "/ui/*",
-    "/fonts/*",
-    "/models/*",
-    "/code/ui/*",
-    "/code/resource/*"
-  ],
+  "Resources": null,
+  "MenuResources": null,
   "HasCode": true,
   "CodePath": "/code/",
   "PackageReferences": [],
@@ -385,14 +380,20 @@
         {
           "Name": "Mount",
           "KeyboardCode": "T",
-          "GroupName": "Other"
+          "GroupName": "Weapon Handling"
         },
         {
           "Name": "FireMode",
           "KeyboardCode": "B",
-          "GroupName": "Other"
+          "GroupName": "Weapon Handling"
+        },
+        {
+          "Name": "UseKillstreak",
+          "KeyboardCode": "k",
+          "GroupName": "Gameplay"
         }
       ]
-    }
+    },
+    "TickRate": 50
   }
 }

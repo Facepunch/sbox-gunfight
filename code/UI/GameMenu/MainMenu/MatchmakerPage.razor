@@ -114,7 +114,12 @@
 				await Task.Delay( 1000 );
 
 				MatchmakingSystem.CurrentState = MatchmakingSystem.State.Empty;
-				await Game.Menu.StartServerAsync( 16, "My Gunfight Game", Game.Random.FromList( SelectedMaps ).FullIdent );
+
+				var lobby = await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
+				lobby.Map = Game.Random.FromArray( SelectedMaps.Select( x => x.FullIdent ).ToArray() );
+				lobby.SetData( "gunfight-gamemode", SelectedMode );
+
+				this.Navigate( "/lobby" );
 			}
 		}
 	}

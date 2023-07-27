@@ -118,14 +118,26 @@
 			</div>
 			
 			<div style="flex-grow: 1;" />
-
+			
+			@if ( Lobby.Owner.IsMe )
+			{
+				<ActionButton onclick=@StartMatch>
+					<Title>
+						Start Match
+					</Title>
+					<Extra>
+						<i>wifi</i>
+					</Extra>
+				</ActionButton>
+			}
+			
 			<ActionButton onclick=@LeaveLobby>
-            	<Title>
-            		Leave
-            	</Title>
-				<Extra>
-					<i>waving_hand</i>
-				</Extra>
+                <Title>
+                    Leave
+                </Title>
+            	<Extra>
+            		<i>waving_hand</i>
+            	</Extra>
             </ActionButton>
 		</div>
 	</div>
@@ -158,6 +170,14 @@
 		Lobby.Leave();
 
 		this.Navigate( "/" );
+	}
+
+	void StartMatch( PanelEvent e )
+	{
+		if ( Lobby.Owner.IsMe )
+		{
+			_ = Lobby.LaunchGameAsync();
+		}
 	}
 
 	protected override int BuildHash()

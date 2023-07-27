@@ -61,10 +61,7 @@
 			<ExpandWidget>
 				<Title>Game Mode</Title>
 				<Body>
-				@if ( Lobby.Data.TryGetValue( "gunfight-gamemode", out var gamemodeName ) )
-				{
-					<GamemodeCard GamemodeName=@gamemodeName/>
-				}
+					<GamemodeCard GamemodeName=@ModeName/>
 				</Body>
 			</ExpandWidget>
 
@@ -194,8 +191,23 @@
 		}
 	}
 
+	string ModeName
+	{
+		get
+		{
+			if ( Lobby == null ) return null;
+			
+			if ( Lobby.Data.TryGetValue( "gunfight-gamemode", out var mode ) )
+			{
+				return mode;
+			}
+
+			return null;
+		}
+	}
+
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( MapIdent, Lobby?.MemberCount, Lobby != null ? string.Join( ", ", Lobby.Data.Select( x => $"{x.Key}{x.Value}" ) ) : "0" );
+		return HashCode.Combine( ModeName, Lobby?.MemberCount, Lobby != null ? string.Join( ", ", Lobby.Data.Select( x => $"{x.Key}{x.Value}" ) ) : "0" );
 	}
 }

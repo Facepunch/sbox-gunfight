@@ -5,6 +5,11 @@
 @inherits Panel
 @attribute [StyleSheet]
 
+@if ( Gamemode == null )
+{
+	return;
+}
+
 <root>
 	<div class="background" />
     <label class="name">@Gamemode.Title</label>
@@ -19,6 +24,8 @@
 	{
 		set
 		{
+			if ( value == null ) return;
+			
 			Gamemode = FindGamemode( value ) ?? throw new Exception( $"Couldn't find gamemode with type name {value}" );
 		}
 	}
@@ -34,5 +41,10 @@
 		}
 		
 		return null;
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Gamemode?.Title.GetHashCode() );
 	}
 }

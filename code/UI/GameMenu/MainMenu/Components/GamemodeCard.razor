@@ -2,12 +2,13 @@
 @using Sandbox.UI;
 
 @namespace Facepunch.Gunfight.MainMenu
+@inherits Panel
 @attribute [StyleSheet]
 
 <root>
-		<div class="background" />
-    	<label class="name">@Gamemode.Title</label>
-    	<label class="description">@Gamemode.Description</label>
+	<div class="background" />
+    <label class="name">@Gamemode.Title</label>
+    <label class="description">@Gamemode.Description</label>
 </root>
 
 @code

@@ -1,0 +1,18 @@
+LobbyChat
+{
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  
+  > .entries
+  {
+    max-height: 256px;
+    overflow: scroll;
+    flex-direction: column;
+  }
+  
+  > TextEntry
+  {
+    
+  }
+}

@@ -1,0 +1,55 @@
+@using Sandbox;
+@using Sandbox.Menu
+@using Sandbox.UI;
+
+@namespace Facepunch.Gunfight.MainMenu
+@attribute [StyleSheet]
+@inherits Panel
+
+<root>
+	<div class="entries" @ref=EntriesPanel>
+		<LobbyChatEntry Message="Welcome to Gunfight!" />
+	</div>
+
+	<TextEntry @ref=TextEntry onsubmit=@OnSubmit placeholder="Chat.." />
+</root>
+
+@code
+{
+	ILobby Lobby => Game.Menu.Lobby;
+
+	Panel EntriesPanel { get; set; }
+	TextEntry TextEntry { get; set; }
+	
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		Lobby.OnChatMessage = OnChatMessage;
+	}
+
+	void OnChatMessage( Friend friend, string message )
+	{
+		Log.Info($"Chat message - {friend.Id}: {message}" );
+
+		var newEntry = new LobbyChatEntry()
+		{
+			User = friend,
+			Message = message
+		};
+		
+		EntriesPanel.AddChild( newEntry );
+	}
+
+	TimeSince LastMessageSent = 2;
+	void OnSubmit( PanelEvent e )
+	{
+		if ( LastMessageSent < 2 ) return;
+
+		LastMessageSent = 0;
+		
+		var text = TextEntry.Text;
+		
+		Lobby.SendChat( text );
+
+		TextEntry.Text = "";
+	}
+}

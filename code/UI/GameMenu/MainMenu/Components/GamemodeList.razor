@@ -1,0 +1,34 @@
+@using Sandbox
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+	@foreach ( var gamemode in TypeLibrary.GetTypes<Gamemode>().Where( x => !x.IsAbstract ) )
+	{
+		<div class="entry @GetPanelClasses( gamemode )" onclick=@(() => Select( gamemode ))>
+			<div class="background" />
+			<label class="name">@gamemode.Title</label>
+			<label class="description">@gamemode.Description</label>
+		</div>
+	}
+</root>
+
+@code
+{
+	public string SelectedGamemode { get; set; } = "KillConfirmedGamemode";
+	
+	void Select( TypeDescription gamemode )
+	{
+		SelectedGamemode = gamemode.Name;
+		StateHasChanged();
+	}
+
+	string GetPanelClasses( TypeDescription gamemode )
+	{
+		if ( gamemode.Name == SelectedGamemode ) return "selected";
+		return "";
+	}
+}

@@ -1,0 +1,70 @@
+@import "/Resource/Styles/hud.scss";
+
+GamemodeList
+{
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+  overflow: scroll;
+  
+  > .entry
+  {
+    height: 96px;
+    flex-direction: column;
+    padding: 16px;
+    justify-content: center;
+    cursor: pointer;
+    
+    &.selected
+    {
+      > .background
+      {
+        background-color: rgba( $main-color, 1 );
+      }
+    }
+    
+    &:hover
+    {
+      > .background 
+      {
+        background-color: rgba(darken($main-color, 0.1), 1);
+      }
+    }
+
+    &:active
+    {
+      > .background
+      {
+        background-color: rgba(darken($main-color, 0.2), 1);
+      }
+    }
+    
+    > .background
+    {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      transition: background-color 0.1s ease;
+      
+      background-size: contain;
+      mask-mode: luminance;
+      background-color: rgba( 10, 10, 10, 1 );
+      opacity: 0.5;
+      mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+    }
+    
+    > .name
+    {
+      font-family: $main-font-bold;
+      text-transform: uppercase;
+      height: 28px;
+    }
+    
+    > .description
+    {
+      font-family: $main-font;
+      font-size: 16px;
+    }
+  }
+}

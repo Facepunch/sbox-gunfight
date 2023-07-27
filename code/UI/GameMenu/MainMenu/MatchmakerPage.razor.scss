@@ -7,16 +7,10 @@ MatchmakerPage
       width: 50%;
     }
   }
-  
-  .mode-list
-  {
-    overflow-y: scroll;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
 }
 
 PackageList
 {
   max-height: 460px;
+  min-height: 250px;
 }

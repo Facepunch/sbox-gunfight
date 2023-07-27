@@ -24,33 +24,7 @@
 					Modes
 				</Title>
 				<Body>
-				<div class="mode-list">
-					<ActionButton onclick=@(() => SetMode( "WarGamemode" ))>
-						<Title>
-							War Room
-						</Title>
-						<Extra>
-							<Panel class="new"/>
-						</Extra>
-					</ActionButton>
-					
-					<ActionButton onclick=@(() => SetMode( "KillConfirmedGamemode" ))>
-						<Title>
-							Kill Confirmed
-						</Title>
-						<Extra>
-							<Panel class="new"/>
-						</Extra>
-					</ActionButton>
-					<ActionButton onclick=@(() => SetMode( "GunfightGamemode" ))>
-						<Title>
-							Gunfight (2v2)
-						</Title>
-						<Extra>
-							<Panel class="new"/>
-						</Extra>
-					</ActionButton>
-				</div>
+					<GamemodeList />
 				</Body>
 			</ExpandWidget>
 

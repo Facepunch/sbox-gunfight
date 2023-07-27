@@ -66,6 +66,8 @@
 	bool queryFinished = false;
 	async Task RunQuery()
 	{
+		queryFinished = false;
+
 		var result = await Package.FindAsync( Query, Take, 0 );
 
 		if ( result != null )

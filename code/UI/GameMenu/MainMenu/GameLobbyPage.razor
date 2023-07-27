@@ -1,0 +1,106 @@
+@using Sandbox;
+@using Sandbox.Menu
+@using Sandbox.UI;
+
+@implements INavigatorPage
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+@if ( Lobby == null )
+{
+	<root>
+		<div class="main">
+			<div class="left column">
+				<div class="game-title">
+					Gunfight
+				</div>
+						
+				<div class="game-subtitle">
+					Joining Lobby...
+				</div>
+			</div>
+		</div>
+	</root>
+
+	return;
+}
+
+<root>
+	<div class="main">
+		<div class="left column">
+			<div class="game-title">
+				Gunfight
+			</div>
+			
+			<div class="game-subtitle">
+				Current Lobby
+			</div>
+		</div>
+		
+		<div style="flex-grow: 1;" />
+		
+		<div class="right column">
+			<div class="game-title">
+				Lobby Members
+			</div>
+			
+			<div class="member-list">
+				@for ( int i = 0; i < Lobby.MaxMembers; i++ )
+				{
+					if ( Lobby.Members.Count() - 1 >= i )
+					{
+						var member = Members.ElementAt( i );
+						
+						<div class="member-entry">
+							<div class="background"/>
+				
+							<img src="avatar:@member.Id"/>
+							<label class="name">@member.Name</label>
+							<div style="flex-grow: 1;"/>
+				
+							@if ( Lobby.Owner.Id == member.Id )
+							{
+								<i>key</i>
+							}
+						</div>
+					}
+					else
+					{
+						<div class="member-entry">
+							<div class="background"/>
+							
+							<div style="flex-grow: 1;"/>
+							<label class="name">Waiting for player...</label>
+							<div style="flex-grow: 1;"/>
+						</div>
+					}
+				}
+			</div>
+			
+			<div style="flex-grow: 1;" />
+
+			<ActionButton onclick=@LeaveLobby>
+            	<Title>
+            		Leave
+            	</Title>
+				<Extra>
+					<i>waving_hand</i>
+				</Extra>
+            </ActionButton>
+		</div>
+	</div>
+</root>
+
+@code
+{
+	ILobby Lobby => Game.Menu.Lobby;
+
+	IEnumerable<Friend> Members => Lobby.Members.OrderByDescending( x => x.Id == Lobby.Owner.Id );
+	
+	void LeaveLobby( PanelEvent e )
+	{
+		Lobby.Leave();
+		
+		this.Navigate( "/" );
+	}
+}

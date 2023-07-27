@@ -28,5 +28,18 @@
         DefaultUrl = "/";
 	    AddDestination( "/", typeof( LandingPage ) );
 	    AddDestination( "/find", typeof( MatchmakerPage ) );
+	    AddDestination( "/lobby", typeof( GameLobbyPage ) );
     }
+	
+	[GameEvent.Menu.ServerJoined]
+	public void OnServerJoined() => Navigate("/active");
+
+	[GameEvent.Menu.LobbyJoined]
+	public void OnLobbyJoined() => Navigate("/lobby" );
+
+	[GameEvent.Menu.LobbyLeave]
+	public void OnLobbyLeave() => Navigate("/");
+
+	[GameEvent.Menu.ServerLeave]
+	public void OnServerLeave() => Navigate("/");
 }

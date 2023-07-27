@@ -27,14 +27,17 @@
 }
 
 <root>
+	<div class="background-override" @ref=BackgroundOverride />
+	<div class="background-mask" @ref=BackgroundMask />
+	
 	<div class="main">
 		<div class="left column">
 			<div class="game-title">
 				Gunfight
 			</div>
-			
+
 			<label class="game-subtitle">@(Lobby.Owner.Name)'s lobby - @(Lobby.MemberCount)/@(Lobby.MaxMembers)</label>
-			
+
 			@* <label class="stats-title">Debug Stats</label>
 			
 			@foreach ( var data in Lobby.Data )
@@ -44,62 +47,62 @@
 					<label>@data.Key: @data.Value</label>
 				</div>
 			} *@
-			
+
 			<ExpandWidget>
 				<Title>Map</Title>
 				<Body>
-					@if ( MapPackage != null )
-					{
-						<PackageCard Fill=@true Package=@MapPackage/>
-					}
+				@if ( MapPackage != null )
+				{
+					<PackageCard Fill=@true Package=@MapPackage/>
+				}
 				</Body>
 			</ExpandWidget>
-			
+
 			<ExpandWidget>
-			    <Title>Game Mode</Title>
+				<Title>Game Mode</Title>
 				<Body>
-					@if ( Lobby.Data.TryGetValue( "gunfight-gamemode", out var gamemodeName ) )
-					{
-						<GamemodeCard GamemodeName=@gamemodeName/>
-					}
+				@if ( Lobby.Data.TryGetValue( "gunfight-gamemode", out var gamemodeName ) )
+				{
+					<GamemodeCard GamemodeName=@gamemodeName/>
+				}
 				</Body>
 			</ExpandWidget>
-			
+
 			<div style="flex-grow: 1;"/>
-			
-			<LobbyChat />
+
+			<LobbyChat/>
 		</div>
-		
-		<div style="flex-grow: 1;" />
-		
+
+		<div style="flex-grow: 1;"/>
+
 		<div class="right column">
 			<div class="game-subtitle">
 				Member List
 			</div>
-			
+
 			<div class="member-list">
 				@for ( int i = 0; i < Lobby.MaxMembers; i++ )
 				{
 					var index = i + 1;
-					
+
 					if ( Lobby.Members.Count() - 1 >= i )
 					{
 						var member = Members.ElementAt( i );
-						
+
 						<div class="member-entry">
 							<div class="background"/>
 							<label class="index">@index</label>
 							<img src="avatar:@member.Id"/>
-							
+
 							@if ( Lobby.Owner.Id == member.Id )
-                            {
-                            	<i class="owner">wifi</i>
-                            }
-                            else
-                            {
-                            	<i>account_circle</i>
-                            }
-							
+							{
+								<i class="owner">wifi</i>
+							}
+							else
+							{
+								<i>account_circle</i>
+							}
+
 							<label class="name">@member.Name</label>
 							<div style="flex-grow: 1;"/>
 						</div>
@@ -116,9 +119,9 @@
 					}
 				}
 			</div>
-			
-			<div style="flex-grow: 1;" />
-			
+
+			<div style="flex-grow: 1;"/>
+
 			@if ( Lobby.Owner.IsMe )
 			{
 				<ActionButton onclick=@StartMatch>
@@ -130,15 +133,15 @@
 					</Extra>
 				</ActionButton>
 			}
-			
+
 			<ActionButton onclick=@LeaveLobby>
-                <Title>
-                    Leave
-                </Title>
-            	<Extra>
-            		<i>waving_hand</i>
-            	</Extra>
-            </ActionButton>
+				<Title>
+					Leave
+				</Title>
+				<Extra>
+					<i>waving_hand</i>
+				</Extra>
+			</ActionButton>
 		</div>
 	</div>
 </root>
@@ -151,18 +154,29 @@
 	Package MapPackage { get; set; }
 	
 	IEnumerable<Friend> Members => Lobby.Members.OrderByDescending( x => x.Id == Lobby.Owner.Id );
+	
+	Panel BackgroundOverride { get; set; }
+	Panel BackgroundMask { get; set; }
 
 	protected override void OnAfterTreeRender( bool firstTime )
 	{
-		if ( firstTime )
-		{
-			_ = SetMapAsync();
-		}
+		_ = SetMapAsync();
 	}
 
 	async Task SetMapAsync()
 	{
 		MapPackage = await Package.Fetch( MapIdent, false );
+		
+		if ( MapPackage != null )
+		{
+			if ( MapPackage.Screenshots.Any() )
+			{
+				var screenshot = MapPackage.Screenshots.Last();
+				
+				BackgroundOverride.Style.BackgroundImage = Texture.Load( screenshot.Url );
+				BackgroundMask.Style.MaskImage = Texture.Load( screenshot.Url );
+			}
+		}
 	}
 	
 	void LeaveLobby( PanelEvent e )

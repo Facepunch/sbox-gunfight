@@ -2,6 +2,34 @@
 
 GameLobbyPage
 {
+  > .background-override
+  {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: -50px;
+    background-image: url( https://files.facepunch.com/tony/1b2611b1/sbox_XilmgXb4DS.jpg );
+    background-size: cover;
+    mask-image: linear-gradient( to right, black, grey, black );
+  }
+  
+  > .background-mask
+  {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: -50px;
+
+    background-color: $main-color;
+    
+    mask-image: url( https://files.facepunch.com/tony/1b2611b1/sbox_XilmgXb4DS.jpg );
+    background-size: cover;
+    mask-size: cover;
+    mask-mode: luminance;
+  }
+  
   > .main
   {
     .left

@@ -16,15 +16,15 @@
 			<div class="game-subtitle">
 				Dying to get into the action?
 			</div>
-			
+
 			<div style="flex-grow: 1;"/>
-			
+
 			<ExpandWidget>
 				<Title>
 					Modes
 				</Title>
 				<Body>
-					<GamemodeList />
+				<GamemodeList/>
 				</Body>
 			</ExpandWidget>
 
@@ -37,27 +37,27 @@
 				</Extra>
 			</ActionButton>
 		</div>
-		
+
 		<div style="flex-grow: 1;"/>
 
 		<div class="right column grow">
 			<div style="flex-grow: 1;"/>
 
 			<ExpandWidget>
-            	<Title>
-	                <label>Maps - @SelectedMaps.Count selected</label>
-            	</Title>
-            	<Body>
-                <PackageList OnUpdate=@OnMapSelectionChanged MaxSelection=@(0)>
-	                <WhenNothingFound>
-		                <label>No maps found...</label>
-	                </WhenNothingFound>
-	                <WhenSearching>
-		                <label>Searching for maps...</label>
-	                </WhenSearching>
-                </PackageList>
-            	</Body>
-            </ExpandWidget>
+				<Title>
+					<label>Maps - @SelectedMaps.Count selected</label>
+				</Title>
+				<Body>
+				<PackageList OnUpdate=@OnMapSelectionChanged MaxSelection=@(0)>
+					<WhenNothingFound>
+						<label>No maps found...</label>
+					</WhenNothingFound>
+					<WhenSearching>
+						<label>Searching for maps...</label>
+					</WhenSearching>
+				</PackageList>
+				</Body>
+			</ExpandWidget>
 
 			<ActionButton onclick=@Search>
 				<Title>

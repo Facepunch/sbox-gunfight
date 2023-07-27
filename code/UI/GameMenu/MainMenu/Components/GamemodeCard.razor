@@ -1,0 +1,37 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace Facepunch.Gunfight.MainMenu
+@attribute [StyleSheet]
+
+<root>
+		<div class="background" />
+    	<label class="name">@Gamemode.Title</label>
+    	<label class="description">@Gamemode.Description</label>
+</root>
+
+@code
+{
+	public TypeDescription Gamemode { get; set; }
+
+	public string GamemodeName
+	{
+		set
+		{
+			Gamemode = FindGamemode( value ) ?? throw new Exception( $"Couldn't find gamemode with type name {value}" );
+		}
+	}
+
+	TypeDescription FindGamemode( string name )
+	{
+		foreach ( var gamemode in TypeLibrary.GetTypes<Gamemode>().Where( x => !x.IsAbstract ) )
+		{
+			if ( gamemode.Name == name || gamemode.Title == name )
+			{
+				return gamemode;
+			}
+		}
+		
+		return null;
+	}
+}

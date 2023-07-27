@@ -8,11 +8,7 @@
 <root>
 	@foreach ( var gamemode in TypeLibrary.GetTypes<Gamemode>().Where( x => !x.IsAbstract ) )
 	{
-		<div class="entry @GetPanelClasses( gamemode )" onclick=@(() => Select( gamemode ))>
-			<div class="background" />
-			<label class="name">@gamemode.Title</label>
-			<label class="description">@gamemode.Description</label>
-		</div>
+		<GamemodeCard Gamemode=@gamemode class="@GetPanelClasses( gamemode )" onclick=@(() => Select( gamemode )) />
 	}
 </root>
 

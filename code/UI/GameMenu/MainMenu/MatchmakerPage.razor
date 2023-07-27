@@ -47,15 +47,17 @@
 
 			<ExpandWidget>
             	<Title>
-            		Maps
+	                <label>Maps - @SelectedMaps.Count selected</label>
             	</Title>
             	<Body>
-            	<div class="package-list" style="gap:16px; font-size: 16px;">
-            		@foreach ( var package in MapPackages )
-		            {
-			            <PackageCard OnLaunch=@(() => ToggleMap( package )) class="@GetPackageClasses( package )" Package=@package />
-		            }
-            	</div>
+                <PackageList OnUpdate=@OnMapSelectionChanged MaxSelection=@(0)>
+	                <WhenNothingFound>
+		                <label>No maps found...</label>
+	                </WhenNothingFound>
+	                <WhenSearching>
+		                <label>Searching for maps...</label>
+	                </WhenSearching>
+                </PackageList>
             	</Body>
             </ExpandWidget>
 
@@ -73,46 +75,13 @@
 
 @code
 {
-	List<Package> MapPackages { get; set; } = new();
 	List<Package> SelectedMaps { get; set; } = new();
-
-	void ToggleMap( Package package )
+	
+	void OnMapSelectionChanged( List<Package> packages )
 	{
-		if ( SelectedMaps.Contains( package ) )
-		{
-			SelectedMaps.Remove( package );
-			return;
-		}
-		
-		SelectedMaps.Add( package );
+		SelectedMaps = packages;
 	}
-
-	string GetPackageClasses( Package package )
-	{
-		if ( SelectedMaps.Contains( package ) ) return "selected";
-
-		return "";
-	}
-
-	protected override void OnAfterTreeRender( bool firstTime )
-	{
-		_ = RunQuery();
-	}
-
-	async Task RunQuery()
-	{
-		var query = "type:map game:facepunch.gunfight";
-		var result = await Package.FindAsync( query, 100, 0 );
-
-		if ( result != null )
-		{
-			var packages = result.Packages;
-			MapPackages = packages.ToList();
-
-			StateHasChanged();
-		}
-	}
-
+	
 	void Search()
 	{
 		//
@@ -121,10 +90,5 @@
 	void Return()
 	{
 		this.Navigate( "/" );
-	}
-
-	protected override int BuildHash()
-	{
-		return HashCode.Combine( MapPackages.Count );
 	}
 }

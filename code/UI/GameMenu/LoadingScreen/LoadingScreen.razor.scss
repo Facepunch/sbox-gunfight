@@ -1,0 +1,99 @@
+@import "/Resource/Styles/hud.scss";
+
+LoadingScreen
+{
+  background-color: #262934;
+  padding: 128px 128px;
+  opacity: 1;
+  flex-direction: column;
+  font-size: 25px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: all 0.3s ease-out;
+  color: rgba( white, 0.8 );
+  justify-content: center;
+  align-items: center;
+
+  .background
+  {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url( https://files.facepunch.com/tony/1b2611b1/sbox_XilmgXb4DS.jpg );
+    opacity: 0.2;
+    background-size: contain;
+    filter: blur( 20px );
+    mask: linear-gradient( 45deg, black, white, white );
+    mask-scope: filter;
+  }
+
+  &:intro
+  {
+    opacity: 0;
+    transform: scaleX( 1.1 );
+  }
+
+  .game-title
+  {
+    font-family: $main-font;
+    font-weight: 700;
+    font-size: 70px;
+    color: rgba( white, 1 );
+  }
+
+  .controls
+  {
+    flex-direction: column;
+    font-family: $main-font;
+    text-transform: uppercase;
+
+    > label
+    {
+      text-align: center;
+    }
+  }
+
+  .progress
+  {
+    margin: 20px 0px;
+    background-color: #0003;
+    width: 500px;
+    border-radius: 5px;
+    overflow: hidden;
+
+    .bar
+    {
+      background-color: #c0cee710;
+      position: absolute;
+      height: 100%;
+    }
+
+    .text-left
+    {
+      flex-grow: 1;
+      flex-shrink: 0;
+    }
+
+    .text-right
+    {
+      flex-shrink: 0;
+    }
+
+    .text-left, .text-right
+    {
+      padding: 5px 20px;
+      white-space: nowrap;
+      font-weight: bold;
+      opacity: 0.25;
+      font-size: 20px;
+      align-items: flex-end;
+
+      .unit
+      {
+        font-size: 15px;
+        opacity: 0.5;
+      }
+    }
+  }
+}

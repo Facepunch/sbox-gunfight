@@ -30,8 +30,21 @@ GameLobbyPage
     mask-mode: luminance;
   }
   
+  &:intro
+  {
+    transition: all 0.25s ease;
+    
+    > .main
+    {
+      opacity: 0;
+      transform: translateX( 128px ) scale( 0.9 );
+    }
+  }
+  
   > .main
   {
+    transition: all 0.25s ease;
+    
     .left
     {
       width: 30%;

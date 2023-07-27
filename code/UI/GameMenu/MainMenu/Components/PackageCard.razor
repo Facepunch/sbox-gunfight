@@ -4,7 +4,7 @@
 @namespace Facepunch.Gunfight.MainMenu
 @attribute [StyleSheet]
 
-<root class="card card-vertical card-package">
+<root class="card card-vertical card-package @(Fill ? "fill" : "")">
 
     <div class="card-image" onclick=@OnCardClicked style="background-image: url( @Package.Thumb )">
 
@@ -55,6 +55,8 @@
     public System.Action OnLaunch { get; set; }
 
     public bool Decorated { get; set; } = true;
+
+	public bool Fill { get; set; } = false;
 	
     public string FormatHoursPlayed()
     {

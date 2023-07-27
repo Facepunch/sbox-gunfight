@@ -3,7 +3,8 @@
 $outline: #fff;
 $highlight: #5c5;
 
-PackageCard {
+PackageCard
+{
   max-width: 259px;
   min-width: 250px;
   border: 1px solid transparent;
@@ -14,6 +15,19 @@ PackageCard {
   background-color: darken( $main-color, 0.5 );
   
   opacity: 0.6;
+  
+  &.fill
+  {
+    flex-grow: 1;
+    max-width: 999px;
+    aspect-ratio: 2;
+    
+    .card-image
+    {
+      aspect-ratio: 2;
+      
+    }
+  }
 
   .card-image {
     border-radius: 1px;

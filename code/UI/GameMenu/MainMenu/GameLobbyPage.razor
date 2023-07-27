@@ -4,6 +4,7 @@
 
 @implements INavigatorPage
 @attribute [StyleSheet]
+@inherits Panel
 @namespace Facepunch.Gunfight.MainMenu
 
 @if ( Lobby == null )
@@ -34,7 +35,7 @@
 			
 			<label class="game-subtitle">@(Lobby.Owner.Name)'s lobby - @(Lobby.MemberCount)/@(Lobby.MaxMembers)</label>
 			
-			<label class="stats-title">Debug Stats</label>
+			@* <label class="stats-title">Debug Stats</label>
 			
 			@foreach ( var data in Lobby.Data )
 			{
@@ -42,30 +43,36 @@
 					<i>feed</i>
 					<label>@data.Key: @data.Value</label>
 				</div>
-			}
+			} *@
 			
 			<ExpandWidget>
 				<Title>Map</Title>
 				<Body>
-				<i>waving_hand</i>
+					@if ( MapPackage != null )
+					{
+						<PackageCard Fill=@true Package=@MapPackage/>
+					}
 				</Body>
 			</ExpandWidget>
 			
 			<ExpandWidget>
 			    <Title>Game Mode</Title>
-			    <Body>
-			        <i>waving_hand</i>
-			    </Body>
+				<Body>
+					@if ( Lobby.Data.TryGetValue( "gunfight-gamemode", out var gamemodeName ) )
+					{
+						<GamemodeCard GamemodeName=@gamemodeName/>
+					}
+				</Body>
 			</ExpandWidget>
 			
 			<div style="flex-grow: 1;"/>
 			
-			<ActionButton>
+			@* <ActionButton>
 				<Title>Chat</Title>
 				<Extra>
 					<i>chat</i>
 				</Extra>
-			</ActionButton>
+			</ActionButton> *@
 		</div>
 		
 		<div style="flex-grow: 1;" />
@@ -132,13 +139,34 @@
 @code
 {
 	ILobby Lobby => Game.Menu.Lobby;
-
+	string MapIdent => Lobby.Map;
+	
+	Package MapPackage { get; set; }
+	
 	IEnumerable<Friend> Members => Lobby.Members.OrderByDescending( x => x.Id == Lobby.Owner.Id );
+
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		if ( firstTime )
+		{
+			_ = SetMapAsync();
+		}
+	}
+
+	async Task SetMapAsync()
+	{
+		MapPackage = await Package.Fetch( MapIdent, false );
+	}
 	
 	void LeaveLobby( PanelEvent e )
 	{
 		Lobby.Leave();
-		
+
 		this.Navigate( "/" );
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( MapIdent, Lobby?.MemberCount, Lobby != null ? string.Join( ", ", Lobby.Data.Select( x => $"{x.Key}{x.Value}" ) ) : "0" );
 	}
 }

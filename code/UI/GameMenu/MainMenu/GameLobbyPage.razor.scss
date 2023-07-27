@@ -4,7 +4,31 @@ GameLobbyPage
 {
   > .main
   {
-    .left, .right
+    .left
+    {
+      width: 30%;
+      
+      > .stats-title
+      {
+        font-size: 14px;
+        font-family: $main-font-bold;
+        height: 10px;
+      }
+      
+      > .stat
+      {
+        font-size: 12px;
+        gap: 8px;
+        height: 6px;
+        
+        label
+        {
+          font-family: $main-font-semibold;
+        }
+      }
+    }
+    
+    .right
     {
       width: 25%;
     }
@@ -21,6 +45,7 @@ GameLobbyPage
         align-items: center;
         align-content: center;
         padding: 16px;
+        gap: 8px;
         
         &:nth-child(even)
         {
@@ -43,12 +68,19 @@ GameLobbyPage
           mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
         }
         
-        > .name
+        > .name, .index
         {
           font-size: 18px;
         }
         
-        i
+        .index
+        {
+          opacity: 0.2;
+          font-family: $main-font-bold;
+          margin-right: 12px;
+        }
+        
+        .owner
         {
           color: gold;
         }
@@ -57,7 +89,6 @@ GameLobbyPage
         {
           height: 32px;
           width: 32px;
-          margin-right: 16px;
         }
       }
     }

@@ -32,45 +32,83 @@
 				Gunfight
 			</div>
 			
-			<div class="game-subtitle">
-				Current Lobby
-			</div>
+			<label class="game-subtitle">@(Lobby.Owner.Name)'s lobby - @(Lobby.MemberCount)/@(Lobby.MaxMembers)</label>
+			
+			<label class="stats-title">Debug Stats</label>
+			
+			@foreach ( var data in Lobby.Data )
+			{
+				<div class="stat">
+					<i>feed</i>
+					<label>@data.Key: @data.Value</label>
+				</div>
+			}
+			
+			<ExpandWidget>
+				<Title>Map</Title>
+				<Body>
+				<i>waving_hand</i>
+				</Body>
+			</ExpandWidget>
+			
+			<ExpandWidget>
+			    <Title>Game Mode</Title>
+			    <Body>
+			        <i>waving_hand</i>
+			    </Body>
+			</ExpandWidget>
+			
+			<div style="flex-grow: 1;"/>
+			
+			<ActionButton>
+				<Title>Chat</Title>
+				<Extra>
+					<i>chat</i>
+				</Extra>
+			</ActionButton>
 		</div>
 		
 		<div style="flex-grow: 1;" />
 		
 		<div class="right column">
-			<div class="game-title">
-				Lobby Members
+			<div class="game-subtitle">
+				Member List
 			</div>
 			
 			<div class="member-list">
 				@for ( int i = 0; i < Lobby.MaxMembers; i++ )
 				{
+					var index = i + 1;
+					
 					if ( Lobby.Members.Count() - 1 >= i )
 					{
 						var member = Members.ElementAt( i );
 						
 						<div class="member-entry">
 							<div class="background"/>
-				
+							<label class="index">@index</label>
 							<img src="avatar:@member.Id"/>
+							
+							@if ( Lobby.Owner.Id == member.Id )
+                            {
+                            	<i class="owner">wifi</i>
+                            }
+                            else
+                            {
+                            	<i>account_circle</i>
+                            }
+							
 							<label class="name">@member.Name</label>
 							<div style="flex-grow: 1;"/>
-				
-							@if ( Lobby.Owner.Id == member.Id )
-							{
-								<i>key</i>
-							}
 						</div>
 					}
 					else
 					{
 						<div class="member-entry">
 							<div class="background"/>
-							
+							<label class="index">@index</label>
 							<div style="flex-grow: 1;"/>
-							<label class="name">Waiting for player...</label>
+							<label class="index">Waiting for player</label>
 							<div style="flex-grow: 1;"/>
 						</div>
 					}

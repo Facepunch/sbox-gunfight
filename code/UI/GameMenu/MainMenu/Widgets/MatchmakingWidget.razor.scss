@@ -71,12 +71,30 @@ MatchmakingWidget
     {
       background-color: $finished-color;
     }
-    
+
     > .icon-container
     {
       > .icon
       {
         background-image: radial-gradient( $finished-color, rgba( $finished-color, 0 ), transparent );
+        animation-name: freakout;
+        animation-duration: 0.2s;
+        animation-timing-function: linear;
+      }
+    }
+  }
+  &.error
+  {
+    > .background
+    {
+      background-color: red;
+    }
+
+    > .icon-container
+    {
+      > .icon
+      {
+        background-image: radial-gradient( red, rgba( red, 0 ), transparent );
         animation-name: freakout;
         animation-duration: 0.2s;
         animation-timing-function: linear;

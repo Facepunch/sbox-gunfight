@@ -24,8 +24,32 @@
 					Modes
 				</Title>
 				<Body>
-				<div style="gap:16px; font-size: 16px;">
-					modes modes modes
+				<div class="mode-list">
+					<ActionButton onclick=@(() => SetMode( "WarGamemode" ))>
+						<Title>
+							War Room
+						</Title>
+						<Extra>
+							<Panel class="new"/>
+						</Extra>
+					</ActionButton>
+					
+					<ActionButton onclick=@(() => SetMode( "KillConfirmedGamemode" ))>
+						<Title>
+							Kill Confirmed
+						</Title>
+						<Extra>
+							<Panel class="new"/>
+						</Extra>
+					</ActionButton>
+					<ActionButton onclick=@(() => SetMode( "GunfightGamemode" ))>
+						<Title>
+							Gunfight (2v2)
+						</Title>
+						<Extra>
+							<Panel class="new"/>
+						</Extra>
+					</ActionButton>
 				</div>
 				</Body>
 			</ExpandWidget>
@@ -76,15 +100,45 @@
 @code
 {
 	List<Package> SelectedMaps { get; set; } = new();
+	string SelectedMode { get; set; } = "KillConfirmedGamemode";
 	
 	void OnMapSelectionChanged( List<Package> packages )
 	{
 		SelectedMaps = packages;
 	}
+
+	void SetMode( string mode )
+	{
+		SelectedMode = mode;
+	}
 	
 	void Search()
 	{
-		//
+		_ = StartSearching();
+	}
+
+	async Task StartSearching()
+	{
+		// Need to select a map.
+		if ( SelectedMaps.Count < 1 ) return;
+		
+		var result = await MatchmakingSystem.Search( SelectedMode, 
+			SelectedMaps.Select( x => x.FullIdent ).ToArray() );
+
+		// If we don't have a result, and we've been only matchmaking for less than 60s, search
+		if ( !result )
+		{
+			if ( MatchmakingSystem.TimeSinceSearch < 60 )
+			{
+				_ = StartSearching();
+			}
+			// If we've been searching for a while, let's make our own session with a random map from the selection?
+			else
+			{
+				MatchmakingSystem.CurrentState = MatchmakingSystem.State.Empty;
+				await Game.Menu.StartServerAsync( 16, "My Gunfight Game", Game.Random.FromList( SelectedMaps ).FullIdent );
+			}
+		}
 	}
 	
 	void Return()

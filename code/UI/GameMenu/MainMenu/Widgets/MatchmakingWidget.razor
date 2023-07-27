@@ -4,6 +4,12 @@
 
 @inherits Panel
 @attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+@if ( MatchmakingSystem.CurrentState == MatchmakingSystem.State.Empty )
+{
+	return;
+}
 
 <root class="@GetClasses()">
 	<div class="background"/>
@@ -24,25 +30,28 @@
 	
 	public string CurrentState
 	{
-		get
-		{
-			return "Searching for a match...";
-		}
+		get => MatchmakingSystem.CurrentState switch {
+			MatchmakingSystem.State.Empty => null,
+			MatchmakingSystem.State.Searching => "Searching for a match...",
+			MatchmakingSystem.State.Found => "Found a match.. Connecting..",
+			MatchmakingSystem.State.NothingAvailable => "Couldn't find any match... trying again..",
+			_ => throw new ArgumentOutOfRangeException()
+		};
 	}
 
 	public string TimeString
 	{
 		get
 		{
-			return TimeSpan.FromSeconds( Time ).ToString( @"mm\:ss" );
+			return TimeSpan.FromSeconds( MatchmakingSystem.TimeSinceSearch ).ToString( @"mm\:ss" );
 		}
 	}
 
 	public string GetClasses()
 	{
 		var str = "";
-		// Test behaviour
-		if ( Time > 10f ) str = $"{str} finished";
+		if ( MatchmakingSystem.CurrentState == MatchmakingSystem.State.Found ) str = $"{str} finished";
+		if ( MatchmakingSystem.CurrentState == MatchmakingSystem.State.NothingAvailable ) str = $"{str} error";
 		
 		return str;
 	}

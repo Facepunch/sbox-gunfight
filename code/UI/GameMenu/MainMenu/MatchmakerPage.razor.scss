@@ -4,8 +4,15 @@ MatchmakerPage
   {
     .left, .right
     {
-      width: 45%;
+      width: 50%;
     }
+  }
+  
+  .mode-list
+  {
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    gap: 16px;
   }
 }
 

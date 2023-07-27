@@ -1,8 +1,8 @@
 ﻿using Sandbox.Menu;
 
-namespace Facepunch.Gunfight.Utility;
+namespace Facepunch.Gunfight;
 
-public partial class MatchmakerUtility
+public partial class MatchmakingSystem
 {
 	// Check to see if a lobby has a compatible map with our query
 	static bool CompatibleMap( ILobby lobby, string[] maps = null )
@@ -31,6 +31,8 @@ public partial class MatchmakerUtility
 		var lobbies = Game.Menu.Lobbies
 			.Where( x => CompatibleGameMode( x, gamemode ) )
 			.Where( x => CompatibleMap( x, maps ) );
+
+		Log.Info( $"We found {lobbies.Count()} lobbies"  );
 		
 		return lobbies.FirstOrDefault();
 	}

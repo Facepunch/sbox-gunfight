@@ -1,7 +1,7 @@
 ﻿
-namespace Facepunch.Gunfight.Utility;
+namespace Facepunch.Gunfight;
 
-public partial class MatchmakerUtility
+public partial class MatchmakingSystem
 {
 	// Check to see if a lobby has a compatible map with our query
 	static bool CompatibleMap( Sandbox.Services.ServerList.Entry server, string[] maps = null )

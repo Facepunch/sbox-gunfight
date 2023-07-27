@@ -3,6 +3,7 @@
 
 @implements INavigatorPage
 @attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
 
 <style>
 	.new
@@ -84,7 +85,7 @@
 				<Body>
 					<div style="gap:16px; font-size: 16px;">	
 				        <i>travel_explore</i>
-						There aren't any lobbies for you to join right now.
+						There aren't any lobbies for you to join right now. <a onclick=@(() => MakeLobbyAsync() )>Make one?</a>
 					</div>
 		        </Body>
 	        </ExpandWidget>
@@ -101,5 +102,13 @@
 	void Matchmake( PanelEvent e )
 	{
 		this.Navigate( "/find" );
+	}
+
+	async Task MakeLobbyAsync()
+	{
+		await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
+
+		var lobby = Game.Menu.Lobby;
+		lobby.Map = "facepunch.prison";
 	}
 }

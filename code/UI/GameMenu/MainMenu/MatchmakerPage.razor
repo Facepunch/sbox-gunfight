@@ -128,13 +128,17 @@
 		// If we don't have a result, and we've been only matchmaking for less than 60s, search
 		if ( !result )
 		{
-			if ( MatchmakingSystem.TimeSinceSearch < 60 )
+			if ( MatchmakingSystem.TimeSinceSearch < 15 )
 			{
 				_ = StartSearching();
 			}
 			// If we've been searching for a while, let's make our own session with a random map from the selection?
 			else
 			{
+				MatchmakingSystem.CurrentState = MatchmakingSystem.State.Found;
+
+				await Task.Delay( 1000 );
+
 				MatchmakingSystem.CurrentState = MatchmakingSystem.State.Empty;
 				await Game.Menu.StartServerAsync( 16, "My Gunfight Game", Game.Random.FromList( SelectedMaps ).FullIdent );
 			}

@@ -19,6 +19,8 @@ $alternate-font-bold: Oxanium-Bold;
 @import "_pickupfeed.scss";
 @import "_capturepoints.scss";
 @import "_spawnoverview.scss";
+@import "_crosshair.scss";
+@import "_gamestatus.scss";
 
 HudRootPanel
 {
@@ -98,7 +100,7 @@ vitals {
         }
             
         flex-direction: row-reverse;
-        font-family: Oswald-Light;
+        font-family: $main-font-bold;
         width: 335px;
         height: 100%;
         align-items: flex-end;
@@ -224,7 +226,7 @@ Stance {
 }
 
 Ammo {
-    border-right: 3px solid rgba( $main-color, 1 );
+    border-right: 3px solid rgba( $theme-color, 1 );
     padding-right: 30px;
 
     .info {
@@ -254,6 +256,47 @@ Ammo {
             color: white;
             text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
             height: 55px;
+        }
+    }
+}
+
+FireModes
+{
+    top: 90px;
+    left: 50px;
+    position: absolute;
+    align-items: center;
+    align-content: center;
+
+    gap: 8px;
+
+    > .firemode {
+        margin-right: 4px;
+        width: 35px;
+        height: 35px;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+
+        img {
+            width: 25px;
+            height: 25px;
+        }
+
+        background-color: rgba(40, 38, 38, 0.5);
+        border: 2px solid rgba(0, 0, 0, 0.3);
+
+        &.active {
+
+            width: 40px;
+            height: 40px;
+            background-color: rgba( $theme-color, 0.5 );
+            border: 2px solid $theme-color;
+
+            img {
+                width: 30px;
+                height: 30px;
+            }
         }
     }
 }

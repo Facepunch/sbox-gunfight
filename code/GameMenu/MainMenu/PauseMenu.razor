@@ -1,0 +1,45 @@
+﻿@using Sandbox
+@using Sandbox.UI
+
+@implements INavigatorPage
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+	<div class="main">
+		<div class="left column grow">
+			<div class="game-title">
+				Gunfight
+			</div>
+			
+			<div style="flex-grow: 1;"/>
+    
+			<ActionButton onclick=@Disconnect>
+				<Title>
+					Disconnect
+				</Title>
+			</ActionButton>
+    
+			<ActionButton onclick=@Quit>
+				<Title>
+					Quit Game
+				</Title>
+			</ActionButton>
+		</div>
+	</div>
+</root>
+
+@code
+{
+	void Quit( PanelEvent e )
+	{
+		Game.Menu.Close();
+	}
+
+	void Disconnect( PanelEvent e )
+	{
+		Game.Menu.LeaveServer( "Leaving" );
+		this.Navigate( "/" );
+	}
+}

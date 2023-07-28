@@ -29,10 +29,14 @@
 	    AddDestination( "/", typeof( LandingPage ) );
 	    AddDestination( "/find", typeof( MatchmakerPage ) );
 	    AddDestination( "/lobby", typeof( GameLobbyPage ) );
+	    AddDestination( "/ingame", typeof( PauseMenu ) );
     }
-	
+
 	[GameEvent.Menu.ServerJoined]
-	public void OnServerJoined() => Navigate("/active");
+	public void OnServerJoined()
+	{
+		Navigate( "/ingame" );
+	}
 
 	[GameEvent.Menu.LobbyJoined]
 	public void OnLobbyJoined() => Navigate("/lobby" );

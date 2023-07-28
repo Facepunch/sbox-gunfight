@@ -118,7 +118,7 @@ public partial class PlayerController : PawnController
 
 	protected float GetGroundFriction()
 	{
-		return CurrentMechanic?.GetGroundFriction() ?? 8f;
+		return CurrentMechanic?.GetGroundFriction() ?? 4f;
 	}
 
 	protected bool CanAim()

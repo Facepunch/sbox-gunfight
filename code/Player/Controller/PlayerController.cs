@@ -200,8 +200,7 @@ public partial class PlayerController : PawnController
 		if ( CanJump() && Input.Pressed( "Jump" ) && !JumpWinding )
 		{
 			JumpWinding = true;
-			JumpWindup = 0.125f;
-			_ = new ScreenShake.Jump();
+			JumpWindup = 0;
 		}
 
 		if ( JumpWindup && JumpWinding )

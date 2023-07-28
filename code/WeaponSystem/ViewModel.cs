@@ -216,7 +216,7 @@ public partial class ViewModel : BaseViewModel
 			rotationOffsetTarget *= Rotation.From( SprintAngleOffset * sprintLerp * sprintBob * 0.2f );
 			ApplyPositionOffset( -SprintPositionOffset * sprintBob2 * 0.3f, sprintLerp );
 
-			Camera.FieldOfView += 5f * sprintLerp;
+			Camera.FieldOfView += -2f * sprintLerp;
 
 			// Vertical Look
 			var lookDownDot = Camera.Rotation.Forward.Dot( Vector3.Down );

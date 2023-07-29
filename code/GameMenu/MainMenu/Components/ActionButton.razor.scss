@@ -6,6 +6,11 @@ ActionButton
   height: 64px;
   width: 356px;
 
+  &.disabled
+  {
+    opacity: 0.5;
+  }
+  
   .main
   {
     flex-direction: column;
@@ -80,27 +85,30 @@ ActionButton
     }
   }
 
-  &:hover
+  &:not( .disabled )
   {
-    cursor: pointer;
-    border-left: 4px solid $theme-color;
-    
-    .title, .description
+    &:hover
     {
-      opacity: 1;
+      cursor: pointer;
+      border-left: 4px solid $theme-color;
+
+      .title, .description
+      {
+        opacity: 1;
+      }
+
+      left: 4px;
     }
     
-    left: 4px;
-  }
-  
-  &:active
-  {
-    .title, .description {
-      transform: scale( 0.99 );
-      
-    }    
-    > .background {
-      background-color: rgb(57, 83, 143);
+    &:active
+    {
+      .title, .description {
+        transform: scale( 0.99 );
+
+      }
+      > .background {
+        background-color: rgb(57, 83, 143);
+      }
     }
   }
 }

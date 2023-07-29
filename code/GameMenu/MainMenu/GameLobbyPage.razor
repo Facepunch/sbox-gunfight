@@ -132,6 +132,14 @@
 					</Title>
 				</ActionButton>
 			}
+			else
+			{
+				<ActionButton Disabled=@true>
+					<Title>
+						Need 1 to ready up
+					</Title>
+				</ActionButton>
+			}
 			
 			<ActionButton onclick=@LeaveLobby>
 				<Title>
@@ -212,15 +220,7 @@
 
 		this.Navigate( "/" );
 	}
-
-	void StartMatch( PanelEvent e )
-	{
-		if ( Lobby.Owner.IsMe )
-		{
-			_ = Lobby.LaunchGameAsync();
-		}
-	}
-
+	
 	string ModeName
 	{
 		get

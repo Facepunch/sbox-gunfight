@@ -30,13 +30,15 @@
 	public RenderFragment Extra { get; set; }
 	public string WithBackground { get; set; } = null;
 	public string Blend { get; set; } = null;
+	public bool Disabled { get; set; }
 	
 	Panel Background { get; set; }
 	
 	protected override void OnAfterTreeRender( bool firstTime )
 	{
 		SetClass( "has-background", !string.IsNullOrEmpty( WithBackground ) );
-
+		SetClass("disabled", Disabled  );
+		
 		if ( HasClass( "has-background" ) )
 		{
 			Background.Style.MaskImage = Texture.Load( WithBackground );

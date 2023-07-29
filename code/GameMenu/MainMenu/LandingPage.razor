@@ -38,10 +38,10 @@
 
 			<ActionButton WithBackground="https://files.facepunch.com/tony/1b1311b1/boxes.webm" onclick=@Matchmake>
 				<Title>
-					Quick Play
+					Kill Confirmed
 				</Title>
 				<Description>
-					Start queueing for a game quickly!
+					Each kill will leave behind dog tags for players to collect.
 				</Description>
 			</ActionButton>
 		<ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@Matchmake>
@@ -55,40 +55,14 @@
 					<Panel class="new"/>
 				</Extra>
 			</ActionButton>
-			<ActionButton onclick=@Matchmake>
-				<Title>
-					Kill Confirmed
-				</Title>
-				<Extra>
-					<Panel class="new"/>
-				</Extra>
-			</ActionButton>
-			<ActionButton onclick=@Matchmake>
-				<Title>
-					Gunfight (2v2)
-				</Title>
-				<Extra>
-					<Panel class="new"/>
-				</Extra>
-			</ActionButton>
 		</div>
     
         <div style="flex-grow: 1;"/>
     
         <div class="right column">
 	        <div style="flex-grow: 1;"/>
-	        <ExpandWidget>
-		        <Title>
-			        Lobbies
-		        </Title>
-				
-				<Body>
-					<div style="gap:16px; font-size: 16px;">	
-				        <i>travel_explore</i>
-						There aren't any lobbies for you to join right now. <a onclick=@(() => MakeLobbyAsync() )>Make one?</a>
-					</div>
-		        </Body>
-	        </ExpandWidget>
+	        
+	        <QuickLobbyListWidget />
         </div>
         
         <div class="column" style="left:24px;">
@@ -102,14 +76,5 @@
 	void Matchmake( PanelEvent e )
 	{
 		this.Navigate( "/find" );
-	}
-
-	async Task MakeLobbyAsync()
-	{
-		await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
-
-		var lobby = MainMenu.CurrentLobby;
-		lobby.Map = "eagleone.killhouse_chimona";
-		lobby.SetData( "gunfight-gamemode", "KillConfirmedGamemode" );
 	}
 }

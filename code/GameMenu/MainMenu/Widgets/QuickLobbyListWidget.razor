@@ -1,0 +1,90 @@
+﻿@using Sandbox
+@using Sandbox.Menu
+@using Sandbox.Razor
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+	<ExpandWidget>
+		<Title>
+			Lobbies
+		</Title>
+		<Body>
+			@if ( Debug )
+			{
+				<div class="lobby">
+					<div class="background"/>
+
+					<label class="name">Lobby</label>
+					<div style="flex-grow: 1;" />
+					<label class="slots">1 / 16</label>
+				</div>
+				<div class="lobby">
+					<div class="background"/>
+
+					<label class="name">Lobby</label>
+					<div style="flex-grow: 1;" />
+					<label class="slots">1 / 16</label>
+				</div>
+				<div class="lobby">
+					<div class="background"/>
+
+					<label class="name">Lobby</label>
+					<div style="flex-grow: 1;" />
+					<label class="slots">1 / 16</label>
+				</div>
+			}
+
+			@foreach ( var lobby in Game.Menu.Lobbies.OrderByDescending( x => x.MemberCount ).Take( 5 ) )
+			{
+				<div class="lobby" onclick=@(() => JoinLobbyAsync( lobby ) )>
+					<div class="background"/>
+
+					<label class="name">@GetLobbyName( lobby )</label>
+					<div style="flex-grow: 1;" />
+					<label class="slots">@lobby.MemberCount / @lobby.MaxMembers</label>
+				</div>
+			}
+		
+			@if ( Game.Menu.Lobbies.Length < 1 )
+			{
+				<div class="lobby" onclick=@MakeLobbyAsync>
+					<div class="background" />
+					<label class="name">There are no lobbies at the moment. Make one?</label>
+				</div>
+			}
+		</Body>
+	</ExpandWidget>
+</root>
+
+@code
+{
+	bool Debug => false;
+
+	string GetLobbyName( ILobby lobby )
+	{
+		return $"{lobby.Owner.Name}'s lobby";
+	}
+
+	protected override int BuildHash()
+	{
+		return System.HashCode.Combine( Game.Menu.Lobbies.Length );
+	}
+	
+	async Task MakeLobbyAsync()
+	{
+		await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
+
+		var lobby = MainMenu.CurrentLobby;
+		lobby.Map = "eagleone.killhouse_chimona";
+		lobby.SetData( "gunfight-gamemode", "KillConfirmedGamemode" );
+	}
+
+	async Task JoinLobbyAsync( ILobby lobby )
+	{
+		await MatchmakingSystem.JoinLobby( lobby );
+	}
+}

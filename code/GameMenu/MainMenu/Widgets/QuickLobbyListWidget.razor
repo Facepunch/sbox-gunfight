@@ -85,6 +85,7 @@
 
 	async Task JoinLobbyAsync( ILobby lobby )
 	{
+		MatchmakingSystem.TimeSinceSearch = 0;
 		await MatchmakingSystem.JoinLobby( lobby );
 		this.Navigate( "/lobby" );
 	}

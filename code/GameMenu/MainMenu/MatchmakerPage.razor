@@ -100,7 +100,7 @@
 		
 		var result = await MatchmakingSystem.Search( SelectedMode, 
 			SelectedMaps.Select( x => x.FullIdent ).ToArray() );
-
+		
 		// If we don't have a result, and we've been only matchmaking for less than 60s, search
 		if ( !result )
 		{
@@ -123,6 +123,10 @@
 
 				this.Navigate( "/lobby" );
 			}
+		}
+		else
+		{
+			if ( MainMenu.CurrentLobby != null ) this.Navigate( "/lobby" );
 		}
 	}
 	

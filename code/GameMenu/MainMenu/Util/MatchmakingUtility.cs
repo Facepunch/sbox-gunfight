@@ -8,7 +8,7 @@ public partial class MatchmakingSystem
 	public static State CurrentState { get; set; } = State.Empty;
 	public static TimeSince TimeSinceSearch { get; set; } = 0;
 
-	public static async Task JoinServer( ServerList.Entry server )
+	public static async Task<bool> JoinServer( ServerList.Entry server )
 	{
 		CurrentState = State.Found;
 		await Task.Delay( 1000 );
@@ -16,22 +16,32 @@ public partial class MatchmakingSystem
 		CurrentState = State.Empty;
 		// Join server
 		Game.Menu.ConnectToServer( server.SteamId );
+
+		return true;
 	}
 
-	public static async Task JoinLobby( ILobby lobby )
+	public static async Task<bool> JoinLobby( ILobby lobby )
 	{
 		CurrentState = State.Found;
 		await Task.Delay( 1000 );
 
 		var result = await lobby.JoinAsync();
+		
+		
 		if ( !result )
 		{
+			Log.Trace( "Failed to join lobby" );
 			CurrentState = State.Searching;
 		}
 		else
 		{
+			Log.Trace( $"Joined lobby successfully {lobby}" );
 			CurrentState = State.Empty;
+
+			MainMenu.MainMenu.CurrentLobby = lobby;
 		}
+
+		return result;
 	}
 	
 	public static async Task<bool> Search( string mode = null, string[] maps = null, int reservedSlots = 1 )
@@ -45,15 +55,13 @@ public partial class MatchmakingSystem
 
 		if ( lobby != null )
 		{
-			await JoinLobby( lobby );
-			return true;
+			return await JoinLobby( lobby );
 		}
 
 		var server = await FindServer( mode, maps, reservedSlots );
 		if ( server != null )
 		{
-			await JoinServer( server.Value );
-			return true;
+			return await JoinServer( server.Value );
 		}
 
 		CurrentState = State.NothingAvailable;

@@ -44,7 +44,7 @@
 					Start queueing for a game quickly!
 				</Description>
 			</ActionButton>
-			<ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@Matchmake>
+		<ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@Matchmake>
 				<Title>
 					War Room
 				</Title>
@@ -108,7 +108,7 @@
 	{
 		await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
 
-		var lobby = Game.Menu.Lobby;
+		var lobby = MainMenu.CurrentLobby;
 		lobby.Map = "eagleone.killhouse_chimona";
 		lobby.SetData( "gunfight-gamemode", "KillConfirmedGamemode" );
 	}

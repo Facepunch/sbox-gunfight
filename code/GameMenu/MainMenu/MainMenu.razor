@@ -1,3 +1,4 @@
+@using Sandbox.Menu
 @using Sandbox.UI;
 
 @inherits Sandbox.UI.NavHostPanel
@@ -23,7 +24,22 @@
 
 @code
 {
-    public MainMenu()
+	static ILobby _currentLobby;
+	public static ILobby CurrentLobby
+	{
+		get
+		{
+			if ( _currentLobby == null ) return Game.Menu.Lobby;
+
+			return _currentLobby;
+		}
+		set
+		{
+			_currentLobby = value;
+		}
+	}
+
+	public MainMenu()
     {
         DefaultUrl = "/";
 	    AddDestination( "/", typeof( LandingPage ) );

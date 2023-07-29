@@ -79,6 +79,9 @@ GameLobbyPage
       width: 80%;
       flex-direction: column;
       
+      flex-grow: 1;
+      overflow: scroll;
+      
       > .member-entry
       {
         width: 100%;
@@ -109,6 +112,14 @@ GameLobbyPage
           mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
         }
         
+        &.ready
+        {
+          background-color: rgba( 60, 90, 60, 1 );
+          animation-name: jump;
+          animation-duration: 1s;
+          animation-timing-function: ease-in-out;
+        }
+        
         > .name, .index
         {
           font-size: 18px;
@@ -133,5 +144,20 @@ GameLobbyPage
         }
       }
     }
+  }
+}
+
+@keyframes jump
+{
+  0% {
+    background-color: rgba( 60, 90, 60, 1 );
+  }
+
+  50% {
+    background-color: rgba( 60, 120, 60, 1 );
+  }
+
+  100% {
+    background-color: rgba( 60, 90, 60, 1 );
   }
 }

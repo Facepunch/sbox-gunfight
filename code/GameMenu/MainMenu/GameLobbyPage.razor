@@ -86,7 +86,7 @@
 					{
 						var member = Members.ElementAt( i );
 
-						<div class="member-entry">
+						<div class="member-entry @(Lobby.IsReady( member ) ? "ready" : "")">
 							<div class="background"/>
 							<label class="index">@index</label>
 							<img src="avatar:@member.Id"/>
@@ -102,6 +102,11 @@
 
 							<label class="name">@member.Name</label>
 							<div style="flex-grow: 1;"/>
+							
+							@if ( Lobby.IsReady( member ) )
+							{
+								<i>sports_esports</i>
+							}
 						</div>
 					}
 					else
@@ -118,6 +123,15 @@
 			</div>
 
 			<div style="flex-grow: 1;"/>
+			
+			@if ( Lobby.HasReadyCountdown )
+			{
+				<ActionButton>
+					<Title>
+						<label>Starting in @TimeSpan.FromSeconds( Lobby.ReadyCountdown ).ToString( @"ss" )</label>
+					</Title>
+				</ActionButton>
+			}
 			
 			<ActionButton onclick=@LeaveLobby>
 				<Title>
@@ -140,7 +154,14 @@
 					}
 				</Title>
 				<Extra>
-					<i>add</i>
+					@if ( Lobby.IsLocalPlayerReady )
+					{
+						<i>remove</i>
+					}
+					else
+					{
+						<i>add</i>
+					}
 				</Extra>
 			</ActionButton>
 		</div>
@@ -217,6 +238,8 @@
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( ModeName, Lobby?.MemberCount, Lobby != null ? string.Join( ", ", Lobby.Data.Select( x => $"{x.Key}{x.Value}" ) ) : "0" );
+		if ( !Lobby.IsValid() ) return 0;
+
+		return HashCode.Combine( ModeName, Lobby?.IsLocalPlayerReady, Lobby?.MemberCount, Lobby != null ? string.Join( ", ", Lobby.Data.Select( x => $"{x.Key}{x.Value}" ) ) : "0" );
 	}
 }

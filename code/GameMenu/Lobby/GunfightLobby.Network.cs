@@ -31,6 +31,8 @@ public partial class GunfightLobby
 		}
 		
 		_lobby.ReceiveMessages( OnNetworkMessage );
+
+		_ = TickReadySystem();
 	}
 }
 

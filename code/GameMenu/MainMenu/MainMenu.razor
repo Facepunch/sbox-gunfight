@@ -30,6 +30,8 @@
 	    AddDestination( "/find", typeof( MatchmakerPage ) );
 	    AddDestination( "/lobby", typeof( GameLobbyPage ) );
 	    AddDestination( "/ingame", typeof( PauseMenu ) );
+	    
+	    BindClass( "ingame", () => Game.InGame );
     }
 
 	[GameEvent.Menu.ServerJoined]

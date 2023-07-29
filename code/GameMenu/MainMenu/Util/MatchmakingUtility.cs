@@ -38,7 +38,7 @@ public partial class MatchmakingSystem
 			Log.Trace( $"Joined lobby successfully {lobby}" );
 			CurrentState = State.Empty;
 
-			MainMenu.MainMenu.CurrentLobby = lobby;
+			MainMenu.MainMenu.CurrentLobby = new( lobby );
 		}
 
 		return result;

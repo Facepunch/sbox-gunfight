@@ -24,12 +24,12 @@
 
 @code
 {
-	static ILobby _currentLobby;
-	public static ILobby CurrentLobby
+	static GunfightLobby _currentLobby;
+	public static GunfightLobby CurrentLobby
 	{
 		get
 		{
-			if ( _currentLobby == null ) return Game.Menu.Lobby;
+			if ( _currentLobby == null && Game.Menu.Lobby != null ) _currentLobby = new GunfightLobby( Game.Menu.Lobby );
 
 			return _currentLobby;
 		}
@@ -64,4 +64,13 @@
 
 	[GameEvent.Menu.ServerLeave]
 	public void OnServerLeave() => Navigate("/");
+
+	public override void Tick()
+	{
+		foreach ( var lobby in GunfightLobby.All )
+		{
+			lobby.Tick();
+		}
+	}
+
 }

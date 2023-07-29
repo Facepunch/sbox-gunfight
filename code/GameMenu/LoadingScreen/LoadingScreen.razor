@@ -82,7 +82,7 @@
 	Panel BackgroundPanel { get; set; }
 	Package Map { get; set; }
 
-	ILobby Lobby => MainMenu.CurrentLobby;
+	GunfightLobby Lobby => MainMenu.CurrentLobby;
 
 	bool IsTest => Progress.Title.Equals( "Testing Loading Progress.." );
 

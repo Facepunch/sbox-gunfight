@@ -118,19 +118,7 @@
 			</div>
 
 			<div style="flex-grow: 1;"/>
-
-			@if ( Lobby.Owner.IsMe )
-			{
-				<ActionButton onclick=@StartMatch>
-					<Title>
-						Start Match
-					</Title>
-					<Extra>
-						<i>wifi</i>
-					</Extra>
-				</ActionButton>
-			}
-
+			
 			<ActionButton onclick=@LeaveLobby>
 				<Title>
 					Leave
@@ -139,16 +127,37 @@
 					<i>waving_hand</i>
 				</Extra>
 			</ActionButton>
+			
+			<ActionButton onclick=@ToggleReadyStatus>
+				<Title>
+					@if ( Lobby.IsLocalPlayerReady )
+					{
+						<Label>Un-Ready</Label>
+					}
+					else
+					{
+						<Label>Ready</Label>
+					}
+				</Title>
+				<Extra>
+					<i>add</i>
+				</Extra>
+			</ActionButton>
 		</div>
 	</div>
 </root>
 
 @code
 {
-	ILobby Lobby => MainMenu.CurrentLobby;
+	GunfightLobby Lobby => MainMenu.CurrentLobby;
 	string MapIdent => Lobby?.Map;
-	
+
 	Package MapPackage { get; set; }
+
+	void ToggleReadyStatus( PanelEvent e )
+	{
+		Lobby.SetReady( !Lobby.IsLocalPlayerReady );
+	}
 	
 	IEnumerable<Friend> Members => Lobby.Members.OrderByDescending( x => x.Id == Lobby.Owner.Id );
 	
@@ -195,7 +204,7 @@
 	{
 		get
 		{
-			if ( Lobby == null ) return null;
+			if ( !Lobby.IsValid() ) return null;
 			
 			if ( Lobby.Data.TryGetValue( "gunfight-gamemode", out var mode ) )
 			{

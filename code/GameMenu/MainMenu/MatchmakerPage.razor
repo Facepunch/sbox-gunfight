@@ -59,14 +59,25 @@
 				</Body>
 			</ExpandWidget>
 
-			<ActionButton onclick=@Search>
-				<Title>
-					Search
-				</Title>
-				<Extra>
-					<i>search</i>
-				</Extra>
-			</ActionButton>
+			<span style="gap: 16px;">
+				<ActionButton onclick=@CreateLobby>
+					<Title>
+						Create Lobby
+					</Title>
+					<Extra>
+						<i>wifi</i>
+					</Extra>
+				</ActionButton>
+				<ActionButton onclick=@Search>
+					<Title>
+						Search
+					</Title>
+					<Extra>
+						<i>search</i>
+					</Extra>
+				</ActionButton>
+			</span>
+
 		</div>
 	</div>
 </root>
@@ -80,17 +91,13 @@
 	{
 		SelectedMaps = packages;
 	}
-
-	void SetMode( string mode )
-	{
-		SelectedMode = mode;
-	}
 	
 	void Search()
-	{
+	{	
+		// TODO - Return error if we can't search?
 		_ = StartSearching();
 		
-		this.Navigate( "/" );
+		if ( MatchmakingSystem.CurrentState != MatchmakingSystem.State.Empty ) this.Navigate( "/" );
 	}
 
 	async Task StartSearching()
@@ -133,5 +140,20 @@
 	void Return()
 	{
 		this.Navigate( "/" );
+	}
+
+	async Task CreateLobby()
+	{
+		if ( SelectedMaps.Count < 1 )
+		{
+			// TODO - Error
+			return;
+		}
+		
+		await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
+
+		var lobby = MainMenu.CurrentLobby;
+		lobby.Map = Game.Random.FromArray( SelectedMaps.Select( x => x.FullIdent ).ToArray() );
+		lobby.SetData( "gunfight-gamemode", "KillConfirmedGamemode" );
 	}
 }

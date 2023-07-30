@@ -40,4 +40,19 @@ public partial class GunfightLobby : IValid
 	{
 		return a?._lobby != b?._lobby;
 	}
+	
+	public void Tick()
+	{
+		if ( _lobby == null )
+			return;
+
+		if ( !_lobby.IsMember )
+		{
+			_lobby = null;
+			return;
+		}
+
+		TickNetwork();
+		_ = TickReadySystem();
+	}
 }

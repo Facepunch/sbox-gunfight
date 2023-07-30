@@ -17,5 +17,7 @@ public partial class GunfightLobby
 		public void SetData( string key, string value ) => _lobby.SetData( key, value );
 		public Task LaunchGameAsync() => _lobby.LaunchGameAsync();
 		public ImmutableDictionary<string, string> Data { get => _lobby.Data; }
-	#endregion
+		public void BroadcastMessage( ByteStream msg ) => _lobby.BroadcastMessage( msg );
+
+		#endregion
 }

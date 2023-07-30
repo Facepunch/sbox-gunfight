@@ -16,10 +16,10 @@ public partial class GunfightLobby
 	/// <param name="isReady"></param>
 	public void SetReady( bool isReady )
 	{
-		var b = ByteStream.Create( 1 );
-		b.Write( MessageType.ReadyState );
-		b.Write( isReady );
-		_lobby.BroadcastMessage( b );
+		using ( var msg = StartNetMessage( "SetReady" ) )
+		{
+			msg.Write( isReady );
+		}
 	}
 
 	/// <summary>
@@ -64,5 +64,14 @@ public partial class GunfightLobby
 				await _lobby.LaunchGameAsync();
 			}
 		}
+	}
+
+	[NetMessage.OnReceived( "SetReady" )]
+	public static void NetReceive_SetReady( NetMessage msg )
+	{
+		var sender = msg.Sender;
+		var state = msg.Read<bool>();
+
+		msg.Lobby.OnReady( sender, state );	
 	}
 }

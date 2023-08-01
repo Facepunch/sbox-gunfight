@@ -32,7 +32,7 @@
   "AmmoType": "SMG",
   "ClipSize": 30,
   "StandardClip": 30,
-  "ReloadTime": 3,
+  "ReloadTime": 2,
   "ReloadSingle": false,
   "MaxEffectiveRange": 2048,
   "ViewModelSetup": {

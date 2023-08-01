@@ -46,7 +46,7 @@ public partial class GunfightPlayer
 		{
 			// Perform holster on weapon
 			IsHolstering = true;
-			TimeUntilHolstered = 0.5f;
+			TimeUntilHolstered = 0.2f;
 			var wpn = ActiveChild as GunfightWeapon;
 			wpn?.Holster();
 		}

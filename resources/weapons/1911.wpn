@@ -1,12 +1,12 @@
 {
-  "WeaponName": "1911",
-  "WeaponShortName": "1911",
+  "WeaponName": "USP-M",
+  "WeaponShortName": "USP-M",
   "Slot": "Secondary",
   "HoldType": "Pistol",
   "Model": "models/m1911/w_m1911.vmdl",
   "ViewModel": "models/m1911/fp_m1911.vmdl",
   "Icon": "models/m1911/w_m1911.vmdl.png",
-  "BaseFireRate": 0.2,
+  "BaseFireRate": 0.135,
   "DefaultFireMode": "Semi",
   "DamageFlags": [
     "bullet"
@@ -28,8 +28,8 @@
   "BaseAimTime": 0.2,
   "BulletRange": 5000,
   "AmmoType": "Pistol",
-  "ClipSize": 7,
-  "StandardClip": 7,
+  "ClipSize": 15,
+  "StandardClip": 15,
   "ReloadTime": 2,
   "ReloadSingle": false,
   "MaxEffectiveRange": 2048,

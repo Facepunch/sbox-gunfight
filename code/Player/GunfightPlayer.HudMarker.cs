@@ -40,7 +40,7 @@ public partial class GunfightPlayer
 		builder.Text = $"{Client.Name}";
 		builder.MaxDistance = isEnemy ? 1000000f : 10000000f;
 		builder.DistanceScale = 0.5f;
-		builder.Position = AimRay.Position + Vector3.Up * 80f;
+		builder.Position = AimRay.Position + Vector3.Up * 20f;
 
 		// Classes
 		builder.Classes["friendly"] = friendState == TeamSystem.FriendlyStatus.Friendly;

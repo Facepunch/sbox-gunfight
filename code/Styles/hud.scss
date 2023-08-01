@@ -263,11 +263,13 @@ Ammo {
 FireModes
 {
     top: 90px;
-    left: 50px;
+    left: 90px;
     position: absolute;
     align-items: center;
     align-content: center;
-
+    justify-content: flex-end;
+    width: 250px;
+    
     gap: 8px;
 
     > .firemode {
@@ -284,14 +286,12 @@ FireModes
         }
 
         background-color: rgba(40, 38, 38, 0.5);
-        border: 2px solid rgba(0, 0, 0, 0.3);
 
         &.active {
 
             width: 40px;
             height: 40px;
-            background-color: rgba( $theme-color, 0.5 );
-            border: 2px solid $theme-color;
+            background-color: rgba( $main-color, 0.5 );
 
             img {
                 width: 30px;

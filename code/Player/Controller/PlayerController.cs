@@ -152,6 +152,8 @@ public partial class PlayerController : PawnController
 		EyeLocalPosition = Vector3.Up * RealEyeHeight;
 	}
 
+	[ConVar.Client(( "gunfight_aim_debug" ) )]
+	public static bool UseAimDebug { get; set; }
 
 	public override void Simulate()
 	{
@@ -159,8 +161,7 @@ public partial class PlayerController : PawnController
 
 		UpdateBBox();
 
-		if ( Weapon.IsValid() && Input.Down( "Attack2" ) )
-		// if ( Weapon.IsValid() )
+		if ( Weapon.IsValid() && Input.Down( "Attack2" ) || UseAimDebug )
 		{
 			if ( !IsAiming )
 			{

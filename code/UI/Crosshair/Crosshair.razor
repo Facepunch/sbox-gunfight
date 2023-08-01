@@ -89,7 +89,7 @@
         if ( !weapon.IsValid() ) return;
         if ( player.Controller == null ) return;
 
-	    SetClass( "visible", !isAiming );
+	    SetClass( "visible", !isAiming || PlayerController.UseAimDebug );
 	    // SetClass( "visible", true );
 
         var speed = player?.Velocity.Length.LerpInverse( 0, 350, true ) ?? 0;

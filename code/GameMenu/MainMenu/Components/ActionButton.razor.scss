@@ -59,6 +59,7 @@ ActionButton
       background-color: rgba( 10, 10, 10, 1 );
       opacity: 0.5;
       mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+      box-shadow: 4px 4px 25px rgba( black, 0.2 );
     }
   }
   
@@ -82,6 +83,7 @@ ActionButton
       mask-position: center;
       background-color: $main-color;
       mask-image: url( https://files.facepunch.com/tony/1b1311b1/boxes.webm );
+      box-shadow: 4px 4px 25px rgba( black, 0.2 );
     }
   }
 

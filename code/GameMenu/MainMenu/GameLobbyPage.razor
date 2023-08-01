@@ -196,6 +196,13 @@
 	protected override void OnAfterTreeRender( bool firstTime )
 	{
 		_ = SetMapAsync();
+
+		if ( Lobby != null ) Lobby.OnReadyStateChanged = OnReadyStateChanged;
+	}
+
+	protected void OnReadyStateChanged( Friend friend, bool ready )
+	{
+		StateHasChanged();
 	}
 
 	async Task SetMapAsync()

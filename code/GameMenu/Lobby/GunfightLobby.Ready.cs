@@ -10,6 +10,8 @@ public partial class GunfightLobby
 	private TimeUntil TimeUntilGameStart = 0;
 	private bool IsAnyoneReady => ReadyStates.Any( x => x.Value == true );
 	
+	public Action<Friend, bool> OnReadyStateChanged { get; set; }
+	
 	/// <summary>
 	/// Sets our ready up state.
 	/// </summary>
@@ -41,6 +43,8 @@ public partial class GunfightLobby
 		{
 			TimeUntilGameStart = 12;
 		}
+
+		OnReadyStateChanged?.Invoke( friend, readyState );
 	}
 
 	public bool IsReady( Friend friend )

@@ -51,6 +51,9 @@ public class GunfightCamera
 
 			return;
 		}
+		
+		if ( Game.LocalPawn is GunfightPlayer player )
+			Target = player;
 
 		if ( !Target.IsValid() )
 			Target = GetPlayers().FirstOrDefault();

@@ -123,7 +123,7 @@ internal class GunfightSpectatorCamera : GunfightCamera
 		}
 	}
 
-	[Event( "boomer.spectator.changedtarget" )]
+	[Event( "gunfight.spectator.changedtarget" )]
 	protected void OnTargetChanged( GunfightPlayer oldTarget, GunfightPlayer newTarget )
 	{
 		var curWeapon = newTarget?.ActiveChild as GunfightWeapon;

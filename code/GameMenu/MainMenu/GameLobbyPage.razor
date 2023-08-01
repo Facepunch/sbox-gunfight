@@ -179,7 +179,7 @@
 @code
 {
 	GunfightLobby Lobby => MainMenu.CurrentLobby;
-	string MapIdent => Lobby?.Map;
+	string MapIdent => Lobby.IsValid() ? Lobby.Map : null;
 
 	Package MapPackage { get; set; }
 

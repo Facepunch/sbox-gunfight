@@ -16,13 +16,15 @@
     position: absolute;
     width: 225px;
     height: 59px;
-    background-image: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 53.13%, rgba(0, 0, 0, 0) 100%);
+    background-image: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.3) 53.13%, rgba(0, 0, 0, 0) 100%);
   }
 
-  > .head {
+  > .head
+  {
+    top: -4px;
     height: 3px;
     margin-bottom: 4px;
-    background-image: linear-gradient( 270deg, rgba($theme-color, 0) 0%, $theme-color 49.48%, rgba($theme-color, 0) 100% );
+    background-image: linear-gradient( to right, rgba( $theme-color, 1 ) 0%, rgba( $theme-color, 0 ) 25.48%, rgba( $theme-color, 0 ) 75%, rgba( $theme-color, 1 ) 100% );
   }
 
   > .location {
@@ -41,6 +43,7 @@
     padding-bottom: 0px;
     background-color: $theme-color;
     font-size: 28px;
+    height: 46px;
     color: black;
     text-align: center;
     justify-content: center;

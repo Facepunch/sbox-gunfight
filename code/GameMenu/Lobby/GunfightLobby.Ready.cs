@@ -1,6 +1,4 @@
-﻿using Facepunch.Gunfight.Proto;
-
-namespace Facepunch.Gunfight;
+﻿namespace Facepunch.Gunfight;
 
 public partial class GunfightLobby
 {
@@ -60,7 +58,10 @@ public partial class GunfightLobby
 	private bool isStarting;
 	async Task TickReadySystem()
 	{
-		if ( IsAnyoneReady && !isStarting )
+		// Don't tick if not the lobby owner 
+		if ( !_lobby.Owner.IsMe ) return;
+
+		if (  IsAnyoneReady && !isStarting )
 		{
 			if ( TimeUntilGameStart )
 			{

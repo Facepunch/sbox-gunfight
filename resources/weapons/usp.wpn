@@ -47,7 +47,7 @@
     "GlobalPositionOffset": "-1.95,1.35,0",
     "GlobalAngleOffset": "-1,0,-2",
     "CrouchPositionOffset": "-3,1,0",
-    "SlidePositionOffset": "-1,2,-1",
+    "SlidePositionOffset": "-1,1,-3",
     "SlideAngleOffset": "0,0,-35",
     "AvoidancePositionOffset": "-4,0,0.5",
     "AvoidanceAngleOffset": "15,0,0",

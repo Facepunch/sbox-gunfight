@@ -15,6 +15,6 @@ public partial class LoadoutPanel
 	[ClientRpc]
 	public static void RpcShow()
 	{
-		LoadoutPanel.Show();
+		// LoadoutPanel.Show();
 	}
 }

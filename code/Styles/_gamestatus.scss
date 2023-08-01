@@ -162,3 +162,36 @@ GameScore
     }
   }
 }
+
+GamemodeIdentity
+{
+  position: absolute;
+  top: 25%;
+  flex-direction: column;
+  width: 400px;
+  transition: all 0.2s ease;
+  border-left: 2px solid $theme-color;
+  padding: 16px;
+  left: 64px;
+  opacity: 1;
+  
+  background-image: linear-gradient( to right, rgba( 0, 0, 0, 0.5 ), rgba( 0, 0, 0, 0 ) );
+
+  &:intro, &:outro {
+    opacity: 0;
+    left: -400px;
+  }
+
+  > .name {
+    color: $theme-color;
+    font-size: 40px;
+    font-family: $main-font-bold;
+    text-transform: uppercase;
+  }
+
+  > .desc {
+    font-family: $main-font-semibold;
+    color: lightgrey;
+    font-size: 20px;
+  }
+}

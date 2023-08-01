@@ -1,5 +1,6 @@
 namespace Facepunch.Gunfight;
 
+// TODO - Set up this
 public partial class GunfightDeathCamera : GunfightCamera
 {
 	public GunfightDeathCamera() { }
@@ -27,26 +28,8 @@ public partial class GunfightDeathCamera : GunfightCamera
 		Camera.FirstPersonViewer = null;
 	}
 
-	public virtual Vector3 GetViewOffset()
+	protected virtual Vector3 GetViewOffset()
 	{
 		return FocusRotation.Forward * 100f;
-	}
-
-	protected void Spectate()
-	{
-		// todo - fix me 
-		// Local.Pawn.Components.Add( new GunfightSpectatorCamera() );
-	}
-
-	public override void BuildInput()
-	{
-		base.BuildInput();
-
-		var gamemode = GamemodeSystem.Current;
-
-		if ( Input.Pressed( "Jump" ) && gamemode.IsValid() && gamemode.AllowSpectating )
-		{
-			Spectate();
-		}
 	}
 }

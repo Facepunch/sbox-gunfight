@@ -2,10 +2,9 @@
 
 public partial class GunfightPlayer
 {
-	[Net, Local]
-	public IList<int> Ammo { get; set; }
+	[Net, Local] public IList<int> Ammo { get; set; }
 
-	public void ClearAmmo()
+	protected void ClearAmmo()
 	{
 		Ammo.Clear();
 	}

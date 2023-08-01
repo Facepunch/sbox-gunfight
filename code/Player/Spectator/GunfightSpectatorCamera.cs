@@ -2,13 +2,6 @@ namespace Facepunch.Gunfight;
 
 internal class GunfightSpectatorCamera : GunfightCamera
 {
-	[ConCmd.Admin( "gunfight_debug_togglespectator", Help = "Toggles spectator mode" )]
-	public static void ToggleSpectator()
-	{
-		//var cl = ConsoleSystem.Caller;
-		//cl.Pawn.Components.Add( new GunfightSpectatorCamera() );
-	}
-
 	public bool IsFree { get; set; } = false;
 
 	protected virtual float BaseMoveSpeed => 800f;

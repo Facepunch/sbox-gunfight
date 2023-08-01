@@ -34,8 +34,6 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 	// @Server
 	public Dictionary<Team, HashSet<GunfightPlayer>> Occupants { get; protected set; } = new();
 
-	public CapturePointEntity() { }
-
 	public void Initialize()
 	{
 		if ( Game.IsServer )
@@ -181,7 +179,6 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		if ( highest == Team.Unassigned )
 		{
 			CurrentState = CaptureState.None;
-
 			return;
 		}
 

@@ -32,7 +32,6 @@ public partial class GunfightGame
 
 			var newPawn = new GunfightSpectatorPlayer();
 			cl.Pawn = newPawn;
-			newPawn.Respawn();
 
 		    UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"became a spectator", cl.SteamId, false );
 		}

@@ -4,7 +4,6 @@ public partial class GunfightPlayer
 {
     public static float KillStreakTime => 10f;
     [Net] public TimeSince TimeSinceLastKill { get; set; } = 10f;
-
     [Net] public int CurrentKillStreak { get; set; } = 0;
     [Net] public int CurrentMultikill { get; set; } = 0;
 

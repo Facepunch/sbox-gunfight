@@ -127,6 +127,7 @@
 				var lobby = await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
 				lobby.Map = Game.Random.FromArray( SelectedMaps.Select( x => x.FullIdent ).ToArray() );
 				lobby.SetData( "gunfight-gamemode", SelectedMode );
+				lobby.Title = $"{lobby.Owner.Name}'s game";
 
 				this.Navigate( "/lobby" );
 			}
@@ -155,5 +156,6 @@
 		var lobby = MainMenu.CurrentLobby;
 		lobby.Map = Game.Random.FromArray( SelectedMaps.Select( x => x.FullIdent ).ToArray() );
 		lobby.SetData( "gunfight-gamemode", "KillConfirmedGamemode" );
+		lobby.Title = $"{lobby.Owner.Name}'s game";
 	}
 }

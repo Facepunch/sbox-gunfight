@@ -27,8 +27,6 @@ public partial class MP5 : GunfightWeapon
 		var arms = new AnimatedEntity( "models/first_person/first_person_arms.vmdl" );
 		arms.SetParent( ViewModelEntity, true );
 		arms.EnableViewmodelRendering = true;
-		
-		ViewModelEntity.SetBodyGroup( 2, 1 );
 	}
 	public override void Simulate( IClient cl )
 	{

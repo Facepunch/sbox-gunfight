@@ -399,7 +399,7 @@
       {
         "Name": "gunfight_test",
         "GameIdent": "facepunch.gunfight#local",
-        "MapName": "facepunch.prison",
+        "MapName": "eagleone.killhouse_chimona",
         "MaxPlayers": 16,
         "GameSettings": {},
         "Addons": "",

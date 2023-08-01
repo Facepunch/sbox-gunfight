@@ -129,6 +129,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		return owner.AmmoCount( AmmoType );
 	}
 
+	private ParticleSystem EjectBrass;
+
 	public override void ActiveStart( Entity ent )
 	{
 		base.ActiveStart( ent );
@@ -144,6 +146,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		StopDecaying();
 
 		Sound.FromEntity( "sounds/guns/switch/weapon_switch.sound", ent );
+		
+		EjectBrass = Cloud.ParticleSystem( "https://asset.party/facepunch/9mm_ejectbrass" );
 	}
 
 	public override void Spawn()
@@ -484,6 +488,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		if ( IsLowAmmo() )
 			AmmoLowSound( AmmoClip / (float)ClipSize );
+		
+		Particles.Create( EjectBrass.ResourcePath, EffectEntity, "eject" );
 	}
 
 	protected TraceResult DoTraceBullet( Vector3 start, Vector3 end, float radius )

@@ -405,6 +405,16 @@
         "Addons": "",
         "PreLaunchCommand": "",
         "PostLaunchCommand": "GunfightGamemode KillConfirmedGamemode"
+      },
+      {
+        "Name": "sv_lan 1",
+        "GameIdent": "facepunch.gunfight#local",
+        "MapName": "eagleone.killhouse_chimona",
+        "MaxPlayers": 16,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "sv_lan 1",
+        "PostLaunchCommand": "GunfightGamemode KillConfirmedGamemode"
       }
     ]
   }

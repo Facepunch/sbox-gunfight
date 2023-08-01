@@ -8,7 +8,13 @@ public partial class USP : GunfightWeapon
 	
 	public override Model WeaponModel => USPModel;
 	public override Model WeaponViewModel => USPViewModel;
-	
+
+	public override void Spawn()
+	{
+		base.Spawn();
+		LocalScale = 1.5f;
+	}
+
 	public override void CreateViewModel()
 	{
 		ViewModelEntity = new ViewModel();

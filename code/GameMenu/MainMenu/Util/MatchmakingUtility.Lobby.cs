@@ -4,6 +4,8 @@ namespace Facepunch.Gunfight;
 
 public partial class MatchmakingSystem
 {
+	public static IEnumerable<ILobby> Lobbies => Game.Menu.Lobbies.Where( IsCompatibleLobby );
+	
 	// Check to see if a lobby has a compatible map with our query
 	static bool CompatibleMap( ILobby lobby, string[] maps = null )
 	{
@@ -28,12 +30,22 @@ public partial class MatchmakingSystem
 	{
 		await Game.Menu.QueryLobbiesAsync( null, reservedSlots );
 
-		var lobbies = Game.Menu.Lobbies
+		var lobbies = Lobbies
 			.Where( x => CompatibleGameMode( x, gamemode ) )
 			.Where( x => CompatibleMap( x, maps ) );
 
 		Log.Info( $"We found {lobbies.Count()} lobbies"  );
 		
 		return lobbies.FirstOrDefault();
+	}
+
+	public static bool IsCompatibleLobby( ILobby lobby )
+	{
+		if ( lobby.Data.TryGetValue( "state", out var state ) )
+		{
+			if ( state == "active" ) return false;
+		}
+
+		return true;
 	}
 }

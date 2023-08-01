@@ -27,7 +27,6 @@ public partial class MatchmakingSystem
 
 		var result = await lobby.JoinAsync();
 		
-		
 		if ( !result )
 		{
 			Log.Trace( "Failed to join lobby" );
@@ -37,7 +36,6 @@ public partial class MatchmakingSystem
 		{
 			Log.Trace( $"Joined lobby successfully {lobby}" );
 			CurrentState = State.Empty;
-
 			MainMenu.MainMenu.CurrentLobby = new( lobby );
 		}
 

@@ -38,7 +38,7 @@
 				</div>
 			}
 
-			@foreach ( var lobby in Game.Menu.Lobbies.OrderByDescending( x => x.MemberCount ).Take( 5 ) )
+			@foreach ( var lobby in MatchmakingSystem.Lobbies )
 			{
 				<div class="lobby" onclick=@(() => JoinLobbyAsync( lobby ) )>
 					<div class="background"/>
@@ -49,7 +49,7 @@
 				</div>
 			}
 		
-			@if ( Game.Menu.Lobbies.Length < 1 )
+			@if ( !MatchmakingSystem.Lobbies.Any() )
 			{
 				<div class="lobby" onclick=@MakeLobbyAsync>
 					<div class="background" />
@@ -71,9 +71,9 @@
 
 	protected override int BuildHash()
 	{
-		return System.HashCode.Combine( Game.Menu.Lobbies.Length );
+		return HashCode.Combine( MatchmakingSystem.Lobbies );
 	}
-	
+
 	async Task MakeLobbyAsync()
 	{
 		await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
@@ -87,6 +87,10 @@
 	{
 		MatchmakingSystem.TimeSinceSearch = 0;
 		await MatchmakingSystem.JoinLobby( lobby );
-		this.Navigate( "/lobby" );
+
+		if ( MainMenu.CurrentLobby != null )
+		{
+			this.Navigate( "/lobby" );
+		}
 	}
 }

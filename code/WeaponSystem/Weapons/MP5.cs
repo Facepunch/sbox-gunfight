@@ -26,7 +26,7 @@ public partial class MP5 : GunfightWeapon
 	{
 		base.Simulate( cl );
 		
-		(Owner as AnimatedEntity)?.SetAnimParameter( "attack_hold", IsTriggerHeld );
-		ViewModelEntity?.SetAnimParameter( "attack_hold", IsTriggerHeld );
+		(Owner as AnimatedEntity)?.SetAnimParameter( "attack_hold", IsTriggerHeld ? 1f : 0f );
+		ViewModelEntity?.SetAnimParameter( "attack_hold", IsTriggerHeld ? 1f : 0f );
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace Facepunch.Gunfight;
 
-[Library( "1911" )]
+[Library( "usp" )]
 public partial class USP : GunfightWeapon
 {
 	private static Model USPModel = Cloud.Model( "https://asset.party/facepunch/w_usp" );

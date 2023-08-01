@@ -1,6 +1,6 @@
 {
-  "WeaponName": "USP-M",
-  "WeaponShortName": "USP-M",
+  "WeaponName": "USP",
+  "WeaponShortName": "USP",
   "Slot": "Secondary",
   "HoldType": "Pistol",
   "Model": "models/m1911/w_m1911.vmdl",

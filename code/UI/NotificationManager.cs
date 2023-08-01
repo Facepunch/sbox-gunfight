@@ -27,7 +27,7 @@ public partial class NotificationManager
 
 	public List<string> Hints = new()
 	{
-		"Press F+R to switch fire modes if your weapon supports it.",
+		"Press B to switch fire modes if your weapon supports it.",
 		"Everything in Gunfight is subject to change."
 	};
 

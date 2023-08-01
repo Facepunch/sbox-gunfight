@@ -7,6 +7,7 @@ public partial class WeaponDefinition : GameResource
 {
 	public static GunfightWeapon CreateWeapon( WeaponDefinition def )
 	{
+		Log.Info( def );
 		var typeLibrary = TypeLibrary.GetType<GunfightWeapon>( def.ResourceName );
 
 		GunfightWeapon weapon;

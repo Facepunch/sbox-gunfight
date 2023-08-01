@@ -72,6 +72,15 @@
 
 		<div style="flex-grow: 1;" />
 		
+		<ActionButton onclick=@Matchmake>
+        	<Title>
+        		Matchmake
+        	</Title>
+        	<Extra>
+        		<i>wifi</i>
+        	</Extra>
+        </ActionButton>
+		
 		<ActionButton onclick=@Refresh>
 		    <Title>
 			    Refresh
@@ -125,5 +134,10 @@
 	void Return( PanelEvent e )
 	{
 		this.Navigate( "/" );
+	}
+
+	void Matchmake( PanelEvent e )
+	{
+		this.Navigate( "/find" );
 	}
 }

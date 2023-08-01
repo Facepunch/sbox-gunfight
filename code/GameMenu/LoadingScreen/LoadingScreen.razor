@@ -78,7 +78,7 @@
 @code
 {
 	public LoadingProgress Progress;
-	
+
 	Panel BackgroundPanel { get; set; }
 	Package Map { get; set; }
 
@@ -91,6 +91,11 @@
 	{
 		Progress = progress;
 		StateHasChanged();
+
+		if ( Map != null && Lobby.Map != Map.FullIdent )
+		{
+			mapTask = SyncMap();
+		}
 
 		if ( Map == null && mapTask == null )
 		{
@@ -127,8 +132,6 @@
 
 		await FetchMapPackage( Lobby.Map );
 	}
-
-	protected override void OnAfterTreeRender( bool firstTime )
-	{
-	}
+	
+	
 }

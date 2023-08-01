@@ -56,6 +56,7 @@ public partial class ViewModel : BaseViewModel
 	float crouchLerp = 0;
 	float airLerp = 0;
 	float slideLerp = 0;
+	float slideCameraLerp = 0;
 	float sideLerp = 0;
 	float speedLerp = 0;
 	float vaultLerp = 0;
@@ -137,6 +138,7 @@ public partial class ViewModel : BaseViewModel
 		//LerpTowards( ref aimLerp, aim && !sprint && !burstSprint ? 1 : 0, 30f );
 		LerpTowards( ref crouchLerp, crouched && !aim && !sliding ? 1 : 0, 7f );
 		LerpTowards( ref slideLerp, sliding ? TimeSincePrimaryAttack.Remap( 0, 0.2f, 0, 1 ).Clamp( 0, 1 ) : 0, 7f );
+		LerpTowards( ref slideCameraLerp, sliding ? 1 : 0, 7f );
 		LerpTowards( ref airLerp, ( isGrounded ? 0 : 1 ) * ( 1 - aimLerp ), 10f );
 		LerpTowards( ref speedLerp, ( aim || sliding || sprint ) ? 0.0f : speed, 10f );
 		LerpTowards( ref vaultLerp, ( vaulting ) ? 1.0f : 0.0f , 10f );
@@ -227,7 +229,7 @@ public partial class ViewModel : BaseViewModel
 		rotationOffsetTarget *= Rotation.From( new Angles(40,0,0) * vaultLerp );
 
 		// Sliding
-		var slideRotationOffset = Rotation.From( Angles.Zero.WithRoll( leftAmt ) * slideLerp * -15.0f );
+		var slideRotationOffset = Rotation.From( Angles.Zero.WithRoll( leftAmt ) * slideCameraLerp * -15.0f );
 
 		if( !aim )
 		{

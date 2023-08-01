@@ -35,7 +35,6 @@
   "ReloadTime": 3,
   "ReloadSingle": false,
   "MaxEffectiveRange": 2048,
-  "Crosshair": "Default",
   "ViewModelSetup": {
     "OverallWeight": 0.1,
     "WeightReturnForce": 100,
@@ -47,12 +46,11 @@
     "WalkCycleOffset": "-2,25,0",
     "BobAmount": "25,50",
     "GlobalLerpPower": 1,
-    "GlobalPositionOffset": "0,0,1",
-    "GlobalAngleOffset": "-1,0,-2",
+    "GlobalPositionOffset": "12.6,-4.2,-11.45",
     "CrouchPositionOffset": "-3,1,0",
     "CrouchAngleOffset": "2,0,-15",
-    "SprintPositionOffset": "0,-2,-1",
-    "SprintAngleOffset": "5,25,0",
+    "SprintPositionOffset": "-5,2,0",
+    "SprintAngleOffset": "5,12.5,0",
     "AimPositionOffset": "-1,2.73,0.81",
     "AimAngleOffset": "1,-2,-0.3"
   },

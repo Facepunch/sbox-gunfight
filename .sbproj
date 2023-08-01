@@ -394,6 +394,18 @@
         }
       ]
     },
-    "TickRate": 50
+    "TickRate": 30,
+    "LaunchConfigs": [
+      {
+        "Name": "gunfight_test",
+        "GameIdent": "facepunch.gunfight#local",
+        "MapName": "facepunch.prison",
+        "MaxPlayers": 16,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": "GunfightGamemode KillConfirmedGamemode"
+      }
+    ]
   }
 }

@@ -28,9 +28,12 @@ public partial class BaseWeapon : BaseCarriable
 
 	protected virtual void InitializeWeapon( WeaponDefinition def )
 	{
-		Log.Info( $"Set up this weapon {def}" );
-		Model = def.CachedModel;
+		Log.Info( $"Set up this weapon {def} with model: {WeaponModel}" );
+		Model = WeaponModel;
 	}
+	
+	public virtual Model WeaponModel => WeaponDefinition.CachedModel;
+	public virtual Model WeaponViewModel => WeaponDefinition.CachedViewModel;
 
 	public override void Spawn()
 	{
@@ -146,7 +149,7 @@ public partial class BaseWeapon : BaseCarriable
 		vm.Weapon = this;
 
 		if ( WeaponDefinition != null )
-			vm.Model = WeaponDefinition.CachedViewModel;
+			vm.Model = WeaponViewModel;
 
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;

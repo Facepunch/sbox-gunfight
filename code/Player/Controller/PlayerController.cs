@@ -160,6 +160,7 @@ public partial class PlayerController : PawnController
 		UpdateBBox();
 
 		if ( Weapon.IsValid() && Input.Down( "Attack2" ) )
+		// if ( Weapon.IsValid() )
 		{
 			if ( !IsAiming )
 			{

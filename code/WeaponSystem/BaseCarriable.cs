@@ -7,7 +7,7 @@ namespace Facepunch.Gunfight;
 public class BaseCarriable : AnimatedEntity
 {
 	public virtual string ViewModelPath => null;
-	public BaseViewModel ViewModelEntity { get; protected set; }
+	public ViewModel ViewModelEntity { get; protected set; }
 
 	public override void Spawn()
 	{
@@ -118,7 +118,7 @@ public class BaseCarriable : AnimatedEntity
 		if ( string.IsNullOrEmpty( ViewModelPath ) )
 			return;
 
-		ViewModelEntity = new BaseViewModel();
+		ViewModelEntity = new ViewModel();
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;
 		ViewModelEntity.EnableViewmodelRendering = true;

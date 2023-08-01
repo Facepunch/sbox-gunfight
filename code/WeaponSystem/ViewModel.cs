@@ -328,4 +328,10 @@ public partial class ViewModel : BaseViewModel
 			value *= Math.Max( magnitude - drop, 0 ) / magnitude;
 		}
 	}
+	protected override void OnAnimGraphCreated()
+	{
+		base.OnAnimGraphCreated();
+
+		SetAnimParameter( "b_deploy", true );
+	}
 }

@@ -546,7 +546,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		if ( ctrl.IsSprinting )
 		{
 			var sound = PlaySound( "sounds/player/foley/gear/player.walk.gear.sound" );
-			sound.SetVolume( volume * 3 );
+			sound.SetVolume( volume );
 		}
 
 		tr.Surface.DoFootstep( this, tr, foot, volume * 20 );

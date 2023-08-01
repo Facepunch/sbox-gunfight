@@ -197,6 +197,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		IsReloading = true;
 
 		(Owner as AnimatedEntity).SetAnimParameter( "b_reload", true );
+		ViewModelEntity?.SetAnimParameter( "b_reload", true );
 
 		StartReloadEffects();
 	}
@@ -264,6 +265,10 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	public override void Simulate( IClient cl )
 	{
+		base.Simulate( cl );
+		
+		IsFiring = false;
+		
 		if ( TimeSinceDeployed < DeployTime )
 			return;
 
@@ -315,7 +320,10 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			OnReloadFinish();
 		}
 	}
-
+	
+	[Net, Predicted] public bool IsFiring { get; set; }
+	public bool IsTriggerHeld => Input.Down( "Attack1" );
+  
 	protected override void InitializeWeapon( WeaponDefinition def )
 	{
 		base.InitializeWeapon( def );
@@ -422,7 +430,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			return CanPrimaryAttackBurst();
 		}
 
-		return TimeSincePrimaryAttack >= PrimaryFireRate && Input.Down( "Attack1" );
+		return TimeSincePrimaryAttack >= PrimaryFireRate && IsTriggerHeld;
 	}
 
 	public virtual void AttackPrimary()
@@ -439,6 +447,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		}
 
 		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
+		ViewModelEntity?.SetAnimParameter( "b_attack", true );
 
 		//
 		// Tell the clients to play the shoot effects

@@ -154,7 +154,7 @@ public abstract partial class Gamemode : Entity
 	protected static Loadout GetRandomLoadout( bool unique = true )
 	{
 		var loadouts = Loadout.WithTag( "gunfight" ).ToList();
-		if ( unique ) loadouts = loadouts.Where( x => x != LoadoutSystem.MatchLoadout ).ToList();
+		if ( unique ) loadouts = loadouts/*.Where( x => x != LoadoutSystem.MatchLoadout )*/.ToList();
 
 		if ( loadouts.Count < 1 ) return null;
 

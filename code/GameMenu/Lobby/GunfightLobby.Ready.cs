@@ -39,7 +39,7 @@ public partial class GunfightLobby
 
 		if ( IsAnyoneReady )
 		{
-			TimeUntilGameStart = 30;
+			TimeUntilGameStart = 12;
 		}
 	}
 

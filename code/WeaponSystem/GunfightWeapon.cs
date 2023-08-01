@@ -489,7 +489,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( IsLowAmmo() )
 			AmmoLowSound( AmmoClip / (float)ClipSize );
 		
-		Particles.Create( EjectBrass.ResourcePath, EffectEntity, "eject" );
+		if ( EjectBrass != null ) Particles.Create( EjectBrass.ResourcePath, EffectEntity, "eject" );
 	}
 
 	protected TraceResult DoTraceBullet( Vector3 start, Vector3 end, float radius )

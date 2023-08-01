@@ -51,17 +51,17 @@ public partial class MatchmakingSystem
 		
 		if ( lastState != State.NothingAvailable ) TimeSinceSearch = 0;
 
+		var server = await FindServer( mode, maps, reservedSlots );
+		if ( server != null )
+		{
+			return await JoinServer( server.Value );
+		}
+		
 		var lobby = await FindLobby( mode, maps, reservedSlots );
 
 		if ( lobby != null )
 		{
 			return await JoinLobby( lobby );
-		}
-
-		var server = await FindServer( mode, maps, reservedSlots );
-		if ( server != null )
-		{
-			return await JoinServer( server.Value );
 		}
 
 		CurrentState = State.NothingAvailable;

@@ -92,6 +92,14 @@ public partial class ViewModel : BaseViewModel
 
 		if ( controller == null )
 			return;
+		
+		var cameraBoneIndex = GetBoneIndex( "camera" );
+		if ( cameraBoneIndex != -1 )
+		{
+			var bone = GetBoneTransform( cameraBoneIndex, worldspace: false );
+			Camera.Position += bone.Position;
+			Camera.Rotation *= bone.Rotation;
+		}
 
 		var frac = controller.IsAiming ? 1 : 0;
 		LerpTowards( ref aimLerp, frac, controller.IsAiming ? 30f : 10f );
@@ -136,7 +144,7 @@ public partial class ViewModel : BaseViewModel
 		var leftAmt = left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal );
 		LerpTowards( ref sideLerp, leftAmt * ( 1 - aimLerp ), 5f );
 
-		bobSpeed *= 1 - sprintLerp * 0.25f;
+		bobSpeed *= 1 - sprintLerp * 2f;
 		bobSpeed *= 1 - burstSprintLerp * 2f;
 
 		if ( isGrounded && !sliding && controller is not null /*&& !controller.Slide.IsActive*/ )
@@ -200,21 +208,6 @@ public partial class ViewModel : BaseViewModel
 			// Sprinting
 			rotationOffsetTarget *= Rotation.From( BurstSprintAngleOffset * burstSprintLerp );
 			ApplyPositionOffset( BurstSprintPositionOffset, burstSprintLerp );
-
-			// Sprinting cycle
-			float cycle = Time.Now * 10.0f;
-			Camera.Rotation *= Rotation.From( 
-				new Angles( 
-					MathF.Abs( MathF.Sin( cycle ) * 2.0f ),
-					MathF.Cos( cycle ), 
-					0 
-				) * sprintLerp * 0.35f );
-
-			// Apply the same offset as above for a nicer sprint bob
-			float sprintBob = MathF.Pow( MathF.Sin( cycle ) * 0.5f + 0.5f, 2.0f );
-			float sprintBob2 = MathF.Pow( MathF.Cos( cycle ) * 0.5f + 0.5f, 3.0f );
-			rotationOffsetTarget *= Rotation.From( SprintAngleOffset * sprintLerp * sprintBob * 0.2f );
-			ApplyPositionOffset( -SprintPositionOffset * sprintBob2 * 0.3f, sprintLerp );
 
 			Camera.FieldOfView += -2f * sprintLerp;
 

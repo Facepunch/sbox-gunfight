@@ -341,7 +341,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	protected virtual void RpcHolster()
 	{
 		//Log.Info( $"{Host.Name} Holster {ViewModelEntity}" );
-		ViewModelEntity?.SetAnimParameter( "holster", true );
+		ViewModelEntity?.SetAnimParameter( "b_holster", true );
 	}
 
 	public void Holster()

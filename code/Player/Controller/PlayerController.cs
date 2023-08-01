@@ -44,6 +44,7 @@ public partial class PlayerController : PawnController
 		Mechanics.Add( new VaultMoveMechanic( this ) );
 		Mechanics.Add( new SlideMechanic( this ) );
 		Mechanics.Add( new DuckMechanic( this ) );
+		Mechanics.Add( new UnstuckMechanic( this ) );
 	}
 
 	public T GetMechanic<T>() where T : BaseMoveMechanic

@@ -1,0 +1,127 @@
+﻿@using Sandbox
+@using Sandbox.UI
+
+@implements INavigatorPage
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+	<div class="main">
+		<div class="left column">
+			<div class="game-title">
+				Gunfight
+			</div>
+			<div class="game-subtitle">
+				Server Browser
+			</div>
+			
+			<div class="column">
+				<div class="header">
+                	
+				</div>
+				
+				<div class="server-list">
+	                @if ( IsDebug )
+	                {
+                		<ServerListRow Title="[EU] Boom-punch 1" MapIdent="facepunch.dockyard"/>
+                		<ServerListRow Title="[EU] Boom-punch 2" MapIdent="facepunch.dockyard"/>
+	                }
+	                else
+	                {
+                		@if ( List == null || ( List.IsQuerying && !List.Any() ) )
+                		{
+			                <div class="warning">
+								<div class="background" />
+				                <i>sync</i>
+			                </div>
+                		}
+                		else if ( !List.Any() )
+                		{
+			                <div class="warning">
+								<div class="background" />
+				                <label>No servers available...</label>
+			                </div>
+                		}
+                		else
+                		{
+                			@foreach ( var server in List )
+                			{
+                				<ServerListRow 
+                					Title=@server.Name 
+                					Players=@server.Players
+                					MaxPlayers=@server.MaxPlayers 
+                					Ping=@server.Ping
+					                MapIdent=@server.Map
+					                SteamId=@server.SteamId
+                				/>
+                			}
+                		}
+	                }
+	            </div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="footer">
+		<ActionButton onclick=@Return>
+			<Title>
+				Return
+			</Title>
+		</ActionButton>
+
+	    <ActionButton onclick=@Refresh>
+		    <Title>
+			    Refresh
+		    </Title>
+		    <Extra>
+				<i>sync</i>
+			</Extra>
+	    </ActionButton>
+	</div>
+</root>
+
+@code
+{
+	bool IsDebug => false;
+    
+	Sandbox.Services.ServerList List;
+    
+	protected override void OnParametersSet()
+	{
+		var game = "facepunch.gunfight";
+        
+		Log.Info($"Filtering By Game '{game}'");
+
+		List?.Dispose();
+		List = new Sandbox.Services.ServerList();
+
+		if ( !string.IsNullOrWhiteSpace( game ) )
+		{
+			List.AddFilter("gametagsand", $"game:{game}");
+		}
+
+		_ = Refresh();
+	}
+    
+	async Task Refresh()
+	{
+		if ( List.IsQuerying )
+			return;
+
+		List.Query();
+
+		while ( List.IsQuerying )
+		{
+			await Task.Delay( 100 );
+			StateHasChanged();
+		}
+
+		StateHasChanged();
+	}
+	
+	void Return( PanelEvent e )
+	{
+		this.Navigate( "/" );
+	}
+}

@@ -1,0 +1,163 @@
+﻿@import "/Styles/hud.scss";
+
+ServerListPage
+{
+  gap: 32px;
+  > .main
+  {
+    gap: 32px;
+    
+    .left
+    {
+      gap: 32px;
+      
+      flex-grow: 3;
+    }
+
+    .right
+    {
+      flex-grow: 1;
+      flex-shrink: 0;
+    }
+    
+    .warning
+    {
+      flex-grow: 1;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      
+      label
+      {
+        font-family: $main-font-bold;
+        font-size: 24px;
+        
+      }
+      
+      i
+      {
+        animation-name: rotate;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        
+        font-size: 64px;
+      }
+      
+      > .background
+      {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        mask-mode: luminance;
+        background-color: rgba( 10, 10, 10, 1 );
+        opacity: 0.2;
+        mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+      }
+    }
+  }
+  
+  > .footer
+  {
+    padding-left: 64px;
+    gap: 16px;
+  }
+
+  .header
+  {
+    height: 30px;
+
+    background-size: contain;
+    mask-mode: luminance;
+    background-color: $main-color;
+    opacity: 0.5;
+    mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+  }
+  
+  .server-list
+  {
+    flex-direction: column;
+    overflow: scroll;
+    flex-grow: 1;
+  }
+}
+
+ServerListRow
+{
+  padding: 16px;
+  gap: 16px;
+  
+  section
+  {
+    &.grow
+    {
+      flex-grow: 1;
+    }
+  }
+
+  > .background
+  {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    transition: background-color 0.1s ease;
+
+    background-size: contain;
+    mask-mode: luminance;
+    background-color: rgba( 10, 10, 10, 1 );
+    opacity: 0.5;
+    mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+  }
+  
+  &:nth-child( even )
+  {
+    > .background
+    {
+      background-color: rgba( 40, 40, 40, 1 );
+    }
+  }
+
+  &:not( .disabled )
+  {
+    &:hover
+    {
+      cursor: pointer;
+      border-left: 4px solid $theme-color;
+
+      .title, .description
+      {
+        opacity: 1;
+      }
+    }
+
+    &:active
+    {
+      .title, .description
+      {
+        transform: scale( 0.99 );
+      }
+      
+      > .background
+      {
+        background-color: $main-color;
+      }
+    }
+  }
+}
+
+
+@keyframes rotate
+{
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

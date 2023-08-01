@@ -1,0 +1,41 @@
+@using Sandbox.UI
+
+@namespace Facepunch.Gunfight.MainMenu
+@attribute [StyleSheet]
+@inherits Panel
+
+<root>
+	<div class="background" />
+	
+	<section class="icon-header">
+		<i>favorite</i>
+	</section>
+	<section class="grow">
+		@Title
+	</section>
+	<section class="min-200">
+		@MapIdent
+	</section>
+	<section class="min-200">
+		@(Players)/@(MaxPlayers)
+	</section>
+	<section class="min-100">
+		<label>@Ping</label>
+		ms
+	</section>
+</root>
+
+@code
+{
+	public string Title { get; set; }
+	public string MapIdent { get; set; }
+	public int Players { get; set; } = 0;
+	public int MaxPlayers { get; set; } = 0;
+	public int Ping { get; set; } = 999;
+	public ulong SteamId { get; set; }
+	
+	protected override void OnClick( MousePanelEvent e )
+	{
+		Game.Menu.ConnectToServer( SteamId );
+	}
+}

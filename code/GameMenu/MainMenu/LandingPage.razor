@@ -38,18 +38,18 @@
 
 			<ActionButton WithBackground="https://files.facepunch.com/tony/1b1311b1/boxes.webm" onclick=@Matchmake>
 				<Title>
-					Kill Confirmed
+					Matchmaking
 				</Title>
 				<Description>
-					Each kill will leave behind dog tags for players to collect.
+					Ready to get into the action?
 				</Description>
 			</ActionButton>
-		<ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@Matchmake>
+		<ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@OpenServerList>
 				<Title>
-					War Room
+					Server Browser
 				</Title>
 				<Description>
-					Two teams of 16 battle it out to deplete the other team's tickets.
+					View all active game servers.
 				</Description>
 				<Extra>
 					<Panel class="new"/>
@@ -73,6 +73,11 @@
 
 @code
 {
+	void OpenServerList( PanelEvent e )
+	{
+		this.Navigate( "/servers" );
+	}
+
 	void Matchmake( PanelEvent e )
 	{
 		this.Navigate( "/find" );

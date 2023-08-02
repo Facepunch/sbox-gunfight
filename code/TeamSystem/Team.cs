@@ -164,7 +164,7 @@ public static class TeamSystem
 
 	public static Team GetTeam( IClient cl )
 	{
-		return cl.Components.Get<TeamComponent>()?.Team ?? Team.Unassigned;
+		return cl?.Components.Get<TeamComponent>()?.Team ?? Team.Unassigned;
 	}
 
 	[ConCmd.Server( "gunfight_team_join" )]

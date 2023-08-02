@@ -22,6 +22,7 @@ public partial class KillConfirmedGamemode : Gamemode
 	public override bool AllowDamage => State != GameState.RoundCountdown;
 	public override bool AllowFriendlyFire => false;
 	public override bool AllowSpectating => true;
+	public override bool NoFlags => true;
 
 	[ConVar.Server( "gunfight_kc_round_countdown" )]
 	protected static float RoundCountdownLength { get; set; } = 10f;

@@ -34,6 +34,8 @@ public abstract partial class Gamemode : Entity
 
 	public virtual bool AllowSpectating => false;
 
+	public virtual bool NoFlags => false;
+
 	/// <summary>
 	/// Decides whether or not players can move
 	/// </summary>
@@ -129,6 +131,15 @@ public abstract partial class Gamemode : Entity
 
 	public virtual void Initialize()
 	{
+		if ( NoFlags )
+		{
+			// Delete capture points
+			foreach ( var ent in Entity.All.OfType<CapturePointEntity>() )
+			{
+				ent.Delete();
+			}
+		}
+		
 	}
 
 	/// <summary>

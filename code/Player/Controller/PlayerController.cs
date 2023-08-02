@@ -8,7 +8,6 @@ public partial class PlayerController : PawnController
 	[Net] public float WalkSpeed { get; set; } = 120.0f;
 	[Net] public float DefaultSpeed { get; set; } = 175.0f;
 	[Net] public float Acceleration { get; set; } = 8.0f;
-	[Net] public float AirAcceleration { get; set; } = 4.0f;
 	[Net] public float StopSpeed { get; set; } = 100.0f;
 	[Net] public float GroundAngle { get; set; } = 46.0f;
 	[Net] public float StepSize { get; set; } = 16f;
@@ -16,7 +15,9 @@ public partial class PlayerController : PawnController
 	[Net] public float BodyGirth { get; set; } = 32.0f;
 	[Net] public float BodyHeight { get; set; } = 72.0f;
 	[Net] public float Gravity { get; set; } = 700.0f;
-	[Net] public float AirControl { get; set; } = 30.0f;
+	
+	public float AirControl => 50.0f;
+	public float AirAcceleration => 50.0f;
 
 	[Net, Predicted] public TimeUntil JumpWindup { get; set; }
 	[Net, Predicted] public bool JumpWinding { get; set; }

@@ -4,7 +4,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 {
 	protected bool Wish { get; set; }
 
-	public float MinimumSpeed => 100f;
+	public float MinimumSpeed => 150f;
 	public float SlideSpeed => 750.0f;
 	private Sound SlideSound;
 
@@ -32,7 +32,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 		// Give it an initial boost
 		var slopeForward = new Vector3( Controller.Velocity.x, Controller.Velocity.y, 0 ).Normal;
 		if( Controller.Velocity.Length < 300.0f )
-			Controller.Velocity += slopeForward * 120.0f;
+			Controller.Velocity += slopeForward * 200.0f;
 
 		Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.stop.sound" );
 		SlideSound = Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.loop.sound");

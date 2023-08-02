@@ -11,7 +11,7 @@ public partial class DuckMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-		Wish = Input.Down( "Crouch" );
+		Wish = Input.Down( "duck" );
 		if ( !Wish ) return false;
 
 		if ( Controller.Slide.IsActive ) return false;
@@ -23,7 +23,7 @@ public partial class DuckMechanic : BaseMoveMechanic
 
 	public override void PreSimulate()
 	{
-		if ( !Input.Down( "Crouch" ) ) StopTry();
+		if ( !Input.Down( "duck" ) ) StopTry();
 	}
 
 	public override float GetWishSpeed()

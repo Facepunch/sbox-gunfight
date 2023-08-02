@@ -4,7 +4,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 {
 	protected bool Wish { get; set; }
 
-	public float MinimumSpeed => 150f;
+	public float MinimumSpeed => 155f;
 	public float SlideSpeed => 750.0f;
 	private Sound SlideSound;
 
@@ -23,7 +23,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
-		Wish = Input.Down( "Crouch" );
+		Wish = Input.Down( "Slide" );
 
 		if ( Controller.Velocity.Length < Controller.DefaultSpeed ) return false;
 		if ( !Wish ) return false;

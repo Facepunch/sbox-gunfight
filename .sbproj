@@ -248,8 +248,8 @@
           "GroupName": "Movement"
         },
         {
-          "Name": "Crouch",
-          "KeyboardCode": "c",
+          "Name": "Duck",
+          "KeyboardCode": "Ctrl",
           "GamepadCode": "B",
           "GroupName": "Movement"
         },
@@ -391,6 +391,11 @@
           "Name": "UseKillstreak",
           "KeyboardCode": "k",
           "GroupName": "Gameplay"
+        },
+        {
+          "Name": "Slide",
+          "KeyboardCode": "C",
+          "GroupName": "Movement"
         }
       ]
     },

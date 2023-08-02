@@ -292,7 +292,7 @@ public abstract partial class Gamemode : Entity
 		{
 			Input.AnalogMove = Vector3.Zero;
 			Input.Clear( "Jump" );
-			Input.Clear( "Crouch" );
+			Input.Clear( "duck" );
 			Input.Clear( "Attack1" );
 			Input.StopProcessing = true;
 		}

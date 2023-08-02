@@ -60,7 +60,7 @@ internal class GunfightSpectatorCamera : GunfightCamera
 	{
 		if ( Input.Down( "Run" ) )
 			return 2f;
-		if ( Input.Down( "Crouch" ) )
+		if ( Input.Down( "duck" ) )
 			return 0.3f;
 
 		return 1f;

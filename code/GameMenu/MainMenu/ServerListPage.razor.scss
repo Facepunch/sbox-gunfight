@@ -90,30 +90,60 @@ ServerListPage
 
   .header
   {
-    height: 30px;
+    flex-shrink: 0;
+    
+    >.background
+    {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+      mask-mode: luminance;
+      background-color: $main-color;
+      opacity: 0.5;
+      mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+    }
 
-    background-size: contain;
-    mask-mode: luminance;
-    background-color: $main-color;
-    opacity: 0.5;
-    mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+    padding: 10px;
+    gap: 32px;
+    
+    section
+    {
+      font-family: $main-font-bold;
+      font-size: 20px;
+      align-items: center;
 
+      &.grow
+      {
+        flex-grow: 1;
+      }
+    }
   }
   
   .server-list
   {
-    flex-direction: column;
     flex-grow: 1;
+    flex-shrink: 0;
+    flex-direction: column;
+    max-height: 96%;
+    
+    overflow: scroll;
   }
 }
 
 ServerListRow
 {
-  padding: 16px;
-  gap: 16px;
+  padding: 10px;
+  gap: 32px;
+  flex-shrink:0;
+  
+  font-family: $main-font;
+  font-size: 20px;
   
   section
   {
+    align-items: center;
+    
     &.grow
     {
       flex-grow: 1;

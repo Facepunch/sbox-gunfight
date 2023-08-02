@@ -25,14 +25,22 @@
 			
 			<div class="column shadow">
 				<div class="header">
-                	
+					<div class="background" />
+
+					<section class="grow">Title</section>
+					<section>Map</section>
+					<section>Players</section>
+					<section>Ping</section>
+					<div style="width: 40px;"/>
 				</div>
 				
 				<div class="server-list">
 	                @if ( IsDebug )
 	                {
-                		<ServerListRow Title="[EU] Boom-punch 1" MapIdent="facepunch.dockyard"/>
-                		<ServerListRow Title="[EU] Boom-punch 2" MapIdent="facepunch.dockyard"/>
+		                @for ( int i = 0; i < 64; i++ )
+		                {
+			                <ServerListRow Title="[EU] Boom-punch @i" MapIdent="facepunch.prison" Players=@i MaxPlayers=@(64) Ping=@(i % 2 == 0 ? 300 : 45) />
+		                }
 	                }
 	                else
 	                {

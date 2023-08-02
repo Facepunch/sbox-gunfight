@@ -10,7 +10,7 @@
 	<section class="grow">
 		@Title
 	</section>
-	
+
 	<section class="min-200">
 		@if ( MapPackage != null )
 		{
@@ -23,11 +23,11 @@
 		}
 	</section>
 	
-	<section class="min-200">
+	<section style="min-width: 64px;">
 		@(Players)/@(MaxPlayers)
 	</section>
 	
-	<section class="min-100">
+	<section style="min-width: 64px;">
 		<label>@(Ping) ms</label>
 	</section>
 	
@@ -54,7 +54,7 @@
 	}
 	public int Players { get; set; } = 0;
 	public int MaxPlayers { get; set; } = 0;
-	public int Ping { get; set; } = 999;
+	public int Ping { get; set; } = 100;
 	public ulong SteamId { get; set; }
 
 	string PingIcon

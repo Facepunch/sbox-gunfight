@@ -1,7 +1,6 @@
 @using Sandbox.UI
 
 @namespace Facepunch.Gunfight.MainMenu
-@attribute [StyleSheet]
 @inherits Panel
 
 <root>
@@ -56,6 +55,31 @@
 	public int MaxPlayers { get; set; } = 0;
 	public int Ping { get; set; } = 100;
 	public ulong SteamId { get; set; }
+	
+	public Action OnServerSelected { get; set; }
+	public Sandbox.Services.ServerList.Entry? Server { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		base.OnParametersSet();
+
+		Refresh();
+	}
+
+	void Refresh()
+	{
+		if ( Server != null )
+		{
+			var server = Server.Value;
+			
+			Players = server.Players;
+			MaxPlayers = server.MaxPlayers;
+			MapIdent = server.Map;
+			Ping = server.Ping;
+			SteamId = server.SteamId;
+			Title = server.Name;
+		}
+	}
 
 	string PingIcon
 	{
@@ -71,7 +95,8 @@
 	
 	protected override void OnClick( MousePanelEvent e )
 	{
-		Game.Menu.ConnectToServer( SteamId );
+		OnServerSelected?.Invoke();
+		// Game.Menu.ConnectToServer( SteamId );
 	}
 
 	async Task SyncMap()

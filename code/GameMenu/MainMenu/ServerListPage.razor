@@ -8,103 +8,104 @@
 
 <root>
 	<div class="main">
-		<div class="left column">
-			<div class="game-title">
-				Gunfight
-			</div>
-			<div class="game-subtitle">
-				Server Browser
-			</div>
-			
-			<div class="game-subtitle">
-				@if ( List.Any() )
-	            {
-	                <label>Found @(List.Count) server(s)</label>
-	            }
-			</div>
-			
-			<div class="column shadow">
-				<div class="header">
-					<div class="background" />
-
-					<section class="grow">Title</section>
-					<section>Map</section>
-					<section>Players</section>
-					<section>Ping</section>
-					<div style="width: 40px;"/>
-				</div>
+		<div class="game-title">
+			Server Browser
+		</div>
+		
+		<div class="content">
+			<div class="left column">
+				<div class="background" />
 				
-				<div class="server-list">
-	                @if ( IsDebug )
-	                {
-		                @for ( int i = 0; i < 64; i++ )
-		                {
-			                <ServerListRow Title="[EU] Boom-punch @i" MapIdent="facepunch.prison" Players=@i MaxPlayers=@(64) Ping=@(i % 2 == 0 ? 300 : 45) />
-		                }
-	                }
-	                else
-	                {
-                		@if ( List == null || ( List.IsQuerying && !List.Any() ) )
-                		{
-			                <div class="warning">
-								<div class="background" />
-				                <i>sync</i>
-			                </div>
-                		}
-                		else if ( !List.Any() )
-                		{
-			                <div class="warning">
-								<div class="background" />
-				                <label>No servers available...</label>
-			                </div>
-                		}
-                		else
-                		{
-			                <div class="fill">
-				                <div class="background" />
-				                 
-				                @foreach ( var server in List )
-				                {
-					                <ServerListRow 
-						                Title=@server.Name 
-						                Players=@server.Players
-						                MaxPlayers=@server.MaxPlayers 
-						                Ping=@server.Ping
-						                MapIdent=@server.Map
-						                SteamId=@server.SteamId
-					                />
-				                }
-			                </div>
-                		}
-	                }
-	            </div>
+				<div class="column">
+					<div class="header">
+						<div class="background"/>
+
+						<section class="grow">Title</section>
+						<section>Map</section>
+						<section>Players</section>
+						<section>Ping</section>
+						<div style="width: 40px;"/>
+					</div>
+
+					<div class="server-list">
+						@if ( IsDebug )
+						{
+							@for ( int i = 0; i < 64; i++ )
+							{
+								<ServerListRow 
+									Title="[EU] Boom-punch @i" 
+									MapIdent="facepunch.prison" 
+									Players=@i MaxPlayers=@(64) 
+									Ping=@(i % 2 == 0 ? 300 : 45)
+									OnServerSelected=@(() => OnServerSelected( new(){
+										                 SteamId = 999,
+										                 Map = "facepunch.prison",
+										                 Name = "My Server"
+										                 }))
+									/>
+							}
+						}
+						else
+						{
+							@if ( List == null || (List.IsQuerying && !List.Any()) )
+							{
+								<div class="warning">
+									<div class="background"/>
+									<i>sync</i>
+								</div>
+							}
+							else if ( !List.Any() )
+							{
+								<div class="warning">
+									<div class="background"/>
+									<label>No servers available...</label>
+								</div>
+							}
+							else
+							{
+								<div class="fill">
+									<div class="background"/>
+
+									@foreach ( var server in List )
+									{
+										<ServerListRow @Server=@server OnServerSelected=@(() => OnServerSelected( server ))/>
+									}
+								</div>
+							}
+						}
+					</div>
+				</div>
+			</div>
+			<div class="right column">
+				<GameServerFrame Server:bind=@SelectedServer />
 			</div>
 		</div>
-	</div>
-	
-	<div class="footer">
-		<ActionButton onclick=@Return>
-			<Title>
-				Return
-			</Title>
-		</ActionButton>
 
-		<div style="flex-grow: 1;" />
-		
-		<ActionButton onclick=@Matchmake>
-        	<Title>
-        		Matchmake
-        	</Title>
-        	<Extra>
-        		<i>wifi</i>
-        	</Extra>
-        </ActionButton>
-		
-		<ActionButton class="icon-only" onclick=@Refresh>
-			<Extra>
-				<i>sync</i>
-			</Extra>
-	    </ActionButton>
+		<div class="footer">
+			<ActionButton onclick=@Return>
+				<Title>
+					Return
+				</Title>
+			</ActionButton>
+
+			<div style="flex-grow: 1;"/>
+
+			<ActionButton onclick=@Matchmake>
+				<Title>
+					Matchmake
+				</Title>
+				<Extra>
+					<i>wifi</i>
+				</Extra>
+			</ActionButton>
+
+			<ActionButton class="icon-only" onclick=@Refresh>
+				<Extra>
+					<i>sync</i>
+				</Extra>
+			</ActionButton>
+		</div>
+
 	</div>
 </root>
 
@@ -113,6 +114,8 @@
 	bool IsDebug => false;
     
 	Sandbox.Services.ServerList List;
+	
+	Sandbox.Services.ServerList.Entry SelectedServer { get; set; }
     
 	protected override void OnParametersSet()
 	{
@@ -130,9 +133,16 @@
 
 		_ = Refresh();
 	}
+
+	void OnServerSelected( Sandbox.Services.ServerList.Entry entry )
+	{
+		SelectedServer = entry;
+	}
     
 	async Task Refresh()
 	{
+		SelectedServer = default;
+		
 		if ( List.IsQuerying )
 			return;
 

@@ -1,0 +1,95 @@
+@using Sandbox
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+	<div class="background"/>
+
+	@if ( Server.SteamId == 0 )
+	{
+		<div>
+			<label class="notification">Select a server...</label>
+		</div>
+		
+		return;
+	}
+	
+	<div class="server-frame">
+		<div class="map-background" @ref=MapBackground/>
+
+		<div class="header">
+
+			<div class="column">
+				@if ( MapPackage != null )
+				{
+					<img class="thumb" src="@MapPackage.Thumb"/>
+				}
+			</div>
+
+			<div class="column">
+				<label class="server-name">@Server.Name</label>
+				<label class="map-name">Playing on @(MapPackage?.Title ?? Server.Map)</label>
+			</div>
+		</div>
+
+		<GamemodeCard GamemodeName=@ModeName/>
+
+		<div style="flex-grow: 1;"/>
+
+		<div class="footer">
+			<ActionButton onclick=@Connect>
+				<Title>
+					Join Server
+				</Title>
+				<Extra>
+					<i>login</i>
+				</Extra>
+			</ActionButton>
+		</div>
+
+	</div>
+</root>
+
+@code 
+{
+	public Sandbox.Services.ServerList.Entry Server { get; set; }
+	Panel MapBackground { get; set; }
+
+	private Package MapPackage;
+
+	string ModeName
+	{
+		get => "KillConfirmedGamemode";
+	}
+	
+	void Connect( PanelEvent e )
+	{
+		Game.Menu.ConnectToServer( Server.SteamId );
+	}
+
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		base.OnAfterTreeRender( firstTime );
+
+		if ( !string.IsNullOrEmpty( Server.Map ) )
+		{
+			_ = SyncMap();
+		}
+	}
+	
+	async Task SyncMap()
+	{
+		MapPackage = await Package.Fetch( Server.Map, false );
+		StateHasChanged();
+
+		MapBackground.Style.BackgroundImage = Texture.Load( MapPackage.Screenshots?.FirstOrDefault()?.Url ?? MapPackage.Thumb  );
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Server.SteamId );
+	}
+}

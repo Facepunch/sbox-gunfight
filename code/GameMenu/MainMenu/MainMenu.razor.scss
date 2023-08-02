@@ -146,7 +146,6 @@ MainMenu
     padding: 64px;
     padding-bottom: 0;
     flex-grow: 1;
-    flex-direction: row;
     gap: 16px;
     
     .left, .right
@@ -165,6 +164,7 @@ MainMenu
 
     .game-title
     {
+      flex-shrink: 0;
       font-family: $main-font-bold;
       font-size: 48px;
       text-transform: uppercase;

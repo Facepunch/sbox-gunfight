@@ -7,35 +7,76 @@
 <root>
 	<div class="background" />
 	
-	<section class="icon-header">
-		<i>favorite</i>
-	</section>
 	<section class="grow">
 		@Title
 	</section>
+	
 	<section class="min-200">
-		@MapIdent
+		@if ( MapPackage != null )
+		{
+			<img style="width: 32px; height: 32px; margin-right: 16px;" src="@MapPackage.Thumb" />
+			<label>@(MapPackage.Title)</label> 
+		}
+		else
+		{
+			@MapIdent
+		}
 	</section>
+	
 	<section class="min-200">
 		@(Players)/@(MaxPlayers)
 	</section>
+	
 	<section class="min-100">
-		<label>@Ping</label>
-		ms
+		<label>@(Ping) ms</label>
 	</section>
+	
+	<section class="icon-header">
+        <i>@(PingIcon)</i>
+    </section>
 </root>
 
 @code
 {
 	public string Title { get; set; }
-	public string MapIdent { get; set; }
+	
+	private string _map;
+	private Package MapPackage;
+	
+	public string MapIdent
+	{
+		get => _map;
+		set
+		{
+			_map = value;
+			_ = SyncMap();
+		}
+	}
 	public int Players { get; set; } = 0;
 	public int MaxPlayers { get; set; } = 0;
 	public int Ping { get; set; } = 999;
 	public ulong SteamId { get; set; }
+
+	string PingIcon
+	{
+		get
+		{
+			if ( Ping < 50 ) return "network_wifi";
+			if ( Ping < 100 ) return "network_wifi_3_bar";
+			if ( Ping < 150 ) return "network_wifi_2_bar";
+			
+			return "network_wifi_1_bar";
+		}
+	}
 	
 	protected override void OnClick( MousePanelEvent e )
 	{
 		Game.Menu.ConnectToServer( SteamId );
+	}
+
+	async Task SyncMap()
+	{
+		MapPackage = await Package.Fetch( _map, false );
+		StateHasChanged();
 	}
 }

@@ -16,6 +16,13 @@
 				Server Browser
 			</div>
 			
+			<div class="game-subtitle">
+				@if ( List.Any() )
+	            {
+	                <label>Found @(List.Count) server(s)</label>
+	            }
+			</div>
+			
 			<div class="column shadow">
 				<div class="header">
                 	
@@ -45,17 +52,21 @@
                 		}
                 		else
                 		{
-                			@foreach ( var server in List )
-                			{
-                				<ServerListRow 
-                					Title=@server.Name 
-                					Players=@server.Players
-                					MaxPlayers=@server.MaxPlayers 
-                					Ping=@server.Ping
-					                MapIdent=@server.Map
-					                SteamId=@server.SteamId
-                				/>
-                			}
+			                <div class="fill">
+				                <div class="background" />
+				                 
+				                @foreach ( var server in List )
+				                {
+					                <ServerListRow 
+						                Title=@server.Name 
+						                Players=@server.Players
+						                MaxPlayers=@server.MaxPlayers 
+						                Ping=@server.Ping
+						                MapIdent=@server.Map
+						                SteamId=@server.SteamId
+					                />
+				                }
+			                </div>
                 		}
 	                }
 	            </div>

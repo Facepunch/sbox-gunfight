@@ -1,12 +1,12 @@
 {
-  "WeaponName": "MP5A2",
+  "WeaponName": "MP5",
   "WeaponShortName": "MP5",
   "Slot": "Primary",
   "HoldType": "Rifle",
   "Model": "models/mp5/w_mp5.vmdl",
   "ViewModel": "models/mp5/fp_mp5.vmdl",
   "Icon": "models/mp5/w_mp5.vmdl.png",
-  "BaseFireRate": 0.08,
+  "BaseFireRate": 0.09,
   "DefaultFireMode": "FullAuto",
   "DamageFlags": [
     "bullet"
@@ -17,8 +17,8 @@
     "Semi"
   ],
   "BulletSpread": 0.09,
-  "BulletForce": 1.5,
-  "BulletDamage": 17,
+  "BulletForce": 1,
+  "BulletDamage": 19,
   "BulletSize": 3,
   "BulletCount": 1,
   "BurstAmount": 3,
@@ -58,8 +58,8 @@
     "AimAngleOffset": "-0.5,0,4"
   },
   "Recoil": {
-    "Decay": "100,180",
-    "BaseRecoilMinimum": "-6,12",
+    "Decay": "125,205",
+    "BaseRecoilMinimum": "-8,14",
     "BaseRecoilMaximum": "6,16"
   },
   "ShootTrailParticleEffect": "particles/gameplay/guns/trail/trail_smoke.vpcf",

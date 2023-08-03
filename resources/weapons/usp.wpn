@@ -6,7 +6,7 @@
   "Model": "models/m1911/w_m1911.vmdl",
   "ViewModel": "models/m1911/fp_m1911.vmdl",
   "Icon": "models/m1911/w_m1911.vmdl.png",
-  "BaseFireRate": 0.135,
+  "BaseFireRate": 0.12,
   "DefaultFireMode": "Semi",
   "DamageFlags": [
     "bullet"
@@ -16,8 +16,8 @@
   ],
   "BulletSpread": 0.1,
   "BulletForce": 1.5,
-  "BulletDamage": 12,
-  "BulletSize": 3,
+  "BulletDamage": 20,
+  "BulletSize": 4,
   "BulletCount": 1,
   "BurstAmount": 3,
   "BurstFireRate": 0.08,

@@ -8,7 +8,7 @@ public partial class SpawnPointSystem
 	/// <summary>
 	/// The max suitable distance a player can spawn away from the original spawn point location.
 	/// </summary>
-	public static float MaxSuitableDistance => 1024;
+	public static float MaxSuitableDistance => 128;
 	/// <summary>
 	/// How many times we'll try to spawn the player, before falling back to the original spot.
 	/// </summary>
@@ -17,7 +17,7 @@ public partial class SpawnPointSystem
 	/// <summary>
 	/// The range (lowest radius, highest radius) that we use to generate a random point around the spawn.
 	/// </summary>
-	public static Vector2 Range => new( 128, 256 );
+	public static Vector2 Range => new( 32, 64 );
 
 	protected static Vector3 GeneratePoint( Vector3 origin )
 	{
@@ -50,7 +50,7 @@ public partial class SpawnPointSystem
 		if ( destination.IsNearlyZero() || destination.Distance( spot ) > MaxSuitableDistance )
 			return false;
 
-		var trace = TraceBBox( destination, destination + Vector3.Up * 70, mins, maxs, 0 );
+		var trace = TraceBBox( destination, destination + Vector3.Up * 20, mins, maxs, 0 );
 		if ( trace.Hit ) return false;
 
 		return true;
@@ -62,8 +62,7 @@ public partial class SpawnPointSystem
 	{
 		if ( Debug )
 		{
-			DebugOverlay.Circle( transform.Position, Rotation.From( new( 90, 0, 0 ) ), Range.y, Color.Green.WithAlpha( 0.1f ), 15, false );
-			DebugOverlay.Circle( transform.Position, Rotation.From( new( 90, 0, 0 ) ), Range.x, Color.Red.WithAlpha( 0.2f ), 15, false );
+			DebugOverlay.Circle( transform.Position, Rotation.From( new( 90, 0, 0 ) ), Range.y, Color.Green.WithAlpha( 0.5f ), 15, false );
 		}
 
 		int i = 0;

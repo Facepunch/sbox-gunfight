@@ -262,7 +262,7 @@ public abstract partial class Gamemode : Entity
 
 		Log.Info( $"{spawnPoints.Count()} valid spawn points found." );
 
-		return spawnPoints.FirstOrDefault()?.GetSpawnTransform();
+		return Game.Random.FromList( spawnPoints.ToList() )?.GetSpawnTransform();
 	}
 
 	public virtual void PreSpawn( GunfightPlayer player )

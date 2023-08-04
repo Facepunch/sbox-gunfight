@@ -5,58 +5,6 @@
 @namespace Facepunch.Gunfight.UI
 @inherits Panel
 
-<style>
-    Crosshair {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-50%);
-
-        .element {
-            transform: translateX(-50%) translateY(-50%);
-            position: absolute;
-            box-shadow: 1px 1px 1px rgba( black, 0.75 );
-        }
-
-        .dot {
-            width: 3px;
-            height: 3px;
-        }
-
-        .left, .right {
-            width: 10px;
-            height: 2px;
-        }
-
-        .top, .bottom {
-            width: 2px;
-            height: 10px;
-        }
-
-        .left {
-            left: -@Distance;
-        }
-
-        .right {
-            left: @Distance;
-        }
-
-        .top {
-            top: -@Distance;
-        }
-
-        .bottom {
-            top: @Distance;
-        }
-
-        transition: opacity 0.1s ease;
-        opacity: 0;
-        &.visible {
-            opacity: 1;
-        }
-    }
-</style>
-
 <root>
     <div class="left element"></div>
     <div class="right element"></div>
@@ -66,17 +14,13 @@
 </root>
 
 @code {
-    public float PixelDistance { get; set; } = 20f;
-    public string Distance => $"{PixelDistance}px";
-
-    protected override void OnAfterTreeRender(bool firstTime)
+	protected override int BuildHash()
     {
-        base.OnAfterTreeRender( firstTime );
-    }
-
-    protected override int BuildHash()
-    {
-        return HashCode.Combine( Time.Now );
+		var player = Game.LocalPawn as GunfightPlayer;
+		var weapon = player?.ActiveChild as GunfightWeapon;
+		var isAiming = player?.IsAiming ?? false;
+		
+        return HashCode.Combine( player, weapon, isAiming );
     }
 
     public override void Tick()

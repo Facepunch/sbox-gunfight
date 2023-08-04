@@ -14,7 +14,7 @@ public partial class GunfightLobby : IValid
 
 	// IValid
 	bool IValid.IsValid => _lobby != null && _lobby?.Id != 0 && _lobby.IsMember;
-
+	
 	public GunfightLobby( ILobby lobby )
 	{
 		_lobby = lobby;

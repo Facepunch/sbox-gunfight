@@ -19,5 +19,6 @@ public partial class GunfightLobby
 		public ImmutableDictionary<string, string> Data { get => _lobby.Data; }
 		public string Title { get => _lobby.Title; set => _lobby.Title = value; }
 		public void BroadcastMessage( ByteStream msg ) => _lobby.BroadcastMessage( msg );
+		public string State { get => _lobby.State; set => _lobby.State = value; }
 	#endregion
 }

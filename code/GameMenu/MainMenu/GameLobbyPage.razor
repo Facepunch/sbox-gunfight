@@ -38,16 +38,6 @@
 
 			<label class="game-subtitle">@(Lobby.Owner.Name)'s lobby - @(Lobby.MemberCount)/@(Lobby.MaxMembers)</label>
 
-			@* <label class="stats-title">Debug Stats</label>
-			
-			@foreach ( var data in Lobby.Data )
-			{
-				<div class="stat">
-					<i>feed</i>
-					<label>@data.Key: @data.Value</label>
-				</div>
-			} *@
-
 			<ExpandWidget>
 				<Title>Map</Title>
 				<Body>
@@ -61,9 +51,20 @@
 			<ExpandWidget>
 				<Title>Game Mode</Title>
 				<Body>
-					<GamemodeCard GamemodeName=@ModeName/>
+				<GamemodeCard GamemodeName=@ModeName/>
 				</Body>
 			</ExpandWidget>
+			
+			
+			<label class="stats-title">Debug Stats</label>
+			
+			@foreach ( var data in Lobby.Data )
+			{
+				<div class="stat">
+					<i>feed</i>
+					<label>@data.Key: @data.Value</label>
+				</div>
+			}
 
 			<div style="flex-grow: 1;"/>
 
@@ -124,19 +125,30 @@
 
 			<div style="flex-grow: 1;"/>
 			
-			@if ( Lobby.HasReadyCountdown )
+			@if ( Lobby.State != "loading" )
 			{
-				<ActionButton>
-					<Title>
-						<label>Starting in @TimeSpan.FromSeconds( Lobby.ReadyCountdown ).ToString( @"ss" )</label>
-					</Title>
-				</ActionButton>
+				@if ( Lobby.HasReadyCountdown )
+				{
+					<ActionButton>
+						<Title>
+							<label>Starting in @TimeSpan.FromSeconds( Lobby.ReadyCountdown ).ToString( @"ss" )</label>
+						</Title>
+					</ActionButton>
+				}
+				else
+				{
+					<ActionButton Disabled=@true>
+						<Title>
+							Need 1 to ready up
+						</Title>
+					</ActionButton>
+				}
 			}
 			else
 			{
 				<ActionButton Disabled=@true>
 					<Title>
-						Need 1 to ready up
+						Waiting for Host
 					</Title>
 				</ActionButton>
 			}
@@ -150,28 +162,31 @@
 				</Extra>
 			</ActionButton>
 			
-			<ActionButton onclick=@ToggleReadyStatus>
-				<Title>
-					@if ( Lobby.IsLocalPlayerReady )
-					{
-						<Label>Un-Ready</Label>
-					}
-					else
-					{
-						<Label>Ready</Label>
-					}
-				</Title>
-				<Extra>
-					@if ( Lobby.IsLocalPlayerReady )
-					{
-						<i>remove</i>
-					}
-					else
-					{
-						<i>add</i>
-					}
-				</Extra>
-			</ActionButton>
+			@if ( Lobby.State != "loading" )
+			{
+				<ActionButton onclick=@ToggleReadyStatus>
+					<Title>
+						@if ( Lobby.IsLocalPlayerReady )
+						{
+							<Label>Un-Ready</Label>
+						}
+						else
+						{
+							<Label>Ready</Label>
+						}
+					</Title>
+					<Extra>
+						@if ( Lobby.IsLocalPlayerReady )
+						{
+							<i>remove</i>
+						}
+						else
+						{
+							<i>add</i>
+						}
+					</Extra>
+				</ActionButton>
+			}
 		</div>
 	</div>
 </root>

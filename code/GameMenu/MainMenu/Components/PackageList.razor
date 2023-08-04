@@ -32,7 +32,7 @@
 	public RenderFragment WhenNothingFound { get; set; }
 
 	List<Package> Packages { get; set; } = new();
-	List<Package> SelectedPackages { get; set; } = new();
+	HashSet<Package> SelectedPackages { get; set; } = new();
 	
 	public Action<List<Package>> OnUpdate { get; set; }
 
@@ -60,7 +60,7 @@
 			SelectedPackages.Add( package );
 		}
 		
-		OnUpdate?.Invoke( SelectedPackages );
+		OnUpdate?.Invoke( SelectedPackages.ToList() );
 	}
 
 	bool queryFinished = false;

@@ -16,7 +16,7 @@ public partial class PlayerController : PawnController
 	[Net] public float BodyHeight { get; set; } = 72.0f;
 	[Net] public float Gravity { get; set; } = 700.0f;
 	
-	public float AirControl => 50.0f;
+	public float AirControl => 10.0f;
 	public float AirAcceleration => 50.0f;
 
 	[Net, Predicted] public TimeUntil JumpWindup { get; set; }
@@ -563,7 +563,7 @@ public partial class PlayerController : PawnController
 
 	protected bool CanJump()
 	{
-		if ( Slide.TimeSinceActivate < 0.1f )
+		if ( Slide.TimeSinceActivate < 0.5f )
 			return false;
 		if ( GroundEntity == null )
 			return false;

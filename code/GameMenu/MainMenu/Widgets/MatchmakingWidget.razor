@@ -17,11 +17,19 @@
 	<div class="icon-container">
 		<div class="icon"/>
 	</div>
-
-	<div class="main">
-		<label>@CurrentState</label>
-        <label class="large">@TimeString</label>
-	</div>
+	
+	@if ( HasHovered )
+	{
+		<label>Stop searching?</label>
+	}
+	else
+	{
+		
+		<div class="main">
+			<label>@CurrentState</label>
+			<label class="large">@TimeString</label>
+		</div>
+	}
 </root>
 
 @code
@@ -58,6 +66,11 @@
 	
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( TimeString, CurrentState );
+		return HashCode.Combine( TimeString, CurrentState, HasHovered );
+	}
+
+	protected override void OnClick( MousePanelEvent e )
+	{
+		MatchmakingSystem.StopMatchmaking();
 	}
 }

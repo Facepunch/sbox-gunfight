@@ -11,6 +11,16 @@ MatchmakingWidget
   justify-content: center;
   align-items: center;
 
+  cursor: pointer;
+  
+  &:hover
+  {
+    >.background
+    {
+      opacity: 0.8;
+    }
+  }
+
   >.background
   {
     transition: all 0.1s ease;

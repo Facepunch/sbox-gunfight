@@ -104,37 +104,13 @@
 	{
 		// Need to select a map.
 		if ( SelectedMaps.Count < 1 ) return;
-		
-		var result = await MatchmakingSystem.Search( SelectedMode, 
+
+		var result = await MatchmakingSystem.Matchmake( SelectedMode,
 			SelectedMaps.Select( x => x.FullIdent ).ToArray() );
-		
-		// If we don't have a result, and we've been only matchmaking for less than 60s, search
-		if ( !result )
+
+		if ( result == "lobby" )
 		{
-			if ( MatchmakingSystem.TimeSinceSearch < 15 )
-			{
-				_ = StartSearching();
-			}
-			// If we've been searching for a while, let's make our own session with a random map from the selection?
-			else
-			{
-				MatchmakingSystem.CurrentState = MatchmakingSystem.State.Found;
-
-				await Task.Delay( 1000 );
-
-				MatchmakingSystem.CurrentState = MatchmakingSystem.State.Empty;
-
-				var lobby = await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
-				lobby.Map = Game.Random.FromArray( SelectedMaps.Select( x => x.FullIdent ).ToArray() );
-				lobby.SetData( "gunfight-gamemode", SelectedMode );
-				lobby.Title = $"{lobby.Owner.Name}'s game";
-
-				this.Navigate( "/lobby" );
-			}
-		}
-		else
-		{
-			if ( MainMenu.CurrentLobby != null ) this.Navigate( "/lobby" );
+			this.Navigate( "/lobby" );
 		}
 	}
 	

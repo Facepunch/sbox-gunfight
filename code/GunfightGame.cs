@@ -112,6 +112,11 @@ partial class GunfightGame : GameManager
 	[GameEvent.Client.PostCamera]
 	public void PostCameraSetup()
 	{
+		if ( Game.LocalPawn.LifeState != LifeState.Alive )
+		{
+			return;
+		}
+		
 		FovOffset = FovOffset.LerpTo( AddedCameraFOV, Time.Delta * 10f, true );
 		Camera.FieldOfView += FovOffset;
 

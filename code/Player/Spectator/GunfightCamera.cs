@@ -65,8 +65,11 @@ public class GunfightCamera
 
 		UpdateDistance();
 
-		LerpedEyeHeight = LerpedEyeHeight.LerpTo( target.Controller.CurrentEyeHeight, Time.Delta * 10f );
-		Camera.Position = Target.Position + Vector3.Up * LerpedEyeHeight;
+		if ( target.Controller != null )
+		{
+			LerpedEyeHeight = LerpedEyeHeight.LerpTo( target.Controller.CurrentEyeHeight, Time.Delta * 10f );
+			Camera.Position = Target.Position + Vector3.Up * LerpedEyeHeight;
+		}
 
 		var rotation = Rotation.LookAt( Target.AimRay.Forward );
 		if ( Target.IsLocalPawn )

@@ -215,7 +215,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	{
 		CameraRecoil -= RecoilDecay * Time.Delta;
 		// Clamp down to zero
-		CameraRecoil = CameraRecoil.Clamp( 0, float.MaxValue );
+		CameraRecoil = CameraRecoil.Clamp( 0, 100f );
 
 		WeaponSpreadRecoil -= WeaponDefinition.Recoil.SpreadDecay * Time.Delta;
 		// Clamp down to zero

@@ -228,12 +228,9 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( Input.AnalogLook.pitch > 0f )
 		{ 
 			var pitchDelta = Input.AnalogLook.pitch;
-
 			RecoilDispersion -= pitchDelta * Time.Delta;
 		}
 
-		DebugOverlay.ScreenText( $"RecoilDispersion: {RecoilDispersion}", 1, 0 );
-		
 		// Clamp down to zero
 		WeaponSpreadRecoil = WeaponSpreadRecoil.Clamp( 0, 2.5f );
 		CameraRecoil = CameraRecoil.Clamp( 0, 20f );

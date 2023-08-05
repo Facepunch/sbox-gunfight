@@ -24,7 +24,7 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 		if ( wall.Distance > MaxWallMountDistance ) return false;
 
 		MountWorldPosition = wall.TracePos;
-		return wall.Height <= 80f && wall.Height >= 30f;
+		return wall.Height <= 65f && wall.Height >= 30f;
 	}
 
 	protected void DoVisualEffects( bool inverted = false )
@@ -56,10 +56,10 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 	public override void PreSimulate()
 	{
 		bool shouldStop = false;
-		if ( !Player.InputDirection.x.AlmostEqual( 0f ) || !Player.InputDirection.y.AlmostEqual( 0f ) || Input.Pressed( "Jump" ) )
+		if ( !Player.MoveInput.x.AlmostEqual( 0f ) || !Player.MoveInput.y.AlmostEqual( 0f ) || Input.Pressed( "Jump" ) )
 			shouldStop = true;
 
-		if ( Vector3.Dot( Controller.EyeRotation.Forward.Normal, CachedWallInfo.Normal ) > - 0.5f )
+		if ( Vector3.Dot( Player.AimRay.Forward.Normal, CachedWallInfo.Normal ) > - 0.5f )
 			shouldStop = true;
 
 		if ( shouldStop ) 

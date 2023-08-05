@@ -145,9 +145,14 @@ public partial class PlayerInventory : BaseNetworkable
 		if ( !Contains( ent ) )
 			return false;
 
-		var carriable = ent as BaseCarriable;
+		var weapon = ent as BaseWeapon;
 
-		carriable?.OnCarryDrop( Owner );
+		weapon?.OnCarryDrop( Owner );
+
+		if ( Owner.ActiveChild == ent )
+		{
+			Owner.ActiveChild = null;
+		}
 
 		if ( ent == PrimaryWeapon )
 			PrimaryWeapon = null;

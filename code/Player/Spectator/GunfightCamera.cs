@@ -19,7 +19,7 @@ public class GunfightCamera
 
 	public static Transform? CameraOverride { get; set; }
 
-	public static bool IsSpectator => Target.IsValid() && !Target.IsLocalPawn;
+	public static bool IsSpectator => Target.IsValid() && Target.LifeState == LifeState.Alive && !Target.IsLocalPawn;
 	public static bool IsLocal => !IsSpectator;
 
 	public static bool IsThirdPerson { get; set; } = false;

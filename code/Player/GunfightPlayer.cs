@@ -159,6 +159,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		var primary = Inventory.PrimaryWeapon;
 		if ( primary.IsValid() && Inventory.Drop( primary ) )
 		{
+			ActiveChild = null;
 			primary.StartDecaying();
 		}
 
@@ -267,6 +268,8 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 	{
 		Rotation = LookInput.WithPitch( 0f ).ToRotation();
 		
+		SimulateWeapons( cl );
+		
 		if ( LifeState == LifeState.Respawning )
 		{
 			if ( TimeSinceKilled > 3 && Game.IsServer )
@@ -292,7 +295,6 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 			return;
 
 		TickPlayerUse();
-		SimulateWeapons( cl );
 
 		if ( TimeSinceDamage > 5f && ( GamemodeSystem.Current?.CanPlayerRegenerate( this ) ?? true ) )
 		{

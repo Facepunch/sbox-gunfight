@@ -125,6 +125,7 @@ public partial class PlayerController : PawnController
 	protected bool CanAim()
 	{
 		if ( !Weapon.IsValid() ) return false;
+		if ( Weapon.TimeSinceDeployed < 0.3f ) return false;
 		if ( Weapon.WeaponDefinition.AimingDisabled ) return false;
 		if ( !GroundEntity.IsValid() ) return false;
 		if ( IsSprinting ) return false;
@@ -161,7 +162,7 @@ public partial class PlayerController : PawnController
 
 		UpdateBBox();
 
-		if ( Weapon.IsValid() && Input.Down( "Attack2" ) || UseAimDebug )
+		if ( Weapon.IsValid() && Input.Down( "Attack2" ) && CanAim() || UseAimDebug )
 		{
 			if ( !IsAiming )
 			{

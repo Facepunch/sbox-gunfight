@@ -16,7 +16,7 @@
     "Burst",
     "Semi"
   ],
-  "BulletSpread": 0.09,
+  "BulletSpread": 0.04,
   "BulletForce": 1,
   "BulletDamage": 19,
   "BulletSize": 3,
@@ -58,7 +58,7 @@
     "AimAngleOffset": "-0.5,0,4"
   },
   "Recoil": {
-    "Decay": "125,205",
+    "Decay": "150,260",
     "BaseRecoilMinimum": "-8,14",
     "BaseRecoilMaximum": "6,16"
   },

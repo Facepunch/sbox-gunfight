@@ -6,17 +6,17 @@
   "Model": "models/m1911/w_m1911.vmdl",
   "ViewModel": "models/m1911/fp_m1911.vmdl",
   "Icon": "models/m1911/w_m1911.vmdl.png",
-  "BaseFireRate": 0.12,
-  "DefaultFireMode": "Semi",
+  "BaseFireRate": 0.15,
+  "DefaultFireMode": "FullAuto",
   "DamageFlags": [
     "bullet"
   ],
   "SupportedFireModes": [
     "Semi"
   ],
-  "BulletSpread": 0.1,
+  "BulletSpread": 0.02,
   "BulletForce": 1.5,
-  "BulletDamage": 20,
+  "BulletDamage": 18,
   "BulletSize": 4,
   "BulletCount": 1,
   "BurstAmount": 3,
@@ -58,7 +58,7 @@
   },
   "Recoil": {
     "Decay": "60,100",
-    "BaseRecoilMinimum": "-4,10",
+    "BaseRecoilMinimum": "-8,20",
     "BaseRecoilMaximum": "4,12"
   },
   "ShootTrailParticleEffect": "particles/gameplay/guns/trail/trail_smoke.vpcf",

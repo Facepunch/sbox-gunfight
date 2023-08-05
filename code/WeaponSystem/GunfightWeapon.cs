@@ -246,33 +246,36 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		var randSpreadY = Game.Random.Float( WeaponDefinition.Recoil.MinimumSpread.y, WeaponDefinition.Recoil.MaximumSpread.y );
 
 		var recoilScale = 1f;
-		var spreadScale = 1f;
 		bool isInAir = !PlayerController.GroundEntity.IsValid();
 
 		// Recoil gets decreased when aiming down the sights.
 		if ( IsAiming )
-			recoilScale *= 0.8f;
+			recoilScale *= 0.5f;
 
 		// Recoil gets decreased when ducking.
 		if ( !isInAir && PlayerController.Duck.IsActive )
-			recoilScale *= 0.8f;
+			recoilScale *= 0.75f;
 
 		if ( PlayerController.CoverAim.IsActive )
 			recoilScale *= 0.5f;
 
 		if ( isInAir )
 		{
-			spreadScale *= 3f;
+			recoilScale *= 3f;
 		}
+		
+		var spreadScale = recoilScale;
 
 		// If you're moving at speed, apply more recoil.
 		var speed = Player.Velocity.Length.LerpInverse( 0, 400, true );
 
+		spreadScale += speed;
+		
 		CameraRecoil += new Vector2( randX, randY ) * recoilScale;
 		// Apply spread too
-		WeaponSpreadRecoil += new Vector2( randSpreadX, randSpreadY ) * recoilScale;
+		WeaponSpreadRecoil += new Vector2( randSpreadX, randSpreadY ) * spreadScale;
 
-		RecoilDispersion += RecoilDispersionRate * Time.Delta;
+		RecoilDispersion += RecoilDispersionRate * recoilScale * Time.Delta;
 		RecoilDispersion = RecoilDispersion.Clamp( 0, MaxRecoilDispersion );
 	}
 

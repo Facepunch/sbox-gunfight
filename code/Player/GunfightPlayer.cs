@@ -353,7 +353,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 
 		base.StartTouch( other );
 
-		if ( other is GunfightWeapon weapon )
+		if ( Game.IsServer && other is GunfightWeapon weapon )
 		{
 			var ammoType = weapon.AmmoType;
 

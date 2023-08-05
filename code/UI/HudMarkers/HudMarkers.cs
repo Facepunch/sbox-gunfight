@@ -66,7 +66,7 @@ public partial class HudMarker : Panel
 		Style.Left = Length.Fraction( screenpos.x );
 		Style.Top = Length.Fraction( screenpos.y );
 
-		if ( MaxDistance != 0 )
+		if ( MaxDistance != 0 && DistanceScale != 0 )
 		{
 			var tr = new PanelTransform();
 			var scale = 1 - (CurrentDistance / MaxDistance) * DistanceScale;

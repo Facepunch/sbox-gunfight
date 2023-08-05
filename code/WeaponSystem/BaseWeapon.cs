@@ -28,7 +28,7 @@ public partial class BaseWeapon : BaseCarriable
 
 	protected virtual void InitializeWeapon( WeaponDefinition def )
 	{
-		Log.Info( $"Set up this weapon {def} with model: {WeaponModel}" );
+		Log.Trace( $"Set up this weapon {def} with model: {WeaponModel}" );
 		Model = WeaponModel;
 	}
 	

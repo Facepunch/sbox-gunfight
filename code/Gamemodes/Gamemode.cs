@@ -260,7 +260,7 @@ public abstract partial class Gamemode : Entity
 		var spawnPoints = GetValidSpawnPoints( player );
 		if ( spawnPoints.Count() < 1 ) return null;
 
-		Log.Info( $"{spawnPoints.Count()} valid spawn points found." );
+		Log.Trace( $"{spawnPoints.Count()} valid spawn points found." );
 
 		return Game.Random.FromList( spawnPoints.ToList() )?.GetSpawnTransform();
 	}

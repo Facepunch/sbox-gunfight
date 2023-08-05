@@ -512,3 +512,40 @@ NotificationManager {
         }
     }
 }
+
+ExperienceHintEntry 
+{
+    .xp, .text {
+        font-family: $main-font-bold;
+        font-weight: 600;
+        color: rgba( $theme-color, 0.8 );
+        font-size: 20px;
+        text-shadow: 0px 0px 5px rgba( black, 0.5 );
+    }
+
+    .xp {
+        font-weight: 800;
+        font-size: 22px;
+    }
+
+    .text {
+        top: 1px;
+        margin-left: 16px;
+    }
+
+    opacity: 1;
+    transition: all 0.2s ease;
+
+    &:intro, &:outro {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    &.effect {
+        transform: scale( 1.3 );
+
+        .xp, .text {
+            text-shadow: 0px 0px 10px rgba( $theme-color, 0.5 );
+        }
+    }
+}

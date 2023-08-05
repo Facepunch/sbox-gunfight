@@ -7,7 +7,6 @@ public partial class WeaponDefinition : GameResource
 {
 	public static GunfightWeapon CreateWeapon( WeaponDefinition def )
 	{
-		Log.Info( def );
 		var typeLibrary = TypeLibrary.GetType<GunfightWeapon>( def.ResourceName );
 
 		GunfightWeapon weapon;
@@ -24,7 +23,7 @@ public partial class WeaponDefinition : GameResource
 			};
 		}
 		
-		Log.Info( $"Created weapon: {def.WeaponName}" );
+		Log.Trace( $"Created weapon: {def.WeaponName}" );
 
 		return weapon;
 	}

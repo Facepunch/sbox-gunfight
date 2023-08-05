@@ -253,13 +253,11 @@ public partial class PlayerInventory : BaseNetworkable
 			case WeaponSlot.Primary:
 				{
 					PrimaryWeapon = null;
-					Log.Info( "Primary Weapon made null" );
 					break;
 				};
 			case WeaponSlot.Secondary:
 				{
 					SecondaryWeapon = null;
-					Log.Info( "Ssecondary Weapon made null" );
 					break;
 				};
 			case WeaponSlot.Gadget:

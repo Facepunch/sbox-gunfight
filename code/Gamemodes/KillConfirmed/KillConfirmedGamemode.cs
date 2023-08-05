@@ -212,7 +212,7 @@ public partial class KillConfirmedGamemode : Gamemode
 	{
 		if ( maxReached )
 		{
-			WinningTeam = team;
+			WinningTeam = Scores.GetHighestTeam();
 			SetGameState( GameState.GameWon );
 		}
 	}

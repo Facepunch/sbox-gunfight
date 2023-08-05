@@ -15,6 +15,14 @@ public partial class USP : GunfightWeapon
 		LocalScale = 1.5f;
 	}
 
+	protected override void InitializeWeapon( WeaponDefinition def )
+	{
+		base.InitializeWeapon( def );
+			
+		SetBodyGroup( 2, 1 );
+		SetBodyGroup( 4, 1 );
+	}
+
 	public override ViewModel CreateViewModel()
 	{
 		ViewModelEntity = new ViewModel();

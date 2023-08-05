@@ -15,7 +15,7 @@ public partial class MP5 : GunfightWeapon
 		LocalScale = 1.5f;
 	}
 
-	public override void CreateViewModel()
+	public override ViewModel CreateViewModel()
 	{
 		ViewModelEntity = new ViewModel();
 		ViewModelEntity.Weapon = this;
@@ -27,7 +27,10 @@ public partial class MP5 : GunfightWeapon
 		var arms = new AnimatedEntity( "models/first_person/first_person_arms.vmdl" );
 		arms.SetParent( ViewModelEntity, true );
 		arms.EnableViewmodelRendering = true;
+
+		return ViewModelEntity;
 	}
+
 	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );

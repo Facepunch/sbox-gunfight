@@ -140,7 +140,7 @@ public partial class BaseWeapon : BaseCarriable
 	/// Create the viewmodel. You can override this in your base classes if you want
 	/// to create a certain viewmodel entity.
 	/// </summary>
-	public override void CreateViewModel()
+	public override ViewModel CreateViewModel()
 	{
 		ViewModelEntity?.Delete();
 
@@ -154,6 +154,8 @@ public partial class BaseWeapon : BaseCarriable
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;
 		ViewModelEntity.EnableViewmodelRendering = true;
+
+		return ViewModelEntity;
 	}
 
 	/// <summary>

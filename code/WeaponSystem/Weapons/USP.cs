@@ -15,7 +15,7 @@ public partial class USP : GunfightWeapon
 		LocalScale = 1.5f;
 	}
 
-	public override void CreateViewModel()
+	public override ViewModel CreateViewModel()
 	{
 		ViewModelEntity = new ViewModel();
 		ViewModelEntity.Weapon = this;
@@ -30,5 +30,7 @@ public partial class USP : GunfightWeapon
 		
 		ViewModelEntity.SetBodyGroup( 2, 1 );
 		ViewModelEntity.SetBodyGroup( 4, 2 );
+
+		return ViewModelEntity;
 	}
 }

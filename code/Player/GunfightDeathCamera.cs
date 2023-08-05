@@ -14,7 +14,7 @@ public partial class GunfightDeathCamera : GunfightCamera
 
 	public virtual Vector3 GetViewOffset()
 	{
-		return FocusRotation.Forward * 100f + Vector3.Down * 10f;
+		return FocusRotation.Forward * 200f + Vector3.Down * 10f;
 	}
 
 	public override void Update()
@@ -31,11 +31,11 @@ public partial class GunfightDeathCamera : GunfightCamera
 			}
 		}
 
-		var delta = Time.Delta * 20f;
+		var delta = Time.Delta * 10f;
 
 		if ( isRagdoll )
 		{
-			Camera.Position = Camera.Position.LerpTo( focusEntity.PhysicsBody.Position + (focusEntity.Rotation.Forward * 150f + Vector3.Up * 15f), delta );
+			Camera.Position = Camera.Position.LerpTo( focusEntity.PhysicsBody.Position + (focusEntity.Rotation.Forward * 200f + Vector3.Up * 15f), delta );
 
 			Camera.Rotation = Rotation.Lerp( Camera.Rotation, Rotation.LookAt( -focusEntity.Rotation.Forward, Vector3.Up ), delta );
 		}

@@ -7,7 +7,7 @@ namespace Facepunch.Gunfight;
 public class BaseCarriable : AnimatedEntity
 {
 	public virtual string ViewModelPath => null;
-	public static ViewModel ViewModelEntity { get; protected set; }
+	public ViewModel ViewModelEntity { get; protected set; }
 
 	public override void Spawn()
 	{
@@ -89,7 +89,7 @@ public class BaseCarriable : AnimatedEntity
 			EnableDrawing = false;
 		}
 
-		if ( Game.IsClient )
+		if ( Game.IsClient && ent.IsLocalPawn )
 		{
 			DestroyViewModel();
 			DestroyHudElements();
@@ -111,18 +111,20 @@ public class BaseCarriable : AnimatedEntity
 	/// Create the viewmodel. You can override this in your base classes if you want
 	/// to create a certain viewmodel entity.
 	/// </summary>
-	public virtual void CreateViewModel()
+	public virtual ViewModel CreateViewModel()
 	{
 		Game.AssertClient();
 
 		if ( string.IsNullOrEmpty( ViewModelPath ) )
-			return;
+			return null;
 
 		ViewModelEntity = new ViewModel();
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;
 		ViewModelEntity.EnableViewmodelRendering = true;
 		ViewModelEntity.SetModel( ViewModelPath );
+
+		return ViewModelEntity;
 	}
 
 	/// <summary>

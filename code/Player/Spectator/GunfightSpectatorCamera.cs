@@ -107,7 +107,7 @@ internal class GunfightSpectatorCamera : GunfightCamera
 			if ( weapon.IsValid() )
 			{
 				weapon?.CreateViewModel();
-				vm = BaseCarriable.ViewModelEntity;
+				vm = weapon.ViewModelEntity;
 			}
 		}
 		else

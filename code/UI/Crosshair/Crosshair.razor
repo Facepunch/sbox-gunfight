@@ -29,13 +29,13 @@
         var weapon = player?.ActiveChild as GunfightWeapon;
         var isAiming = player?.IsAiming ?? false;
 
-        if ( !player.IsValid() ) return;
-        if ( !weapon.IsValid() ) return;
-        if ( player.Controller == null ) return;
-
-	    SetClass( "visible", !isAiming || PlayerController.UseAimDebug );
+	    SetClass( "visible", ( !isAiming || PlayerController.UseAimDebug ) && player.LifeState == LifeState.Alive );
 	    // SetClass( "visible", true );
 
+	    if ( !player.IsValid() ) return;
+	    if ( !weapon.IsValid() ) return;
+	    if ( player.Controller == null ) return;
+	    
         var speed = player?.Velocity.Length.LerpInverse( 0, 350, true ) ?? 0;
         if ( player?.Controller.Slide.IsActive ?? false ) speed = 0;
 

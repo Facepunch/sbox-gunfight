@@ -42,6 +42,12 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		EnableHitboxes = true;
 	}
 
+	[ClientRpc]
+	public void RpcSetupCamera()
+	{
+		PlayerCamera = new();
+	}
+	
 	public void Respawn()
 	{
 		Game.AssertServer();
@@ -56,6 +62,8 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		ResetInterpolation();
 
 		SetModel( "models/citizen/citizen.vmdl" );
+
+		RpcSetupCamera( To.Single( Client ) );
 
 		Controller = new PlayerController();
 
@@ -130,6 +138,12 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		// STUB
 	}
 
+	[ClientRpc]
+	public void RpcShowDeathCamera( ModelEntity killer )
+	{
+		PlayerCamera = new GunfightDeathCamera( killer );
+	}
+
 	public override void OnKilled()
 	{
 		GameManager.Current?.OnKilled( this );
@@ -145,11 +159,14 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		StopUsing();
 		Client?.AddInt( "deaths", 1 );
 
+
 		if ( LastDamage.Attacker.IsValid() && LastDamage.Attacker is GunfightPlayer player )
 		{
 			Progression.GiveAward( player.Client, "Kill" );
 			player.AddKill();
 		}
+		
+		RpcShowDeathCamera( To.Single( Client ), LastDamage.Attacker as GunfightPlayer );
 
 		if ( CapturePoint.IsValid() )
 		{

@@ -7,7 +7,7 @@ namespace Facepunch.Gunfight;
 public class BaseCarriable : AnimatedEntity
 {
 	public virtual string ViewModelPath => null;
-	public ViewModel ViewModelEntity { get; protected set; }
+	public static ViewModel ViewModelEntity { get; protected set; }
 
 	public override void Spawn()
 	{

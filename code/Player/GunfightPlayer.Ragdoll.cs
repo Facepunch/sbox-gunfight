@@ -2,6 +2,8 @@
 
 public partial class GunfightPlayer
 {
+	public ModelEntity RagdollEntity { get; set; }
+	
 	[ClientRpc]
 	private void BecomeRagdollOnClient( Vector3 velocity, Vector3 forcePos, Vector3 force, int bone )
 	{
@@ -40,5 +42,7 @@ public partial class GunfightPlayer
 		}
 
 		ent.DeleteAsync( 10.0f );
+
+		RagdollEntity = ent;
 	}
 }

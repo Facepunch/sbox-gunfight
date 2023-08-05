@@ -40,6 +40,7 @@ public class GunfightCamera
 		Camera.FirstPersonViewer = CurrentDistance < 8 ? Target : null;
 	}
 
+	private float LerpedEyeHeight = 64f;
 	public virtual void Update()
 	{
 		if ( CameraOverride != null )
@@ -64,11 +65,12 @@ public class GunfightCamera
 
 		UpdateDistance();
 
-		Camera.Position = Target.AimRay.Position;
+		LerpedEyeHeight = LerpedEyeHeight.LerpTo( target.Controller.CurrentEyeHeight, Time.Delta * 10f );
+		Camera.Position = Target.Position + Vector3.Up * LerpedEyeHeight;
 
 		var rotation = Rotation.LookAt( Target.AimRay.Forward );
 		if ( Target.IsLocalPawn )
-			rotation = Target.ViewAngles.ToRotation();
+			rotation = Target.LookInput.ToRotation();
 
 		float distance = CurrentDistance * Target.Scale;
 		var targetPos = Camera.Position + rotation.Right * ((Target.CollisionBounds.Maxs.x + RightOffset) * Target.Scale) * (CurrentDistance / CameraDistance);

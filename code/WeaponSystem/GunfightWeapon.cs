@@ -200,7 +200,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		IsReloading = true;
 
-		(Owner as AnimatedEntity).SetAnimParameter( "b_reload", true );
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_reload", true );
 		ViewModelEntity?.SetAnimParameter( "b_reload", true );
 
 		StartReloadEffects();
@@ -261,10 +261,10 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	{
 		if ( !Player.IsValid() ) return;
 
-		var viewAngles = Player.ViewAngles;
+		var viewAngles = Player.LookInput;
 		viewAngles.pitch -= CameraRecoil.y * Time.Delta;
 		viewAngles.yaw -= CameraRecoil.x * Time.Delta;
-		Player.ViewAngles = viewAngles;
+		Player.LookInput = viewAngles;
 	}
 
 	public override void Simulate( IClient cl )
@@ -312,11 +312,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		
 		if ( CanPrimaryAttack() )
 		{
-			using ( LagCompensation() )
-			{
-				TimeSincePrimaryAttack = 0;
-				AttackPrimary();
-			}
+			TimeSincePrimaryAttack = 0;
+			AttackPrimary();
 		}
 
 		if ( IsReloading && TimeSinceReload > ReloadTime )
@@ -334,20 +331,6 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		AmmoClip = def.StandardClip;
 		CurrentFireMode = def.DefaultFireMode;
-	}
-
-
-	[ClientRpc]
-	protected virtual void RpcHolster()
-	{
-		//Log.Info( $"{Host.Name} Holster {ViewModelEntity}" );
-		ViewModelEntity?.SetAnimParameter( "b_holster", true );
-	}
-
-	public void Holster()
-	{
-		if ( Game.IsServer )
-			RpcHolster( To.Single( Owner ) );
 	}
 
 	public virtual void OnReloadFinish()
@@ -390,8 +373,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	}
 
 	protected bool CanDefaultPrimaryAttack()
-	{
-		if ( Player.IsHolstering ) return false;
+	{ 
 		if ( TimeSinceDeployed < 0.2f ) return false;
 		if ( !PlayerController.AimFireDelay ) return false;
 		//if ( PlayerController.Slide.IsActive ) return false;

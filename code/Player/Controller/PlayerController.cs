@@ -89,7 +89,7 @@ public partial class PlayerController : PawnController
 	{
 		var girth = BodyGirth * 0.5f;
 		var mins = new Vector3( -girth, -girth, 0 ) * Pawn.Scale;
-		var maxs = new Vector3( +girth, +girth, RealEyeHeight + 6f ) * Pawn.Scale;
+		var maxs = new Vector3( +girth, +girth, CurrentEyeHeight + 6f ) * Pawn.Scale;
 
 		CurrentMechanic?.UpdateBBox( ref mins, ref maxs, Pawn.Scale );
 
@@ -104,7 +104,6 @@ public partial class PlayerController : PawnController
 
 	public override void FrameSimulate()
 	{
-		base.FrameSimulate();
 		SimulateEyes();
 	}
 
@@ -134,24 +133,23 @@ public partial class PlayerController : PawnController
 		return true;
 	}
 
-	public float RealEyeHeight { get; set; }
-
+	[Net, Predicted] public float CurrentEyeHeight { get; set; } = 64f;
 	protected void SimulateEyes()
 	{
 		var target = GetEyeHeight();
 		// Magic number :sad:
 		var trace = TraceBBox( Position, Position, 0, 10f );
-		if ( trace.Hit && target > RealEyeHeight )
+		if ( trace.Hit && target > CurrentEyeHeight )
 		{
 			// We hit something, that means we can't increase our eye height because something's in the way.
 		}
 		else
 		{
-			RealEyeHeight = RealEyeHeight.LerpTo( target, Time.Delta * 10f );
+			CurrentEyeHeight = target;
 		}
 
-		EyeRotation = Player.ViewAngles.ToRotation();
-		EyeLocalPosition = Vector3.Up * RealEyeHeight;
+		Player.EyeRotation = Player.LookInput.ToRotation();
+		Player.EyeLocalPosition = Vector3.Up * CurrentEyeHeight;
 	}
 
 	[ConVar.Client(( "gunfight_aim_debug" ) )]
@@ -181,7 +179,7 @@ public partial class PlayerController : PawnController
 
 		IsSprinting = Input.Down( "Run" );
 
-		if ( IsSprinting && Velocity.Length < 40 || Player.InputDirection.x < 0.5f )
+		if ( IsSprinting && Velocity.Length < 40 || Player.MoveInput.x < 0.5f )
 			IsSprinting = false;
 
 		if ( Input.Down( "Attack1" ) || Input.Down( "Attack2" ) )
@@ -227,9 +225,9 @@ public partial class PlayerController : PawnController
 		//
 		// Work out wish velocity.. just take input, rotate it to view, clamp to -1, 1
 		//
-		WishVelocity = new Vector3( Player.InputDirection.x, Player.InputDirection.y * ( IsSprinting ? 0.5f : 1f ), 0 );
+		WishVelocity = new Vector3( Player.MoveInput.x, Player.MoveInput.y * ( IsSprinting ? 0.5f : 1f ), 0 );
 		var inSpeed = WishVelocity.Length.Clamp( 0, 1 );
-		WishVelocity *= Player.ViewAngles.WithPitch( 0 ).ToRotation();
+		WishVelocity *= Player.LookInput.WithPitch( 0 ).ToRotation();
 
 		if ( !Swimming && !IsTouchingLadder )
 		{
@@ -635,8 +633,8 @@ public partial class PlayerController : PawnController
 
 	public virtual void CheckLadder()
 	{
-		var wishvel = new Vector3( Player.InputDirection.x, Player.InputDirection.y, 0 );
-		wishvel *= Player.ViewAngles.WithPitch( 0 ).ToRotation();
+		var wishvel = new Vector3( Player.MoveInput.x, Player.MoveInput.y, 0 );
+		wishvel *= Player.LookInput.WithPitch( 0 ).ToRotation();
 		wishvel = wishvel.Normal;
 
 		if ( IsTouchingLadder )

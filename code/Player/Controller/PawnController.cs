@@ -11,8 +11,6 @@ public partial class PawnController : BaseNetworkable
 	public Vector3 Position { get; set; }
 	public Rotation Rotation { get; set; }
 	public Vector3 Velocity { get; set; }
-	public Rotation EyeRotation { get; set; }
-	[Net, Predicted] public Vector3 EyeLocalPosition { get; set; }
 	public Vector3 BaseVelocity { get; set; }
 	public Entity GroundEntity { get; set; }
 	public Vector3 GroundNormal { get; set; }
@@ -25,34 +23,9 @@ public partial class PawnController : BaseNetworkable
 		Rotation = entity.Rotation;
 		Velocity = entity.Velocity;
 
-		if ( entity is GunfightPlayer player )
-		{
-			EyeRotation = player.Controller.EyeRotation;
-			EyeLocalPosition = player.Controller.EyeLocalPosition;
-		}
-
 		BaseVelocity = entity.BaseVelocity;
 		GroundEntity = entity.GroundEntity;
 		WishVelocity = entity.Velocity;
-	}
-
-	public void UpdateFromController( PawnController controller )
-	{
-		Pawn = controller.Pawn;
-		Client = controller.Client;
-
-		Position = controller.Position;
-		Rotation = controller.Rotation;
-		Velocity = controller.Velocity;
-		EyeRotation = controller.EyeRotation;
-		GroundEntity = controller.GroundEntity;
-		BaseVelocity = controller.BaseVelocity;
-		EyeLocalPosition = controller.EyeLocalPosition;
-		WishVelocity = controller.WishVelocity;
-		GroundNormal = controller.GroundNormal;
-
-		Events = controller.Events;
-		Tags = controller.Tags;
 	}
 
 	public void Finalize( Entity target )
@@ -62,12 +35,6 @@ public partial class PawnController : BaseNetworkable
 		target.Rotation = Rotation;
 		target.GroundEntity = GroundEntity;
 		target.BaseVelocity = BaseVelocity;
-
-		if ( target is GunfightPlayer player )
-		{
-			player.Controller.EyeLocalPosition = EyeLocalPosition;
-			player.Controller.EyeRotation = EyeRotation;
-		}
 	}
 
 	/// <summary>
@@ -179,18 +146,6 @@ public partial class PawnController : BaseNetworkable
 		UpdateFromEntity( pawn );
 
 		Simulate();
-
-		Finalize( pawn );
-	}
-	
-	public void FrameSimulate( IClient client, Entity pawn )
-	{
-		Pawn = pawn;
-		Client = client;
-
-		UpdateFromEntity( pawn );
-
-		FrameSimulate();
 
 		Finalize( pawn );
 	}

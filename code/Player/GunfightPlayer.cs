@@ -9,23 +9,16 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 	[Net] public CapturePointEntity CapturePoint { get; set; }
 	[Net] public string PlayerLocation { get; set; } = "";
 	public string SpawnPointTag { get; set; } = null;
-
-	[Net, Predicted] public TimeUntil TimeUntilHolstered { get; set; } = -1;
-	[Net, Predicted] public bool IsHolstering { get; set; } = false;
 	[Net, Predicted] public PlayerController Controller { get; set; }
 
 	[Net, Predicted] public Entity ActiveChild { get; set; }
-	[ClientInput] public Vector3 InputDirection { get; protected set; }
 	[ClientInput] public Entity ActiveChildInput { get; set; }
-	[ClientInput] public Angles ViewAngles { get; set; }
 
 	public bool IsRegen { get; set; }
 
 	public bool IsAiming => Controller?.IsAiming ?? false;
 
 	Sound HeartbeatSound { get; set; }
-
-	public override Ray AimRay => new Ray( Position + ( Controller?.EyeLocalPosition ?? 0 ), ViewAngles.Forward );
 
 	public GunfightCamera PlayerCamera { get; set; } = new();
 
@@ -222,30 +215,15 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 	{
 		if ( controller == null )
 			return;
-
-		// where should we be rotated to
-		var turnSpeed = 0.02f;
-
-		Rotation rotation;
-
-		// If we're a bot, spin us around 180 degrees.
-		if ( Client.IsBot )
-			rotation = ViewAngles.WithYaw( ViewAngles.yaw + 180f ).ToRotation();
-		else
-			rotation = ViewAngles.ToRotation();
-
-		var idealRotation = Rotation.LookAt( rotation.Forward.WithZ( 0 ), Vector3.Up );
-		Rotation = Rotation.Slerp( Rotation, idealRotation, controller.WishVelocity.Length * Time.Delta * turnSpeed );
-		Rotation = Rotation.Clamp( idealRotation, 45.0f, out var shuffle ); // lock facing to within 45 degrees of look direction
-
+		
 		CitizenAnimationHelper animHelper = new CitizenAnimationHelper( this );
 
 		animHelper.WithWishVelocity( controller.WishVelocity );
 		animHelper.WithVelocity( controller.Velocity );
 		animHelper.WithLookAt( AimRay.Position + AimRay.Forward * 100.0f, 1.0f, 1.0f, 0.5f );
-		animHelper.AimAngle = rotation;
-		animHelper.FootShuffle = shuffle;
-		var height = controller.RealEyeHeight.LerpInverse( 32, 64, true );
+		animHelper.AimAngle = EyeRotation;
+		animHelper.FootShuffle = 0f;
+		var height = controller.CurrentEyeHeight.LerpInverse( 32, 64, true );
 		animHelper.DuckLevel = MathX.Lerp( animHelper.DuckLevel, 1 - height, Time.Delta * 10.0f );
 		animHelper.VoiceLevel = ( Game.IsClient && Client.IsValid() ) ? Client.Voice.LastHeard < 0.5f ? Client.Voice.CurrentLevel : 0.0f : 0.0f;
 		animHelper.IsGrounded = GroundEntity != null;
@@ -287,6 +265,8 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 	TimeSince TimeSinceKilled;
 	public override void Simulate( IClient cl )
 	{
+		Rotation = LookInput.WithPitch( 0f ).ToRotation();
+		
 		if ( LifeState == LifeState.Respawning )
 		{
 			if ( TimeSinceKilled > 3 && Game.IsServer )
@@ -370,31 +350,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 				weapon.Delete();
 		}
 	}
-
-	public override void BuildInput()
-	{
-		if ( GamemodeSystem.Current?.AllowMovement ?? true )
-		{
-			InputDirection = Input.AnalogMove;
-		}
-
-		if ( !Input.StopProcessing )
-		{
-			var look = Input.AnalogLook;
-			var viewAngles = ViewAngles;
-			viewAngles += look;
-			ViewAngles = viewAngles.Normal;
-
-			// Since we're a FPS game, let's clamp the player's pitch between -90, and 90.
-			ViewAngles = viewAngles.WithPitch( viewAngles.pitch.Clamp( -90f, 90f ) );
-		}
-
-		ActiveChild?.BuildInput();
-		Controller?.BuildInput();
-
-		BuildWeaponInput();
-	}
-
+	
 	DamageInfo LastDamage;
 
 	public override void TakeDamage( DamageInfo info )

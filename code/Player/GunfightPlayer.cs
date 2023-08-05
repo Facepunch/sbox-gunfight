@@ -11,7 +11,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 	public string SpawnPointTag { get; set; } = null;
 	[Net, Predicted] public PlayerController Controller { get; set; }
 
-	[Net, Predicted] public Entity ActiveChild { get; set; }
+	[Net] public Entity ActiveChild { get; set; }
 	[ClientInput] public Entity ActiveChildInput { get; set; }
 
 	public bool IsRegen { get; set; }

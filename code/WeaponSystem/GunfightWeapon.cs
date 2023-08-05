@@ -46,7 +46,6 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public int ClipSize => WeaponDefinition.ClipSize;
 	public float ReloadTime => WeaponDefinition.ReloadTime;
 	public AmmoType AmmoType => WeaponDefinition?.AmmoType ?? AmmoType.None;
-	public Vector2 RecoilDecay => WeaponDefinition.Recoil.Decay;
 	public float BulletSpread => WeaponDefinition.BulletSpread;
 	public float BulletForce => WeaponDefinition.BulletForce;
 	public float BulletDamage => WeaponDefinition.BulletDamage;
@@ -211,15 +210,33 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		return Input.Down( "Reload" );
 	}
 
+	[Net, Predicted] public float RecoilDispersion { get; set; } = 0;
+	public float MaxRecoilDispersion => 0.15f;
+	public float RecoilDispersionRate => 3f;
+	
 	protected virtual void SimulateRecoil( IClient owner )
 	{
-		CameraRecoil -= RecoilDecay * Time.Delta;
-		// Clamp down to zero
-		CameraRecoil = CameraRecoil.Clamp( 0, 20f );
+		if ( TimeSincePrimaryAttack > RecoilDispersion )
+		{
+			CameraRecoil = CameraRecoil.LerpTo( 0, Time.Delta * 10f );
+			WeaponSpreadRecoil = WeaponSpreadRecoil.LerpTo( 0, Time.Delta * 10f );
+			
+			RecoilDispersion -= RecoilDispersionRate * 0.5f;
+			RecoilDispersion = RecoilDispersion.Clamp( 0, MaxRecoilDispersion );
+		}
 
-		WeaponSpreadRecoil -= WeaponDefinition.Recoil.SpreadDecay * Time.Delta;
+		if ( Input.AnalogLook.pitch > 0f )
+		{ 
+			var pitchDelta = Input.AnalogLook.pitch;
+
+			RecoilDispersion -= pitchDelta * Time.Delta;
+		}
+
+		DebugOverlay.ScreenText( $"RecoilDispersion: {RecoilDispersion}", 1, 0 );
+		
 		// Clamp down to zero
-		WeaponSpreadRecoil = WeaponSpreadRecoil.Clamp( 0, float.MaxValue );
+		WeaponSpreadRecoil = WeaponSpreadRecoil.Clamp( 0, 2.5f );
+		CameraRecoil = CameraRecoil.Clamp( 0, 20f );
 	}
 
 	protected virtual void ApplyRecoil()
@@ -232,6 +249,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		var randSpreadY = Game.Random.Float( WeaponDefinition.Recoil.MinimumSpread.y, WeaponDefinition.Recoil.MaximumSpread.y );
 
 		var recoilScale = 1f;
+		var spreadScale = 1f;
 		bool isInAir = !PlayerController.GroundEntity.IsValid();
 
 		// Recoil gets decreased when aiming down the sights.
@@ -246,15 +264,19 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			recoilScale *= 0.5f;
 
 		if ( isInAir )
-			recoilScale *= 1.4f;
+		{
+			spreadScale *= 3f;
+		}
 
 		// If you're moving at speed, apply more recoil.
 		var speed = Player.Velocity.Length.LerpInverse( 0, 400, true );
-		recoilScale += 1f * speed;
 
 		CameraRecoil += new Vector2( randX, randY ) * recoilScale;
 		// Apply spread too
 		WeaponSpreadRecoil += new Vector2( randSpreadX, randSpreadY ) * recoilScale;
+
+		RecoilDispersion += RecoilDispersionRate * Time.Delta;
+		RecoilDispersion = RecoilDispersion.Clamp( 0, MaxRecoilDispersion );
 	}
 
 	public override void BuildInput()

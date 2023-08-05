@@ -57,9 +57,8 @@
     "AimAngleOffset": "1,0,1"
   },
   "Recoil": {
-    "Decay": "60,100",
-    "BaseRecoilMinimum": "-8,20",
-    "BaseRecoilMaximum": "4,12"
+    "BaseRecoilMinimum": "-4,4",
+    "BaseRecoilMaximum": "4,8"
   },
   "ShootTrailParticleEffect": "particles/gameplay/guns/trail/trail_smoke.vpcf",
   "DeployTime": 0.6

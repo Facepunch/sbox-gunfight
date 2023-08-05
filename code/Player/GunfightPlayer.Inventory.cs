@@ -32,5 +32,10 @@ public partial class GunfightPlayer
 		{
 			TrySlotFromInput( $"Slot{i}" );
 		}
+
+		if ( Input.MouseWheel != 0 )
+		{
+			Inventory.SwitchActiveSlot( Input.MouseWheel, true );
+		}
 	}
 }

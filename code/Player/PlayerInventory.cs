@@ -1,4 +1,7 @@
-﻿namespace Facepunch.Gunfight;
+﻿using System.Net.Http.Headers;
+using Sandbox.Diagnostics;
+
+namespace Facepunch.Gunfight;
 
 public partial class PlayerInventory : BaseNetworkable
 {
@@ -284,43 +287,32 @@ public partial class PlayerInventory : BaseNetworkable
 		return true;
 	}
 
-	public bool SetActiveSlot( int i, bool allowempty = false )
+	public bool TrySetActiveSlot( int i, bool allowempty = false )
 	{
+		Game.AssertClient();
+		
 		var ent = GetSlot( i );
-
-		Log.Info( ent );
-
+		
 		if ( Owner.ActiveChild == ent )
 			return false;
 
 		if ( !allowempty && ent == null )
 			return false;
 
-		Owner.ActiveChild = ent;
+		Owner.ActiveChildInput = ent;
+		
 		return ent.IsValid();
 	}
 
-	public bool SwitchActiveSlot( int idelta, bool loop )
+	public bool SwitchActiveSlot( int idelta, bool loop = true )
 	{
 		var count = Count();
 		if ( count == 0 ) return false;
 
-		var slot = GetActiveSlot();
-		var nextSlot = slot + idelta;
+		var newId = GetActiveSlot();
+		newId += idelta;
+		newId = (newId + count) % count;
 
-		if ( loop )
-		{
-			while ( nextSlot < 0 ) nextSlot += count;
-			while ( nextSlot >= count ) nextSlot -= count;
-		}
-		else
-		{
-			if ( nextSlot < 0 ) return false;
-			if ( nextSlot >= count ) return false;
-		}
-
-		Log.Info( nextSlot );
-
-		return SetActiveSlot( nextSlot, false );
+		return TrySetActiveSlot( newId, false );
 	}
 }

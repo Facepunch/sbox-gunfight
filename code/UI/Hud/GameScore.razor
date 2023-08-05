@@ -6,17 +6,19 @@
 
 <root>
     <div class="info">
-        <div class="bar @(MyScore == 0 ? "is-zero" : "")">
-                <div class="bar-inner friendly" style="width:@MyScorePercent%">
-                    <text class="score friendly">@MyScore</text>
-                </div>
+        <div class="bar">
+	        <div class="bar-inner friendly  @(MyScore == 0 ? "is-zero" : "")" style="width:@MyScorePercent%">
+		        <text class="score friendly">@MyScore</text>
+	        </div>
+	        
+	        <text class="info friendly">YOUR TEAM</text>
         </div>
     </div>
 
     <div class="info">
-        <div class="bar @(EnemyScore == 0 ? "is-zero" : "")">
-            <div class="bar-inner enemy" style="width:@EnemyScorePercent%">
-                <text class="score enemy">@EnemyScore</text>
+        <div class="bar">
+            <div class="bar-inner enemy @(EnemyScore == 0 ? "is-zero" : "")" style="width:@EnemyScorePercent%">
+	            <text class="score enemy">@EnemyScore</text>
             </div>
         </div>
     </div>

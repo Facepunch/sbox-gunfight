@@ -28,7 +28,7 @@ public partial class DuckMechanic : BaseMoveMechanic
 
 	public override float GetWishSpeed()
 	{
-		return 120f;
+		return 90f;
 	}
 
 	public override float? GetEyeHeight()

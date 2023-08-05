@@ -469,6 +469,11 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		Sound.FromScreen( sound );
 	}
 
+	float GetFootstepDelay()
+	{
+		return Controller.GetMechanic<DuckMechanic>()?.IsActive ?? false ? 0.5f : 0.18f;
+	}
+	
 	TimeSince timeSinceLastFootstep = 0;
 
 	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
@@ -479,7 +484,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		if ( LifeState != LifeState.Alive )
 			return;
 
-		if ( timeSinceLastFootstep < 0.18f )
+		if ( timeSinceLastFootstep < GetFootstepDelay() )
 			return;
 
 		var ctrl = Controller as PlayerController;
@@ -489,6 +494,9 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 			return;
 
 		volume *= Velocity.WithZ( 0 ).Length.LerpInverse( 0.0f, 200.0f ) * 0.2f;
+		
+		// Sneaky beaky
+		if ( Controller.GetMechanic<DuckMechanic>()?.IsActive ?? false ) volume *= 0.45f;
 
 		timeSinceLastFootstep = 0;
 

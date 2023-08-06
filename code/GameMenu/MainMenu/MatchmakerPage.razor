@@ -132,7 +132,7 @@
 		var lobby = MainMenu.CurrentLobby;
 		lobby.State = "lobby";
 		lobby.Map = Game.Random.FromArray( SelectedMaps.Select( x => x.FullIdent ).ToArray() );
-		lobby.SetData( "gunfight-gamemode", SelectedMode );
+		lobby.SetData( "convar.gunfight_gamemode", SelectedMode );
 		lobby.Title = $"{lobby.Owner.Name}'s game";
 	}
 }

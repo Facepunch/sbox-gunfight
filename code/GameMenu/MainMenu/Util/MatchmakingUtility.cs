@@ -90,7 +90,7 @@ public partial class MatchmakingSystem
 				var lobby = await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
 				lobby.Map = Game.Random.FromArray( maps );
 				lobby.State = "lobby";
-				lobby.SetData( "gunfight-gamemode", mode );
+				lobby.SetData( "convar.gunfight_gamemode", mode );
 				lobby.Title = $"{lobby.Owner.Name}'s game";
 
 				CurrentState = State.Empty;

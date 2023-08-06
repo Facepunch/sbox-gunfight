@@ -127,11 +127,15 @@
           {
             "Value": "FFAGamemode",
             "Name": "Free For All"
+          },
+          {
+            "Value": "WarGamemode",
+            "Name": "Conquest"
           }
         ],
         "ConVarName": "gunfight_gamemode",
         "DisplayName": "Active Mode",
-        "DefaultValue": "FFAGamemode",
+        "DefaultValue": "KillConfirmedGamemode",
         "Description": "The current gamemode.",
         "Group": "Important"
       },

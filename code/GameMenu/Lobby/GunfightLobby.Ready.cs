@@ -68,10 +68,6 @@ public partial class GunfightLobby
 			if ( TimeUntilGameStart )
 			{
 				isStarting = true;
-	
-				// TODO - Proper game settings area
-				_lobby.ConVars = ImmutableDictionary.Create<string, string>().Add( "gunfight_gamemode", _lobby.Data["gunfight-gamemode"] );
-				
 				await _lobby.LaunchGameAsync();
 			}
 		}

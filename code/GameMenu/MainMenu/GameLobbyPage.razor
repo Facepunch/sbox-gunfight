@@ -248,7 +248,7 @@
 		{
 			if ( !Lobby.IsValid() ) return null;
 			
-			if ( Lobby.Data.TryGetValue( "gunfight-gamemode", out var mode ) )
+			if ( Lobby.Data.TryGetValue( "convar.gunfight_gamemode", out var mode ) )
 			{
 				return mode;
 			}

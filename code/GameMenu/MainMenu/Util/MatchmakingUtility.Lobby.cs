@@ -19,7 +19,7 @@ public partial class MatchmakingSystem
 	static bool CompatibleGameMode( ILobby lobby, string gamemode = null )
 	{
 		if ( string.IsNullOrEmpty( gamemode ) ) return true;
-		if ( lobby.Data.TryGetValue( "gunfight-gamemode", out var foundMode ) &&
+		if ( lobby.Data.TryGetValue( "convar.gunfight_gamemode", out var foundMode ) &&
 		     foundMode.Equals( gamemode ) ) return true;
 		
 		return false;

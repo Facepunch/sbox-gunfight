@@ -31,7 +31,7 @@ public partial class GunfightPlayer
 
 		var friendState = TeamSystem.GetFriendState( Team, TeamSystem.MyTeam );
 		var isEnemy = friendState == TeamSystem.FriendlyStatus.Hostile;
-		if ( isEnemy )
+		if ( isEnemy || friendState == TeamSystem.FriendlyStatus.Neutral )
 		{
 			if ( !CalculateVisibility() )
 				return false;

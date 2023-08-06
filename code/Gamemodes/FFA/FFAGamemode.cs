@@ -210,6 +210,7 @@ public partial class FFAGamemode : Gamemode
 		if ( WinningPlayer.IsValid() && WinningPlayer.GetInt( "frags" ) >= MaximumScore )
 		{
 			SetGameState( GameState.GameWon );
+			UI.GunfightChatbox.AddChatEntry( To.Everyone, WinningPlayer.Name, "is the winner!", WinningPlayer.SteamId, false );
 		}
     }
 

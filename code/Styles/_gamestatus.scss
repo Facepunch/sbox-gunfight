@@ -21,10 +21,9 @@
 
   > .head
   {
-    top: -4px;
+    top: -3px;
     height: 3px;
-    margin-bottom: 4px;
-    background-image: linear-gradient( to right, rgba( $theme-color, 1 ) 0%, rgba( $theme-color, 0 ) 25.48%, rgba( $theme-color, 0 ) 75%, rgba( $theme-color, 1 ) 100% );
+    background-image: linear-gradient( to right, rgba( $theme-color, 1 ) 0%, rgba( $theme-color, 0 ) 45%, rgba( $theme-color, 0 ) 55%, rgba( $theme-color, 1 ) 100% );
   }
 
   > .location {

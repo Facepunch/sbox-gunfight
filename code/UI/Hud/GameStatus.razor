@@ -7,7 +7,10 @@
 <root>
     <div class="head-gradient"/>
     <div class="head"/>
-    <text class="location">@PlayerLocation</text>
+    @if ( !string.IsNullOrEmpty( PlayerLocation ) )
+    {
+	    <text class="location">@PlayerLocation</text>
+    }
     <text class="timer">@TimeLeft</text>
 </root>
 
@@ -16,7 +19,6 @@
     public string PlayerLocation => Game.LocalClient.GetLocation();
     public string TimeLeft => GamemodeSystem.Current?.GetTimeLeftLabel() ?? "00:00";
 
-	protected int BoxAmount => GunfightGame.Current.Scores.MaximumScore;
     public int FriendlyScore => GunfightGame.Current.Scores.GetScore( TeamSystem.MyTeam );
     public int EnemyScore => GunfightGame.Current.Scores.GetScore( TeamSystem.MyTeam.GetOpponent() );
 

@@ -44,7 +44,7 @@ public static class TeamExtensions
 		var pawn = cl.Pawn as GunfightPlayer;
 
 		if ( string.IsNullOrEmpty( pawn?.PlayerLocation ) )
-			return "UNKNOWN";
+			return null;
 
 		return pawn.PlayerLocation;
 	}

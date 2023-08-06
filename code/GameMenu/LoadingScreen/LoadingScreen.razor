@@ -92,7 +92,7 @@
 		Progress = progress;
 		StateHasChanged();
 
-		if ( Map != null && Lobby?.Map != Map.FullIdent )
+		if ( Map != null && Lobby.IsValid() && Lobby.Map != Map.FullIdent )
 		{
 			mapTask = SyncMap();
 		}

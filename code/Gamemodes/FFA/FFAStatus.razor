@@ -6,13 +6,16 @@
 
 <root>
 	<div class="header">
-		<div class="second">
-			<div class="entry big">
-				<img class="avatar" src="avatar:@Second.SteamId"/>
-				<label class="score">@( Second.GetInt( "kills" ) )</label>
-				<label class="name">@Second.Name</label>
+		@if ( Second.IsValid() )
+		{
+			<div class="second">
+				<div class="entry big">
+					<img class="avatar" src="avatar:@Second.SteamId"/>
+					<label class="score">@( Second.GetInt( "kills" ) )</label>
+					<label class="name">@Second.Name</label>
+				</div>
 			</div>
-		</div>
+		}
 
 		<div class="first">
 			<div class="entry big">
@@ -22,13 +25,16 @@
 			</div>
 		</div>
 
-		<div class="third">
-			<div class="entry big">
-				<img class="avatar" src="avatar:@Third.SteamId"/>
-				<label class="score">@( Third.GetInt( "kills" ) )</label>
-				<label class="name">@Third.Name</label>
+		@if ( Third.IsValid() )
+		{
+			<div class="third">
+				<div class="entry big">
+					<img class="avatar" src="avatar:@Third.SteamId"/>
+					<label class="score">@( Third.GetInt( "kills" ) )</label>
+					<label class="name">@Third.Name</label>
+				</div>
 			</div>
-		</div>
+		}
 	</div>
 	
 	<label class="title">FIRST TO @( ( GamemodeSystem.Current as FFAGamemode )?.MaximumScore) WINS</label>
@@ -46,14 +52,14 @@
 
 @code
 {
-	public IClient First => Clients.ElementAt( 0 );
-	public IClient Second => Clients.ElementAt( 1 );
-	public IClient Third => Clients.ElementAt( 2 );
+	public IClient First => Clients.ElementAtOrDefault( 0 );
+	public IClient Second => Clients.ElementAtOrDefault( 1 );
+	public IClient Third => Clients.ElementAtOrDefault( 2 );
 	
 	public IEnumerable<IClient> Clients => Game.Clients.OrderByDescending( x => x.GetInt( "kills" ) );
 	
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( Game.Clients.Sum( x => x.GetInt( "kills" ) ) );
+		return HashCode.Combine( Game.Clients.Count, Game.Clients.Sum( x => x.GetInt( "kills" ) ) );
 	}
 }

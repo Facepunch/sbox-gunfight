@@ -8,9 +8,8 @@ killfeed
 	z-index: 100;
 	flex-direction: column-reverse;
 	width: 500px;
-	font-family: Oxanium;
-	font-size: 15px;
-	font-weight: 600;
+	font-family: $main-font;
+	font-size: 18px;
 	align-items: flex-start;
 }
 
@@ -24,8 +23,7 @@ KillFeedEntry
 	flex-grow: 0;
 	height: 30px;
 	font-size: 20px;
-	font-family: Oxanium;
-	font-weight: 600;
+	font-family: $main-font;
 
 	&:intro
 	{
@@ -59,18 +57,14 @@ KillFeedEntry
 	.left, .right
 	{
 		padding: 0 12px;
+		font-family: $main-font-bold;
+		color: $enemy;
+		text-shadow: 0px 0px 5px rgba( $enemy, 0.5 );
 
-		&.me
+		&.me, &.friendly
 		{
-			color: #b6ff00;
-		}
-
-		&.friendly {
+			text-shadow: 2px 2px 5px rgba( $friendly, 0.5 );
 			color: $friendly;
-		}
-
-		&.enemy {
-			color: $enemy;
 		}
 	}
 
@@ -100,7 +94,7 @@ KillFeedEntry
 	&.information {
 		.method {
 			opacity: 1;
-			color: $main-color;
+			color: $theme-color;
 		}
 	}
 }

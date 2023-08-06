@@ -121,17 +121,17 @@
             "Name": "Kill Confirmed"
           },
           {
-            "Value": "WarGamemode",
-            "Name": "Ground War"
-          },
-          {
             "Value": "",
             "Name": "No Gamemode (good for testing)"
+          },
+          {
+            "Value": "FFAGamemode",
+            "Name": "Free For All"
           }
         ],
         "ConVarName": "gunfight_gamemode",
         "DisplayName": "Active Mode",
-        "DefaultValue": "KillConfirmedGamemode",
+        "DefaultValue": "FFAGamemode",
         "Description": "The current gamemode.",
         "Group": "Important"
       },

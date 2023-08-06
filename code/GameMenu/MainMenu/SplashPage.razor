@@ -1,0 +1,23 @@
+@namespace Facepunch.Gunfight.UI
+@using Sandbox.UI
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	<div class="logo"/>
+</root>
+
+@code
+{
+	TimeSince TimeSinceCreated { get; set; } = 0;
+
+	public override void Tick()
+	{
+		if ( !IsVisible ) return;
+
+		if ( TimeSinceCreated > 3f )
+		{
+			this.Navigate( "/" );   
+		}
+	}
+}

@@ -1,3 +1,4 @@
+@using Facepunch.Gunfight.UI
 @using Sandbox.Menu
 @using Sandbox.UI;
 
@@ -41,12 +42,13 @@
 
 	public MainMenu()
     {
-        DefaultUrl = "/";
+        DefaultUrl = "/splash";
 	    AddDestination( "/", typeof( LandingPage ) );
 		AddDestination( "/find", typeof( MatchmakerPage ) );
 		AddDestination( "/servers", typeof( ServerListPage ) );
 	    AddDestination( "/lobby", typeof( GameLobbyPage ) );
-	    AddDestination( "/ingame", typeof( PauseMenu ) );
+		AddDestination( "/ingame", typeof( PauseMenu ) );
+		AddDestination( "/splash", typeof( SplashPage ) );
 	    
 	    BindClass( "ingame", () => Game.InGame );
     }

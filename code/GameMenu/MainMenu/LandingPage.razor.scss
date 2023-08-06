@@ -4,6 +4,15 @@ LandingPage
 {
   > .main
   {
+    transition: all 0.4s ease;
+    
+    &:intro
+    {
+      opacity: 0;
+      transform: scale(1.1);
+    }
+    opacity: 1;
+    
     .left, .right
     {
       width: 25%;

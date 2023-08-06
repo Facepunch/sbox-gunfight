@@ -45,6 +45,7 @@ public partial class GunfightPlayer
 		// Classes
 		builder.Classes["friendly"] = friendState == TeamSystem.FriendlyStatus.Friendly;
 		builder.Classes["enemy"] = friendState == TeamSystem.FriendlyStatus.Hostile;
+		builder.Classes["neutral"] = friendState == TeamSystem.FriendlyStatus.Neutral;
 
 		return true;
 	}

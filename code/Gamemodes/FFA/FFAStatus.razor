@@ -6,16 +6,22 @@
 
 <root>
 	<div class="header">
-		@if ( Second.IsValid() )
-		{
-			<div class="second">
+		<div class="second">
+			@if ( Second.IsValid() )
+			{
 				<div class="entry big">
 					<img class="avatar" src="avatar:@Second.SteamId"/>
 					<label class="score">@( Second.GetInt( "frags" ) )</label>
 					<label class="name">@Second.Name</label>
 				</div>
-			</div>
-		}
+			}
+			else
+			{
+				<div class="entry big waiting">
+					<i class="text">question_mark</i>
+				</div>
+			}
+		</div>
 
 		<div class="first">
 			<div class="entry big">
@@ -25,16 +31,23 @@
 			</div>
 		</div>
 
-		@if ( Third.IsValid() )
-		{
-			<div class="third">
+		<div class="third">
+			@if ( Third.IsValid() )
+			{
 				<div class="entry big">
 					<img class="avatar" src="avatar:@Third.SteamId"/>
 					<label class="score">@( Third.GetInt( "frags" ) )</label>
 					<label class="name">@Third.Name</label>
 				</div>
-			</div>
-		}
+			}
+			else
+			{
+				<div class="entry big waiting">
+					<i class="text">question_mark</i>
+				</div>
+			}
+		</div>
+		
 	</div>
 	
 	<label class="title">FIRST TO @( ( GamemodeSystem.Current as FFAGamemode )?.MaximumScore) WINS</label>

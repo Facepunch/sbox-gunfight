@@ -1,0 +1,59 @@
+
+@using Sandbox.UI
+@inherits Panel
+@namespace Facepunch.Gunfight.UI
+@attribute [StyleSheet]
+
+<root>
+	<div class="header">
+		<div class="second">
+			<div class="entry big">
+				<img class="avatar" src="avatar:@Second.SteamId"/>
+				<label class="score">@( Second.GetInt( "kills" ) )</label>
+				<label class="name">@Second.Name</label>
+			</div>
+		</div>
+
+		<div class="first">
+			<div class="entry big">
+				<img class="avatar" src="avatar:@First.SteamId"/>
+				<label class="score">@( First.GetInt( "kills" ) )</label>
+				<label class="name">@(First.Name)</label>
+			</div>
+		</div>
+
+		<div class="third">
+			<div class="entry big">
+				<img class="avatar" src="avatar:@Third.SteamId"/>
+				<label class="score">@( Third.GetInt( "kills" ) )</label>
+				<label class="name">@Third.Name</label>
+			</div>
+		</div>
+	</div>
+	
+	<label class="title">FIRST TO @( ( GamemodeSystem.Current as FFAGamemode )?.MaximumScore) WINS</label>
+
+	@*	<div class="entries">
+		@foreach ( var cl in Clients.Skip( 3 ) )
+		{
+			<div class="entry">
+				<img class="avatar" src="avatar:@cl.SteamId"/>
+				<label class="score">@( cl.GetInt( "kills" ) )</label>
+			</div>
+		}
+	</div> *@
+</root>
+
+@code
+{
+	public IClient First => Clients.ElementAt( 0 );
+	public IClient Second => Clients.ElementAt( 1 );
+	public IClient Third => Clients.ElementAt( 2 );
+	
+	public IEnumerable<IClient> Clients => Game.Clients.OrderByDescending( x => x.GetInt( "kills" ) );
+	
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Game.Clients.Sum( x => x.GetInt( "kills" ) ) );
+	}
+}

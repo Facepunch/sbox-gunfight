@@ -243,10 +243,21 @@ public abstract partial class Gamemode : Entity
 		return distance;
 	}
 
+	public bool IsValidSpawn( ISpawnPoint spawn, GunfightPlayer player )
+	{
+		// No teams
+		if ( GamemodeSystem.Current?.TeamSetup.Contains( Team.Unassigned ) ?? false )
+		{
+			return true;
+		}
+
+		return spawn.IsValidSpawn( player );
+	}
+
 	public IEnumerable<ISpawnPoint> GetValidSpawnPoints( GunfightPlayer player )
 	{
 		return Entity.All.OfType<ISpawnPoint>()
-			.Where( x => x.IsValidSpawn( player ) ).OrderByDescending( x => x.GetSpawnPriority() );
+			.Where( x => IsValidSpawn( x, player ) ).OrderByDescending( x => x.GetSpawnPriority() );
 	}
 
 	/// <summary>

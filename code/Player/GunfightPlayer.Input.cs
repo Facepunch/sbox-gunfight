@@ -63,6 +63,12 @@ public partial class GunfightPlayer
 		MoveInput = Input.AnalogMove;
 		var lookInput = (LookInput + Input.AnalogLook).Normal;
 
+		if ( GamemodeSystem.Current?.AllowMovement == false )
+		{
+			Input.StopProcessing = true;
+			MoveInput = Vector2.Zero;
+		}
+
 		// Since we're a FPS game, let's clamp the player's pitch between -90, and 90.
 		LookInput = lookInput.WithPitch( lookInput.pitch.Clamp( -90f, 90f ) );
 	}

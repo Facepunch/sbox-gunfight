@@ -290,8 +290,6 @@ partial class GunfightGame : GameManager
 	{
 		base.BuildInput();
 		
-		if ( Input.StopProcessing ) return;
-
 		GamemodeSystem.Current?.BuildInput();
 	}
 }

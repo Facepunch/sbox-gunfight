@@ -395,7 +395,9 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	}
 
 	protected bool CanDefaultPrimaryAttack()
-	{ 
+	{
+		if ( GamemodeSystem.Current?.AllowMovement == false ) return false;
+		
 		if ( TimeSinceDeployed < 0.2f ) return false;
 		if ( !PlayerController?.AimFireDelay ?? false ) return false;
 		//if ( PlayerController.Slide.IsActive ) return false;

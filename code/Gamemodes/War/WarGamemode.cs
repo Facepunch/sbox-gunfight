@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Facepunch.Gunfight.War;
 
-// [Display( Name = "War Room", Description = "All-out war against two large teams. First team to drain the other team's tickets wins." )]
+[Display( Name = "Conquest", Description = "All-out war against two large teams. First team to drain the other team's tickets wins." )]
 public partial class WarGamemode : Gamemode
 {
 	[Net] public GameState State { get; set; } = GameState.WaitingForPlayers;

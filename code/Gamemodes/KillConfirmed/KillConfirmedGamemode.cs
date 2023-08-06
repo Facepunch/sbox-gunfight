@@ -195,17 +195,6 @@ public partial class KillConfirmedGamemode : Gamemode
 
 	public override void PostProcessTick()
 	{
-		//var postProcess = Map.Camera.FindOrCreateHook<Sandbox.Effects.ScreenEffects>();
-		//postProcess.colo.Enabled = State == GameState.RoundCountdown;
-		//postProcess.ChromaticAberration.Scale = State == GameState.RoundCountdown ? 1 : 0;
-		//if ( State == GameState.RoundCountdown )
-		//{
-		//	postProcess.ColorOverlay.Color = new Color( 0, 0, 0.3f );
-		//	postProcess.ColorOverlay.Mode = StandardPostProcess.ColorOverlaySettings.OverlayMode.Mix;
-		//	postProcess.ColorOverlay.Amount = 0.1f;
-
-		//	postProcess.ChromaticAberration.Offset = new Vector3( -0.0007f, -0.0007f, 0f );
-		//}
 	}
 
 	public override void OnScoreChanged( Team team, int score, bool maxReached = false )

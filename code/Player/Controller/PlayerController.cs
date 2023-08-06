@@ -4,18 +4,19 @@ namespace Facepunch.Gunfight;
 [Library]
 public partial class PlayerController : PawnController
 {
-	[Net] public float SprintSpeed { get; set; } = 250.0f;
-	[Net] public float WalkSpeed { get; set; } = 120.0f;
-	[Net] public float DefaultSpeed { get; set; } = 175.0f;
-	[Net] public float Acceleration { get; set; } = 8.0f;
-	[Net] public float StopSpeed { get; set; } = 100.0f;
-	[Net] public float GroundAngle { get; set; } = 46.0f;
-	[Net] public float StepSize { get; set; } = 16f;
-	[Net] public float MaxNonJumpVelocity { get; set; } = 140.0f;
-	[Net] public float BodyGirth { get; set; } = 32.0f;
-	[Net] public float BodyHeight { get; set; } = 72.0f;
-	[Net] public float Gravity { get; set; } = 700.0f;
+	public float SprintSpeed => 250.0f;
+	public float WalkSpeed => 120.0f;
+	public float DefaultSpeed => 175.0f;
+	public float Acceleration => 6.0f;
+	public float StopSpeed => 100.0f;
+	public float GroundAngle => 46.0f;
+	public float StepSize => 16f;
+	public float MaxNonJumpVelocity => 140.0f;
+	public float BodyGirth => 32.0f;
+	public float BodyHeight => 72.0f;
 	
+	// TODO - Expose this to game / gamemodes
+	public float Gravity => 700.0f;
 	public float AirControl => 10.0f;
 	public float AirAcceleration => 50.0f;
 

@@ -23,7 +23,7 @@
 
     protected override int BuildHash()
     {
-        return HashCode.Combine( Weapon, Weapon?.AmmoClip, GunfightCamera.Target, GunfightCamera.Target?.LifeState );
+        return HashCode.Combine( Weapon, Weapon?.AmmoClip, Weapon?.AvailableAmmo(), GunfightCamera.Target, GunfightCamera.Target?.LifeState );
     }
 
     protected override void OnAfterTreeRender( bool firstTime )

@@ -204,10 +204,10 @@ public partial class FFAGamemode : Gamemode
 		if ( State != GameState.RoundActive ) 
 			return;
 
-		var winner = Game.Clients.OrderByDescending( x => x.GetInt( "kills", 0 ) );
+		var winner = Game.Clients.OrderByDescending( x => x.GetInt( "frags", 0 ) );
 		WinningPlayer = winner.FirstOrDefault();
 
-		if ( WinningPlayer.IsValid() && WinningPlayer.GetInt( "kills" ) >= MaximumScore )
+		if ( WinningPlayer.IsValid() && WinningPlayer.GetInt( "frags" ) >= MaximumScore )
 		{
 			SetGameState( GameState.GameWon );
 		}

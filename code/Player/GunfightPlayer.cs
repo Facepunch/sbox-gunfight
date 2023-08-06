@@ -455,7 +455,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		{
 			if ( info.Attacker.Client != null && info.Attacker != this )
 			{
-				info.Attacker.Client.AddInt( "kills" );
+				info.Attacker.Client.AddInt( "frags" );
 			}
 		}
 	}

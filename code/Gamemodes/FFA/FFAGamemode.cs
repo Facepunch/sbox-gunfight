@@ -206,6 +206,11 @@ public partial class FFAGamemode : Gamemode
 
 		var winner = Game.Clients.OrderByDescending( x => x.GetInt( "kills", 0 ) );
 		WinningPlayer = winner.FirstOrDefault();
+
+		if ( WinningPlayer.IsValid() && WinningPlayer.GetInt( "kills" ) >= MaximumScore )
+		{
+			SetGameState( GameState.GameWon );
+		}
     }
 
 	public override void CleanupMap()

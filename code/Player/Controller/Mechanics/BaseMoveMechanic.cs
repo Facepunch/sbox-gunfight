@@ -117,22 +117,19 @@ public partial class BaseMoveMechanic : BaseNetworkable
 
 		var step = maxHeight / precision;
 
-		Vector3 firstHit = startPos;
+		Vector3 firstHit = Vector3.Zero;
 		
 		float currentHeight = 0f;
 		var foundWall = false;
 		for ( int i = 0; i < Math.Min( precision, MaxWallTraceIterations ); i++ )
 		{
-
-
-			
 			startPos.z += step;
 			currentHeight += step;
 			var trace = Trace.Ray( startPos, startPos - wallNormal * maxDist )
 				.StaticOnly()
 				.Run();
 
-			if ( i == 0 )
+			if ( firstHit.IsNearZeroLength && trace.Hit )
 			{
 				firstHit = trace.HitPosition;
 			}

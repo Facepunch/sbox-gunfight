@@ -15,7 +15,7 @@ public partial class VaultMoveMechanic : BaseMoveMechanic
 	public VaultMoveMechanic() { }
 	public VaultMoveMechanic( PlayerController ctrl ) : base( ctrl ) { }
 
-	public override bool IsDebugging => true;
+	public override bool IsDebugging => false;
 
 	private float LastWallHeight = 0f;
 	

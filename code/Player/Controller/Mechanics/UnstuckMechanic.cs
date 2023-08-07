@@ -9,6 +9,8 @@ public partial class UnstuckMechanic : BaseMoveMechanic
 
 	protected override bool TryActivate()
 	{
+		if ( Controller.Vault?.IsActive ?? false ) return false;
+		
 		var result = Controller.TraceBBox( Controller.Position, Controller.Position );
 
 		// Not stuck, we cool

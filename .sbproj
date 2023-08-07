@@ -35,7 +35,8 @@
         "water": "Trigger",
         "ragdoll": "Trigger",
         "weapon": "Trigger",
-        "player": "Collide"
+        "player": "Collide",
+        "glass": "Collide"
       },
       "Pairs": [
         {
@@ -86,6 +87,11 @@
           "a": "player",
           "b": "player",
           "r": "Ignore"
+        },
+        {
+          "a": "player",
+          "b": "glass",
+          "r": "Trigger"
         }
       ]
     },
@@ -406,14 +412,14 @@
     "TickRate": 30,
     "LaunchConfigs": [
       {
-        "Name": "gunfight_test",
+        "Name": "FFA - Killhouse",
         "GameIdent": "facepunch.gunfight#local",
         "MapName": "eagleone.killhouse_chimona",
         "MaxPlayers": 16,
         "GameSettings": {},
         "Addons": "",
         "PreLaunchCommand": "",
-        "PostLaunchCommand": "GunfightGamemode KillConfirmedGamemode"
+        "PostLaunchCommand": "gunfight_gamemode FFAGamemode"
       },
       {
         "Name": "sv_lan 1",
@@ -424,6 +430,16 @@
         "Addons": "",
         "PreLaunchCommand": "sv_lan 1",
         "PostLaunchCommand": "GunfightGamemode KillConfirmedGamemode"
+      },
+      {
+        "Name": "FFA - motel",
+        "GameIdent": "facepunch.gunfight#local",
+        "MapName": "gkaf.motel",
+        "MaxPlayers": 16,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": "gunfight_gamemode FFAGamemode"
       }
     ]
   }

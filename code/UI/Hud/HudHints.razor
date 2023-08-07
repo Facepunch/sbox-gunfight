@@ -107,7 +107,7 @@
 		var controller = player.Controller as PlayerController;
 		if ( controller == null ) return;
 
-		VaultHint.SetClass( "show", controller.Vault.CanActivate( false ) && !controller.Vault.IsActive );
+		VaultHint.SetClass( "show", ( controller.Vault.CanActivate( false ) && !controller.Vault.IsActive ) || controller.Climb.CanActivate( false ) && !controller.Climb.IsActive );
 
 		var weapon = player.ActiveChild as GunfightWeapon;
 		if ( !weapon.IsValid() ) return;

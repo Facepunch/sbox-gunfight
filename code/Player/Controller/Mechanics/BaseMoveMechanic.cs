@@ -88,13 +88,13 @@ public partial class BaseMoveMechanic : BaseNetworkable
 	public virtual float GetWishSpeed() { return -1f; }
 	protected virtual bool TryActivate() { return false; }
 
-	protected WallInfo GetWallInfo( Vector3 direction )
+	protected WallInfo GetWallInfo( Vector3 direction, float maxHeight = 500f, float maxDistance = 100f, int precision = 128 )
 	{
 		var trace = Controller.TraceBBox( Controller.Position, Controller.Position + direction * 100 );
 		if ( !trace.Hit ) return null;
 
 		Vector3 tracePos;
-		var height = ApproximateWallHeight( Controller.Position, trace.Normal, 500f, 100f, 128, out tracePos, out float absoluteHeight );
+		var height = ApproximateWallHeight( this, Controller.Position + Vector3.Up * 10f, trace.Normal, maxHeight, maxDistance, precision, out tracePos, out float absoluteHeight );
 
 		return new WallInfo()
 		{
@@ -107,23 +107,45 @@ public partial class BaseMoveMechanic : BaseNetworkable
 		};
 	}
 
+	public virtual bool IsDebugging => false;
+
 	private static int MaxWallTraceIterations => 40;
-	private static float ApproximateWallHeight( Vector3 startPos, Vector3 wallNormal, float maxHeight, float maxDist, int precision, out Vector3 tracePos, out float absoluteHeight )
+	private static float ApproximateWallHeight( BaseMoveMechanic mechanic, Vector3 startPos, Vector3 wallNormal, float maxHeight, float maxDist, int precision, out Vector3 tracePos, out float absoluteHeight )
 	{
 		tracePos = Vector3.Zero;
 		absoluteHeight = startPos.z;
 
 		var step = maxHeight / precision;
 
+		Vector3 firstHit = startPos;
+		
 		float currentHeight = 0f;
 		var foundWall = false;
 		for ( int i = 0; i < Math.Min( precision, MaxWallTraceIterations ); i++ )
 		{
+
+
+			
 			startPos.z += step;
 			currentHeight += step;
 			var trace = Trace.Ray( startPos, startPos - wallNormal * maxDist )
 				.StaticOnly()
 				.Run();
+
+			if ( i == 0 )
+			{
+				firstHit = trace.HitPosition;
+			}
+			else
+			{
+				if ( trace.HitPosition.WithZ( firstHit.z ).Distance( firstHit ) > 10f )
+				{
+					return currentHeight;
+				}
+			}
+
+			
+			if ( mechanic.IsDebugging ) DebugOverlay.TraceResult( trace );
 
 			if ( !trace.Hit && !foundWall ) continue;
 			if ( trace.Hit )

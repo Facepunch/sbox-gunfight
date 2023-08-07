@@ -59,7 +59,8 @@ public partial class ViewModel : BaseViewModel
 	float slideCameraLerp = 0;
 	float sideLerp = 0;
 	float speedLerp = 0;
-	float vaultLerp = 0;
+	float climbLerp = 0;
+	private float vaultLerp = 0;
 
 	protected float MouseDeltaLerpX;
 	protected float MouseDeltaLerpY;
@@ -127,6 +128,7 @@ public partial class ViewModel : BaseViewModel
 		var crouched = controller?.Duck?.IsActive ?? false;
 		var sliding = controller?.Slide?.IsActive ?? false;
 		var vaulting = controller?.Vault?.IsActive ?? false;
+		var climbing = controller?.Climb?.IsActive ?? false;
 
 		var avoidanceVal = avoidanceTrace.Hit ? (1f - avoidanceTrace.Fraction) : 0;
 		avoidanceVal *= 1 - ( aimLerp * 0.8f );
@@ -141,6 +143,7 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref slideCameraLerp, sliding ? 1 : 0, 7f );
 		LerpTowards( ref airLerp, ( isGrounded ? 0 : 1 ) * ( 1 - aimLerp ), 10f );
 		LerpTowards( ref speedLerp, ( aim || sliding || sprint ) ? 0.0f : speed, 10f );
+		LerpTowards( ref climbLerp, ( climbing ) ? 1.0f : 0.0f , 10f );
 		LerpTowards( ref vaultLerp, ( vaulting ) ? 1.0f : 0.0f , 10f );
 
 		var leftAmt = left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal );
@@ -180,7 +183,11 @@ public partial class ViewModel : BaseViewModel
 		ApplyDamping( ref velocity, Damping * (1 + aimLerp) );
 
 		velocity = velocity.Normal * Math.Clamp( velocity.Length, 0, VelocityClamp );
-
+		
+		// Vaulting
+		Camera.Position += new Vector3( 0, 0, -25f ) * vaultLerp;
+		Camera.Rotation *= Rotation.From( new Angles(2,2,-5) * vaultLerp );
+		
 		Position = Camera.Position;
 		Rotation = Camera.Rotation;
 
@@ -225,8 +232,8 @@ public partial class ViewModel : BaseViewModel
 			}
 		}
 
-		// Vaulting
-		rotationOffsetTarget *= Rotation.From( new Angles(40,0,0) * vaultLerp );
+		// Climbing
+		rotationOffsetTarget *= Rotation.From( new Angles(40,0,0) * climbLerp );
 
 		// Sliding
 		var slideRotationOffset = Rotation.From( Angles.Zero.WithRoll( leftAmt ) * slideCameraLerp * -15.0f );

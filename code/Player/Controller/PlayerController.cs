@@ -33,6 +33,7 @@ public partial class PlayerController : PawnController
 	public SlideMechanic Slide => GetMechanic<SlideMechanic>();
 	public DuckMechanic Duck => GetMechanic<DuckMechanic>();
 	public VaultMoveMechanic Vault => GetMechanic<VaultMoveMechanic>();
+	public ClimbMechanic Climb => GetMechanic<ClimbMechanic>();
 	public CoverAimMechanic CoverAim => GetMechanic<CoverAimMechanic>();
 
 	public List<BaseMoveMechanic> Mechanics = new();
@@ -44,6 +45,7 @@ public partial class PlayerController : PawnController
 
 		Mechanics.Add( new CoverAimMechanic( this ) );
 		Mechanics.Add( new VaultMoveMechanic( this ) );
+		Mechanics.Add( new ClimbMechanic( this ) );
 		Mechanics.Add( new SlideMechanic( this ) );
 		Mechanics.Add( new DuckMechanic( this ) );
 		Mechanics.Add( new UnstuckMechanic( this ) );

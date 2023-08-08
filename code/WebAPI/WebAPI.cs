@@ -5,8 +5,7 @@ namespace Facepunch.Gunfight;
 
 public partial class WebAPI
 {
-	// TODO - Set this to something proper
-	public static string BaseUrl => "http://localhost:8080/api/";
+	public static string BaseUrl => "https://gunfight-api.azurewebsites.net/api/";
 
 	private static async Task<Dictionary<string, string>> GetHeaders()
 	{

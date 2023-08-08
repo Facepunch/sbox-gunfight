@@ -1,4 +1,6 @@
-﻿namespace Facepunch.Gunfight;
+﻿using System.Net.Http;
+
+namespace Facepunch.Gunfight;
 
 public partial class WebAPI
 {
@@ -17,6 +19,19 @@ public partial class WebAPI
 			}
 
 			return null;
+		}
+
+		public static async Task SubmitAsync( Models.MatchSubmitRequest request )
+		{
+			try
+			{
+				await HttpPut( "MatchHistory", new StringContent( Json.Serialize( request ) ) );
+			}
+			catch ( Exception e )
+			{
+				// TODO - Handle exceptions nicely 
+				Log.Warning( e );
+			}
 		}
 	}
 }

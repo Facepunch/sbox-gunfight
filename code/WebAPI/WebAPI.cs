@@ -32,9 +32,21 @@ public partial class WebAPI
 		return await Http.RequestJsonAsync<T>( $"{BaseUrl}{endpoint}", "POST", content, headers );
 	}
 		
+	public static async Task HttpPost( string endpoint, HttpContent content = null )
+	{
+		var headers = await GetHeaders();
+		await Http.RequestAsync( $"{BaseUrl}{endpoint}", "POST", content, headers );
+	}
+		
 	public static async Task<T> HttpPut<T>( string endpoint, HttpContent content = null )
 	{
 		var headers = await GetHeaders();
 		return await Http.RequestJsonAsync<T>( $"{BaseUrl}{endpoint}", "PUT", content, headers );
+	}
+
+	public static async Task HttpPut( string endpoint, HttpContent content = null )
+	{
+		var headers = await GetHeaders();
+		await Http.RequestAsync( $"{BaseUrl}{endpoint}", "PUT", content, headers );
 	}
 }

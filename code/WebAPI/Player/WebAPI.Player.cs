@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using Facepunch.Gunfight.Models;
 
 namespace Facepunch.Gunfight;
@@ -12,11 +13,12 @@ public partial class WebAPI
 		{
 			// This may look confusing. But it's intentional.
 			Game.AssertClient();
-			
-			var player = await HttpPut<Models.Player>( "Player/xp", new StringContent( $"{amount}", null, "application/json" ) );
+
+			var json = JsonSerializer.Serialize( new Models.Player.GiveExperienceRequest { Experience = amount } );
+			await HttpPost( "Player/xp", new StringContent( json, null, "application/json" ) );
 			
 			// Return new XP
-			return player.Experience;
+			return amount;
 		}
 
 		public static async Task<Models.Player> GetPlayer( ulong steamId )

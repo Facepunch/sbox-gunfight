@@ -1,7 +1,4 @@
-﻿using Sandbox;
-using System;
-
-namespace Facepunch.Gunfight;
+﻿namespace Facepunch.Gunfight;
 
 // TODO - Clean all this up, it's a fucking mess.
 public partial class ViewModel : BaseViewModel

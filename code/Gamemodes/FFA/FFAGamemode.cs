@@ -110,6 +110,9 @@ public partial class FFAGamemode : Gamemode
 		};
 	}
 
+	private DateTimeOffset StartTime;
+	private DateTimeOffset EndTime;
+	
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{
 		TimeSinceStateChanged = 0;
@@ -123,6 +126,8 @@ public partial class FFAGamemode : Gamemode
 		}
 		if ( after == GameState.RoundCountdown )
 		{
+			StartTime = DateTimeOffset.UtcNow;
+			
 			CleanupMap();
 			TimeUntilNextState = RoundCountdownLength;
 			RandomizeLoadout();
@@ -136,7 +141,11 @@ public partial class FFAGamemode : Gamemode
 		else if ( after == GameState.GameWon )
 		{
 			TimeUntilNextState = GameWonLength;
-			// ShowWinningTeam( To.Everyone, WinningPlayer );
+			
+			UI.GunfightChatbox.AddChatEntry( To.Everyone, WinningPlayer.Name, "is the winner!", WinningPlayer.SteamId, false );
+
+			EndTime = DateTimeOffset.UtcNow;
+			_ = WebAPI.MatchHistory.SubmitAsync( WebAPI.MatchHistory.BuildRequest( StartTime, EndTime, "FFAGamemode" ) );
 		}
 
 		Event.Run( "gunfight.gamestate.changed", before, after );
@@ -210,7 +219,6 @@ public partial class FFAGamemode : Gamemode
 		if ( WinningPlayer.IsValid() && WinningPlayer.GetInt( "frags" ) >= MaximumScore )
 		{
 			SetGameState( GameState.GameWon );
-			UI.GunfightChatbox.AddChatEntry( To.Everyone, WinningPlayer.Name, "is the winner!", WinningPlayer.SteamId, false );
 		}
     }
 

@@ -14,7 +14,8 @@ public partial class WebAPI
 
 		var headers = new Dictionary<string, string>
 		{
-			{ "X-Auth-Token", token }, { "X-Auth-Id", Game.SteamId.ToString() }
+			{ "X-Auth-Token", token }, { "X-Auth-Id", Game.SteamId.ToString() },
+			{ "Content-Type", "application/json" }
 		};
 
 		return headers;

@@ -19,7 +19,7 @@ public class Match
 
 public struct MatchSubmitRequest
 {
-	public long ServerSteamId { get; set; }
+	public ulong ServerSteamId { get; set; }
 	public string MapIdent { get; set; }
 	public string GamemodeIdent { get; set; }
 

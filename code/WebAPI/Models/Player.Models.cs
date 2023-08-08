@@ -2,16 +2,25 @@
 
 public class Player : BaseModel
 {
-	public long SteamId { get; set; }
+	public string SteamId { get; set; }
 
 	public ulong Experience { get; set; }
 
-	public Player( long steamId )
+	public Player()
+	{
+	}
+
+	public Player( string steamId )
 	{
 		SteamId = steamId;
 	}
 
-	public struct UpdateRequest
+	public class UpdateRequest
+	{
+		public ulong Experience { get; set; }
+	}
+	
+	public class GiveExperienceRequest
 	{
 		public ulong Experience { get; set; }
 	}

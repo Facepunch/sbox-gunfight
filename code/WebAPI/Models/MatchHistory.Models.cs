@@ -3,7 +3,7 @@
 public class Match
 {
 	public Guid Id { get; set; }
-	public long ServerSteamId { get; set; }
+	public string ServerSteamId { get; set; }
 	public string MapIdent { get; set; }
 	public string GamemodeIdent { get; set; }
 
@@ -17,9 +17,9 @@ public class Match
 	}
 }
 
-public struct MatchSubmitRequest
+public class MatchSubmitRequest
 {
-	public ulong ServerSteamId { get; set; }
+	public string ServerSteamId { get; set; }
 	public string MapIdent { get; set; }
 	public string GamemodeIdent { get; set; }
 
@@ -32,12 +32,12 @@ public class MatchPlayer : BaseModel
 {
 	public Guid MatchId { get; set; }
 	public Match Match { get; set; }
-	public long PlayerSteamId { get; set; }
+	public string PlayerSteamId { get; set; }
 	public Dictionary<string, string> KeyValues { get; set; }
 }
 
-public struct MatchPlayerSubmitRequest
+public class MatchPlayerSubmitRequest
 {
-	public long PlayerSteamId { get; set; }
+	public string PlayerSteamId { get; set; }
 	public Dictionary<string, string> KeyValues { get; set; }
 }

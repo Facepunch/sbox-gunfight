@@ -51,13 +51,13 @@ public partial class WebAPI
 			var request = new Models.MatchSubmitRequest();
 			request.GamemodeIdent = gamemode;
 			request.GameLength = ( endTime - startTime );
-			request.ServerSteamId = Game.ServerSteamId;
+			request.ServerSteamId = $"{Game.ServerSteamId}";
 			request.MapIdent = Game.Server.MapIdent;
 
 			request.Players = new();
 			foreach ( var cl in Game.Clients )
 			{
-				var pl = new MatchPlayerSubmitRequest { PlayerSteamId = cl.SteamId, KeyValues = new()
+				var pl = new MatchPlayerSubmitRequest { PlayerSteamId = cl.SteamId.ToString(), KeyValues = new()
 					{
 						{ "kills", cl.GetInt( "frags" ).ToString() },
 						{ "deaths", cl.GetInt( "deaths" ).ToString() },

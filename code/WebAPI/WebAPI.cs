@@ -6,6 +6,7 @@ namespace Facepunch.Gunfight;
 public partial class WebAPI
 {
 	public static string BaseUrl => "https://gunfight-api.azurewebsites.net/api/";
+	// public static string BaseUrl => "http://localhost:8080/api/";
 
 	private static async Task<Dictionary<string, string>> GetHeaders()
 	{
@@ -14,7 +15,6 @@ public partial class WebAPI
 		var headers = new Dictionary<string, string>
 		{
 			{ "X-Auth-Token", token }, { "X-Auth-Id", Game.SteamId.ToString() },
-			{ "Content-Type", "application/json" }
 		};
 
 		return headers;
@@ -35,7 +35,7 @@ public partial class WebAPI
 	public static async Task HttpPost( string endpoint, HttpContent content = null )
 	{
 		var headers = await GetHeaders();
-		await Http.RequestAsync( $"{BaseUrl}{endpoint}", "POST", content, headers );
+		await Http.RequestAsync( "POST", $"{BaseUrl}{endpoint}", content, headers );
 	}
 		
 	public static async Task<T> HttpPut<T>( string endpoint, HttpContent content = null )
@@ -47,6 +47,6 @@ public partial class WebAPI
 	public static async Task HttpPut( string endpoint, HttpContent content = null )
 	{
 		var headers = await GetHeaders();
-		await Http.RequestAsync( $"{BaseUrl}{endpoint}", "PUT", content, headers );
+		await Http.RequestAsync( "PUT", $"{BaseUrl}{endpoint}", content, headers );
 	}
 }

@@ -79,6 +79,8 @@ GunfightScoreboard {
         flex-grow: 1;
     }
 
+    gap: 8px;
+
     .deaths, .kills, .score, .fps, .captures, .ping {
         width: 150px;
     }
@@ -209,7 +211,9 @@ GunfightScoreboard {
                     font-size: 20px;
                 }
 
-                .name, .kills, .deaths, .score, .ping {
+                gap: 8px;
+
+                .level, .name, .kills, .deaths, .score, .ping {
                     color: white;
                 }
 
@@ -266,5 +270,21 @@ GunfightScoreboard {
 
     100% {
         color: rgba( white, 1 );
+    }
+}
+
+LevelComponent
+{
+    color: gold;
+    align-items: center;
+    
+    i
+    {
+        font-size: 24px;
+    }
+    
+    label
+    {
+        font-family: $main-font-bold;
     }
 }

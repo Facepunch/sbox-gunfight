@@ -7,7 +7,8 @@
     @if ( Client.IsValid() )
     {
         <img class="avatar" src="avatar:@Client.SteamId" />
-        <label class="name">@Client.Name</label>
+		<LevelComponent @Level="@Level" />
+	    <label class="name">@Client.Name</label>
         <label class="kills">@Kills</label>
         <label class="deaths">@Deaths</label>
         <label class="score">@Score</label>
@@ -25,7 +26,8 @@
 
     public int Kills => Client.GetInt( "frags", 0 );
     public int Deaths => Client.GetInt( "deaths", 0 );
-    public int Score => Client.GetInt( "score", 0 );
+	public int Score => Client.GetInt( "score", 0 );
+	public int Level => Client.Components.GetOrCreate<ProgressionComponent>()?.Level ?? 1;
 
     public void SetClient( IClient cl )
     {
@@ -51,6 +53,6 @@
 
     protected override int BuildHash()
     {
-        return HashCode.Combine( Kills, Deaths, Score );
+        return HashCode.Combine( Kills, Deaths, Score, Level );
     }
 }

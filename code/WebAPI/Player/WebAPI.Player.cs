@@ -21,7 +21,7 @@ public partial class WebAPI
 			return amount;
 		}
 
-		public static async Task<Models.Player> GetPlayer( ulong steamId )
+		public static async Task<Models.Player> GetPlayer( long steamId )
 		{
 			var player = await HttpGet<Models.Player>( $"Player/{steamId}" );
 			return player;
@@ -30,7 +30,7 @@ public partial class WebAPI
 		public static async Task<Models.Player> GetLocalPlayer()
 		{
 			Game.AssertClientOrMenu();
-			return await GetPlayer( Convert.ToUInt64( Game.SteamId ) );
+			return await GetPlayer( Game.SteamId );
 		}
 	}
 }

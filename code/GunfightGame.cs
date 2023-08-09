@@ -56,6 +56,9 @@ partial class GunfightGame : GameManager
 	public override void ClientJoined( IClient cl )
 	{
 		base.ClientJoined( cl );
+		
+		// Make progression component
+		cl.Components.GetOrCreate<ProgressionComponent>();
 
 		var player = CreatePawn( cl );
 

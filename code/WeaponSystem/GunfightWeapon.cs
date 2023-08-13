@@ -216,7 +216,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	
 	protected virtual void SimulateRecoil( IClient owner )
 	{
-		if ( TimeSincePrimaryAttack > RecoilDispersion )
+		if ( TimeSincePrimaryAttack > RecoilDispersion || AmmoClip < 1 )
 		{
 			CameraRecoil = CameraRecoil.LerpTo( 0, Time.Delta * 10f );
 			WeaponSpreadRecoil = WeaponSpreadRecoil.LerpTo( 0, Time.Delta * 10f );

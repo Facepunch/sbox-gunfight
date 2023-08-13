@@ -145,7 +145,6 @@ public partial class FFAGamemode : Gamemode
 			UI.GunfightChatbox.AddChatEntry( To.Everyone, WinningPlayer.Name, "is the winner!", WinningPlayer.SteamId, false );
 
 			EndTime = DateTimeOffset.UtcNow;
-			_ = WebAPI.MatchHistory.SubmitAsync( WebAPI.MatchHistory.BuildRequest( StartTime, EndTime, "FFAGamemode" ) );
 		}
 
 		Event.Run( "gunfight.gamestate.changed", before, after );

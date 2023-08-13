@@ -60,7 +60,6 @@ public partial class ProgressionComponent : EntityComponent
 	{
 		Log.Trace( $"Syncing Progression for {Entity.Client.SteamId}" );
 		
-		var player = await WebAPI.Player.GetPlayer( Entity.Client.SteamId );
-		Set( player.Experience );
+		// TODO - Hold data locally
 	}
 }

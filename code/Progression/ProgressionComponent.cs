@@ -53,12 +53,12 @@ public partial class ProgressionComponent : EntityComponent
 
 		_experience = xp;
 		
-		Log.Info( $"Set level to {Level}, with XP {Experience}"  );
+		Log.Trace( $"Set level to {Level}, with XP {Experience}"  );
 	}
 
 	public async Task Sync()
 	{
-		Log.Info( $"Syncing Progression for {Entity.Client.SteamId}" );
+		Log.Trace( $"Syncing Progression for {Entity.Client.SteamId}" );
 		
 		var player = await WebAPI.Player.GetPlayer( Entity.Client.SteamId );
 		Set( player.Experience );

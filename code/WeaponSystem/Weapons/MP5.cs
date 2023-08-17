@@ -46,7 +46,7 @@ public partial class MP5 : GunfightWeapon
 		else
 		{
 			ViewModelEntity?.SetAnimParameter( "ironsights", 0 );
-			ViewModelEntity?.SetAnimParameter( "ironsights_fire_scale", 1 );
+			ViewModelEntity?.SetAnimParameter( "ironsights_fire_scale", 0.5f );
 		}
 	}
 }

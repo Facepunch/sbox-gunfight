@@ -1,4 +1,6 @@
-﻿namespace Facepunch.Gunfight;
+﻿using System;
+
+namespace Facepunch.Gunfight;
 
 public partial class Progression
 {
@@ -9,7 +11,7 @@ public partial class Progression
 
 		private const string PERSISTENCE_BUCKET = "progression.level";
 
-		private static int _level;
+		private static int _level = 0;
 		private static int _experience;
 
 		public static int CurrentLevel
@@ -24,13 +26,14 @@ public partial class Progression
 			{
 				value = value.Clamp( 0, MAX_EXPERIENCE );
 
-				var level = ExpToLevel( value )
+				var level = GetLevelFromExperience( value )
 					.Clamp( 0, MAX_LEVEL );
 
 				var previousXp = _experience;
 				var previousLevel = _level;
 
 				_experience = value;
+
 				_level = level;
 
 				if ( previousXp > 0 )
@@ -44,28 +47,31 @@ public partial class Progression
 					} );
 				}
 
-				BroadcastLevel( _level );
+				if ( _level != previousLevel ) BroadcastLevel( _level );
 			}
 		}
 
-		static int LevelToExp( int level )
+		public static int GetRequiredExperienceForLevel( int level )
 		{
-			return (int)MathF.Round( ( level ^ ( 50 / 27 ) ) * 600 );
+			var exponent = 1.5f;
+			var baseXp = 1000;
+
+			return (int)MathF.Floor( baseXp * MathF.Pow( level, exponent ) );
 		}
 
-		static int ExpToLevel( int exp )
+		public static int GetLevelFromExperience( int experience )
 		{
-			return (int)MathF.Round( ( exp / 600 ) ^ ( 27 / 50 ) ) + 1;
-		}
+			int lvl = 0;
+			while ( lvl <= MAX_LEVEL )
+			{
+				var requiredXp = GetRequiredExperienceForLevel( lvl );
 
-		static int ExpRemaining( int exp )
-		{
-			return NextLevelExp() - exp;
-		}
+				if ( requiredXp >= experience ) return lvl - 1;
 
-		static int NextLevelExp()
-		{
-			return LevelToExp( _experience + 1 );
+				lvl++;
+			}
+
+			return lvl;
 		}
 
 		public static void Load()
@@ -112,6 +118,17 @@ public partial class Progression
 			public int CurrentXp;
 			public int PreviousLevel;
 			public int CurrentLevel;
+		}
+
+		[ConCmd.Server( "gunfight_progression_export" )]
+		public static void Export()
+		{
+			for ( int i = 0; i <= MAX_LEVEL; i++ )
+			{
+				var xpRequiredForLevel = Progression.Levelling.GetRequiredExperienceForLevel( i );
+
+				Log.Info( $"Level {i} requires {xpRequiredForLevel} XP" );
+			}
 		}
 	}
 }

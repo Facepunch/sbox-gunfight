@@ -1,0 +1,43 @@
+﻿ExperienceBar
+{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    padding: 8px;
+    padding-left: 80px;
+    padding-right: 80px;
+
+    padding-bottom: 0;
+    align-items: center;
+    gap: 8px;
+
+    .segments
+    {
+        flex-grow: 1;
+        gap: 8px;
+
+        .segment
+        {
+            height: 10px;
+            width: 10%;
+            background-color: rgba( black, 0.2 );
+
+            .inner-bar
+            {
+                transition: all 0.5s ease-out;
+                height: 100%;
+                background-color: rgba( $theme-color, 0.2 );
+            }
+        }
+    }
+
+    .level
+    {
+        padding: 0px 8px 0px 8px;
+        font-family: $main-font-semibold;
+        color: rgba( white, 0.8 );
+        font-size: 24px;
+    }
+}

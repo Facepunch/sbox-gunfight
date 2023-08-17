@@ -1,0 +1,34 @@
+﻿@using Sandbox
+@using Sandbox.Menu
+@using Sandbox.Razor
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+    <div class="background" />
+    <label>Player Level</label>
+    <div style="flex-grow: 1;" />
+    <i>analytics</i>
+    <label>@Progression.Levelling.CurrentLevel</label>
+</root>
+
+@code
+{
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if ( firstTime )
+        {
+            Progression.Levelling.Load();
+        }
+
+        base.OnAfterTreeRender( firstTime );
+    }
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Progression.Levelling.TotalExperience, Progression.Levelling.CurrentLevel );
+	}
+}

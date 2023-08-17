@@ -84,7 +84,8 @@ GunfightChatbox {
     }
 }
 
-ChatboxRow {
+ChatboxRow
+{
     margin-bottom: 16px;
     color: white;
     transition: transform 0.1s ease-out, opacity 0.1s ease-out;
@@ -97,7 +98,8 @@ ChatboxRow {
     flex-direction: row;
     background-image: linear-gradient( to right, rgba( black, 0.5 ), rgba( black, 0 ) );
 
-    &:intro, &:outro {
+    &:intro, &:outro
+    {
         max-height: 0px;
         padding-top: 0;
         padding-bottom: 0;
@@ -106,26 +108,56 @@ ChatboxRow {
         transform: scale( 0 );
     }
 
-    .avatar {
+    .avatar
+    {
         position: absolute;
         aspect-ratio: 1;
         height: 45px;
         border: 1px solid black;
         z-index: 100;
 
-        .image {
+        .image
+        {
             height: 45px;
             aspect-ratio: 1;
         }
     }
 
-    .header {
+    .header
+    {
         text-shadow: 0px 0px 1px rgba( black, 0.3 );
         height: 100%;
     }
 
-    .name {
+    LevelComponent
+    {
+        top: 11px;
         margin-left: 58px;
+    }
+
+    LevelComponent
+    {
+        align-items: center;
+
+        height: 24px;
+        flex-shrink: 0;
+
+
+        i
+        {
+            color: gold;
+            font-size: 24px;
+        }
+
+        label
+        {
+            font-family: $main-font-bold;
+        }
+    }
+
+    .name
+    {
+        margin-left: 16px;
         font-weight: 600;
         flex-shrink: 0;
         font-size: 20px;
@@ -135,15 +167,18 @@ ChatboxRow {
         white-space: nowrap;
     }
 
-    .main {
+    .main
+    {
         padding: 8px;
         padding-right: 16px;
-        padding-left: 32px;
+        padding-left: 16px;
         padding-bottom: 11px;
     }
 
-    .msg {
+    .msg
+    {
         color: white;
+        flex-grow: 0;
         font-size: 20px;
         font-family: Oxanium;
         font-weight: 500;
@@ -151,45 +186,58 @@ ChatboxRow {
         top: 3px;
     }
 
-    &.noname {
-        .name {
+    &.noname
+    {
+        .name
+        {
             display: none;
         }
     }
 
-    &.not-message {
-        .message {
+    &.not-message
+    {
+        .message
+        {
             color: $main-color;
         }
     }
 
-    &.is-lobby {
-        .name {
+    &.is-lobby
+    {
+        .name
+        {
             color: #ff80f5;
         }
     }
 
-    &.friend {
-        .name {
+    &.friend
+    {
+        .name
+        {
             color: rgba( $friendly, 1 );
         }
 
-        .avatar {
+        .avatar
+        {
             border: 2px solid rgba( $friendly, 0.8 );
         }
     }
 
-    &.enemy {
-        .name {
+    &.enemy
+    {
+        .name
+        {
             color: rgba( $enemy, 1 );
         }
 
-        .avatar {
+        .avatar
+        {
             border: 2px solid rgba( $enemy, 0.8 );
         }
     }
 
-    &.stale {
+    &.stale
+    {
         transition: opacity 1s ease;
         opacity: 0;
     }

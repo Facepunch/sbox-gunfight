@@ -60,6 +60,8 @@ partial class GunfightGame : GameManager
 		// Make progression component
 		cl.Components.GetOrCreate<PlayerLevelComponent>();
 
+		Progression.Levelling.RpcLoad( To.Single( cl ) );
+
 		var player = CreatePawn( cl );
 
 		// Inform the active gamemode

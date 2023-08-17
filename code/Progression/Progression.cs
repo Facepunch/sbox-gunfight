@@ -11,8 +11,18 @@ public partial class Progression
 	[ClientRpc]
 	public static void RpcGiveXP( int amount, string reason )
 	{
-		Game.LocalClient.Components.GetOrCreate<PlayerLevelComponent>()
-			.AddExperience( amount );
+		Progression.Levelling.GiveExperience( amount );
+	}
+
+	/// <summary>
+	/// Tell the server what your level is
+	/// </summary>
+	/// <param name="cl"></param>
+	/// <param name="amount"></param>
+	[ConCmd.Server( "gunfight_progression_broadcast_lvl" )]
+	public static void BroadcastLevel( int level )
+	{
+		ConsoleSystem.Caller.Components.GetOrCreate<PlayerLevelComponent>().Level = level;
 	}
 
     public static void GiveScore( IClient cl, int amount )

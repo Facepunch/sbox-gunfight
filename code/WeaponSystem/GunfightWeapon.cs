@@ -250,7 +250,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		// Recoil gets decreased when aiming down the sights.
 		if ( IsAiming )
-			recoilScale *= 0.5f;
+			recoilScale *= 0.75f;
 
 		// Recoil gets decreased when ducking.
 		if ( !isInAir && PlayerController.Duck.IsActive )

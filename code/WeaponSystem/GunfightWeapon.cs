@@ -311,6 +311,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			BurstCount = 0;
 		}
 
+		if ( IsBurst && AmmoClip == 0 ) IsBurstFiring = false;
+
 		SimulateRecoil( cl );
 
 		if ( WantsReload() )

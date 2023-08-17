@@ -5,7 +5,15 @@ public partial class Progression
     public static void GiveXP( IClient cl, int amount, string reason )
     {
         UI.ExperienceHints.RpcSend( To.Single( cl ), amount, reason );
+		RpcGiveXP( To.Single( cl ), amount, reason );
     }
+
+	[ClientRpc]
+	public static void RpcGiveXP( int amount, string reason )
+	{
+		Game.LocalClient.Components.GetOrCreate<PlayerLevelComponent>()
+			.AddExperience( amount );
+	}
 
     public static void GiveScore( IClient cl, int amount )
     {

@@ -447,17 +447,6 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 
 			TookDamage( To.Single( this ), info.Weapon.IsValid() ? info.Weapon.Position : info.Attacker.Position );
 		}
-
-		//
-		// Add a score to the killer
-		//
-		if ( LifeState != LifeState.Alive && info.Attacker != null )
-		{
-			if ( info.Attacker.Client != null && info.Attacker != this )
-			{
-				info.Attacker.Client.AddInt( "frags" );
-			}
-		}
 	}
 
 	[ClientRpc]

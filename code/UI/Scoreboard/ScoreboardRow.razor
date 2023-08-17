@@ -27,7 +27,7 @@
     public int Kills => Client.GetInt( "frags", 0 );
     public int Deaths => Client.GetInt( "deaths", 0 );
 	public int Score => Client.GetInt( "score", 0 );
-	public int Level => Client.Components.GetOrCreate<ProgressionComponent>()?.Level ?? 1;
+	public int Level => Client.Components.GetOrCreate<PlayerLevelComponent>()?.Level ?? 1;
 
     public void SetClient( IClient cl )
     {

@@ -498,6 +498,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			AmmoLowSound( AmmoClip / (float)ClipSize );
 		
 		if ( EjectBrass != null ) Particles.Create( EjectBrass.ResourcePath, EffectEntity, "eject" );
+
+		Particles.Create( "particles/pistol_muzzleflash.vpcf", EffectEntity, "muzzle" );
 	}
 
 	protected TraceResult DoTraceBullet( Vector3 start, Vector3 end, float radius )

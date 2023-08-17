@@ -54,7 +54,8 @@
     "AvoidanceAngleOffset": "5,1,-15",
     "SprintPositionOffset": "-2.5,0,0.5",
     "SprintAngleOffset": "15,25,-15",
-    "AimPositionOffset": "0,0,0.2"
+    "AimPositionOffset": "-0.85,3.46,0.995",
+    "AimAngleOffset": "-0.5,0,4"
   },
   "Recoil": {
     "BaseRecoilMinimum": "-4,2",

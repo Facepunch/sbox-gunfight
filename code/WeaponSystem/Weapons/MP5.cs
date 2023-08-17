@@ -40,7 +40,7 @@ public partial class MP5 : GunfightWeapon
 
 		if ( (Owner as GunfightPlayer)?.IsAiming ?? false )
 		{
-			ViewModelEntity?.SetAnimParameter( "ironsights", 2 );
+			ViewModelEntity?.SetAnimParameter( "ironsights", 1 );
 			ViewModelEntity?.SetAnimParameter( "ironsights_fire_scale", 0.3f );
 		}
 		else

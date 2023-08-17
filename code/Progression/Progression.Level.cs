@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Facepunch.Gunfight;
+﻿namespace Facepunch.Gunfight;
 
 public partial class Progression
 {
@@ -33,8 +27,22 @@ public partial class Progression
 				var level = ExpToLevel( value )
 					.Clamp( 0, MAX_LEVEL );
 
+				var previousXp = _experience;
+				var previousLevel = _level;
+
 				_experience = value;
 				_level = level;
+
+				if ( previousXp > 0 )
+				{
+					Event.Run( "gunfight.progression.xp", new ExperienceChangedData
+					{
+						PreviousXp = previousXp,
+						CurrentXp = _experience,
+						PreviousLevel = previousLevel,
+						CurrentLevel = _level
+					} );
+				}
 
 				BroadcastLevel( _level );
 			}
@@ -62,7 +70,7 @@ public partial class Progression
 
 		public static void Load()
 		{
-			var xp = PersistenceSystem.Instance.Get( PERSISTENCE_BUCKET, "experience", 0 );
+			var xp = PersistenceSystem.Instance.Get( PERSISTENCE_BUCKET, "experience", 300 );
 			
 			TotalExperience = xp;
 		}
@@ -82,7 +90,6 @@ public partial class Progression
 		/// Tell the server what your level is.
 		/// This is purely cosmetic.
 		/// </summary>
-		/// <param name="cl"></param>
 		/// <param name="level"></param>
 		[ConCmd.Server( "gunfight_progression_broadcast_lvl" )]
 		public static void BroadcastLevel( int level )
@@ -94,6 +101,17 @@ public partial class Progression
 		public static void RpcLoad()
 		{
 			Load();
+		}
+
+		/// <summary>
+		/// Event for when xp changes
+		/// </summary>
+		public struct ExperienceChangedData
+		{
+			public int PreviousXp;
+			public int CurrentXp;
+			public int PreviousLevel;
+			public int CurrentLevel;
 		}
 	}
 }

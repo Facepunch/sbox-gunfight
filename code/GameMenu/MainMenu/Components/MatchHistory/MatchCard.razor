@@ -10,11 +10,21 @@
 	<div class="background" @ref=Background />
 
 	<div class="main">
-        <span class="timestamp">
-            <i>history</i>
-            <label>@Timestamp</label>
-        </span>
-       
+        <div class="details">
+            <span class="timestamp">
+                <i>history</i>
+                <label>@Timestamp</label>
+            </span>
+
+            <div style="flex-grow: 1;" />
+
+            <div class="avatars">
+                @foreach ( var player in Match.Players )
+                {
+                    <img class="avatar" src="avatar:@player.SteamId" @onclick=@(() => ViewProfile(player.SteamId) ) />
+                }
+            </div>
+        </div>
 
         <div style="flex-grow: 1;" />
 
@@ -52,8 +62,13 @@
         Background.Style.MaskImage = Texture.Load( Game.Random.FromArray( MapPackage.Screenshots )?.Url );
     }
 
-	protected override int BuildHash()
-	{
-		return HashCode.Combine( Match.StartTime );
-	}
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Match.StartTime );
+    }
+
+    void ViewProfile( long steamId )
+    {
+        new Friend( steamId ).OpenInOverlay();
+    }
 }

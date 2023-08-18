@@ -109,9 +109,6 @@ public partial class FFAGamemode : Gamemode
 			_ => FormattedTimeRemaining
 		};
 	}
-
-	private DateTimeOffset StartTime;
-	private DateTimeOffset EndTime;
 	
 	protected void OnGameStateChanged( GameState before, GameState after )
 	{
@@ -126,7 +123,7 @@ public partial class FFAGamemode : Gamemode
 		}
 		if ( after == GameState.RoundCountdown )
 		{
-			StartTime = DateTimeOffset.UtcNow;
+			MatchStartTime = DateTimeOffset.UtcNow;
 			
 			CleanupMap();
 			TimeUntilNextState = RoundCountdownLength;
@@ -143,8 +140,7 @@ public partial class FFAGamemode : Gamemode
 			TimeUntilNextState = GameWonLength;
 			
 			UI.GunfightChatbox.AddChatEntry( To.Everyone, WinningPlayer.Name, "is the winner!", WinningPlayer.SteamId, false );
-
-			EndTime = DateTimeOffset.UtcNow;
+			Progression.MatchHistory.Record();
 		}
 
 		Event.Run( "gunfight.gamestate.changed", before, after );

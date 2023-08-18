@@ -91,6 +91,11 @@ public abstract partial class Gamemode : Entity
 
 	protected GunfightPlayer LastKilledPlayer;
 
+	/// <summary>
+	/// Time since the match started.
+	/// </summary>
+	public DateTimeOffset MatchStartTime { get; set; } = DateTimeOffset.UtcNow;
+
 	public virtual string GetTimeLeftLabel()
 	{
 		return "00:00";
@@ -295,6 +300,7 @@ public abstract partial class Gamemode : Entity
 
 	public virtual void CleanupMap()
 	{
+		MatchStartTime = DateTimeOffset.UtcNow;
 	}
 
 	public override void BuildInput()

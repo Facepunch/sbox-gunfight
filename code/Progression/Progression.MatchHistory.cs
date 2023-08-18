@@ -35,6 +35,7 @@ public partial class Progression
 		{
 			public string ServerSteamId { get; set; }
 			public string ServerName { get; set; }
+			public string MapIdent { get; set; }
 			public string Gamemode { get; set; }
 
 			public DateTimeOffset StartTime { get; set; }
@@ -104,6 +105,7 @@ public partial class Progression
 			{
 				ServerSteamId = Game.Server.SteamId,
 				ServerName = Game.Server.ServerTitle,
+				MapIdent = Game.Server.MapIdent,
 				Gamemode = GamemodeSystem.SelectedGamemode,
 				
 				StartTime = GamemodeSystem.Current.MatchStartTime,

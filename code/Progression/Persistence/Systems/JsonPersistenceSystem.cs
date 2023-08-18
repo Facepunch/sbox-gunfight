@@ -14,7 +14,7 @@ public class JsonPersistenceSystem : IPersistenceSystem
 		if ( !FileSystem.Data.FileExists( path ) )
 			return new();
 
-		return FileSystem.Data.ReadJson<Dictionary<string, T>>( GetFilePath( bucket ) );
+		return FileSystem.Data.ReadJson<Dictionary<string, T>>( GetFilePath( bucket ), new() );
 	}
 
 	public virtual T Get<T>( string bucket, string name, T defValue = default( T ) )

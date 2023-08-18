@@ -292,7 +292,10 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
-		
+
+		ViewModelEntity?.SetAnimParameter( "b_grounded", Player.Controller.GroundEntity.IsValid() );
+
+
 		IsFiring = false;
 		
 		if ( TimeSinceDeployed < DeployTime )

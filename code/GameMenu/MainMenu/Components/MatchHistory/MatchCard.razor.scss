@@ -73,8 +73,10 @@ MatchCard
 
         > .avatars
         {
+            gap: 4px;
             pointer-events: all;
             justify-content: flex-end;
+            opacity: 0.65;
 
             .avatar
             {
@@ -84,7 +86,7 @@ MatchCard
 
                 &:hover
                 {
-                    transform:scale( 1.1 );
+                    transform: scale( 1.1 );
                 }
             }
         }

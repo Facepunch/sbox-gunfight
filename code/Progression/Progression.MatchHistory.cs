@@ -9,10 +9,15 @@ public partial class Progression
 		const string PERSISTENCE_BUCKET = "progression.matchhistory";
 		const int TAKE_HISTORY = 10; // Take the last X games when displaying Match History
 
+		public static int Count()
+		{
+			return PersistenceSystem.Instance.GetAll<Match>( PERSISTENCE_BUCKET )
+				.Values
+				.Count;
+		}
+
 		public static List<Match> Get()
 		{
-			Game.AssertClient();
-
 			return PersistenceSystem.Instance.GetAll<Match>( PERSISTENCE_BUCKET )
 				.Values
 				.OrderByDescending( x => x.StartTime )
@@ -50,7 +55,7 @@ public partial class Progression
 			{
 				RpcRecord( To.Everyone );
 			}
-			else
+			else if ( Game.IsClient )
 			{
 				var match = BuildFromCurrentGame();
 				PersistenceSystem.Instance.Set( PERSISTENCE_BUCKET, match.StartTime.ToString(), match );

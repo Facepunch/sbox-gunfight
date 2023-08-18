@@ -16,6 +16,7 @@ public class PersistenceSystem
 
 	protected IPersistenceSystem System = new JsonPersistenceSystem();
 
+	public Dictionary<string, T> GetAll<T>( string bucket ) => System.GetAll<T>( bucket );
 	public T Get<T>( string bucket, string name, T defValue = default ) => System.Get( bucket, name, defValue );
 	public void Set( string bucket, string name, object value )
 	{

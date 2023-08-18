@@ -6,6 +6,20 @@ public partial class Progression
 {
 	public static partial class MatchHistory
 	{
+		const string PERSISTENCE_BUCKET = "progression.matchhistory";
+		const int TAKE_HISTORY = 10; // Take the last X games when displaying Match History
+
+		public static List<Match> Get()
+		{
+			Game.AssertClient();
+
+			return PersistenceSystem.Instance.GetAll<Match>( PERSISTENCE_BUCKET )
+				.Values
+				.OrderByDescending( x => x.StartTime )
+				.Take( TAKE_HISTORY )
+				.ToList();
+		}
+
 		public struct MatchPlayer
 		{
 			public long SteamId { get; set; }
@@ -39,7 +53,7 @@ public partial class Progression
 			else
 			{
 				var match = BuildFromCurrentGame();
-				PersistenceSystem.Instance.Set( "progression.matchhistory", match.StartTime.ToString(), match );
+				PersistenceSystem.Instance.Set( PERSISTENCE_BUCKET, match.StartTime.ToString(), match );
 			}
 		}
 

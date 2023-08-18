@@ -1,0 +1,59 @@
+@using Sandbox
+@using Sandbox.Razor
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+	<div class="background" @ref=Background />
+
+	<div class="main">
+        <span class="timestamp">
+            <i>history</i>
+            <label>@Timestamp</label>
+        </span>
+       
+
+        <div style="flex-grow: 1;" />
+
+        <div class="overlay">
+            <label class="gamemode">@Gamemode</label>
+            <label class="map">@MapPackage?.Title</label>
+        </div>
+
+	</div>
+</root>
+
+@code
+{
+    public string Timestamp { get; set; } = "Today at 8:43 PM";
+    public string Gamemode { get; set; } = "Free For All";
+    public string MapName { get; set; }
+
+    public Progression.MatchHistory.Match Match { get; set; }
+
+    Panel Background { get; set; }
+    Package MapPackage { get; set; }
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        if ( firstTime )
+        {
+            FetchPackage();
+        }
+    }
+
+    async void FetchPackage()
+    {
+        MapPackage = await Package.FetchAsync( Match.MapIdent, true );
+
+        Background.Style.MaskImage = Texture.Load( Game.Random.FromArray( MapPackage.Screenshots )?.Url );
+    }
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Match.StartTime );
+	}
+}

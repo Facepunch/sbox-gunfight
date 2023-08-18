@@ -29,6 +29,11 @@
                 <i>feed</i>
                 <label>Required Experience For Next Level: @Progression.Levelling.GetRequiredExperienceForLevel( Progression.Levelling.CurrentLevel + 1 ).ToString( "N0" )</label>
             </div>
+
+            <div class="stat">
+                <i>feed</i>
+                <label>Total Matches Played: @Progression.MatchHistory.Count().ToString( "N0" )</label>
+            </div>
 			
 			<div style="flex-grow: 1;"/>
 
@@ -44,18 +49,9 @@
 				Match History
 			</div>
 
-            <div class="stat">
-                <label>Total Matches Played: @Progression.MatchHistory.Count().ToString( "N0" )</label>
-                <i>feed</i>
-            </div>
-
             @foreach ( var match in Progression.MatchHistory.Get() )
             {
-                <ActionButton onclick=@(x => ShowMatch( match ))>
-                    <Title>
-                        @match.StartTime.ToString( "g" )
-                    </Title>
-                </ActionButton>
+                <MatchCard Match=@match />
             }
 			
 			<div style="flex-grow: 1;"/>
@@ -65,11 +61,6 @@
 
 @code
 {
-    void ShowMatch( Progression.MatchHistory.Match match )
-    {
-        Log.Info( match );
-    }
-
     void Quit( PanelEvent e )
     {
         Game.Menu.Close();

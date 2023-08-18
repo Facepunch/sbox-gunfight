@@ -39,7 +39,7 @@ public partial class Progression
 			else
 			{
 				var match = BuildFromCurrentGame();
-				Log.Info( match );
+				PersistenceSystem.Instance.Set( "progression.matchhistory", match.StartTime.ToString(), match );
 			}
 		}
 

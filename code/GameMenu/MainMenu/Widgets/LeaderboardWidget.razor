@@ -17,7 +17,7 @@
             {
                 @foreach ( var entry in Board.Entries )
                 {
-                    <div class="entry @(entry.Me ? "is-me" : "")">
+                    <div class="entry @(entry.Me ? "is-me" : "")" onclick=@(() => ViewProfile(entry.SteamId))>
                         <img src="avatar:@entry.SteamId" />
                         <label class="bold">@GetUserName( entry.SteamId )</label>
                         <div style="flex-grow: 1;"/>
@@ -59,6 +59,11 @@
         Update();
     }
 
+    void ViewProfile( long steamId )
+    {
+        new Friend(steamId).OpenInOverlay();
+    }
+
     async void Update()
     {
         var board = Sandbox.Services.Leaderboards.Get( "experience" );
@@ -67,7 +72,7 @@
         board.MaxEntries = 10;
 
         // compare against people in my country
-        board.Group = "friends";
+        board.Group = "global";
 
         await board.Refresh();
         Board = board;

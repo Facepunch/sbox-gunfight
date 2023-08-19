@@ -2,12 +2,27 @@
 
 LeaderboardWidget
 {
+    .main
+    {
+        flex-direction: column;
+    }
+
     .entry
     {
         flex-grow: 1;
         width: 100%;
         gap: 8px;
         align-items: center;
+        cursor: pointer;
+
+        &:hover
+        {
+            label
+            {
+                opacity: 1;
+                color: white;
+            }
+        }
 
         &.is-me
         {

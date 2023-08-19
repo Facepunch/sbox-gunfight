@@ -142,7 +142,7 @@ public partial class Progression
 		{
 			if ( data.CurrentLevel > data.PreviousLevel )
 			{
-				NotificationSystem.Notify( $"You are now lvel {data.CurrentLevel}" );
+				NotificationSystem.Notify( $"You are now level {data.CurrentLevel}", "LEVEL UP" );
 			}
 		}
 	}

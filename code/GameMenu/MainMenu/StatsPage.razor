@@ -65,6 +65,11 @@
             {
                 <MatchCard Match=@match />
             }
+
+            @if ( Progression.MatchHistory.Count() < 1 )
+            {
+                <label>No matches recorded yet...</label>
+            }
 			
 			<div style="flex-grow: 1;"/>
 		</div>

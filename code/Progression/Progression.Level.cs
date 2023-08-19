@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Facepunch.Gunfight.UI;
+using System;
 
 namespace Facepunch.Gunfight;
 
@@ -8,6 +9,7 @@ public partial class Progression
 	{
 		public const int MAX_LEVEL = 50;
 		public const int MAX_EXPERIENCE = 1000000;
+		public const int DEFAULT_XP = 300;
 
 		private static int _level = 0;
 		private static int _experience;
@@ -78,7 +80,7 @@ public partial class Progression
 
 			var stat = Sandbox.Services.Stats.LocalPlayer.Get( "experience" );
 			var xp = stat.Value;
-			if ( xp == 0 ) xp = 300;
+			if ( xp == 0 ) xp = DEFAULT_XP;
 
 			TotalExperience = (int)xp;
 		}
@@ -137,6 +139,22 @@ public partial class Progression
 
 				Log.Info( $"Level {i} requires {xpRequiredForLevel} XP" );
 			}
+		}
+
+		[Event( "gunfight.progression.xp" )]
+		public static void OnXpGain( ExperienceChangedData data )
+		{
+			if ( data.CurrentLevel > data.PreviousLevel )
+			{
+				NotificationSystem.Notify( $"You are now lvel {data.CurrentLevel}" );
+			}
+		}
+
+		[ConCmd.Server( "gunfight_progression_level_reset" )]
+		public static void Reset()
+		{
+			Progression.Levelling.TotalExperience = DEFAULT_XP;
+			Progression.Levelling.Save();
 		}
 	}
 }

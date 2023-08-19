@@ -73,4 +73,10 @@
         Board = board;
         StateHasChanged();
     }
+
+    [Event( "gunfight.progression.xp" )]
+    public void OnXpGain( Gunfight.Progression.Levelling.ExperienceChangedData data )
+    {
+        Update();
+    }
 }

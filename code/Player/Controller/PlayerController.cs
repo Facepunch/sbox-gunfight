@@ -417,18 +417,28 @@ public partial class PlayerController : PawnController
 		// Play the heavy land sound, on top of the light one.
 		Pawn.PlaySound( "sounds/player/foley/gear/player.heavy_land.gear.sound" );
 
-		TakeFallDamage( velocity, velocityLength );
+		TakeFallDamage();
 
 		new ScreenShake.Pitch( 1f, 10f * velocityLength );
 	}
 
-	void TakeFallDamage( Vector3 velocity, float length )
+	void TakeFallDamage()
 	{
 		if ( Game.IsServer )
 		{
-			var fallDamageScale = 25;
-			var dmg = MathF.Exp( length ) * fallDamageScale;
-			Player.TakeDamage( DamageInfo.Generic( dmg ) );
+			var jumpFromPos = JumpPosition;
+			var positionNow = Position;
+
+			// jumped up somehow?
+			if ( positionNow.z >= jumpFromPos.z ) return;
+
+			var fallDamageScale = 125;
+			var zDist = MathF.Abs( positionNow.z - jumpFromPos.z );
+
+			var scale = zDist.LerpInverse( 0, 500f, true );
+			if ( scale < 0.35f ) return;
+
+			Player.TakeDamage( DamageInfo.Generic( fallDamageScale * scale ) );
 		}
 	}
 
@@ -585,6 +595,8 @@ public partial class PlayerController : PawnController
 		return true;
 	}
 
+	Vector3 JumpPosition;
+
 	public virtual void CheckJumpButton()
 	{
 		if ( !CanJump() ) return;
@@ -601,6 +613,8 @@ public partial class PlayerController : PawnController
 
 			return;
 		}
+
+		JumpPosition = Position;
 
 		ClearGroundEntity();
 

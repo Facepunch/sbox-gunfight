@@ -1,0 +1,31 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+
+@namespace Facepunch.Gunfight.UI
+@attribute [StyleSheet]
+
+<root>
+    <div class="main" @ref="Main">
+        @* notifs *@
+    </div>
+</root>
+
+@code
+{
+    public Panel Main { get; set; }
+
+    public static NotificationOverlay Instance;
+
+    public NotificationOverlay()
+    {
+        Instance = this;
+    }
+
+    public void Add( INotification notif )
+    {
+        if ( notif is not Panel pnl )
+            return;
+
+        Main.AddChild( pnl );
+    }
+}

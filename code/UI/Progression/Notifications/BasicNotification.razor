@@ -1,0 +1,22 @@
+﻿@using Sandbox.UI
+@namespace Facepunch.Gunfight.UI
+@implements INotification
+@attribute [StyleSheet]
+
+<root>
+    <div class="background" />
+    <label class="title">@Title</label>
+    <label>@Text</label>
+</root>
+
+@code
+{
+    public float Lifetime { get; set; } = 5;
+    public string Title { get; set; } = "Notification";
+    public string Text { get; set; } = "This is a notification.";
+
+    public void Destroy()
+    {
+        Delete();
+    }
+}

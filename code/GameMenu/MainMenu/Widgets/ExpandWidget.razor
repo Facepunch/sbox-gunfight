@@ -25,18 +25,23 @@
 
 @code
 {
-	public RenderFragment Title { get; set; }
-	public RenderFragment Body { get; set; }
-	public bool Expanded { get; set; } = true;
+    public RenderFragment Title { get; set; }
+    public RenderFragment Body { get; set; }
+    public bool Expanded { get; set; } = true;
 
-	public ExpandWidget()
-	{
-		SetClass( "is-hidden", !Expanded );
-	}
+    public ExpandWidget()
+    {
+        SetClass( "is-hidden", !Expanded );
+    }
 
-	protected void DoClick( PanelEvent e )
-	{
-		Expanded ^= true;
-		SetClass( "is-hidden", !Expanded );
-	}
+    protected void DoClick( PanelEvent e )
+    {
+        Expanded ^= true;
+        SetClass( "is-hidden", !Expanded );
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Time.Now );
+    }
 }

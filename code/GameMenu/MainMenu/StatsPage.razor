@@ -37,18 +37,6 @@
 			
 			<div style="flex-grow: 1;"/>
 
-            <ActionButton onclick=@ResetXP>
-				<Title>
-					Reset XP
-				</Title>
-                <Description>
-                    This is a destructive change. You can't get your XP back.
-                </Description>
-                <Extra>
-                    <i style="color:red;font-size: 40px;">priority_high</i>
-                </Extra>
-			</ActionButton>
-
 			<ActionButton onclick=@Return>
 				<Title>
 					Return
@@ -94,11 +82,6 @@
     {
         Game.Menu.LeaveServer( "Leaving" );
         this.Navigate( "/" );
-    }
-
-    void ResetXP( PanelEvent e )
-    {
-        Progression.Levelling.Reset();
     }
 
     void Return( PanelEvent e )

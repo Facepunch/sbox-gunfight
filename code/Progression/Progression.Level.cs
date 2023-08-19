@@ -12,7 +12,7 @@ public partial class Progression
 		public const int DEFAULT_XP = 300;
 
 		private static int _level = 0;
-		private static int _experience;
+		private static int _experience = 0;
 
 		public static int CurrentLevel
 		{
@@ -45,6 +45,11 @@ public partial class Progression
 						PreviousLevel = previousLevel,
 						CurrentLevel = _level
 					} );
+
+					var xpDifference = _experience - previousXp;
+					Sandbox.Services.Stats.Increment( "experience", xpDifference );
+
+					Log.Info( $"Incrementing {xpDifference} to experience" );
 				}
 
 				if ( _level != previousLevel ) BroadcastLevel( _level );
@@ -83,23 +88,14 @@ public partial class Progression
 			if ( xp == 0 ) xp = DEFAULT_XP;
 
 			TotalExperience = (int)xp;
+
+			Log.Info( $"Experience set to {xp}, level being {CurrentLevel}" );
 		}
 
 		[ConCmd.Client( "gunfight_progression_load_xp" )]
 		public static void Load()
 		{
 			LoadAsync();
-		}
-
-		public static void Save()
-		{
-			Sandbox.Services.Stats.SetValue( "experience", _experience );
-		}
-
-		public static void GiveExperience( int experience )
-		{
-			TotalExperience += experience;
-			Save();
 		}
 
 		/// <summary>
@@ -148,13 +144,6 @@ public partial class Progression
 			{
 				NotificationSystem.Notify( $"You are now lvel {data.CurrentLevel}" );
 			}
-		}
-
-		[ConCmd.Server( "gunfight_progression_level_reset" )]
-		public static void Reset()
-		{
-			Progression.Levelling.TotalExperience = DEFAULT_XP;
-			Progression.Levelling.Save();
 		}
 	}
 }

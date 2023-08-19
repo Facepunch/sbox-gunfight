@@ -11,7 +11,7 @@ public partial class Progression
 	[ClientRpc]
 	public static void RpcGiveXP( int amount, string reason )
 	{
-		Progression.Levelling.GiveExperience( amount );
+		Progression.Levelling.TotalExperience += amount;
 	}
 
 	/// <summary>

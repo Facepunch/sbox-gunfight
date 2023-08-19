@@ -1,0 +1,76 @@
+﻿@using Sandbox
+@using Sandbox.Menu
+@using Sandbox.Razor
+@using Sandbox.UI
+
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+	<ExpandWidget>
+		<Title>
+			Leaderboard
+		</Title>
+		<Body>
+            @if ( Board != null )
+            {
+                @foreach ( var entry in Board.Entries )
+                {
+                    <div class="entry @(entry.Me ? "is-me" : "")">
+                        <img src="avatar:@entry.SteamId" />
+                        <label class="bold">@GetUserName( entry.SteamId )</label>
+                        <div style="flex-grow: 1;"/>
+                        <label>@GetLevelFromExperience( entry.Value )</label>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="entry">
+                    <label>Loading...</label>
+                </div>
+            }
+		</Body>
+	</ExpandWidget>
+</root>
+
+@code
+{
+    Sandbox.Services.Leaderboards.Board Board;
+
+    string GetUserName( long steamId )
+    {
+        var f = new Friend( steamId );
+        return f.Name;
+    }
+
+    string GetLevelFromExperience( double value )
+    {
+        var lvl = Progression.Levelling.GetLevelFromExperience( Convert.ToInt32( value ) );
+
+        return $"Level {lvl.ToString("D")}";
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender(firstTime);
+
+        Update();
+    }
+
+    async void Update()
+    {
+        var board = Sandbox.Services.Leaderboards.Get( "experience" );
+
+        // return max 10 entries
+        board.MaxEntries = 10;
+
+        // compare against people in my country
+        board.Group = "friends";
+
+        await board.Refresh();
+        Board = board;
+        StateHasChanged();
+    }
+}

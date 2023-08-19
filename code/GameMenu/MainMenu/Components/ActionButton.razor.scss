@@ -3,7 +3,7 @@
 ActionButton
 {
   padding: 12px 26px;
-  height: 64px;
+  min-height: 64px;
   width: 356px;
   
   &.icon-only
@@ -33,6 +33,7 @@ ActionButton
     flex-direction: column;
     justify-content: center;
     flex-grow: 1;
+    gap: 4px;
   }
   
   .extra
@@ -82,7 +83,7 @@ ActionButton
   
   &.has-background
   {
-    height: 128px;
+    min-height: 128px;
     width: 356px;
     padding: 26px;
     background-color: transparent;

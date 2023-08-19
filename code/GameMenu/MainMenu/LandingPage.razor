@@ -36,6 +36,16 @@
 
 			<div style="flex-grow: 1;"/>
 
+            <ActionButton onclick=@ViewStats>
+                <Title>Stats</Title>
+                <Description>
+                    Check out all of your stats, including match history.
+                </Description>
+                <Extra>
+                    <Panel class="new" />
+                </Extra>
+            </ActionButton>
+
 			<ActionButton WithBackground="https://files.facepunch.com/tony/1b1311b1/boxes.webm" onclick=@Matchmake>
 				<Title>
 					Matchmaking
@@ -44,7 +54,7 @@
 					Ready to get into the action?
 				</Description>
 			</ActionButton>
-		<ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@OpenServerList>
+		    <ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@OpenServerList>
 				<Title>
 					Server Browser
 				</Title>
@@ -62,22 +72,27 @@
         <div class="right column">
 	        <div style="flex-grow: 1;"/>
 	        
-	        <PlayerLevelWidget />
-	        <QuickLobbyListWidget />
+            <LeaderboardWidget />
 	        <FriendsListWidget />
+	        <PlayerLevelWidget />
         </div>
 	</div>
 </root>
 
 @code
 {
-	void OpenServerList( PanelEvent e )
-	{
-		this.Navigate( "/servers" );
-	}
+    void OpenServerList( PanelEvent e )
+    {
+        this.Navigate( "/servers" );
+    }
 
-	void Matchmake( PanelEvent e )
-	{
-		this.Navigate( "/find" );
-	}
+    void Matchmake( PanelEvent e )
+    {
+        this.Navigate( "/find" );
+    }
+
+    void ViewStats( PanelEvent e )
+    {
+        this.Navigate( "/stats" );
+    }
 }

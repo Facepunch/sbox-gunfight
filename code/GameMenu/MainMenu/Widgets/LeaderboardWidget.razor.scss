@@ -1,0 +1,49 @@
+﻿@import "/Styles/hud.scss";
+
+LeaderboardWidget
+{
+    .entry
+    {
+        flex-grow: 1;
+        width: 100%;
+        gap: 8px;
+        align-items: center;
+
+        &.is-me
+        {
+            img
+            {
+                border: 0.8px solid rgba( green, 1 );
+                box-shadow: 0px 0px 25px rgba( lightgreen, 0.05 );
+            }
+        }
+
+        label
+        {
+            font-family: $main-font;
+            font-size: 15px;
+            height: 15px;
+        }
+
+        .bold
+        {
+            font-family: $main-font-bold;
+            height: 18px;
+        }
+
+        img
+        {
+            width: 30px;
+            border-radius: 100px;
+            border: 1px solid rgba( black, 0.5 );
+            height: 30px;
+        }
+
+        .slots
+        {
+            font-size: 15px;
+            height: 15px;
+            font-family: $main-font-bold;
+        }
+    }
+}

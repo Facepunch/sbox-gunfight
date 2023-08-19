@@ -64,6 +64,7 @@ public partial class Progression
 		}
 
 		[ClientRpc]
+		[ConCmd.Client( "gunfight_progression_matchhistory" )]
 		internal static void RpcRecord()
 		{
 			Record();

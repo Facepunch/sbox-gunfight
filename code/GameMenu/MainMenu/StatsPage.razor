@@ -108,6 +108,6 @@
 
     protected override int BuildHash()
     {
-        return HashCode.Combine( Progression.Levelling.TotalExperience );
+        return HashCode.Combine( Progression.Levelling.TotalExperience, Progression.MatchHistory.Count() );
     }
 }

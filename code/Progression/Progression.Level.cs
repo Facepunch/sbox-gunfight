@@ -9,8 +9,6 @@ public partial class Progression
 		public const int MAX_LEVEL = 50;
 		public const int MAX_EXPERIENCE = 1000000;
 
-		private const string PERSISTENCE_BUCKET = "progression.level";
-
 		private static int _level = 0;
 		private static int _experience;
 
@@ -74,16 +72,26 @@ public partial class Progression
 			return lvl;
 		}
 
+		private static async void LoadAsync()
+		{
+			await Sandbox.Services.Stats.LocalPlayer.Refresh();
+
+			var stat = Sandbox.Services.Stats.LocalPlayer.Get( "experience" );
+			var xp = stat.Value;
+			if ( xp == 0 ) xp = 300;
+
+			TotalExperience = (int)xp;
+		}
+
+		[ConCmd.Client( "gunfight_progression_load_xp" )]
 		public static void Load()
 		{
-			var xp = PersistenceSystem.Instance.Get( PERSISTENCE_BUCKET, "experience", 300 );
-			
-			TotalExperience = xp;
+			LoadAsync();
 		}
 
 		public static void Save()
 		{
-			PersistenceSystem.Instance.Set( PERSISTENCE_BUCKET, "experience", _experience );
+			Sandbox.Services.Stats.SetValue( "experience", _experience );
 		}
 
 		public static void GiveExperience( int experience )

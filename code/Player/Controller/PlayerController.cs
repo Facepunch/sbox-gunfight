@@ -417,7 +417,19 @@ public partial class PlayerController : PawnController
 		// Play the heavy land sound, on top of the light one.
 		Pawn.PlaySound( "sounds/player/foley/gear/player.heavy_land.gear.sound" );
 
+		TakeFallDamage( velocity, velocityLength );
+
 		new ScreenShake.Pitch( 1f, 10f * velocityLength );
+	}
+
+	void TakeFallDamage( Vector3 velocity, float length )
+	{
+		if ( Game.IsServer )
+		{
+			var fallDamageScale = 25;
+			var dmg = MathF.Exp( length ) * fallDamageScale;
+			Player.TakeDamage( DamageInfo.Generic( dmg ) );
+		}
 	}
 
 	[Net, Predicted]

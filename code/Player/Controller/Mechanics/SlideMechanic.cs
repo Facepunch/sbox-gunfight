@@ -35,15 +35,15 @@ public partial class SlideMechanic : BaseMoveMechanic
 			Controller.Velocity += slopeForward * 200.0f;
 
 		Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.stop.sound" );
-		SlideSound = Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.loop.sound");
-		SlideSound.SetVolume( 2.0f );
+		//SlideSound = Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.loop.sound");
+		//SlideSound.SetVolume( 2.0f );
 
 		return true;
 	}
 
 	public override void StopTry()
 	{
-		SlideSound.Stop();
+		//SlideSound.Stop();
 		base.StopTry();
 	}
 
@@ -64,7 +64,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 			Controller.Velocity += slopeForward * Time.Delta * SlideSpeed;
 
 		// Doesn't work?
-		SlideSound.SetPitch( Controller.Velocity.Length / Controller.SprintSpeed );
+		// SlideSound.SetPitch( Controller.Velocity.Length / Controller.SprintSpeed );
 
 		Controller.SetTag( "sliding" );
 	}

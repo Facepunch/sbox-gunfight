@@ -31,18 +31,20 @@ MatchModal
 
         .left
         {
-            width: 25%;
+            width: 50%;
         }
+    }
 
-        .right
-        {
-            width: 25%;
-        }
+    .subtitle
+    {
+        text-transform: uppercase;
+        font-family: $main-font-bold;
+        font-size: 18px;
     }
 
     .players
     {
-        flex-direction: column;
+        flex-direction: row;
 
         > .header
         {
@@ -55,6 +57,20 @@ MatchModal
             label
             {
                 top: 0.5px;
+            }
+        }
+
+        gap: 16px;
+
+        .group
+        {
+            flex-grow: 1;
+            flex-direction: column;
+            background-color: rgba( $main-color, 0.3 );
+
+            &.enemy
+            {
+                background-color: rgba( red, 0.05 );
             }
         }
 

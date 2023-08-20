@@ -8,46 +8,50 @@
 <root>
     <div class="main">
         <div class="left">
-            <label class="bold">Match of @Match.StartTime.ToString( "D" )</label>
+            <label class="subtitle bold">@Match.StartTime.ToString( "D" )</label>
+            <label class="subtitle bold">@GetMatchDuration( Match.Duration )</label>
 
-            <label>Scoreboard</label>
+            <div style="height: 24px;"/>
+
+            <label class="subtitle">TEAMS</label>
 
             <div class="players">
-                <div class="header">
-                    <label>Name</label>
-                </div>
-
-                @foreach ( var player in Match.Players )
+                @foreach ( var group in Match.Players.GroupBy( x => x.Team ) )
                 {
-                    <div class="row">
-                        <img class="avatar" src="avatar:@player.SteamId" />
-                        <label>@GetPlayerName( player.SteamId )</label>
+                    <div class="group @GetGroupClass( group.Key )">
+                        @foreach ( var player in group )
+                        {
+                            <div class="row">
+                                <img class="avatar" src="avatar:@player.SteamId" />
+                                <label>@GetPlayerName( player.SteamId )</label>
 
-                        <div class="grow" />
+                                <div class="grow" />
 
-                        <div class="span">
-                            <i>adjust</i>
-                            <label>@player.Data["kills"]</label>
-                        </div>
+                                <div class="span">
+                                    <i>adjust</i>
+                                    <label>@player.Data["kills"]</label>
+                                </div>
 
-                        <div class="span">
-                            <i>handshake</i>
-                            <label>@player.Data["assists"]</label>
-                        </div>
+                                <div class="span">
+                                    <i>handshake</i>
+                                    <label>@player.Data["assists"]</label>
+                                </div>
 
-                        <div class="span">
-                            <i>sentiment_very_dissatisfied</i>
-                            <label>@player.Data["deaths"]</label>
-                        </div>
-                    </div>
+                                <div class="span">
+                                    <i>sentiment_very_dissatisfied</i>
+                                    <label>@player.Data["deaths"]</label>
+                                </div>
+                            </div>
+                        }
+                    </div>    
                 }
             </div>
                 
-            <label>Map</label>
+            <label class="subtitle">Map</label>
 
             @if ( MapPackage != null )
             {
-                <PackageCard Fill=@true Package=@MapPackage />
+                <PackageCard Fill=@false Package=@MapPackage />
             }
         </div>
     </div>
@@ -79,5 +83,21 @@
             name = $"BOT";
 
         return name;
+    }
+
+    string GetGroupClass( Team team )
+    {
+        var myPlayer = Match.Players.FirstOrDefault( x => x.SteamId == Game.SteamId );
+        var state = TeamSystem.GetFriendState( myPlayer.Team, team );
+
+        if ( state == TeamSystem.FriendlyStatus.Friendly ) return "friend";
+        if ( state == TeamSystem.FriendlyStatus.Hostile ) return "enemy";
+
+        return "";
+    }
+
+    string GetMatchDuration( TimeSpan span )
+    {
+        return $"{span.TotalMinutes:n0} minutes, {span.Seconds:n0} seconds";
     }
 }

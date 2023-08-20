@@ -50,7 +50,6 @@ public partial class Progression
 			public List<MatchPlayer> Players { get; set; }
 		}
 
-		[ConCmd.Client( "gunfight_progression_matchhistory" )]
 		public static void Record()
 		{
 			if ( Game.IsServer )

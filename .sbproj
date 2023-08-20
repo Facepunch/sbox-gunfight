@@ -440,6 +440,16 @@
         "Addons": "",
         "PreLaunchCommand": "",
         "PostLaunchCommand": "gunfight_gamemode FFAGamemode"
+      },
+      {
+        "Name": "KC - Motel",
+        "GameIdent": "facepunch.gunfight#local",
+        "MapName": "gkaf.motel",
+        "MaxPlayers": 16,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": "gunfight_gamemode KillConfirmedGamemode;bot_add true;bot_add true;bot_add true;"
       }
     ]
   }

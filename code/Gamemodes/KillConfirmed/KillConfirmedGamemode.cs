@@ -126,6 +126,8 @@ public partial class KillConfirmedGamemode : Gamemode
 		}
 		if ( after == GameState.RoundCountdown )
 		{
+			MatchStartTime = DateTimeOffset.UtcNow;
+
 			CleanupMap();
 			TimeUntilNextState = RoundCountdownLength;
 			RandomizeLoadout();
@@ -140,6 +142,7 @@ public partial class KillConfirmedGamemode : Gamemode
 		{
 			TimeUntilNextState = GameWonLength;
 			ShowWinningTeam( To.Everyone, WinningTeam );
+			Progression.MatchHistory.Record();
 		}
 
 		Event.Run( "gunfight.gamestate.changed", before, after );

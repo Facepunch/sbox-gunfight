@@ -1,0 +1,84 @@
+@using Sandbox.UI
+@using Facepunch.Gunfight.UI
+
+@namespace Facepunch.Gunfight.MainMenu
+@inherits BaseModal
+@attribute [StyleSheet]
+
+<root>
+    <div class="main">
+        <div class="left">
+            <label class="bold">Match of @Match.StartTime.ToString( "D" )</label>
+
+            <label>Scoreboard</label>
+
+            <div class="players">
+                <div class="header">
+                    <label>Name</label>
+                </div>
+
+
+                @foreach ( var player in Match.Players )
+                {
+                    <div class="row">
+                        <img class="avatar" src="avatar:@player.SteamId" />
+                        <label>@GetPlayerName( player.SteamId )</label>
+
+                        <div class="grow" />
+
+                        <div class="span">
+                            <i>adjust</i>
+                            <label>@player.Data["kills"]</label>
+                        </div>
+
+                        <div class="span">
+                            <i>handshake</i>
+                            <label>@player.Data["assists"]</label>
+                        </div>
+
+                        <div class="span">
+                            <i>sentiment_very_dissatisfied</i>
+                            <label>@player.Data["deaths"]</label>
+                        </div>
+                    </div>
+                }
+            </div>
+                
+            <label>Map</label>
+
+            @if ( MapPackage != null )
+            {
+                <PackageCard Fill=@true Package=@MapPackage />
+            }
+        </div>
+    </div>
+</root>
+
+
+@code
+{
+    public Progression.MatchHistory.Match Match { get; set; }
+
+    Package MapPackage { get; set; }
+
+    public MatchModal( Progression.MatchHistory.Match match )
+    {
+        Match = match;
+        FetchPackage();
+    }
+
+    async void FetchPackage()
+    {
+        MapPackage = await Package.FetchAsync( Match.MapIdent, false );
+        StateHasChanged();
+    }
+
+    string GetPlayerName( long steamId )
+    {
+        var name = new Friend( steamId ).Name;
+        if ( string.IsNullOrEmpty( name ) )
+            name = $"BOT";
+
+        return name;
+    }
+}

@@ -1,0 +1,104 @@
+﻿@import "/Styles/hud.scss";
+
+MatchModal
+{
+    flex-direction: column;
+
+    .grow
+    {
+        flex-grow: 1;
+    }
+
+    .main
+    {
+        height: 100%;
+        pointer-events: none;
+        justify-content: center;
+        align-items: center;
+        padding-top: 0;
+        flex-direction: row;
+
+        .bold
+        {
+            font-family: $main-font-bold;
+        }
+
+        .left, .right
+        {
+            gap: 8px;
+            flex-direction: column;
+        }
+
+        .left
+        {
+            width: 25%;
+        }
+
+        .right
+        {
+            width: 25%;
+        }
+    }
+
+    .players
+    {
+        flex-direction: column;
+
+        > .header
+        {
+            padding: 2px;
+            padding-left: 8px;
+            background-color: darken( $main-color, 0.6 );
+            font-size: 14px;
+            font-family: $main-font-bold;
+
+            label
+            {
+                top: 0.5px;
+            }
+        }
+
+        .row
+        {
+            background-color: rgba( $main-color, 0.05 );
+            font-size: 16px;
+            align-items: center;
+            padding: 8px;
+            gap: 12px;
+
+            &:nth-child(even)
+            {
+                background-color: rgba( black, 0.1 );
+            }
+
+            .avatar
+            {
+                border-radius: 100px;
+                width: 24px;
+                height: 24px;
+            }
+
+            .grow
+            {
+                flex-grow: 1;
+            }
+
+            .span
+            {
+                gap: 4px;
+                align-items: center;
+                font-size: 18px;
+
+                label
+                {
+                    font-family: $main-font-semibold;
+                }
+
+                i
+                {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}

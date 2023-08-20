@@ -23,6 +23,7 @@ ModalOverlay
 
     .modal
     {
+        font-family: $main-font;
         padding: 64px;
         background-color: rgba( $main-color, 0.2 );
         position: absolute;

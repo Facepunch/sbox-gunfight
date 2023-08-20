@@ -71,4 +71,9 @@
     {
         new Friend( steamId ).OpenInOverlay();
     }
+
+    protected override void OnClick(MousePanelEvent e)
+    {
+        UI.ModalSystem.Push( new MatchModal( Match ) );
+    }
 }

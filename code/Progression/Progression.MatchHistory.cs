@@ -28,6 +28,7 @@ public partial class Progression
 		public struct MatchPlayer
 		{
 			public long SteamId { get; set; }
+			public Team Team { get; set; }
 			public Dictionary<string, object> Data { get; set; }
 		}
 
@@ -79,6 +80,7 @@ public partial class Progression
 				list.Add( new()
 				{
 					SteamId = cl.SteamId,
+					Team = cl.GetTeam(),
 					Data = new()
 					{
 						{ "kills", cl.GetInt( "frags" ) },

@@ -1,3 +1,4 @@
+@using System.ComponentModel.DataAnnotations
 @using Sandbox
 @using Sandbox.Razor
 @using Sandbox.UI
@@ -10,6 +11,12 @@
 	<div class="background" @ref=Background />
 
 	<div class="main">
+
+        <div class="overlay">
+            <label class="gamemode">@Gamemode</label>
+            <label class="map">@MapPackage?.Title</label>
+        </div>
+
         <div class="details">
             <span class="timestamp">
                 <i>history</i>
@@ -25,14 +32,6 @@
                 }
             </div>
         </div>
-
-        <div style="flex-grow: 1;" />
-
-        <div class="overlay">
-            <label class="gamemode">@Gamemode</label>
-            <label class="map">@MapPackage?.Title</label>
-        </div>
-
 	</div>
 </root>
 
@@ -59,6 +58,8 @@
     {
         MapPackage = await Package.FetchAsync( Match.MapIdent, true );
 
+        Gamemode = FindGamemode( Match.Gamemode )?.Title ?? Match.Gamemode;
+
         Background.Style.MaskImage = Texture.Load( Game.Random.FromArray( MapPackage.Screenshots )?.Url );
     }
 
@@ -76,4 +77,17 @@
     {
         UI.ModalSystem.Push( new MatchModal( Match ) );
     }
+
+    TypeDescription FindGamemode( string name )
+	{
+		foreach ( var gamemode in TypeLibrary.GetTypes<Gamemode>().Where( x => !x.IsAbstract && x.HasAttribute<DisplayAttribute>() ) )
+		{
+			if ( gamemode.Name == name || gamemode.Title == name )
+			{
+				return gamemode;
+			}
+		}
+		
+		return null;
+	}
 }

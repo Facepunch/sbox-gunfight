@@ -20,12 +20,11 @@ PackageCard
   {
     flex-grow: 1;
     max-width: 999px;
-    aspect-ratio: 2;
+    aspect-ratio: 3;
     
     .card-image
     {
-      aspect-ratio: 2;
-      
+      aspect-ratio: 3;
     }
   }
 

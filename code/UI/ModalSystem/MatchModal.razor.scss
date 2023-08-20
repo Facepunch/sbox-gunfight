@@ -35,11 +35,44 @@ MatchModal
         }
     }
 
+    .span
+    {
+        gap: 4px;
+        align-items: center;
+        font-size: 18px;
+
+        label
+        {
+            font-family: $main-font-bold;
+        }
+
+        i
+        {
+            font-size: 18px;
+        }
+    }
+
     .subtitle
     {
         text-transform: uppercase;
         font-family: $main-font-bold;
         font-size: 18px;
+    }
+
+    PackageCard, GamemodeCard
+    {
+        pointer-events: all;
+    }
+
+    .row
+    {
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .column
+    {
+        flex-direction: column;
     }
 
     .players
@@ -97,23 +130,6 @@ MatchModal
             .grow
             {
                 flex-grow: 1;
-            }
-
-            .span
-            {
-                gap: 4px;
-                align-items: center;
-                font-size: 18px;
-
-                label
-                {
-                    font-family: $main-font-semibold;
-                }
-
-                i
-                {
-                    font-size: 12px;
-                }
             }
         }
     }

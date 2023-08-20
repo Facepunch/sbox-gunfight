@@ -8,8 +8,41 @@
 <root>
     <div class="main">
         <div class="left">
-            <label class="subtitle bold">@Match.StartTime.ToString( "D" )</label>
-            <label class="subtitle bold">@GetMatchDuration( Match.Duration )</label>
+            <div class="row">
+                <div class="column">
+                    @if ( MapPackage != null )
+                    {
+                        <PackageCard Fill=@false Package=@MapPackage />
+                    }
+                </div>
+
+                <div class="column grow center">
+                    <div class="column grow">
+                        <div class="span">
+                            <i>calendar_today</i>
+                            <label class="subtitle bold">@Match.StartTime.ToString( "D" )</label>
+                        </div>
+
+                        <div class="span">
+                            <i>hourglass_empty</i>
+                            <label class="subtitle bold">@GetMatchDuration( Match.Duration )</label>
+                        </div>
+
+                        <div class="span">
+                            <i>groups</i>
+                            <label class="subtitle bold">@Match.Players.Count</label>
+                        </div>
+
+                        <div class="span">
+                            <i>dns</i>
+                            <label class="subtitle bold">@Match.ServerName</label>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <GamemodeCard GamemodeName=@Match.Gamemode />
+                    </div>
+                </div>
+            </div>
 
             <div style="height: 24px;"/>
 
@@ -46,13 +79,6 @@
                     </div>    
                 }
             </div>
-                
-            <label class="subtitle">Map</label>
-
-            @if ( MapPackage != null )
-            {
-                <PackageCard Fill=@false Package=@MapPackage />
-            }
         </div>
     </div>
 </root>

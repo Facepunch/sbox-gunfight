@@ -67,8 +67,15 @@
 	
 	void Connect( PanelEvent e )
 	{
-		Game.Menu.ConnectToServer( Server.SteamId );
-	}
+		@if ( IsOutdated() )
+        {
+            UI.ModalSystem.Push( new DialogModal(() => Game.Menu.ConnectToServer( Server.SteamId ) ) );
+        }
+        else
+        {
+            Game.Menu.ConnectToServer(Server.SteamId);
+        }
+    }
 
 	protected override void OnAfterTreeRender( bool firstTime )
 	{
@@ -92,4 +99,9 @@
 	{
 		return HashCode.Combine( Server.SteamId );
 	}
+
+    bool IsOutdated()
+    {
+        return Game.Menu.Package.Revision != null && Game.Menu.Package.Revision.VersionId != Server.GameVersion;
+    }
 }

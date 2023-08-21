@@ -1,0 +1,39 @@
+@using Sandbox.UI
+@using Facepunch.Gunfight.UI
+
+@namespace Facepunch.Gunfight.MainMenu
+@inherits BaseModal
+@attribute [StyleSheet]
+
+<root>
+    <div class="main">
+        <div class="title">
+            @Title
+        </div>
+        <div class="question">
+            @Question
+        </div>
+        <div class="options">
+            <ActionButton onclick=@(() => OnYes?.Invoke())>
+                <Title>Yes</Title>
+            </ActionButton>
+
+            <ActionButton onclick=@(() => CloseModal( true ))>
+                <Title>No</Title>
+            </ActionButton>
+        </div>
+    </div>
+</root>
+
+
+@code
+{
+    public Action OnYes { get; set; }
+    public string Title { get; set; } = "WARNING";
+    public string Question { get; set; } = "Are you sure you want to join this server? It's outdated and things will be broken.";
+
+    public DialogModal(Action callback = null)
+    {
+        OnYes = callback;
+    }
+}

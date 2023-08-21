@@ -1,0 +1,154 @@
+﻿@import "/Styles/hud.scss";
+
+DialogModal
+{
+    flex-direction: column;
+
+    .grow
+    {
+        flex-grow: 1;
+    }
+
+    .question
+    {
+
+    }
+
+    .title
+    {
+        font-family: $main-font-bold;
+        font-size: 40px;
+    }
+
+    .options
+    {
+        pointer-events: all;
+        gap: 16px;
+    }
+
+    .main
+    {
+        height: 100%;
+        pointer-events: none;
+        justify-content: center;
+        align-items: center;
+        padding-top: 0;
+        flex-direction: column;
+        gap: 32px;
+
+        .bold
+        {
+            font-family: $main-font-bold;
+        }
+
+        .left, .right
+        {
+            gap: 8px;
+            flex-direction: column;
+        }
+
+        .left
+        {
+            width: 50%;
+        }
+    }
+
+    .span
+    {
+        gap: 4px;
+        align-items: center;
+        font-size: 18px;
+
+        label
+        {
+            font-family: $main-font-bold;
+        }
+
+        i
+        {
+            font-size: 18px;
+        }
+    }
+
+    .subtitle
+    {
+        text-transform: uppercase;
+        font-family: $main-font-bold;
+        font-size: 18px;
+    }
+
+    PackageCard, GamemodeCard
+    {
+        pointer-events: all;
+    }
+
+    .row
+    {
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .column
+    {
+        flex-direction: column;
+    }
+
+    .players
+    {
+        flex-direction: row;
+
+        > .header
+        {
+            padding: 2px;
+            padding-left: 8px;
+            background-color: darken( $main-color, 0.6 );
+            font-size: 14px;
+            font-family: $main-font-bold;
+
+            label
+            {
+                top: 0.5px;
+            }
+        }
+
+        gap: 16px;
+
+        .group
+        {
+            flex-grow: 1;
+            flex-direction: column;
+            background-color: rgba( $main-color, 0.3 );
+
+            &.enemy
+            {
+                background-color: rgba( red, 0.05 );
+            }
+        }
+
+        .row
+        {
+            background-color: rgba( $main-color, 0.05 );
+            font-size: 16px;
+            align-items: center;
+            padding: 8px;
+            gap: 12px;
+
+            &:nth-child(even)
+            {
+                background-color: rgba( black, 0.1 );
+            }
+
+            .avatar
+            {
+                border-radius: 100px;
+                width: 24px;
+                height: 24px;
+            }
+
+            .grow
+            {
+                flex-grow: 1;
+            }
+        }
+    }
+}

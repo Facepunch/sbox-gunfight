@@ -5,7 +5,7 @@
 
 <root>
 	<div class="background" />
-	
+
 	<section class="grow">
 		@Title
 	</section>
@@ -37,71 +37,73 @@
 
 @code
 {
-	public string Title { get; set; }
-	
-	private string _map;
-	private Package MapPackage;
-	
-	public string MapIdent
-	{
-		get => _map;
-		set
-		{
-			_map = value;
-			_ = SyncMap();
-		}
-	}
-	public int Players { get; set; } = 0;
-	public int MaxPlayers { get; set; } = 0;
-	public int Ping { get; set; } = 100;
-	public ulong SteamId { get; set; }
-	
-	public Action OnServerSelected { get; set; }
-	public Sandbox.Services.ServerList.Entry? Server { get; set; }
+    public string Title { get; set; }
 
-	protected override void OnParametersSet()
-	{
-		base.OnParametersSet();
+    private string _map;
+    private Package MapPackage;
 
-		Refresh();
-	}
+    public string MapIdent
+    {
+        get => _map;
+        set
+        {
+            _map = value;
+            _ = SyncMap();
+        }
+    }
+    public int Players { get; set; } = 0;
+    public int MaxPlayers { get; set; } = 0;
+    public int Ping { get; set; } = 100;
+    public ulong SteamId { get; set; }
+    public long GameVersion { get; set; } = 0;
 
-	void Refresh()
-	{
-		if ( Server != null )
-		{
-			var server = Server.Value;
-			
-			Players = server.Players;
-			MaxPlayers = server.MaxPlayers;
-			MapIdent = server.Map;
-			Ping = server.Ping;
-			SteamId = server.SteamId;
-			Title = server.Name;
-		}
-	}
+    public Action OnServerSelected { get; set; }
+    public Sandbox.Services.ServerList.Entry? Server { get; set; }
 
-	string PingIcon
-	{
-		get
-		{
-			if ( Ping < 50 ) return "network_wifi";
-			if ( Ping < 100 ) return "network_wifi_3_bar";
-			if ( Ping < 150 ) return "network_wifi_2_bar";
-			
-			return "network_wifi_1_bar";
-		}
-	}
-	
-	protected override void OnClick( MousePanelEvent e )
-	{
-		OnServerSelected?.Invoke();
-		// Game.Menu.ConnectToServer( SteamId );
-	}
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
 
-	async Task SyncMap()
-	{
-		MapPackage = await Package.Fetch( _map, false );
-		StateHasChanged();
-	}
+        Refresh();
+    }
+
+    void Refresh()
+    {
+        if ( Server != null )
+        {
+            var server = Server.Value;
+
+            Players = server.Players;
+            MaxPlayers = server.MaxPlayers;
+            MapIdent = server.Map;
+            Ping = server.Ping;
+            SteamId = server.SteamId;
+            Title = server.Name;
+            GameVersion = server.GameVersion;
+        }
+    }
+
+    string PingIcon
+    {
+        get
+        {
+            if ( Ping < 50 ) return "network_wifi";
+            if ( Ping < 100 ) return "network_wifi_3_bar";
+            if ( Ping < 150 ) return "network_wifi_2_bar";
+
+            return "network_wifi_1_bar";
+        }
+    }
+
+    protected override void OnClick( MousePanelEvent e )
+    {
+        OnServerSelected?.Invoke();
+        // Game.Menu.ConnectToServer( SteamId );
+    }
+
+    async Task SyncMap()
+    {
+        MapPackage = await Package.Fetch( _map, false );
+        StateHasChanged();
+    }
 }

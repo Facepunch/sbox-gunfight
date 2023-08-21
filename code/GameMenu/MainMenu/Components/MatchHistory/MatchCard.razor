@@ -20,7 +20,7 @@
         <div class="details">
             <span class="timestamp">
                 <i>history</i>
-                <label>@Timestamp</label>
+                <label>@MatchTime</label>
             </span>
 
             <div style="flex-grow: 1;" />
@@ -37,9 +37,10 @@
 
 @code
 {
-    public string Timestamp { get; set; } = "Today at 8:43 PM";
     public string Gamemode { get; set; } = "Free For All";
     public string MapName { get; set; }
+
+    public string MatchTime =>  Match.StartTime.ToString( "d MMMM yy, h tt" );
 
     public Progression.MatchHistory.Match Match { get; set; }
 

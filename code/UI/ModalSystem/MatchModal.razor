@@ -62,22 +62,22 @@
 
                                 <div class="span">
                                     <i>chart-simple</i>
-                                    <label>@player.Data["score"]</label>
+                                    <label>@GetData( player, "score", 0 )</label>
                                 </div>
 
                                 <div class="span">
                                     <i>person-rifle</i>
-                                    <label>@player.Data["kills"]</label>
+                                    <label>@GetData( player, "kills", 0 )</label>
                                 </div>
 
                                 <div class="span">
                                     <i>handshake-angle</i>
-                                    <label>@player.Data["assists"]</label>
+                                    <label>@GetData( player, "assists", 0 )</label>
                                 </div>
 
                                 <div class="span">
                                     <i>skull-crossbones</i>
-                                    <label>@player.Data["deaths"]</label>
+                                    <label>@GetData( player, "deaths", 0 )</label>
                                 </div>
                             </div>
                         }
@@ -94,6 +94,16 @@
     public Progression.MatchHistory.Match Match { get; set; }
 
     Package MapPackage { get; set; }
+
+    public object GetData( Progression.MatchHistory.MatchPlayer player, string key, object defaultValue )
+    {
+        if ( player.Data.TryGetValue( key, out var value ) )
+        {
+            return value;
+        }
+
+        return defaultValue;
+    }
 
     public MatchModal( Progression.MatchHistory.Match match )
     {

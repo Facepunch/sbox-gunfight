@@ -40,12 +40,22 @@
 		<div style="flex-grow: 1;"/>
 
 		<div class="footer">
+            <ActionButton class="small @(IsOutdated() ? "invalid" : "")">
+				<Title>
+                    Game Version
+				</Title>
+				<Extra>
+                    <i>code-commit</i>
+                    <label>@Server.GameVersion</label>
+				</Extra>
+			</ActionButton>
+
 			<ActionButton onclick=@Connect>
 				<Title>
 					Join Server
 				</Title>
 				<Extra>
-					<i>login</i>
+                    <i>right-to-bracket</i>
 				</Extra>
 			</ActionButton>
 		</div>

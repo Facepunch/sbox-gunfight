@@ -2,84 +2,94 @@
 
 GameServerFrame
 {
-  flex-grow: 1;
-  width: 100%;
-  height: 100%;
-
-  .notification
-  {
+    flex-grow: 1;
     width: 100%;
     height: 100%;
-    text-align: center;
-    align-items: center;
-    font-size: 16px;
-    font-family: $main-font-bold;
-  }
 
-  .server-frame
-  {
-    width: 100%;
-    height: 100%;
-    padding: 24px;
-    padding-bottom: 0;
-    gap: 32px;
-    
-    flex-direction: column;
-    
-    .header
+    .notification
     {
-      gap: 16px;
-      
-      .thumb
-      {
-        width: 64px;
-        height: 64px;
-      }
-      
-      >.column
-      {
-        > .server-name
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        align-items: center;
+        font-size: 16px;
+        font-family: $main-font-bold;
+    }
+
+    .server-frame
+    {
+        width: 100%;
+        height: 100%;
+        padding: 24px;
+        padding-bottom: 0;
+        gap: 32px;
+        flex-direction: column;
+
+        .header
         {
-          font-size: 28px;
-          text-shadow: 5px 5px 2px rgba( black, 0.5 );
-          font-family: $main-font-bold;
+            gap: 16px;
+
+            .thumb
+            {
+                width: 64px;
+                height: 64px;
+            }
+
+            > .column
+            {
+                > .server-name
+                {
+                    font-size: 28px;
+                    text-shadow: 5px 5px 2px rgba( black, 0.5 );
+                    font-family: $main-font-bold;
+                }
+
+                > .map-name
+                {
+                    font-size: 24px;
+                    text-shadow: 5px 5px 2px rgba( black, 0.5 );
+                    font-family: $main-font-semibold;
+                }
+            }
         }
 
-        > .map-name
+        > .footer
         {
-          font-size: 24px;
-          text-shadow: 5px 5px 2px rgba( black, 0.5 );
-          font-family: $main-font-semibold;
+            flex-direction: column;
+            justify-content: center;
+
+            ActionButton
+            {
+                width: 100%;
+
+                &.invalid
+                {
+                    color: orange;
+                }
+            }
         }
-      }
+
+        > .map-background
+        {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            mask-image: linear-gradient( to bottom, black, white, black );
+        }
     }
 
-    > .footer
+    > .background
     {
-      justify-content: center;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        mask-mode: luminance;
+        background-color: rgba( 10, 10, 10, 1 );
+        opacity: 0.4;
+        mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
     }
-    
-    >.map-background 
-    {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      mask-image: linear-gradient( to bottom, black, white, black );
-    }
-  }
-
-  > .background
-  {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    mask-mode: luminance;
-    background-color: rgba( 10, 10, 10, 1 );
-    opacity: 0.4;
-    mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
-  }
 }

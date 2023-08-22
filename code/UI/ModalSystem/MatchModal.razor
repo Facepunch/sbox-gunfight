@@ -1,4 +1,5 @@
 @using Sandbox.UI
+@using System.Text.Json
 @using Facepunch.Gunfight.UI
 
 @namespace Facepunch.Gunfight.MainMenu
@@ -52,7 +53,7 @@
                 @foreach ( var group in Match.Players.GroupBy( x => x.Team ) )
                 {
                     <div class="group @GetGroupClass( group.Key )">
-                        @foreach ( var player in group )
+                        @foreach ( var player in group.OrderByDescending( x => GetData( x, "score", 0 ) ) )
                         {
                             <div class="row">
                                 <img class="avatar" src="avatar:@player.SteamId" />
@@ -95,11 +96,16 @@
 
     Package MapPackage { get; set; }
 
-    public object GetData( Progression.MatchHistory.MatchPlayer player, string key, object defaultValue )
+    public T GetData<T>( Progression.MatchHistory.MatchPlayer player, string key, T defaultValue )
     {
         if ( player.Data.TryGetValue( key, out var value ) )
         {
-            return value;
+            if ( value is JsonElement element )
+            {
+                return (T)element.Deserialize(typeof(T));
+            }
+
+            return (T)value;
         }
 
         return defaultValue;

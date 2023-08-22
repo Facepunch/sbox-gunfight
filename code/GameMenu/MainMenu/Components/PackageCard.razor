@@ -26,7 +26,7 @@
             if (Package.Usage.UsersNow > 0)
             {
                 <div class="card-decorator-users" tooltip="This many users are playing now">
-                    <i>sports_esports</i>
+                    <i>gamepad</i>
                     <span> @Package.Usage.UsersNow.KiloFormat() </span>
                 </div>
             }
@@ -38,7 +38,7 @@
             <div class="body-meta">
                 @if (Package.Interaction.Used)
                 {
-                    <div tooltip="Amount of hours you've played"><i>alarm</i> @FormatHoursPlayed()</div>
+                    <div tooltip="Amount of hours you've played"><i>clock</i> @FormatHoursPlayed()</div>
                 }
             </div>
         </div>

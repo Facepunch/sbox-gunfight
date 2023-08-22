@@ -58,7 +58,7 @@
                             @if ( MatchScores.ContainsKey( $"{group.Key}" ) )
                             {
                                 <div class="row header">
-                                    <label>@group.Key</label>
+                                    <label style="text-transform: uppercase;">@TeamSystem.GetTeamName( group.Key )</label>
                                     <div class="grow" />
                                     <label class="score">@MatchScores[$"{group.Key}"]</label>
                                 </div>

@@ -135,12 +135,14 @@ GameLobbyPage
         .owner
         {
           color: gold;
+          font-size: 16px;
         }
         
         > img
         {
-          height: 32px;
-          width: 32px;
+            border-radius: 100px;
+            height: 32px;
+            width: 32px;
         }
       }
     }

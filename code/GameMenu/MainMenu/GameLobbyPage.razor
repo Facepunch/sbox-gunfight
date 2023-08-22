@@ -51,7 +51,7 @@
 			<ExpandWidget>
 				<Title>Game Mode</Title>
 				<Body>
-				<GamemodeCard GamemodeName=@ModeName/>
+				<GamemodeCard class="no-click" GamemodeName=@ModeName/>
 				</Body>
 			</ExpandWidget>
 			
@@ -94,7 +94,7 @@
 
 							@if ( Lobby.Owner.Id == member.Id )
 							{
-								<i class="owner">wifi</i>
+								<i class="owner">server</i>
 							}
 							else
 							{

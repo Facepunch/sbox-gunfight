@@ -53,30 +53,47 @@
                 @foreach ( var group in Match.Players.GroupBy( x => x.Team ) )
                 {
                     <div class="group @GetGroupClass( group.Key )">
+                        @if ( MatchScores != null )
+                        {
+                            @if ( MatchScores.ContainsKey( $"{group.Key}" ) )
+                            {
+                                <div class="row header">
+                                    <label>@group.Key</label>
+                                    <div class="grow" />
+                                    <label class="score">@MatchScores[$"{group.Key}"]</label>
+                                </div>
+                            }
+                        }
+
                         @foreach ( var player in group.OrderByDescending( x => GetData( x, "score", 0 ) ) )
                         {
                             <div class="row">
                                 <img class="avatar" src="avatar:@player.SteamId" />
-                                <label>@GetPlayerName( player.SteamId )</label>
+
+                                <div class="span">
+                                    <i class="level">chess-rook</i>
+                                    <label>@GetData( player, "level", 0 )</label>
+                                    <label>@GetPlayerName( player.SteamId )</label>
+                                </div>
 
                                 <div class="grow" />
 
-                                <div class="span">
+                                <div class="span bold">
                                     <i>chart-simple</i>
                                     <label>@GetData( player, "score", 0 )</label>
                                 </div>
 
-                                <div class="span">
+                                <div class="span bold">
                                     <i>person-rifle</i>
                                     <label>@GetData( player, "kills", 0 )</label>
                                 </div>
 
-                                <div class="span">
+                                <div class="span bold">
                                     <i>handshake-angle</i>
                                     <label>@GetData( player, "assists", 0 )</label>
                                 </div>
 
-                                <div class="span">
+                                <div class="span bold">
                                     <i>skull-crossbones</i>
                                     <label>@GetData( player, "deaths", 0 )</label>
                                 </div>
@@ -96,9 +113,26 @@
 
     Package MapPackage { get; set; }
 
+    Dictionary<string, int> MatchScores => GetData( "scores", new Dictionary<string, int>() );
+
     public T GetData<T>( Progression.MatchHistory.MatchPlayer player, string key, T defaultValue )
     {
         if ( player.Data.TryGetValue( key, out var value ) )
+        {
+            if ( value is JsonElement element )
+            {
+                return (T)element.Deserialize(typeof(T));
+            }
+
+            return (T)value;
+        }
+
+        return defaultValue;
+    }
+
+    public T GetData<T>( string key, T defaultValue )
+    {
+        if ( Match.Data.TryGetValue( key, out var value ) )
         {
             if ( value is JsonElement element )
             {

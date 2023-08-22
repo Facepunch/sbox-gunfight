@@ -35,23 +35,6 @@ MatchModal
         }
     }
 
-    .span
-    {
-        gap: 4px;
-        align-items: center;
-        font-size: 18px;
-
-        label
-        {
-            font-family: $main-font-bold;
-        }
-
-        i
-        {
-            font-size: 18px;
-        }
-    }
-
     .subtitle
     {
         text-transform: uppercase;
@@ -131,6 +114,51 @@ MatchModal
             {
                 flex-grow: 1;
             }
+
+            &.header
+            {
+                height: 30px;
+                font-family: $main-font-bold;
+                background-image: linear-gradient( to left, rgba( black, 0.75 ), rgba( black, 0.5 ) );
+                color: white;
+
+                > *
+                {
+                    top: 1px;
+                }
+
+                > .score
+                {
+                    font-size: 24px;
+                }
+            }
+        }
+    }
+
+
+    .span
+    {
+        gap: 4px;
+        align-items: center;
+
+        &.bold
+        {
+            font-size: 18px;
+
+            label
+            {
+                font-family: $main-font-bold;
+            }
+
+            i
+            {
+                font-size: 18px;
+            }
+        }
+
+        .level
+        {
+            color: gold;
         }
     }
 }

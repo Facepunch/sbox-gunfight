@@ -21,7 +21,7 @@
         Instance = this;
     }
 
-    public void Add( INotification notif )
+    public new void Add( INotification notif )
     {
         if ( notif is not Panel pnl )
             return;

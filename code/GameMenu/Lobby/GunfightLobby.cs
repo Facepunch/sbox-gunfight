@@ -40,7 +40,12 @@ public partial class GunfightLobby : IValid
 	{
 		return a?._lobby != b?._lobby;
 	}
-	
+
+	public override int GetHashCode()
+	{
+		return _lobby.GetHashCode();
+	}
+
 	public void Tick()
 	{
 		if ( _lobby == null )

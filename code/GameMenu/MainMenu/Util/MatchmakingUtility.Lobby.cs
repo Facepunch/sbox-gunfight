@@ -26,7 +26,7 @@ public partial class MatchmakingSystem
 	}
 	
 	// Try to find a lobby based on a gamemode string and map list
-	public static async Task<ILobby?> FindLobby( string gamemode = null, string[] maps = null, int reservedSlots = 1 )
+	public static async Task<ILobby> FindLobby( string gamemode = null, string[] maps = null, int reservedSlots = 1 )
 	{
 		await Game.Menu.QueryLobbiesAsync( null, reservedSlots );
 

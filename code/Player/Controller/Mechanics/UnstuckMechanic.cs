@@ -21,7 +21,7 @@ public partial class UnstuckMechanic : BaseMoveMechanic
 			return false;
 		}
 
-		if ( BasePlayerController.Debug )
+		if ( PlayerController.Debug )
 		{
 			DebugOverlay.Text( $"[stuck in {result.Entity}]", Controller.Position, Color.Red );
 			Box( result.Entity, Color.Red );
@@ -46,7 +46,7 @@ public partial class UnstuckMechanic : BaseMoveMechanic
 
 			if ( !result.StartedSolid )
 			{
-				if ( BasePlayerController.Debug )
+				if ( PlayerController.Debug )
 				{
 					DebugOverlay.Text( $"unstuck after {_stuckTries} tries ({_stuckTries * AttemptsPerTick} tests)", Controller.Position, Color.Green, 5.0f );
 					DebugOverlay.Line( pos, Controller.Position, Color.Green, 5.0f, false );
@@ -57,7 +57,7 @@ public partial class UnstuckMechanic : BaseMoveMechanic
 			}
 			else
 			{
-				if ( BasePlayerController.Debug )
+				if ( PlayerController.Debug )
 				{
 					DebugOverlay.Line( pos, Controller.Position, Color.Yellow, 0.5f, false );
 				}

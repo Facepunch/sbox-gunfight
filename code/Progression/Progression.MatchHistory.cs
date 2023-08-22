@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Facepunch.Gunfight.UI;
+using System;
 
 namespace Facepunch.Gunfight;
 
@@ -90,7 +91,8 @@ public partial class Progression
 						{ "kills", cl.GetInt( "frags" ) },
 						{ "deaths", cl.GetInt( "deaths" ) },
 						{ "assists", cl.GetInt( "assists" ) },
-						{ "score", cl.GetInt( "score" ) }
+						{ "score", cl.GetInt( "score" ) },
+						{ "level", cl.Components.GetOrCreate<PlayerLevelComponent>()?.Level ?? 0 }
 					}
 				} );
 			}

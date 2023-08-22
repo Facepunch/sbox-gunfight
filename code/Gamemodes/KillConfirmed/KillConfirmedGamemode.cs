@@ -140,9 +140,10 @@ public partial class KillConfirmedGamemode : Gamemode
 			TimeUntilNextState = RoundLength;
 		else if ( after == GameState.GameWon )
 		{
+			Progression.MatchHistory.Record();
+
 			TimeUntilNextState = GameWonLength;
 			ShowWinningTeam( To.Everyone, WinningTeam );
-			Progression.MatchHistory.Record();
 		}
 
 		Event.Run( "gunfight.gamestate.changed", before, after );

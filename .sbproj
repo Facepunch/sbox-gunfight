@@ -450,6 +450,26 @@
         "Addons": "",
         "PreLaunchCommand": "",
         "PostLaunchCommand": "gunfight_gamemode KillConfirmedGamemode;bot_add true;bot_add true;bot_add true;"
+      },
+      {
+        "Name": "FFA Short - Motel",
+        "GameIdent": "facepunch.gunfight#local",
+        "MapName": "gkaf.motel",
+        "MaxPlayers": 16,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": "gunfight_gamemode FFAGamemode;gunfight_ffa_max_score 5"
+      },
+      {
+        "Name": "KC Short - Motel",
+        "GameIdent": "facepunch.gunfight#local",
+        "MapName": "gkaf.motel",
+        "MaxPlayers": 16,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": "gunfight_gamemode KillConfirmedGamemode;;gunfight_kc_max_score 5"
       }
     ]
   }

@@ -64,8 +64,13 @@ public partial class Progression
 		}
 
 		[ClientRpc]
-		[ConCmd.Client( "gunfight_progression_matchhistory" )]
 		internal static void RpcRecord()
+		{
+			Record();
+		}
+
+		[ConCmd.Client( "gunfight_progression_matchhistory" )]
+		internal static void CmdRecord()
 		{
 			Record();
 		}
@@ -84,7 +89,8 @@ public partial class Progression
 					{
 						{ "kills", cl.GetInt( "frags" ) },
 						{ "deaths", cl.GetInt( "deaths" ) },
-						{ "assists", cl.GetInt( "assists" ) }
+						{ "assists", cl.GetInt( "assists" ) },
+						{ "score", cl.GetInt( "score" ) }
 					}
 				} );
 			}
@@ -96,7 +102,16 @@ public partial class Progression
 		{
 			var dict = new Dictionary<string, object>();
 
-			// TODO - Populate
+			// Fetch scores
+			var scoresDict = new Dictionary<Team, int>();
+			var gamemode = GamemodeSystem.Current;
+
+			foreach ( var team in gamemode.TeamSetup )
+			{
+				scoresDict[team] = gamemode.Scores.GetScore( team );
+			}
+
+			dict.Add( "scores", scoresDict );
 
 			return dict;
 		}

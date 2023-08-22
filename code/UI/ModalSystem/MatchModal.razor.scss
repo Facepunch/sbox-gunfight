@@ -138,12 +138,13 @@ MatchModal
 
     .span
     {
-        gap: 4px;
+        gap: 8px;
         align-items: center;
+        font-family: $main-font-semibold;
 
         &.bold
         {
-            font-size: 18px;
+            font-size: 15px;
 
             label
             {

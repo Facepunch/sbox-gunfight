@@ -35,12 +35,12 @@
 			</div>
 		</div>
 
-		<GamemodeCard GamemodeName=@ModeName/>
+		<GamemodeCard class="no-click" GamemodeName=@ModeName/>
 
 		<div style="flex-grow: 1;"/>
 
 		<div class="footer">
-            <ActionButton class="small @(IsOutdated() ? "invalid" : "")">
+            <ActionButton class="small no-click @(IsOutdated() ? "invalid" : "")">
 				<Title>
                     Game Version
 				</Title>

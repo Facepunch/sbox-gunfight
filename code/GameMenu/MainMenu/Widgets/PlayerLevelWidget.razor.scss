@@ -54,4 +54,6 @@ PlayerLevelWidget
         opacity: 0.5;
         mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
     }
+
+    pointer-events: none;
 }

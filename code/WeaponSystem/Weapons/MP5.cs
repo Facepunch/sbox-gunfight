@@ -22,6 +22,7 @@ public partial class MP5 : GunfightWeapon
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;
 		ViewModelEntity.EnableViewmodelRendering = true;
+		//ViewModelEntity.SetModel( "models/weapons/sbox_smg_mp5/v_mp5.vmdl" );
 		ViewModelEntity.Model = MP5ViewModel;
 
 		var arms = new AnimatedEntity( "models/first_person/first_person_arms.vmdl" );
@@ -30,6 +31,14 @@ public partial class MP5 : GunfightWeapon
 
 		return ViewModelEntity;
 	}
+
+	int FiringModeParameter => CurrentFireMode switch
+	{
+		FireMode.Semi => 1,
+		FireMode.FullAuto => 3,
+		FireMode.Burst => 2,
+		_ => 0
+	};
 
 	public override void Simulate( IClient cl )
 	{
@@ -48,5 +57,7 @@ public partial class MP5 : GunfightWeapon
 			ViewModelEntity?.SetAnimParameter( "ironsights", 0 );
 			ViewModelEntity?.SetAnimParameter( "ironsights_fire_scale", 0.5f );
 		}
+
+		ViewModelEntity?.SetAnimParameter( "firing_mode", FiringModeParameter );
 	}
 }

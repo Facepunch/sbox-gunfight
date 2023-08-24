@@ -35,9 +35,10 @@ public partial class MP5 : GunfightWeapon
 	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
-		
-		(Owner as AnimatedEntity)?.SetAnimParameter( "attack_hold", IsTriggerHeld ? 1f : 0f );
-		ViewModelEntity?.SetAnimParameter( "attack_hold", IsTriggerHeld ? 1f : 0f );
+
+		var held = AmmoClip > 0 && IsTriggerHeld;
+		(Owner as AnimatedEntity)?.SetAnimParameter( "attack_hold", held ? 1f : 0f );
+		ViewModelEntity?.SetAnimParameter( "attack_hold", held ? 1f : 0f );
 
 		if ( (Owner as GunfightPlayer)?.IsAiming ?? false )
 		{

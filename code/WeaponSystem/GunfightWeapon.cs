@@ -753,6 +753,9 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	public virtual void DryFire()
 	{
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack_dry", true );
+		ViewModelEntity?.SetAnimParameter( "b_attack_dry", true );
+
 		Owner?.PlaySound( WeaponDefinition.DryFireSound );
 	}
 

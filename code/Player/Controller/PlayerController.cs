@@ -630,6 +630,9 @@ public partial class PlayerController : PawnController
 		Velocity -= new Vector3( 0, 0, Gravity * 0.5f ) * Time.Delta;
 		
 		Pawn.PlaySound( "sounds/player/foley/gear/player.jump.gear.sound" );
+
+		Weapon?.ViewModelEntity?.SetAnimParameter( "b_jump", true );
+
 		AddEvent( "jump" );
 	}
 

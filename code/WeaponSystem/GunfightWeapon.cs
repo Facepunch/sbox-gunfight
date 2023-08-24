@@ -450,7 +450,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( GamemodeSystem.Current?.AllowMovement == false ) return false;
 		
 		if ( TimeSinceDeployed < 0.2f ) return false;
-		if ( !PlayerController?.AimFireDelay ?? false ) return false;
+		//if ( !PlayerController?.AimFireDelay ?? false ) return false;
 		//if ( PlayerController.Slide.IsActive ) return false;
 		if ( IsSprinting ) return false;
 		if ( IsReloading ) return false;

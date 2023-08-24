@@ -6,6 +6,7 @@
   "Model": "models/m1911/w_m1911.vmdl",
   "ViewModel": "models/m1911/fp_m1911.vmdl",
   "Icon": "models/m1911/w_m1911.vmdl.png",
+  "HolsterTime": 0,
   "BaseFireRate": 0.17,
   "DefaultFireMode": "FullAuto",
   "DamageFlags": [

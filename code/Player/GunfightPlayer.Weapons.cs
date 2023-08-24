@@ -14,6 +14,8 @@ public partial class GunfightPlayer
 	/// <returns></returns>
 	public bool CanChangeWeapon( IClient cl )
 	{
+		if ( IsHolstering ) return false;
+
 		var wpn = CurrentWeapon;
 		if ( wpn != null )
 		{
@@ -39,10 +41,25 @@ public partial class GunfightPlayer
 			QueuedActiveChild = ActiveChildInput;
 		}
 
+		// Start the holstering procedure
 		if ( QueuedActiveChild.IsValid() && CanChangeWeapon( cl ) )
 		{
-			ActiveChild = QueuedActiveChild;
-			QueuedActiveChild = null;
+			// Perform holster on weapon
+			IsHolstering = true;
+			var wpn = ActiveChild as GunfightWeapon;
+
+			TimeUntilHolstered = wpn.HolsterTime;
+			wpn?.Holster();
+		}
+
+		if ( IsHolstering )
+		{
+			if ( TimeUntilHolstered )
+			{
+				IsHolstering = false;
+				ActiveChild = QueuedActiveChild;
+				QueuedActiveChild = null;
+			}
 		}
 
 		// Run this after everything, as we could've changed ActiveChild above

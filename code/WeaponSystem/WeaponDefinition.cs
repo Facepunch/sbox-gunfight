@@ -115,6 +115,9 @@ public partial class WeaponDefinition : GameResource
 	[Category( "Setup" ), ResourceType( "jpg" )]
 	public string Icon { get; set; }
 
+	[Category( "Setup" )]
+	public float HolsterTime { get; set; } = 0.5f;
+
 	[Category( "Shooting" )]
 	public float BaseFireRate { get; set; } = 1f;
 

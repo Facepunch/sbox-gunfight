@@ -2,6 +2,9 @@ namespace Facepunch.Gunfight;
 
 public partial class GunfightPlayer
 {
+	[Net, Predicted] public bool IsHolstering { get; set; } = false;
+	[Net, Predicted] public TimeUntil TimeUntilHolstered { get; set; } = -1;
+
 	protected int GetSlotIndexFromInput( string action )
 	{
 		return action switch

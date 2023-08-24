@@ -37,6 +37,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public bool IsLowAmmo() => (AmmoClip / (float)ClipSize) <= LowAmmoFraction;
 	public bool IsUnlimitedAmmo() => AmmoClip == 0 && ClipSize == 0;
 
+	public float HolsterTime => WeaponDefinition?.HolsterTime ?? 0.5f;
 	public new string Name => WeaponDefinition?.WeaponName ?? base.Name;
 	public string ShortName => WeaponDefinition.WeaponShortName;
 	public bool IsSprinting => PlayerController?.IsSprinting ?? false;
@@ -135,6 +136,21 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		};
 
 		ViewModelEntity?.SetAnimParameter( "firing_mode", firingModeParameter );
+	}
+
+	[ClientRpc]
+	protected virtual void RpcHolster()
+	{
+		//Log.Info( $"{Host.Name} Holster {ViewModelEntity}" );
+		ViewModelEntity?.SetAnimParameter( "b_holster", true );
+	}
+
+	public void Holster()
+	{
+		if ( Game.IsServer )
+		{
+			RpcHolster( To.Single( Owner ) );
+		}
 	}
 
 	public int AvailableAmmo()
@@ -429,6 +445,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	protected bool CanDefaultPrimaryAttack()
 	{
+		if ( Player.IsHolstering ) return false;
+
 		if ( GamemodeSystem.Current?.AllowMovement == false ) return false;
 		
 		if ( TimeSinceDeployed < 0.2f ) return false;

@@ -6,6 +6,7 @@
   "Model": "models/mp5/w_mp5.vmdl",
   "ViewModel": "models/mp5/fp_mp5.vmdl",
   "Icon": "models/mp5/w_mp5.vmdl.png",
+  "HolsterTime": 1,
   "BaseFireRate": 0.09,
   "DefaultFireMode": "FullAuto",
   "DamageFlags": [

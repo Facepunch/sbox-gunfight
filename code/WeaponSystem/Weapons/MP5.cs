@@ -41,8 +41,6 @@ public partial class MP5 : GunfightWeapon
 		(Owner as AnimatedEntity)?.SetAnimParameter( "attack_hold", held );
 		ViewModelEntity?.SetAnimParameter( "attack_hold", held );
 
-		Log.Info( held );
-
 		if ( (Owner as GunfightPlayer)?.IsAiming ?? false )
 		{
 			ViewModelEntity?.SetAnimParameter( "ironsights", 1 );

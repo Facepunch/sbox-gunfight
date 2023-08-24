@@ -32,14 +32,6 @@ public partial class MP5 : GunfightWeapon
 		return ViewModelEntity;
 	}
 
-	int FiringModeParameter => CurrentFireMode switch
-	{
-		FireMode.Semi => 1,
-		FireMode.FullAuto => 3,
-		FireMode.Burst => 2,
-		_ => 0
-	};
-
 	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
@@ -57,7 +49,5 @@ public partial class MP5 : GunfightWeapon
 			ViewModelEntity?.SetAnimParameter( "ironsights", 0 );
 			ViewModelEntity?.SetAnimParameter( "ironsights_fire_scale", 0.5f );
 		}
-
-		ViewModelEntity?.SetAnimParameter( "firing_mode", FiringModeParameter );
 	}
 }

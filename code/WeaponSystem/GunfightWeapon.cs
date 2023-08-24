@@ -14,7 +14,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	[Net, Predicted] public int AmmoClip { get; set; }
 	[Net, Predicted] public TimeSince TimeSinceReload { get; set; }
 	[Net, Predicted] public bool IsReloading { get; set; }
-	[Net, Predicted] public TimeSince TimeSinceDeployed { get; set; }
+	public TimeSince TimeSinceDeployed { get; set; }
 	[Net, Predicted] public TimeSince TimeSincePrimaryAttack { get; set; }
 	[Net, Predicted] protected int BurstCount { get; set; } = 0;
 	[Net, Change( "FireModeChanged" )] public FireMode CurrentFireMode { get; set; } = FireMode.Semi;
@@ -119,6 +119,22 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		{
 			UI.NotificationManager.AddNotification( To.Single( Owner ), UI.NotificationDockType.BottomMiddle, $"Fire Mode: {CurrentFireMode}", 1 );
 		}
+
+		RpcCycleFireModeEffect();
+	}
+
+	[ClientRpc]
+	void RpcCycleFireModeEffect()
+	{
+		int firingModeParameter = CurrentFireMode switch
+		{
+			FireMode.Semi => 3,
+			FireMode.FullAuto => 2,
+			FireMode.Burst => 1,
+			_ => 0
+		};
+
+		ViewModelEntity?.SetAnimParameter( "firing_mode", firingModeParameter );
 	}
 
 	public int AvailableAmmo()
@@ -147,6 +163,18 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		Sound.FromEntity( "sounds/guns/switch/weapon_switch.sound", ent );
 		
 		EjectBrass = Cloud.ParticleSystem( "https://asset.party/facepunch/9mm_ejectbrass" );
+
+		if ( Game.IsClient )
+		{
+			DeployAsync();
+		}
+	}
+
+	async void DeployAsync()
+	{
+		ViewModelEntity?.SetAnimParameter( "b_deploy", true );
+		await Task.Delay( 100 );
+		ViewModelEntity?.SetAnimParameter( "b_deploy", false );
 	}
 
 	public override void Spawn()

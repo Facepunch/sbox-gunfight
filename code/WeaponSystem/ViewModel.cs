@@ -107,8 +107,12 @@ public partial class ViewModel : BaseViewModel
 
 		var isGrounded = Owner.GroundEntity != null;
 		var weapon = Weapon as GunfightWeapon;
-		var speed = Owner.Velocity.Length.LerpInverse( 0, 750 );
-		var sideSpeed = Owner.Velocity.Length.LerpInverse( 0, 350 );
+		var velLen = Owner.Velocity.Length;
+		var speed = velLen.LerpInverse( 0, 750 );
+
+		SetAnimParameter( "move_groundspeed", velLen );
+
+		var sideSpeed = velLen.LerpInverse( 0, 350 );
 		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -250, 700 );
 		var left = Camera.Rotation.Left;
 		var up = Camera.Rotation.Up;

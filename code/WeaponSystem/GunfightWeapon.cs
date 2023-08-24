@@ -333,6 +333,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		Player.LookInput = viewAngles;
 	}
 
+	[Net, Predicted] public TimeSince TimeSinceStartFiring { get; set; }
+
 	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
@@ -381,6 +383,11 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( !Owner.IsValid() )
 			return;
 		
+		if ( !Input.Down( "Attack1" ) )
+		{
+			TimeSinceStartFiring = 0;
+		}
+
 		if ( CanPrimaryAttack() )
 		{
 			TimeSincePrimaryAttack = 0;

@@ -36,9 +36,12 @@ public partial class MP5 : GunfightWeapon
 	{
 		base.Simulate( cl );
 
-		var held = AmmoClip > 0 && IsTriggerHeld;
-		(Owner as AnimatedEntity)?.SetAnimParameter( "attack_hold", held ? 1f : 0f );
-		ViewModelEntity?.SetAnimParameter( "attack_hold", held ? 1f : 0f );
+		var held = AmmoClip > 0 && IsTriggerHeld ? TimeSinceStartFiring : 0;
+		
+		(Owner as AnimatedEntity)?.SetAnimParameter( "attack_hold", held );
+		ViewModelEntity?.SetAnimParameter( "attack_hold", held );
+
+		Log.Info( held );
 
 		if ( (Owner as GunfightPlayer)?.IsAiming ?? false )
 		{

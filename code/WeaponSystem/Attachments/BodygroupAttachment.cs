@@ -48,7 +48,7 @@ public partial class BodygroupAttachment : WeaponAttachmentComponent
 	{
 		foreach ( var kv in Bodygroups )
 		{
-			Entity.SetBodyGroup( kv.Key, 0 );
+			Entity?.SetBodyGroup( kv.Key, 0 );
 		}
 	}
 }

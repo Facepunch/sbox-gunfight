@@ -192,7 +192,10 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		foreach ( var attachment in Attachments )
 		{
-			attachment.Enabled = true;
+			if ( attachment.IsSupported( this ) )
+			{
+				attachment.Enabled = true;
+			}
 		}
 	}
 
@@ -240,7 +243,10 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	{
 		foreach ( var attachment in Attachments )
 		{
-			attachment.SetupViewModel( ViewModelEntity );
+			if ( attachment.IsSupported( this ) )
+			{
+				attachment.SetupViewModel( ViewModelEntity );
+			}
 		}
 	}
 

@@ -3,7 +3,7 @@
 namespace Facepunch.Gunfight;
 
 [Library( "usp_sd" )]
-public partial class USPSuppressorttachment : BodygroupAttachment
+public partial class USPSuppressorAttachment : BodygroupAttachment
 {
 	public override string ForWeapon => "usp";
 
@@ -31,6 +31,7 @@ public partial class USPSuppressorttachment : BodygroupAttachment
 
 		if ( !Entity.HasAttachment( "usp_rmr" ) )
 		{
+			// Raised Ironsights to compensate for Suppressor
 			vm.SetBodyGroup( 4, 1 );
 		}
 	}

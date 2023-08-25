@@ -41,8 +41,8 @@ public abstract class WeaponAttachmentComponent : EntityComponent<GunfightWeapon
 	{
 		if ( !IsSupported( Entity ) )
 		{
-			// Cya
-			Remove();
+			Enabled = false;
+			return;
 		}
 
 		if ( Game.IsClient && Entity.ViewModelEntity.IsValid() )

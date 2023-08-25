@@ -4,6 +4,11 @@ public partial class GunfightWeapon
 {
 	public WeaponAttachmentComponent[] Attachments => Components.GetAll<WeaponAttachmentComponent>( true ).OrderByDescending( x => x.Priority ).ToArray();
 
+	/// <summary>
+	/// Give / Take an attachment off this weapon
+	/// </summary>
+	/// <param name="identifier"></param>
+	/// <param name="active"></param>
 	public void SetAttachment( string identifier, bool active )
 	{
 		var desc = TypeLibrary.GetType( identifier );
@@ -32,7 +37,7 @@ public partial class GunfightWeapon
 	}
 
 	/// <summary>
-	/// Do we ahve this attachment?
+	/// Do we have this attachment?
 	/// </summary>
 	/// <param name="identifier"></param>
 	/// <returns></returns>

@@ -1,6 +1,6 @@
 namespace Facepunch.Gunfight;
 
-public partial class WeaponAttachmentComponent : EntityComponent<GunfightWeapon>
+public abstract class WeaponAttachmentComponent : EntityComponent<GunfightWeapon>
 {
 	/// <summary>
 	///  A list of required attachments to be able to attach this component to a weapon

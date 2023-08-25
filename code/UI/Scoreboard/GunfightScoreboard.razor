@@ -39,10 +39,14 @@
         Canvases.DeleteChildren();
     }
 
+    [GameEvent.Client.BuildInput]
+    protected void BuildInput()
+    {
+        SetClass( "open", Input.Down( "score" ) );
+    }
+
     public override void Tick()
     {
-        SetClass( "open", Input.Down( "Score" ) );
-
         if ( !IsVisible )
             return;
 

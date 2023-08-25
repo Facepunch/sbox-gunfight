@@ -78,6 +78,7 @@
     }
 
     int hash;
+    bool usingController = false;
     public override void Tick()
     {
         if ( string.IsNullOrWhiteSpace( Button ) ) return;
@@ -87,5 +88,12 @@
             hash = Button.GetHashCode();
             SetButton( Button );
         }
+
+        if ( usingController != Input.UsingController )
+        {
+            SetButton( Button );
+        }
+
+        usingController = Input.UsingController;
     }
 }

@@ -300,12 +300,6 @@
           "GroupName": "Inventory"
         },
         {
-          "Name": "Slot3",
-          "KeyboardCode": "3",
-          "GamepadCode": "DpadSouth",
-          "GroupName": "Inventory"
-        },
-        {
           "Name": "Slot4",
           "KeyboardCode": "4",
           "GroupName": "Inventory"
@@ -355,7 +349,6 @@
         {
           "Name": "View",
           "KeyboardCode": "C",
-          "GamepadCode": "RightJoystickButton",
           "GroupName": "Other"
         },
         {
@@ -367,7 +360,6 @@
         {
           "Name": "Drop",
           "KeyboardCode": "g",
-          "GamepadCode": "RightJoystickButton",
           "GroupName": "Other"
         },
         {
@@ -390,11 +382,13 @@
         {
           "Name": "Mount",
           "KeyboardCode": "T",
+          "GamepadCode": "RightJoystickButton",
           "GroupName": "Weapon Handling"
         },
         {
           "Name": "FireMode",
           "KeyboardCode": "B",
+          "GamepadCode": "DpadSouth",
           "GroupName": "Weapon Handling"
         },
         {
@@ -405,7 +399,13 @@
         {
           "Name": "Slide",
           "KeyboardCode": "C",
+          "GamepadCode": "B",
           "GroupName": "Movement"
+        },
+        {
+          "Name": "Slot3",
+          "KeyboardCode": "3",
+          "GroupName": "Inventory"
         }
       ]
     },

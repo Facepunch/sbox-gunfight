@@ -149,6 +149,11 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	{
 		if ( Game.IsServer )
 		{
+			foreach ( var attachment in Attachments )
+			{
+				attachment.Enabled = false;
+			}
+
 			RpcHolster( To.Single( Owner ) );
 		}
 	}
@@ -183,6 +188,11 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		if ( Game.IsClient )
 		{
 			DeployAsync();
+		}
+
+		foreach ( var attachment in Attachments )
+		{
+			attachment.Enabled = true;
 		}
 	}
 
@@ -224,6 +234,14 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		}
 
 		StartDecaying();
+	}
+
+	public override void PostCreateViewModel()
+	{
+		foreach ( var attachment in Attachments )
+		{
+			attachment.SetupViewModel( ViewModelEntity );
+		}
 	}
 
 	public virtual void Reload()
@@ -501,6 +519,8 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		return TimeSincePrimaryAttack >= PrimaryFireRate && IsTriggerHeld;
 	}
 
+	public string FireSound => Attachments.Select( x => x.GetSound( "fire" ) ).FirstOrDefault( x => x is not null ) ?? WeaponDefinition.FireSound;
+
 	public virtual void AttackPrimary()
 	{
 		TimeSincePrimaryAttack = 0;
@@ -521,7 +541,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		// Tell the clients to play the shoot effects
 		//
 		ShootEffects();
-		Owner?.PlaySound( WeaponDefinition.FireSound );
+		Owner?.PlaySound( FireSound );
 
 		//
 		// Shoot the bullets

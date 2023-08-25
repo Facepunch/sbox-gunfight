@@ -18,9 +18,12 @@ public partial class USP : GunfightWeapon
 	protected override void InitializeWeapon( WeaponDefinition def )
 	{
 		base.InitializeWeapon( def );
-			
-		SetBodyGroup( 2, 1 );
-		SetBodyGroup( 4, 1 );
+
+		if ( Game.IsServer )
+		{
+			SetAttachment( "usp_rmr", true );
+			SetAttachment( "usp_sd", true );
+		}
 	}
 
 	public override ViewModel CreateViewModel()

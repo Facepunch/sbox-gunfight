@@ -99,6 +99,7 @@ public partial class BaseWeapon : BaseCarriable
 			DestroyHudElements();
 
 			CreateViewModel();
+			PostCreateViewModel();
 			CreateHudElements();
 		}
 	}

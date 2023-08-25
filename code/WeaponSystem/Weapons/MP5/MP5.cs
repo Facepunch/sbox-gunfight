@@ -15,6 +15,16 @@ public partial class MP5 : GunfightWeapon
 		LocalScale = 1.5f;
 	}
 
+	protected override void InitializeWeapon( WeaponDefinition def )
+	{
+		base.InitializeWeapon( def );
+
+		if ( Game.IsServer )
+		{
+			SetAttachment( "mp5_rail", true );
+		}
+	}
+
 	public override ViewModel CreateViewModel()
 	{
 		ViewModelEntity = new ViewModel();

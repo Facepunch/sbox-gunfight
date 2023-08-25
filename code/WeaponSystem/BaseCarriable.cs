@@ -51,6 +51,10 @@ public class BaseCarriable : AnimatedEntity
 		EnableAllCollisions = true;
 	}
 
+	public virtual void PostCreateViewModel()
+	{
+	}
+
 	/// <summary>
 	/// This entity has become the active entity. This most likely
 	/// means a player was carrying it in their inventory and now
@@ -70,6 +74,7 @@ public class BaseCarriable : AnimatedEntity
 			DestroyHudElements();
 
 			CreateViewModel();
+			PostCreateViewModel();
 			CreateHudElements();
 		}
 	}

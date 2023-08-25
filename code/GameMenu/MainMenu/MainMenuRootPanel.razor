@@ -1,0 +1,27 @@
+@using Facepunch.Gunfight.UI
+@using Sandbox.Menu
+@using Sandbox.UI;
+
+@inherits RootPanel
+@implements Sandbox.Menu.IGameMenuPanel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+	<MainMenu />
+</root>
+
+@code
+{
+    protected override void UpdateScale( Rect screenSize )
+    {
+        base.UpdateScale( screenSize );
+
+        Scale *= UI.UIGlobals.MenuScale;
+
+        if ( Game.IsRunningOnHandheld || true )
+        {
+            Scale += 0.3f;
+        }
+    }
+}

@@ -18,4 +18,9 @@
 {
     public CreateAClass.CustomClass CustomClass { get; set; }
     public string ClassName { get; set; }
+
+    protected override void OnClick(MousePanelEvent e)
+    {
+            UI.ModalSystem.Push( new ClassModal( ClassName, CustomClass, () => Log.Info("yep" ) ) );
+    }
 }

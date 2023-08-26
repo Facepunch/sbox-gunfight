@@ -1,0 +1,55 @@
+@using Sandbox.UI
+@using Facepunch.Gunfight.UI
+
+@namespace Facepunch.Gunfight.MainMenu
+@inherits BaseModal
+@attribute [StyleSheet]
+
+<root>
+    <div class="main">
+        <div class="title">
+            @ClassName
+        </div>
+
+        <div style="flex-grow: 1;" />
+
+        <div class="options">
+            <ActionButton onclick=@( () => Save() )>
+                <Title>Save</Title>
+            </ActionButton>
+            <ActionButton onclick=@( () => Delete() )>
+                <Title>Delete</Title>
+            </ActionButton>
+            <ActionButton onclick=@( () => CloseModal( true ) )>
+                <Title>Close</Title>
+            </ActionButton>
+        </div>
+    </div>
+</root>
+
+
+@code
+{
+    public string ClassName { get; set; }
+
+    public Action OnSave;
+
+    public Gunfight.CreateAClass.CustomClass CustomClass { get; set; }
+
+    public void Save()
+    {
+        OnSave?.Invoke();
+    }
+
+    public void Delete()
+    {
+        Log.Info("Delete");
+    }
+
+    public ClassModal( string name, Gunfight.CreateAClass.CustomClass customClass, Action callback = null )
+    {
+        ClassName = name;
+        CustomClass = customClass;
+        OnSave = callback;
+    }
+}

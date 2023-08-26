@@ -9,9 +9,33 @@ ClassModal
         flex-grow: 1;
     }
 
-    .question
+    .weapon-view
     {
+        flex-grow: 1;
+        width: 100%;
 
+        WeaponViewer
+        {
+            flex-grow: 1;
+        }
+    }
+
+    .attachment-slots
+    {
+        flex-shrink: 0;
+        flex-grow: 0;
+        gap: 16px;
+        height: 128px;
+
+        .slot
+        {
+            height: 100%;
+            aspect-ratio: 1.2;
+            background-color: rgba( black, 0.2 );
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
     }
 
     .title
@@ -22,6 +46,9 @@ ClassModal
 
     .options
     {
+        flex-shrink: 0;
+        flex-grow: 0;
+        height: 32px;
         pointer-events: all;
         gap: 16px;
     }

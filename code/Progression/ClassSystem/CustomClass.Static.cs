@@ -17,6 +17,7 @@ public partial class CustomClass
 	/// <summary>
 	/// A reference to the custom class list.
 	/// </summary>
+	[SkipHotload]
 	public static Dictionary<string, CustomClass> All { get; set; } = Fetch() ?? new();
 
 	/// <summary>

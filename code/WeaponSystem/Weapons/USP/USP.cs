@@ -3,7 +3,7 @@
 [Library( "usp" )]
 public partial class USP : GunfightWeapon
 {
-	private static Model USPModel = Cloud.Model( "https://asset.party/facepunch/w_usp" );
+	public static Model USPModel = Cloud.Model( "https://asset.party/facepunch/w_usp" );
 	private static Model USPViewModel = Cloud.Model( "https://asset.party/facepunch/v_usp" );
 	
 	public override Model WeaponModel => USPModel;

@@ -36,6 +36,16 @@
 
 			<div style="flex-grow: 1;"/>
 
+            <ActionButton onclick=@CreateAClass>
+                <Title>Create A Class</Title>
+                <Description>
+                    Make your own loadouts here.
+                </Description>
+                <Extra>
+                    <Panel class="new" />
+                </Extra>
+            </ActionButton>
+
             <ActionButton onclick=@ViewStats>
                 <Title>Stats</Title>
                 <Description>
@@ -61,9 +71,6 @@
 				<Description>
 					View all active game servers.
 				</Description>
-				<Extra>
-					<Panel class="new"/>
-				</Extra>
 			</ActionButton>
 		</div>
     
@@ -94,5 +101,10 @@
     void ViewStats( PanelEvent e )
     {
         this.Navigate( "/stats" );
+    }
+
+    void CreateAClass( PanelEvent e )
+    {
+        this.Navigate( "/createaclass" );
     }
 }

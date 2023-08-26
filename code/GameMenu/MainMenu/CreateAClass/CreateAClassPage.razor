@@ -1,0 +1,39 @@
+﻿@using Sandbox
+@using Sandbox.UI
+
+@implements INavigatorPage
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+	<div class="main">
+		<div class="left column grow">
+			<div class="game-title">
+				Gunfight
+			</div>
+
+            <label class="stats-title">Create A Class</label>
+
+			<div style="flex-grow: 1;"/>
+
+            <div class="scroll list">
+                <ClassCard ClassName="Create new class..." />
+            </div>
+
+			<ActionButton onclick=@Return>
+				<Title>
+					Return
+				</Title>
+			</ActionButton>
+		</div>
+	</div>
+</root>
+
+@code
+{
+    void Return( PanelEvent e )
+    {
+        this.Navigate( "/" );
+    }
+}

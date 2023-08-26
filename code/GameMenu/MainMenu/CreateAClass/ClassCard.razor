@@ -1,0 +1,20 @@
+﻿@using Sandbox
+@using Sandbox.UI
+
+@implements INavigatorPage
+@inherits Panel
+@attribute [StyleSheet]
+@namespace Facepunch.Gunfight.MainMenu
+
+<root>
+    <div class="background" />
+
+    <div class="title">
+        @ClassName
+    </div>
+</root>
+
+@code
+{
+    public string ClassName { get; set; }
+}

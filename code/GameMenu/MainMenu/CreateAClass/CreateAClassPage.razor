@@ -18,7 +18,12 @@
 			<div style="flex-grow: 1;"/>
 
             <div class="scroll list">
-                <ClassCard ClassName="Create new class..." />
+                @foreach ( var kv in CreateAClass.CustomClass.All )
+                {
+                    <ClassCard ClassName=@kv.Key CustomClass=@kv.Value />
+                }
+
+                <ClassCard ClassName="Create new class..." onclick=@CreateClass />
             </div>
 
 			<ActionButton onclick=@Return>
@@ -35,5 +40,15 @@
     void Return( PanelEvent e )
     {
         this.Navigate( "/" );
+    }
+
+    void CreateClass( PanelEvent e )
+    {
+        CreateAClass.CustomClass.SaveOne( $"Custom Class #{Gunfight.CreateAClass.CustomClass.All.Count() + 1}", new( "mp5", "usp" ) );
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( Gunfight.CreateAClass.CustomClass.All.Count() );
     }
 }

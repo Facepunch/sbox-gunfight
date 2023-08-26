@@ -18,6 +18,15 @@ public abstract class WeaponAttachmentComponent : EntityComponent<GunfightWeapon
 	public virtual int Priority { get; set; }
 
 	/// <summary>
+	/// Progression: Is this attachment unlocked?
+	/// </summary>
+	/// <returns></returns>
+	public virtual bool IsUnlocked()
+	{
+		return true;
+	}
+
+	/// <summary>
 	/// Is this attachment supported on this weapon?
 	/// </summary>
 	/// <param name="wpn"></param>
@@ -58,7 +67,7 @@ public abstract class WeaponAttachmentComponent : EntityComponent<GunfightWeapon
 
 	public virtual void SetupViewModel( ViewModel vm )
 	{
-		Log.Info( "SETUP; VM" );
+		//
 	}
 
 	public virtual void SetupWorldModel( GunfightWeapon wpn )

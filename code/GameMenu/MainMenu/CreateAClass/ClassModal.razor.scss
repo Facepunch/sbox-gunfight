@@ -20,6 +20,10 @@ ClassModal
         }
     }
 
+    ActionButton {
+        pointer-events: all;
+    }
+
     .attachment-slots
     {
         flex-shrink: 0;
@@ -63,7 +67,7 @@ ClassModal
     {
         flex-shrink: 0;
         flex-grow: 0;
-        height: 32px;
+        height: 64px;
         pointer-events: all;
         gap: 16px;
     }

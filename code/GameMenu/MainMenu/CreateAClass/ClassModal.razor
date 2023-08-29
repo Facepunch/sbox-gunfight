@@ -11,17 +11,45 @@
             @ClassName
         </div>
 
-        <div class="weapon-view">
-            <WeaponViewer @ref="WeaponViewer" />
-        </div>
+        @if ( Weapon is null )
+        {
+            <div class="options">
+                <ActionButton onclick=@( () => Select( CustomClass.PrimaryWeapon ) )>
+                    <Title>@CustomClass.PrimaryWeapon.Name</Title>
+                </ActionButton>
+                <ActionButton onclick=@( () => Select( CustomClass.SecondaryWeapon ) )>
+                    <Title>@CustomClass.SecondaryWeapon.Name</Title>
+                </ActionButton>
+            </div>
 
-        <div class="attachment-slots">
+            <div class="options">
+                <ActionButton onclick=@( () => Save() )>
+                    <Title>Save</Title>
+                </ActionButton>
+                <ActionButton onclick=@( () => Delete() )>
+                    <Title>Delete</Title>
+                </ActionButton>
+            </div>
+        }
+        else
+        {
+            <div class="weapon-view">
+                <WeaponViewer @ref="WeaponViewer" />
+            </div>
 
-            @foreach ( var attachment in WeaponAttachment.For( CustomClass.SecondaryWeapon.Name ) )
-            {
-                <div class="slot @( AttachmentClass( attachment ) )" onclick=@(() => ToggleAttachment( attachment ) ) >@attachment.Identifier</div>
-            }
-        </div>
+            <div class="attachment-slots">
+
+                @foreach ( var attachment in WeaponAttachment.For( Weapon.Name ) )
+                {
+                    <div class="slot @( AttachmentClass( attachment ) )" onclick=@(() => ToggleAttachment( attachment ) ) >@attachment.Identifier</div>
+                }
+            </div>
+
+            <ActionButton onclick=@( () => Return() )>
+                <Title>Return</Title>
+            </ActionButton>
+        }
+        
 @* 
         <div class="options">
             <ActionButton onclick=@( () => Save() )>
@@ -54,9 +82,19 @@
         OnSave?.Invoke();
     }
 
+    void Return()
+    {
+        Weapon = null;
+    }
+
+    public void Select( Gunfight.CreateAClass.Weapon wpn )
+    {
+        Weapon = wpn;
+        StateHasChanged();
+    }
+
     public void Delete()
     {
-        Log.Info( "Delete" );
     }
 
     string AttachmentClass( WeaponAttachment att )
@@ -77,13 +115,25 @@
             Weapon.Attachments.Add( att.Identifier );
         }
 
-        Update();
+        Refresh();
     }
 
     public void Refresh()
     {
-        // TODO - Set proper model
-        WeaponViewer.SetModel( Gunfight.USP.USPModel );
+        if ( WeaponViewer is null ) return;
+
+        // THIS IS TEMPORARY
+        // REPLACE THIS WITH REAL DATA
+
+        if ( Weapon.Name == "mp5" )
+        {
+            WeaponViewer.SetModel( Gunfight.MP5.MP5Model );
+        }
+        else
+        {
+            WeaponViewer.SetModel( Gunfight.USP.USPModel );
+        }
+
 
         foreach ( var att in Weapon.Attachments.Select( x => WeaponAttachment.Get( x ) ).OrderBy( x => x.Priority ) )
         {
@@ -96,18 +146,21 @@
         ClassName = name;
         CustomClass = customClass;
         OnSave = callback;
-
-
-        Weapon = customClass.SecondaryWeapon;
     }
 
     void Update()
     {
-        Refresh();
+        if ( WeaponViewer is null ) return;
 
-        // mp5
-        //WeaponViewer.Camera.Position = Vector3.Up * 6f + Vector3.Backward * 100f;
-        WeaponViewer.Camera.Position = Vector3.Right * -2f + Vector3.Up * 4f + Vector3.Backward * 70f;
+        var bounds = WeaponViewer.Model.Bounds;
+        var middle = (bounds.Mins + bounds.Maxs) * 0.5f;
+
+        var size = 0f;
+        size = MathF.Max( size, MathF.Abs( bounds.Mins.x ) + MathF.Abs( bounds.Maxs.x ) );
+        size = MathF.Max( size, MathF.Abs( bounds.Mins.y ) + MathF.Abs( bounds.Maxs.y ) );
+        size = MathF.Max( size, MathF.Abs( bounds.Mins.z ) + MathF.Abs( bounds.Maxs.z ) );
+
+        WeaponViewer.Camera.Position = Vector3.Right * -middle.y + Vector3.Up * middle.z + Vector3.Backward * ( 40f + ( size * 2f ) );
         WeaponViewer.Camera.FieldOfView = 23;
         WeaponViewer.Camera.ZNear = 5;
         WeaponViewer.Camera.ZFar = 15000;
@@ -125,9 +178,9 @@
         WeaponViewer.World.GradientFog.EndDistance = 1000;
     }
 
-    protected override void OnAfterTreeRender(bool firstTime)
+    protected override void OnAfterTreeRender( bool firstTime )
     {
-        base.OnAfterTreeRender(firstTime);
+        Refresh();
         Update();
     }
 }

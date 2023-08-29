@@ -48,13 +48,14 @@ public class WeaponViewer : ScenePanel
 	{
 		base.Tick();
 
+		if ( Model is null ) return;
+
 		if ( !IsVisible ) return;
 
 		foreach ( var model in Models )
 		{
 			model.Update( Time.Delta * TimeScale );
 		}
-
 
 		var mdW = MousePosition.x / Screen.Width;
 		var mdH = MousePosition.y / Screen.Height;

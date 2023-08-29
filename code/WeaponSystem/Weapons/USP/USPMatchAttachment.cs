@@ -11,6 +11,11 @@ public partial class USPMatchAttachment : BodygroupAttachment
 		{ 2, 1 }
 	};
 
+	public override Dictionary<string, int> SceneModelBodygroups => new()
+	{
+		{ "barrel", 1 }
+	};
+
 	/// <summary>
 	/// Inherit bodygroups to the ViewModel
 	/// </summary>

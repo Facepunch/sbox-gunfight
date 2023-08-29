@@ -5,6 +5,7 @@ namespace Facepunch.Gunfight;
 public partial class USPSuppressorAttachment : BodygroupAttachment
 {
 	public override string ForWeapon => "usp";
+	public override string Category => "Barrels";
 	public override string Identifier => "usp_sd";
 
 	public override Dictionary<int, int> Bodygroups => new()
@@ -13,6 +14,12 @@ public partial class USPSuppressorAttachment : BodygroupAttachment
 		{ 2, 2 },
 		// Raised Ironsights
 		{ 4, 1 }
+	};
+
+	public override Dictionary<string, int> SceneModelBodygroups => new()
+	{
+		{ "barrel", 2 },
+		{ "sights", 1 }
 	};
 
 	/// <summary>

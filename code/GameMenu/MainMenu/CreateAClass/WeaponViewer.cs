@@ -101,8 +101,6 @@ public class WeaponViewer : ScenePanel
 		}
 
 		Model = new SceneModel( World, model, Transform.Zero.WithRotation( Rotation.From( 0, 90, 0 ) ) );
-		Model.SetBodyGroup( "barrel", 2 );
-		Model.SetBodyGroup( "sights", 1 );
 
 		Models.Add( Model );
 		Model.Update( 0.1f );

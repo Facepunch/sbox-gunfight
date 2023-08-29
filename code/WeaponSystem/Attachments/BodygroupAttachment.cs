@@ -14,6 +14,11 @@ public partial class BodygroupAttachment : WeaponAttachment
 	public virtual Dictionary<int, int> ViewModelBodygroups { get; set; }
 
 	/// <summary>
+	/// Replace this 
+	/// </summary>
+	public virtual Dictionary<string, int> SceneModelBodygroups { get; set; }
+
+	/// <summary>
 	/// Disregard ViewModelBodyGroups, just set Bodygroups on both the Weapon and its ViewModel
 	/// </summary>
 	public virtual bool InheritBodygroups { get; set; }
@@ -33,7 +38,6 @@ public partial class BodygroupAttachment : WeaponAttachment
 		foreach ( var kv in InheritBodygroups ? Bodygroups : ViewModelBodygroups )
 		{
 			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
-
 			vm.SetBodyGroup( kv.Key, kv.Value );
 		}
 	}
@@ -45,5 +49,16 @@ public partial class BodygroupAttachment : WeaponAttachment
 			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
 			wpn.SetBodyGroup( kv.Key, kv.Value );
 		}
+	}
+
+	public override void SetupSceneModel( SceneModel mdl )
+	{
+		foreach ( var kv in SceneModelBodygroups )
+		{
+			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
+			mdl.SetBodyGroup( kv.Key, kv.Value );
+		}
+
+		mdl.Update( 0.1f );
 	}
 }

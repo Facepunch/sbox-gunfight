@@ -18,6 +18,11 @@ public partial class WeaponAttachment
 	public virtual string Identifier { get; set; }
 
 	/// <summary>
+	/// UI Category for this attachment
+	/// </summary>
+	public virtual string Category { get; set; }
+
+	/// <summary>
 	/// Priority of this attachment, mainly for replacing weapon sounds and shit like that
 	/// </summary>
 	public virtual int Priority { get; set; }

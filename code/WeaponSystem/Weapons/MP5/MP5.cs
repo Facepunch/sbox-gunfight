@@ -4,7 +4,7 @@
 public partial class MP5 : GunfightWeapon
 {
 	private static Model MP5Model = Cloud.Model( "https://asset.party/facepunch/w_mp5" );
-	private static Model MP5ViewModel = Cloud.Model( "https://asset.party/facepunch/v_mp5" );
+	public static Model MP5ViewModel = Cloud.Model( "https://asset.party/facepunch/v_mp5" );
 	
 	public override Model WeaponModel => MP5Model;
 	public override Model WeaponViewModel => MP5ViewModel;

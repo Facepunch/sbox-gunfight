@@ -35,6 +35,21 @@ ClassModal
             justify-content: center;
             align-items: center;
             font-size: 12px;
+            pointer-events: all;
+            cursor: pointer;
+
+            &:hover
+            {
+                background-color: rgba( black, 0.4 );
+                color: white;
+            }
+
+            &.active
+            {
+                background-color: rgba( black, 0.5 );
+                color: white;
+                font-family: $main-font-bold;
+            }
         }
     }
 

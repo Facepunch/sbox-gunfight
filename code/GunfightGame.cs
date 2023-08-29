@@ -26,6 +26,9 @@ partial class GunfightGame : GameManager
 			_ = new LoadoutSystem();
 			Scores = new();
 		}
+
+		// Initialize attachment system
+		WeaponAttachment.Init();
 	}
 
 	[GameEvent.Entity.PostSpawn]
@@ -294,7 +297,7 @@ partial class GunfightGame : GameManager
 	public override void BuildInput()
 	{
 		base.BuildInput();
-		
+
 		GamemodeSystem.Current?.BuildInput();
 	}
 }

@@ -2,10 +2,10 @@
 
 namespace Facepunch.Gunfight;
 
-[Library( "mp5_rail" )]
 public partial class MP5RailAttachment : BodygroupAttachment
 {
 	public override string ForWeapon => "mp5";
+	public override string Identifier => "mp5_rail";
 
 	public override Dictionary<int, int> Bodygroups => new()
 	{

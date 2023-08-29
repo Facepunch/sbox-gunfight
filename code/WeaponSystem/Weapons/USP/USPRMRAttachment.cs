@@ -1,10 +1,11 @@
 ﻿
 namespace Facepunch.Gunfight;
 
-[Library( "usp_rmr" )]
 public partial class USPRMRAttachment : BodygroupAttachment
 {
 	public override string ForWeapon => "usp";
+	public override string Identifier => "usp_rmr";
+	public override int Priority => 5;
 
 	public override Dictionary<int, int> Bodygroups => new()
 	{

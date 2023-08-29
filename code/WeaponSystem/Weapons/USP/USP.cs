@@ -39,9 +39,6 @@ public partial class USP : GunfightWeapon
 		arms.SetParent( ViewModelEntity, true );
 		arms.EnableViewmodelRendering = true;
 		
-		ViewModelEntity.SetBodyGroup( 2, 1 );
-		ViewModelEntity.SetBodyGroup( 4, 2 );
-
 		return ViewModelEntity;
 	}
 }

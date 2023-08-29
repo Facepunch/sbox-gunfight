@@ -192,7 +192,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		foreach ( var attachment in Attachments )
 		{
-			if ( attachment.IsSupported( this ) )
+			if ( attachment.IsSupported() )
 			{
 				attachment.Enabled = true;
 			}
@@ -243,9 +243,9 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	{
 		foreach ( var attachment in Attachments )
 		{
-			if ( attachment.IsSupported( this ) )
+			if ( attachment.IsSupported() )
 			{
-				attachment.SetupViewModel( ViewModelEntity );
+				attachment.Attachment.SetupViewModel( ViewModelEntity );
 			}
 		}
 	}
@@ -525,7 +525,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		return TimeSincePrimaryAttack >= PrimaryFireRate && IsTriggerHeld;
 	}
 
-	public string FireSound => Attachments.Select( x => x.GetSound( "fire" ) ).FirstOrDefault( x => x is not null ) ?? WeaponDefinition.FireSound;
+	public string FireSound => Attachments.Select( x => x.Attachment.GetSound( "fire" ) ).FirstOrDefault( x => x is not null ) ?? WeaponDefinition.FireSound;
 
 	public virtual void AttackPrimary()
 	{

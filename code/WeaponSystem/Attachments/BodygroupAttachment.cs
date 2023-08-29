@@ -1,6 +1,6 @@
 namespace Facepunch.Gunfight;
 
-public partial class BodygroupAttachment : WeaponAttachmentComponent
+public partial class BodygroupAttachment : WeaponAttachment
 {
 	/// <summary>
 	/// A list of bodygroups to be activated 
@@ -23,15 +23,17 @@ public partial class BodygroupAttachment : WeaponAttachmentComponent
 	/// </summary>
 	public virtual string ForWeapon { get; set; }
 
-	public override bool IsSupported( GunfightWeapon wpn )
+	public override bool IsSupported( string weapon )
 	{
-		return ForWeapon == wpn.ShortName.ToLower();
+		return ForWeapon == weapon;
 	}
 
 	public override void SetupViewModel( ViewModel vm )
 	{
 		foreach ( var kv in InheritBodygroups ? Bodygroups : ViewModelBodygroups )
 		{
+			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
+
 			vm.SetBodyGroup( kv.Key, kv.Value );
 		}
 	}
@@ -40,15 +42,8 @@ public partial class BodygroupAttachment : WeaponAttachmentComponent
 	{
 		foreach ( var kv in Bodygroups )
 		{
+			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
 			wpn.SetBodyGroup( kv.Key, kv.Value );
-		}
-	}
-
-	protected override void OnDeactivate()
-	{
-		foreach ( var kv in Bodygroups )
-		{
-			Entity?.SetBodyGroup( kv.Key, 0 );
 		}
 	}
 }

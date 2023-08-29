@@ -55,6 +55,9 @@
 	    AddDestination( "/createaclass", typeof( CreateAClassPage ) );
 	    
 	    BindClass( "ingame", () => Game.InGame );
+
+        // Initialize attachment system
+        WeaponAttachment.Init();
     }
 
 	[GameEvent.Menu.ServerJoined]

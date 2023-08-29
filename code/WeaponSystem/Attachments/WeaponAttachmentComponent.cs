@@ -1,77 +1,41 @@
 namespace Facepunch.Gunfight;
 
-public abstract class WeaponAttachmentComponent : EntityComponent<GunfightWeapon>
+public partial class WeaponAttachmentComponent : EntityComponent<GunfightWeapon>
 {
-	/// <summary>
-	///  A list of required attachments to be able to attach this component to a weapon
-	/// </summary>
-	public string[] RequiredAttachments { get; set; }
+	[Net, Change( nameof( OnAttachmentChanged ) )] public string AttachmentIdentifier { get; set; }
 
-	/// <summary>
-	/// Accessor for this component's identifier
-	/// </summary>
-	public string Identifier => DisplayInfo.For( this ).ClassName ?? Name;
+	public WeaponAttachment Attachment { get; set; }
+	public string Identifier => Attachment?.Identifier;
+	public int Priority => Attachment?.Priority ?? 0;
+	public bool IsSupported() => Attachment.IsSupported( Entity.ShortName.ToLower() );
 
-	/// <summary>
-	/// Priority of this attachment, mainly for replacing weapon sounds and shit like that
-	/// </summary>
-	public virtual int Priority { get; set; }
-
-	/// <summary>
-	/// Progression: Is this attachment unlocked?
-	/// </summary>
-	/// <returns></returns>
-	public virtual bool IsUnlocked()
+	internal void OnAttachmentChanged( string before, string after )
 	{
-		return true;
-	}
+		Attachment = WeaponAttachment.Get( after );
 
-	/// <summary>
-	/// Is this attachment supported on this weapon?
-	/// </summary>
-	/// <param name="wpn"></param>
-	/// <returns></returns>
-	public virtual bool IsSupported( GunfightWeapon wpn )
-	{
-		return true;
-	}
-
-	/// <summary>
-	/// Sound replacements via attachments
-	/// </summary>
-	/// <param name="key"></param>
-	/// <returns></returns>
-	public virtual string GetSound( string key )
-	{
-		return null;
-	}
-
-	protected override void OnActivate()
-	{
-		if ( !IsSupported( Entity ) )
+		if ( Attachment is null )
 		{
-			Enabled = false;
+			Log.Warning( "Attachment is null ??" );
 			return;
 		}
+	}
 
+	protected void Update()
+	{
 		if ( Game.IsClient && Entity.ViewModelEntity.IsValid() )
 		{
-			SetupViewModel( Entity.ViewModelEntity );
+			Attachment.SetupViewModel( Entity.ViewModelEntity );
 		}
 
 		if ( Game.IsServer )
 		{
-			SetupWorldModel( Entity );
+			Log.Info( Attachment );
+			Attachment.SetupWorldModel( Entity );
 		}
 	}
 
-	public virtual void SetupViewModel( ViewModel vm )
+	protected override void OnActivate()
 	{
-		//
-	}
-
-	public virtual void SetupWorldModel( GunfightWeapon wpn )
-	{
-		//
+		Update();
 	}
 }

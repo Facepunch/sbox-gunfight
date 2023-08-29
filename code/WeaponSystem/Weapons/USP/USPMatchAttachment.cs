@@ -1,11 +1,10 @@
 ﻿
 namespace Facepunch.Gunfight;
 
-[Library( "usp_match" )]
 public partial class USPMatchAttachment : BodygroupAttachment
 {
 	public override string ForWeapon => "usp";
-
+	public override string Identifier => "usp_match";
 	public override Dictionary<int, int> Bodygroups => new()
 	{
 		// USP Match

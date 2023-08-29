@@ -2,7 +2,7 @@ namespace Facepunch.Gunfight;
 
 public partial class GunfightWeapon
 {
-	public WeaponAttachmentComponent[] Attachments => Components.GetAll<WeaponAttachmentComponent>( true ).OrderByDescending( x => x.Priority ).ToArray();
+	public WeaponAttachmentComponent[] Attachments => Components.GetAll<WeaponAttachmentComponent>( true ).OrderBy( x => x.Priority ).ToArray();
 
 	/// <summary>
 	/// Give / Take an attachment off this weapon
@@ -11,28 +11,34 @@ public partial class GunfightWeapon
 	/// <param name="active"></param>
 	public void SetAttachment( string identifier, bool active )
 	{
-		var desc = TypeLibrary.GetType( identifier );
-		if ( desc is not null )
+		Game.AssertServer();
+
+		Log.Info( $"Trying to SetAttachment( {identifier}, {active} )" );
+
+		var attachment = WeaponAttachment.Get( identifier );
+		if ( attachment == null )
 		{
-			var att = Attachments.FirstOrDefault( x => x.Identifier == identifier );
+			Log.Warning( $"Tried to run SetAttachemnt( {identifier} ) but failed to find a type" );
+			return;
+		}
 
-			if ( active )
-			{
-				// Don't add the same attachment twice
-				if ( att != null ) return;
+		var att = Attachments.FirstOrDefault( x => x.Identifier == identifier );
+		var component = Components.GetAll<WeaponAttachmentComponent>().FirstOrDefault( x => x.Identifier == identifier );
 
-				var component = TypeLibrary.Create<WeaponAttachmentComponent>( identifier );
-				Components.Add( component );
-			}
-			else
-			{
-				att?.Remove();
-			}
+		if ( active )
+		{
+			if ( component != null ) return;
+			
+			component = new WeaponAttachmentComponent() { AttachmentIdentifier = identifier };
+			component.OnAttachmentChanged( null, identifier );
 
+			Components.Add( component );
+
+			Log.Info( $"Added attachment {identifier} to {this}" );
 		}
 		else
 		{
-			Log.Warning( $"Tried to run SetAttachemnt( {identifier} but failed to find a type" );
+			component?.Remove();
 		}
 	}
 

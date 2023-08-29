@@ -20,7 +20,8 @@ ClassModal
         }
     }
 
-    ActionButton {
+    ActionButton
+    {
         pointer-events: all;
     }
 
@@ -41,6 +42,14 @@ ClassModal
             font-size: 12px;
             pointer-events: all;
             cursor: pointer;
+            flex-direction: column;
+            gap: 8px;
+
+            .group
+            {
+                font-family: $main-font-bold;
+                color: white;
+            }
 
             &:hover
             {

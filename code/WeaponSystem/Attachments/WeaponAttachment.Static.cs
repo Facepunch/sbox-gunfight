@@ -4,7 +4,7 @@ public partial class WeaponAttachment
 {
 	public static HashSet<WeaponAttachment> All { get; set; }
 
-	public static IEnumerable<WeaponAttachment> For( string weapon ) => All.Where( x => x.IsSupported( weapon ) );
+	public static IEnumerable<WeaponAttachment> For( string weapon ) => All.Where( x => x.IsSupported( weapon ) && !string.IsNullOrEmpty( x.Identifier ) );
 
 	public static WeaponAttachment Get( string identifier )
 	{

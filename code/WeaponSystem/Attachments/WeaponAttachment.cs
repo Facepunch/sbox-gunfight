@@ -18,6 +18,11 @@ public partial class WeaponAttachment
 	public virtual string Identifier { get; set; }
 
 	/// <summary>
+	/// Friendly name
+	/// </summary>
+	public virtual string Name => Identifier;
+
+	/// <summary>
 	/// UI Category for this attachment
 	/// </summary>
 	public virtual string Category { get; set; }

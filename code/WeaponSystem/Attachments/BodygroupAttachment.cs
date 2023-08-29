@@ -35,7 +35,10 @@ public partial class BodygroupAttachment : WeaponAttachment
 
 	public override void SetupViewModel( ViewModel vm )
 	{
-		foreach ( var kv in InheritBodygroups ? Bodygroups : ViewModelBodygroups )
+		var bodygroups = InheritBodygroups ? Bodygroups : ViewModelBodygroups;
+		if ( bodygroups is null ) return;
+
+		foreach ( var kv in bodygroups )
 		{
 			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
 			vm.SetBodyGroup( kv.Key, kv.Value );
@@ -44,6 +47,8 @@ public partial class BodygroupAttachment : WeaponAttachment
 
 	public override void SetupWorldModel( GunfightWeapon wpn )
 	{
+		if ( Bodygroups is null ) return;
+
 		foreach ( var kv in Bodygroups )
 		{
 			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
@@ -53,6 +58,8 @@ public partial class BodygroupAttachment : WeaponAttachment
 
 	public override void SetupSceneModel( SceneModel mdl )
 	{
+		if ( SceneModelBodygroups is null ) return;
+
 		foreach ( var kv in SceneModelBodygroups )
 		{
 			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );

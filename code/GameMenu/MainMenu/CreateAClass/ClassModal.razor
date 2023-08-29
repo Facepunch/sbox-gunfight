@@ -39,9 +39,15 @@
 
             <div class="attachment-slots">
 
-                @foreach ( var attachment in WeaponAttachment.For( Weapon.Name ) )
+                @foreach ( var group in WeaponAttachment.For( Weapon.Name ).GroupBy( x => x.Category ) )
                 {
-                    <div class="slot @( AttachmentClass( attachment ) )" onclick=@(() => ToggleAttachment( attachment ) ) >@attachment.Identifier</div>
+                    @foreach ( var attachment in group )
+                    {
+                        <div class="slot @( AttachmentClass( attachment ) )" onclick=@(() => ToggleAttachment( attachment ) )>
+                            <label class="group">@group.Key</label>
+                            <label>@attachment.Name</label>
+                        </div>
+                    }
                 }
             </div>
 
@@ -49,19 +55,6 @@
                 <Title>Return</Title>
             </ActionButton>
         }
-        
-@* 
-        <div class="options">
-            <ActionButton onclick=@( () => Save() )>
-                <Title>Save</Title>
-            </ActionButton>
-            <ActionButton onclick=@( () => Delete() )>
-                <Title>Delete</Title>
-            </ActionButton>
-            <ActionButton onclick=@( () => CloseModal( true ) )>
-                <Title>Close</Title>
-            </ActionButton>
-        </div> *@
     </div>
 </root>
 

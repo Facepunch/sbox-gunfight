@@ -6,23 +6,6 @@ ActionButton
     min-height: 64px;
     width: 356px;
 
-    &.icon-only
-    {
-        padding: 0;
-        width: 64px;
-        justify-content: center;
-
-        > .main
-        {
-            display: none;
-        }
-
-        > .extra
-        {
-            left: -3px;
-        }
-    }
-
     &.disabled
     {
         opacity: 0.5;
@@ -132,14 +115,20 @@ ActionButton
         &:hover
         {
             cursor: pointer;
-            border-left: 4px solid $theme-color;
 
             .title, .description
             {
                 opacity: 1;
             }
 
-            left: 4px;
+            &:not( .has-background )
+            {
+
+                > .background
+                {
+                    background-color: rgb(57, 83, 143);
+                }
+            }
         }
 
         &:active
@@ -159,5 +148,29 @@ ActionButton
     &.no-click
     {
         pointer-events: none;
+    }
+
+
+    &.icon-only
+    {
+        padding: 0;
+        width: 64px;
+        justify-content: center;
+
+        > .main
+        {
+            display: none;
+        }
+
+        > .extra
+        {
+            left: -1px;
+        }
+
+        &:hover
+        {
+            left: 0px;
+            cursor: pointer;
+        }
     }
 }

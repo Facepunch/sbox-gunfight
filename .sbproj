@@ -315,31 +315,6 @@
           "GroupName": "Inventory"
         },
         {
-          "Name": "Slot6",
-          "KeyboardCode": "6",
-          "GroupName": "Inventory"
-        },
-        {
-          "Name": "Slot7",
-          "KeyboardCode": "7",
-          "GroupName": "Inventory"
-        },
-        {
-          "Name": "Slot8",
-          "KeyboardCode": "8",
-          "GroupName": "Inventory"
-        },
-        {
-          "Name": "Slot9",
-          "KeyboardCode": "9",
-          "GroupName": "Inventory"
-        },
-        {
-          "Name": "Slot0",
-          "KeyboardCode": "0",
-          "GroupName": "Inventory"
-        },
-        {
           "Name": "SlotPrev",
           "KeyboardCode": "mouse4",
           "GamepadCode": "SwitchLeftBumper",
@@ -395,11 +370,6 @@
           "KeyboardCode": "B",
           "GamepadCode": "DpadSouth",
           "GroupName": "Weapon Handling"
-        },
-        {
-          "Name": "UseKillstreak",
-          "KeyboardCode": "k",
-          "GroupName": "Gameplay"
         },
         {
           "Name": "Slide",

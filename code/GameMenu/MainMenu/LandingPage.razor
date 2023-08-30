@@ -20,8 +20,8 @@
 			<div class="game-title">
 				Gunfight
 			</div>
-			
-			<ExpandWidget>
+		
+            <ExpandWidget style="width: 45%;">
 				<Title>
 					Message Of The Day
 				</Title>
@@ -35,52 +35,59 @@
 			</ExpandWidget>
 
 			<div style="flex-grow: 1;"/>
-
-            @if ( Game.IsEditor )
-            {
-                <ActionButton onclick=@CreateAClass>
-                    <Title>Create A Class</Title>
+            
+            <div class="row">
+                @if ( Game.IsEditor )
+                {
+                    <ActionButton onclick=@CreateAClass>
+                        <Title>Create A Class</Title>
+                        <Description>
+                            Make your own loadouts here.
+                        </Description>
+                        <Extra>
+                            <Panel class="new" />
+                        </Extra>
+                    </ActionButton>
+                }
+                
+                <ActionButton onclick=@ViewStats>
+                    <Title>Stats</Title>
                     <Description>
-                        Make your own loadouts here.
+                        Check out all of your stats, including match history.
                     </Description>
-                    <Extra>
-                        <Panel class="new" />
-                    </Extra>
                 </ActionButton>
-            }
+            </div>
 
-            <ActionButton onclick=@ViewStats>
-                <Title>Stats</Title>
-                <Description>
-                    Check out all of your stats, including match history.
-                </Description>
-                <Extra>
-                    <Panel class="new" />
-                </Extra>
-            </ActionButton>
-
-			<ActionButton WithBackground="https://files.facepunch.com/tony/1b1311b1/boxes.webm" onclick=@Matchmake>
-				<Title>
-					Matchmaking
-				</Title>
-				<Description>
-					Ready to get into the action?
-				</Description>
-			</ActionButton>
-		    <ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@OpenServerList>
-				<Title>
-					Server Browser
-				</Title>
-				<Description>
-					View all active game servers.
-				</Description>
-			</ActionButton>
+            <div class="row">
+			    <ActionButton WithBackground="https://files.facepunch.com/tony/1b1311b1/boxes.webm" onclick=@Matchmake>
+				    <Title>
+					    Matchmaking
+				    </Title>
+				    <Description>
+					    Ready to get into the action?
+				    </Description>
+			    </ActionButton>
+		        <ActionButton WithBackground="https://files.facepunch.com/tony/1b2611b1/kc.png" Blend="orange" onclick=@OpenServerList>
+				    <Title>
+					    Server Browser
+				    </Title>
+				    <Description>
+					    View all active game servers.
+				    </Description>
+			    </ActionButton>
+            </div>
 		</div>
     
         <div style="flex-grow: 1;"/>
-    
+
         <div class="right column">
-	        <div style="flex-grow: 1;"/>
+            <ActionButton class="icon-only" onclick=@ViewSettings>
+                <Extra>
+                    <i>gear</i>
+                </Extra>
+            </ActionButton>
+            
+            <div style="flex-grow: 1;"/>
 	        
             <LeaderboardWidget />
 	        <FriendsListWidget />
@@ -109,5 +116,10 @@
     void CreateAClass( PanelEvent e )
     {
         this.Navigate( "/createaclass" );
+    }
+
+    void ViewSettings( PanelEvent e )
+    {
+        this.Navigate( "/settings" );
     }
 }

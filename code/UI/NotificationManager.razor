@@ -46,7 +46,21 @@
     {
         var parent = GetDock( dock );
         var notification = parent.AddChild<Panel>( "notification" );
-        notification.Add.Label( text );
+
+        var inputHintPattern = "<InputHint=";
+        foreach ( var word in text.Split( " " ) )
+        {
+            if ( word.Contains( inputHintPattern ) )
+            {
+                var inputAction = word.Substring( inputHintPattern.Length, word.Length - inputHintPattern.Length - 1 );
+                var hint = notification.AddChild<InputHint>();
+                hint.Button = inputAction;
+            }
+            else
+            {
+                notification.Add.Label( word );
+            }
+        }
 
         _ = Decay( notification, seconds );
     }

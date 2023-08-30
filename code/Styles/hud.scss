@@ -440,24 +440,37 @@ HudRootPanel {
 }
 
 
-NotificationManager {
+NotificationManager
+{
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
     right: 0;
 
-    > .dock {
+    .notification
+    {
+        gap: 3px;
+    }
+
+    inputhint
+    {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    > .dock
+    {
         position: absolute;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         align-content: center;
-
         width: 100%;
         min-height: 64px;
 
-        label {
+        label
+        {
             font-family: Oxanium;
             font-size: 24px;
             font-weight: 600;
@@ -465,35 +478,43 @@ NotificationManager {
             text-shadow: 0px 0px 5px rgba(black, 0.3);
         }
 
-        &.bottom-middle {
+        &.bottom-middle
+        {
             bottom: 160px;
             flex-direction: column-reverse;
 
-            > .notification {
+            > .notification
+            {
                 transition: all 0.1s ease;
 
-                &:intro {
+                &:intro
+                {
                     opacity: 0;
                     transform: scale(0.5);
                 }
 
-                &:outro {
+                &:outro
+                {
                     opacity: 0;
                     transform: scale(1.2);
                 }
             }
         }
 
-        &.middle {
+        &.middle
+        {
             top: 40%;
             flex-direction: column-reverse;
         }
 
-        &.top-middle {
+        &.top-middle
+        {
             top: 160px;
 
-            > .notification {
-                label {
+            > .notification
+            {
+                label
+                {
                     color: white;
                     font-size: 32px;
                     top: 2px;
@@ -505,7 +526,8 @@ NotificationManager {
                 padding-top: 10px;
                 padding-bottom: 10px;
 
-                &:intro {
+                &:intro
+                {
                     opacity: 0;
                     transform: scaleX(0.5);
                 }

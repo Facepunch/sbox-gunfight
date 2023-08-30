@@ -25,16 +25,17 @@ public partial class NotificationManager
 
 	TimeSince LastHint;
 
-	public List<string> Hints = new()
+	public List<string> Hints => new()
 	{
-		"Press B to switch fire modes if your weapon supports it.",
-		"Everything in Gunfight is subject to change."
+		"Press <InputHint=FireMode> to switch fire modes if your weapon supports it.",
+		"Press <InputHint=Slide> to traverse the map quickly by sliding.",
+		"Press <InputHint=Interact> interact with things.",
 	};
 
 	[GameEvent.Tick.Client]
 	protected void TickHints()
 	{
-		if ( LastHint > 60f )
+		if ( LastHint > 30f )
 		{
 			var randHint = Game.Random.FromList( Hints );
 			Current?.Add( NotificationDockType.BottomMiddle, randHint, 5 );

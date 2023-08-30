@@ -3,12 +3,6 @@
 [Library( "mp5" )]
 public partial class MP5 : GunfightWeapon
 {
-	public static Model MP5Model = Cloud.Model( "https://asset.party/facepunch/w_mp5" );
-	static Model MP5ViewModel = Cloud.Model( "https://asset.party/facepunch/v_mp5" );
-	
-	public override Model WeaponModel => MP5Model;
-	public override Model WeaponViewModel => MP5ViewModel;
-
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -32,8 +26,7 @@ public partial class MP5 : GunfightWeapon
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;
 		ViewModelEntity.EnableViewmodelRendering = true;
-		//ViewModelEntity.SetModel( "models/weapons/sbox_smg_mp5/v_mp5.vmdl" );
-		ViewModelEntity.Model = MP5ViewModel;
+		ViewModelEntity.Model = WeaponDefinition.CachedViewModel;
 
 		var arms = new AnimatedEntity( "models/first_person/first_person_arms.vmdl" );
 		arms.SetParent( ViewModelEntity, true );

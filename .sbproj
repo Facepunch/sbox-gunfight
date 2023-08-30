@@ -11,7 +11,12 @@
   "MenuResources": "/fonts/*\n/UI/*\n/GameMenu/*\n/Styles/*",
   "HasCode": true,
   "CodePath": "/code/",
-  "PackageReferences": [],
+  "PackageReferences": [
+    "facepunch.w_mp5",
+    "facepunch.v_mp5",
+    "facepunch.w_usp",
+    "facepunch.v_mp5"
+  ],
   "EditorReferences": null,
   "Metadata": {
     "MaxPlayers": 16,

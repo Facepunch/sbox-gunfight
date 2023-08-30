@@ -115,18 +115,10 @@
     {
         if ( WeaponViewer is null ) return;
 
-        // THIS IS TEMPORARY
-        // REPLACE THIS WITH REAL DATA
+        var def = WeaponDefinition.Find( Weapon.Name );
+        if ( def == null ) return;
 
-        if ( Weapon.Name == "mp5" )
-        {
-            WeaponViewer.SetModel( Gunfight.MP5.MP5Model );
-        }
-        else
-        {
-            WeaponViewer.SetModel( Gunfight.USP.USPModel );
-        }
-
+        WeaponViewer.SetModel( def.Model );
 
         foreach ( var att in Weapon.Attachments.Select( x => WeaponAttachment.Get( x ) ).OrderBy( x => x.Priority ) )
         {

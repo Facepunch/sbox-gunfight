@@ -3,12 +3,6 @@
 [Library( "usp" )]
 public partial class USP : GunfightWeapon
 {
-	public static Model USPModel = Cloud.Model( "https://asset.party/facepunch/w_usp" );
-	private static Model USPViewModel = Cloud.Model( "https://asset.party/facepunch/v_usp" );
-	
-	public override Model WeaponModel => USPModel;
-	public override Model WeaponViewModel => USPViewModel;
-
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -33,7 +27,7 @@ public partial class USP : GunfightWeapon
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;
 		ViewModelEntity.EnableViewmodelRendering = true;
-		ViewModelEntity.Model = USPViewModel;
+		ViewModelEntity.Model = WeaponDefinition.CachedViewModel;
 
 		var arms = new AnimatedEntity( "models/first_person/first_person_arms.vmdl" );
 		arms.SetParent( ViewModelEntity, true );

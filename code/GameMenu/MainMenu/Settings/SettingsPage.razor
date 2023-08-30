@@ -46,6 +46,6 @@
 {
     void Return( PanelEvent e )
     {
-        this.Navigate( "/" );
+        this.Navigate( Game.InGame ? "/ingame" : "/" );
     }
 }

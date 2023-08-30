@@ -21,15 +21,15 @@
             	</Title>
             </ActionButton>
     
+			<ActionButton onclick=@ViewSettings>
+				<Title>
+					Settings
+				</Title>
+			</ActionButton>
+
 			<ActionButton onclick=@Disconnect>
 				<Title>
 					Disconnect
-				</Title>
-			</ActionButton>
-    
-			<ActionButton onclick=@Quit>
-				<Title>
-					Quit Game
 				</Title>
 			</ActionButton>
 		</div>
@@ -38,10 +38,15 @@
 
 @code
 {
-	void Quit( PanelEvent e )
-	{
-		Game.Menu.Close();
-	}
+    void Quit( PanelEvent e )
+    {
+        Game.Menu.Close();
+    }
+
+    void ViewSettings()
+    {
+        this.Navigate( "/settings" );
+    }
 
 	void Respawn( PanelEvent e )
 	{

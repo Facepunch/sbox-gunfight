@@ -46,12 +46,16 @@ WeaponCard
 
     &:hover
     {
-        opacity: 0.7;
-        border-left: 4px solid $theme-color;
+        transform: scale( 1.02 );
 
         .title
         {
             color: white;
+        }
+
+        > .background
+        {
+            background-color: rgb( 57, 83, 143 );
         }
     }
 }

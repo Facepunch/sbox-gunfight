@@ -27,9 +27,6 @@ ClassModal
 
     .weapons
     {
-        flex-shrink: 0;
-        flex-grow: 0;
-        height: 64px;
         pointer-events: all;
         gap: 16px;
     }
@@ -84,7 +81,7 @@ ClassModal
         gap: 16px;
     }
 
-    .main
+    > .main
     {
         height: 100%;
         pointer-events: none;
@@ -93,12 +90,6 @@ ClassModal
         padding-top: 0;
         flex-direction: column;
         gap: 32px;
-
-        > .title
-        {
-            font-family: $main-font-bold;
-            font-size: 40px;
-        }
 
         .bold
         {

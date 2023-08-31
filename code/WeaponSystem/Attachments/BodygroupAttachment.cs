@@ -40,7 +40,7 @@ public partial class BodygroupAttachment : WeaponAttachment
 
 		foreach ( var kv in bodygroups )
 		{
-			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
+			//Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
 			vm.SetBodyGroup( kv.Key, kv.Value );
 		}
 	}
@@ -51,7 +51,7 @@ public partial class BodygroupAttachment : WeaponAttachment
 
 		foreach ( var kv in Bodygroups )
 		{
-			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
+			//Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
 			wpn.SetBodyGroup( kv.Key, kv.Value );
 		}
 	}
@@ -62,7 +62,7 @@ public partial class BodygroupAttachment : WeaponAttachment
 
 		foreach ( var kv in SceneModelBodygroups )
 		{
-			Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
+			//Log.Info( $"Setting bodygroup: {kv.Key}, {kv.Value}" );
 			mdl.SetBodyGroup( kv.Key, kv.Value );
 		}
 

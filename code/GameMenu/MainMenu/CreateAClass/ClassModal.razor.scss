@@ -11,8 +11,11 @@ ClassModal
 
     .weapon-view
     {
+        position: absolute;
         flex-grow: 1;
         width: 100%;
+        height: 100%;
+        z-index: -1;
 
         WeaponViewer
         {
@@ -27,7 +30,8 @@ ClassModal
 
     .weapons
     {
-        pointer-events: all;
+        justify-content: center;
+        flex-direction: column;
         gap: 16px;
     }
 
@@ -76,9 +80,8 @@ ClassModal
     {
         flex-shrink: 0;
         flex-grow: 0;
-        height: 64px;
-        pointer-events: all;
         gap: 16px;
+        flex-direction: column;
     }
 
     > .main
@@ -86,7 +89,6 @@ ClassModal
         height: 100%;
         pointer-events: none;
         justify-content: center;
-        align-items: center;
         padding-top: 0;
         flex-direction: column;
         gap: 32px;

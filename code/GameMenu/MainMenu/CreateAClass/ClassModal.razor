@@ -24,13 +24,22 @@
 
             <div class="options">
                 <ActionButton onclick=@( () => SetActive() )>
-                    <Title>Set as active</Title>
+                    <Title>Set Active</Title>
+                    <Extra>
+                        <i>check</i>
+                    </Extra>
                 </ActionButton>
                 <ActionButton onclick=@( () => Save() )>
                     <Title>Save</Title>
+                    <Extra>
+                        <i>save</i>
+                    </Extra>
                 </ActionButton>
                 <ActionButton onclick=@( () => Delete() )>
                     <Title>Delete</Title>
+                    <Extra>
+                        <i>trash</i>
+                    </Extra>
                 </ActionButton>
             </div>
         }
@@ -39,6 +48,8 @@
             <div class="weapon-view">
                 <WeaponViewer Weapon:bind=@Weapon @ref=WeaponViewer />
             </div>
+
+            <div style="flex-grow: 1;" />
 
             <div class="attachment-slots">
 

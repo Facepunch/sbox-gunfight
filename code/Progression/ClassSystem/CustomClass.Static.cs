@@ -16,13 +16,23 @@ public partial class CustomClass
 	}
 
 	/// <summary>
+	/// Get the selected custom class name
+	/// </summary>
+	/// <returns></returns>
+	public static string GetSelectedName()
+	{
+		var selected = PersistenceSystem.Instance.Get<string>( PERSISTENCE_BUCKET_PREFS, "_Selected", null );
+		return selected;
+	}
+
+	/// <summary>
 	/// Get the selected custom class that you'lls spawn with
 	/// </summary>
 	/// <returns></returns>
 	public static CustomClass GetSelected()
 	{
-		var selected = PersistenceSystem.Instance.Get<string>( PERSISTENCE_BUCKET_PREFS, "_Selected", null );
-		if ( selected is null ) return null;
+		var selected = GetSelectedName();
+		if ( string.IsNullOrEmpty( selected ) ) return null;
 
 		if ( All.TryGetValue( selected, out var customClass ) )
 		{

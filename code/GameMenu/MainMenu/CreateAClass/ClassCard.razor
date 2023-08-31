@@ -6,7 +6,7 @@
 @attribute [StyleSheet]
 @namespace Facepunch.Gunfight.MainMenu
 
-<root>
+<root class="@( IsSelected ? "selected" : "" )">
     <div class="background" />
 
     @if ( CustomClass != null )
@@ -21,7 +21,13 @@
     }
 
     <div class="title">
-        @ClassName
+        <label>@ClassName</label>
+
+        @if ( IsSelected )
+        {
+            <div style="flex-grow: 1;"/>
+            <i>circle-check</i>
+        }
     </div>
 </root>
 
@@ -29,6 +35,7 @@
 {
     public CreateAClass.CustomClass CustomClass { get; set; }
     public string ClassName { get; set; }
+    public bool IsSelected => CreateAClass.CustomClass.GetSelectedName() == ClassName;
 
     public Action<string, CreateAClass.CustomClass> OnSave;
     public Action<string> OnDelete;

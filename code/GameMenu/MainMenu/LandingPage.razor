@@ -37,18 +37,15 @@
 			<div style="flex-grow: 1;"/>
             
             <div class="row">
-                @if ( Game.IsEditor )
-                {
-                    <ActionButton onclick=@CreateAClass>
-                        <Title>Create A Class</Title>
-                        <Description>
-                            Make your own loadouts here.
-                        </Description>
-                        <Extra>
-                            <Panel class="new" />
-                        </Extra>
-                    </ActionButton>
-                }
+                <ActionButton onclick=@CreateAClass>
+                    <Title>Create A Class</Title>
+                    <Description>
+                        Make your own loadouts here.
+                    </Description>
+                    <Extra>
+                        <Panel class="new" />
+                    </Extra>
+                </ActionButton>
                 
                 <ActionButton onclick=@ViewStats>
                     <Title>Stats</Title>

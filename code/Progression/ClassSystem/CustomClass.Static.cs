@@ -4,6 +4,7 @@ namespace Facepunch.Gunfight.CreateAClass;
 public partial class CustomClass
 {
 	const string PERSISTENCE_BUCKET = "progression.createaclass";
+	const string PERSISTENCE_BUCKET_PREFS = "progression.createaclass.preferences";
 
 	/// <summary>
 	/// Get a list of custom classes
@@ -15,10 +16,36 @@ public partial class CustomClass
 	}
 
 	/// <summary>
+	/// Get the selected custom class that you'lls spawn with
+	/// </summary>
+	/// <returns></returns>
+	public static CustomClass GetSelected()
+	{
+		var selected = PersistenceSystem.Instance.Get<string>( PERSISTENCE_BUCKET_PREFS, "_Selected", null );
+		if ( selected is null ) return null;
+
+		if ( All.TryGetValue( selected, out var customClass ) )
+		{
+			return customClass;
+		}
+		
+		return null;
+	}
+
+	/// <summary>
+	/// Set the selected custom class that you'll spawn with
+	/// </summary>
+	/// <param name="name"></param>
+	public static void SetSelected( string name )
+	{
+		PersistenceSystem.Instance.Set( PERSISTENCE_BUCKET_PREFS, "_Selected", name );
+	}
+
+	/// <summary>
 	/// A reference to the custom class list.
 	/// </summary>
 	[SkipHotload]
-	public static Dictionary<string, CustomClass> All { get; set; } = Fetch() ?? new();
+	public static Dictionary<string, CustomClass> All => Fetch() ?? new();
 
 	/// <summary>
 	/// Save a custom class to persistence and in memory.
@@ -27,7 +54,6 @@ public partial class CustomClass
 	/// <param name="newClass"></param>
 	public static void SaveOne( string className, CustomClass newClass )
 	{
-		All[className] = newClass;
 		PersistenceSystem.Instance.Set( PERSISTENCE_BUCKET, className, newClass );
 	}
 
@@ -37,7 +63,6 @@ public partial class CustomClass
 	/// <param name="className"></param>
 	public static void Delete( string className )
 	{
-		All.Remove( className );
 		PersistenceSystem.Instance.Remove( PERSISTENCE_BUCKET, className );
 	}
 }

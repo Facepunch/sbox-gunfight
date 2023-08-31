@@ -20,8 +20,6 @@ public partial class WarGamemode : Gamemode
 	public override void Spawn()
 	{
 		base.Spawn();
-
-		LoadoutSystem.AllowCustomLoadouts = true;
 	}
 
 	public override void Initialize()
@@ -57,14 +55,6 @@ public partial class WarGamemode : Gamemode
 		UI.GunfightChatbox.AddChatEntry( To.Everyone, cl.Name, $"joined {teamComponent.Team.GetName()}", cl.SteamId, false );
 
 		VerifyEnoughPlayers();
-	}
-
-	public override bool PlayerLoadout( GunfightPlayer player )
-	{
-		RandomizeLoadout( false );
-		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
-
-		return true;
 	}
 
 	public override void PostPlayerKilled( GunfightPlayer player, DamageInfo lastDamage )

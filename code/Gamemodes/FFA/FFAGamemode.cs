@@ -38,7 +38,6 @@ public partial class FFAGamemode : Gamemode
 	public override void Spawn()
 	{
 		base.Spawn();
-		LoadoutSystem.AllowCustomLoadouts = true;
 	}
 
 	public override void AssignTeam( IClient cl )
@@ -63,15 +62,6 @@ public partial class FFAGamemode : Gamemode
 		}
 	}
 
-
-	public override bool PlayerLoadout( GunfightPlayer player )
-	{
-		RandomizeLoadout();
-		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
-
-		return true;
-	}
-
 	public override bool CanPlayerRegenerate( GunfightPlayer player )
 	{
 		return true;
@@ -80,6 +70,8 @@ public partial class FFAGamemode : Gamemode
 	public override void PreSpawn( GunfightPlayer player )
 	{
 		player.SpawnPointTag = null;
+
+		base.PreSpawn( player );
 	}
 
 	public void SetGameState( GameState newState )
@@ -127,11 +119,9 @@ public partial class FFAGamemode : Gamemode
 			
 			CleanupMap();
 			TimeUntilNextState = RoundCountdownLength;
-			RandomizeLoadout();
 			RespawnAllPlayers();
 
 			UI.GamemodeIdentity.RpcShow( To.Everyone, RoundCountdownLength.CeilToInt() );
-			UI.LoadoutPanel.RpcShow( To.Everyone );
 		}
 		else if ( after == GameState.RoundActive )
 			TimeUntilNextState = RoundLength;

@@ -15,7 +15,6 @@
 
     <div class="actions">
         <div class="header" />
-        <button class="" onclick=@ToggleLoadoutMenu><label class="text">CHANGE LOADOUT</label></button>
         <button class="primary" onclick=@Spawn><label class="text">@DeployText</label></button>
     </div>
 </root>
@@ -44,10 +43,5 @@
     public void Spawn()
     {
         WarGamemode.AskToRespawn( ( Selected as Entity )?.NetworkIdent ?? 0 );
-    }
-
-    public void ToggleLoadoutMenu()
-    {
-        LoadoutSelector.This.ToggleOpen();
     }
 }

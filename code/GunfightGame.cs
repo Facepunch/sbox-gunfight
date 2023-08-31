@@ -23,7 +23,6 @@ partial class GunfightGame : GameManager
 		if ( Game.IsServer )
 		{
 			Hud = new GunfightHud();
-			_ = new LoadoutSystem();
 			Scores = new();
 		}
 

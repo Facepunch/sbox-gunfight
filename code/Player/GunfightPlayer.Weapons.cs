@@ -1,3 +1,5 @@
+using Facepunch.Gunfight.CreateAClass;
+
 namespace Facepunch.Gunfight;
 
 public partial class GunfightPlayer
@@ -6,6 +8,35 @@ public partial class GunfightPlayer
 	/// Accessor to grab current weapon as a GunfightWeapon
 	/// </summary>
 	public GunfightWeapon CurrentWeapon => ActiveChild as GunfightWeapon;
+
+	public CustomClass SelectedLoadout { get; set; }
+
+	[ConCmd.Server( "gunfight_loadout_set" )]
+	public static void CmdSetLoadout( string json )
+	{
+		var cl = ConsoleSystem.Caller;
+		var player = cl?.Pawn as GunfightPlayer;
+		if ( !player.IsValid() ) return;
+
+		if ( json is not null )
+		{
+			var customClass = Json.Deserialize<CustomClass>( json );
+			if ( customClass != null )
+			{
+				player.SelectedLoadout = customClass;
+				Log.Info( "Updated player loadout" );
+			}
+		}
+
+		GamemodeSystem.Current?.PlayerLoadout( player );
+	}
+
+	[ClientRpc]
+	public void AskForLoadout()
+	{
+		var customClass = CustomClass.GetSelected();
+		CmdSetLoadout( Json.Serialize( customClass ) );
+	}
 
 	/// <summary>
 	/// Can we start changing weapons?

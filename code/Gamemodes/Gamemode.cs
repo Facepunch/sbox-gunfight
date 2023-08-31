@@ -157,6 +157,15 @@ public abstract partial class Gamemode : Entity
 		PlayerCount--;
 	}
 
+	public virtual List<CreateAClass.CustomClass> DefaultClasses => new()
+	{
+		new()
+		{
+			PrimaryWeapon = { Name = "mp5" },
+			SecondaryWeapon = { Name = "usp", Attachments = new() { "usp_rmr", "usp_sd" } } 
+		}
+	};
+
 	/// <summary>
 	/// Used to apply a loadout to a player
 	/// </summary>
@@ -164,25 +173,17 @@ public abstract partial class Gamemode : Entity
 	/// <returns></returns>
 	public virtual bool PlayerLoadout( GunfightPlayer player )
 	{
+		var loadout = player.SelectedLoadout;
+		if ( loadout is null )
+		{
+			loadout = DefaultClasses.First();
+		}
+
+		player.GiveWeapon( loadout.PrimaryWeapon.Name, true, loadout.PrimaryWeapon.Attachments.ToArray() );
+		player.GiveWeapon( loadout.SecondaryWeapon.Name, false, loadout.SecondaryWeapon.Attachments.ToArray() );
+
+
 		return false;
-	}
-
-	protected static Loadout GetRandomLoadout( bool unique = true )
-	{
-		var loadouts = Loadout.WithTag( "gunfight" ).ToList();
-		if ( unique ) loadouts = loadouts/*.Where( x => x != LoadoutSystem.MatchLoadout )*/.ToList();
-
-		if ( loadouts.Count < 1 ) return null;
-
-		var index = Game.Random.Int( 1, loadouts.Count() ) - 1;
-		var loadout = loadouts[index];
-
-		return loadout;
-	}
-
-	protected void RandomizeLoadout( bool unique = true )
-	{
-		LoadoutSystem.MatchLoadout = GetRandomLoadout( unique );
 	}
 
 	/// <summary>
@@ -283,7 +284,7 @@ public abstract partial class Gamemode : Entity
 
 	public virtual void PreSpawn( GunfightPlayer player )
 	{
-		//
+		player.AskForLoadout( To.Single( player ) );
 	}
 
 	public virtual void RespawnAllPlayers()

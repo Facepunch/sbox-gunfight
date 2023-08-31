@@ -99,28 +99,23 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 
 	public void GiveAll()
 	{
-		var overrideLoadout = GamemodeSystem.Current?.PlayerLoadout( this ) ?? false;
-		// Use a default loadout
-		if ( !overrideLoadout )
-		{
-			GiveAmmo( AmmoType.Pistol, MaxAmmo( AmmoType.Pistol ) );
-			GiveAmmo( AmmoType.SMG, MaxAmmo( AmmoType.SMG ) );
-			GiveAmmo( AmmoType.Rifle, MaxAmmo( AmmoType.Rifle ) );
-			GiveAmmo( AmmoType.DMR, MaxAmmo( AmmoType.DMR ) );
-			GiveAmmo( AmmoType.Sniper, MaxAmmo( AmmoType.Sniper ) );
-			GiveAmmo( AmmoType.Shotgun, MaxAmmo( AmmoType.Shotgun ) );
-
-			var primary = WeaponDefinition.Random( WeaponDefinition.FindFromSlot( WeaponSlot.Primary ) );
-			GiveWeapon( primary, true );
-
-			var secondary = WeaponDefinition.Random( WeaponDefinition.FindFromSlot( WeaponSlot.Secondary ) );
-			GiveWeapon( secondary );
-		}
+		GiveAmmo( AmmoType.Pistol, MaxAmmo( AmmoType.Pistol ) );
+		GiveAmmo( AmmoType.SMG, MaxAmmo( AmmoType.SMG ) );
+		GiveAmmo( AmmoType.Rifle, MaxAmmo( AmmoType.Rifle ) );
+		GiveAmmo( AmmoType.DMR, MaxAmmo( AmmoType.DMR ) );
+		GiveAmmo( AmmoType.Sniper, MaxAmmo( AmmoType.Sniper ) );
+		GiveAmmo( AmmoType.Shotgun, MaxAmmo( AmmoType.Shotgun ) );
 	}
 
 	public GunfightWeapon GiveWeapon( string name, bool makeActive = false, params string[] attachments )
 	{
 		var wpn = WeaponDefinition.CreateWeapon( name );
+
+		foreach ( var att in attachments )
+		{
+			wpn.SetAttachment( att, true );
+		}
+
 		Inventory.Add( wpn, makeActive );
 		return wpn;
 	}
@@ -128,6 +123,12 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 	public GunfightWeapon GiveWeapon( WeaponDefinition def, bool makeActive = false, params string[] attachments )
 	{
 		var wpn = WeaponDefinition.CreateWeapon( def );
+
+		foreach ( var att in attachments )
+		{
+			wpn.SetAttachment( att, true );
+		}
+
 		Inventory.Add( wpn, makeActive );
 		return wpn;
 	}

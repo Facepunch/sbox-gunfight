@@ -102,7 +102,7 @@
         var weapon = player?.ActiveChild as GunfightWeapon;
         var isAiming = player?.IsAiming ?? false;
 
-	    SetClass( "visible", ( !isAiming || PlayerController.UseAimDebug ) && player.LifeState == LifeState.Alive && !weapon.IsReloading );
+	    SetClass( "visible", ( !isAiming || PlayerController.UseAimDebug ) && player.LifeState == LifeState.Alive && !(weapon?.IsReloading ?? false) );
 
 	    if ( !player.IsValid() ) return;
 	    if ( !weapon.IsValid() ) return;

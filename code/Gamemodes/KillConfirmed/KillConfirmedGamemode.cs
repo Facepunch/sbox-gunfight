@@ -38,7 +38,6 @@ public partial class KillConfirmedGamemode : Gamemode
 	public override void Spawn()
 	{
 		base.Spawn();
-		LoadoutSystem.AllowCustomLoadouts = true;
 	}
 
 	public override void AssignTeam( IClient cl )
@@ -64,15 +63,6 @@ public partial class KillConfirmedGamemode : Gamemode
 		}
 	}
 
-
-	public override bool PlayerLoadout( GunfightPlayer player )
-	{
-		RandomizeLoadout();
-		LoadoutSystem.GetLoadout( player.Client )?.Give( player );
-
-		return true;
-	}
-
 	public override bool CanPlayerRegenerate( GunfightPlayer player )
 	{
 		return true;
@@ -81,6 +71,8 @@ public partial class KillConfirmedGamemode : Gamemode
 	public override void PreSpawn( GunfightPlayer player )
 	{
 		player.SpawnPointTag = player.Team == Team.BLUFOR ? "one" : "two";
+
+		base.PreSpawn( player );
 	}
 
 	public void SetGameState( GameState newState )
@@ -130,11 +122,9 @@ public partial class KillConfirmedGamemode : Gamemode
 
 			CleanupMap();
 			TimeUntilNextState = RoundCountdownLength;
-			RandomizeLoadout();
 			RespawnAllPlayers();
 
 			UI.GamemodeIdentity.RpcShow( To.Everyone, RoundCountdownLength.CeilToInt() );
-			UI.LoadoutPanel.RpcShow( To.Everyone );
 		}
 		else if ( after == GameState.RoundActive )
 			TimeUntilNextState = RoundLength;

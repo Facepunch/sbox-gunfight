@@ -23,6 +23,9 @@
             <div style="flex-grow: 1;" />
 
             <div class="options">
+                <ActionButton onclick=@( () => SetActive() )>
+                    <Title>Set as active</Title>
+                </ActionButton>
                 <ActionButton onclick=@( () => Save() )>
                     <Title>Save</Title>
                 </ActionButton>
@@ -76,6 +79,13 @@
         OnSave?.Invoke( ClassName, CustomClass );
         CloseModal( true );
         NotificationSystem.Notify( $"{ClassName} saved!", "Create A Class" );
+    }
+
+    void SetActive()
+    {
+        CreateAClass.CustomClass.SetSelected( ClassName );
+        CloseModal( true );
+        NotificationSystem.Notify($"{ClassName} set as active class", "Create A Class");
     }
 
     void Return()

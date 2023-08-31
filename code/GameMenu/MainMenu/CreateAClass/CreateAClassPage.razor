@@ -49,7 +49,7 @@
 
     void Return( PanelEvent e )
     {
-        this.Navigate( "/" );
+        this.Navigate( Game.InGame ? "/ingame" : "/" );
     }
 
     void CreateClass( PanelEvent e )

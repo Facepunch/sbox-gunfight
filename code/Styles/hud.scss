@@ -85,106 +85,12 @@ vitals {
 }
 
 .bottom-right {
-    right: 96px;
+    right: 32px;
 }
 
 .bottom-left, .bottom-right {
     position: absolute;
     bottom: 80px;
-}
-
-.bottom-right {
-    ammo {
-        opacity: 0;
-        &.active {
-            opacity: 1;
-        }
-            
-        flex-direction: row-reverse;
-        font-family: $main-font-bold;
-        width: 335px;
-        height: 100%;
-        align-items: flex-end;
-
-        .icon {
-            top: -15px;
-            left: 0px;
-            position: absolute;
-            aspect-ratio: 2;
-            width: 220px;
-        }
-
-        .gunname {
-            position: absolute;
-            bottom: 15px;
-            left: 7px;
-            font-family: $alternate-font;
-            font-size: 18px;
-            text-align: left;
-            color: $theme-color;
-            opacity: 0;
-        }
-
-        .ammobar {
-            position: absolute;
-            flex-direction: row-reverse;
-            flex-shrink: 0;
-            align-items: flex-start;
-            top: 80%;
-            opacity: 0;
-
-            .bullet {
-                width: 2px;
-                flex-shrink: 0;
-                flex-grow: 1;
-                background-color: $theme-color;
-                margin-left: 2px;
-                transition: all 0.25s ease-out;
-                min-height: 8px;
-
-                &.empty {
-                    background-color: $theme-color;
-                    opacity: 0.0;
-                    box-shadow: none;
-                }
-            }
-
-            .anim {
-                background-color: $theme-color;
-                opacity: 0.04;
-                box-shadow: none;
-                animation-name: spentbullet;
-                animation-duration: .2s;
-                animation-timing-function: linear;
-                animation-iteration-count: 1;
-            }
-        }
-
-        label {
-            min-width: 100px;
-            text-align: right;
-
-            &.danger {
-                color: #f00;
-            }
-        }
-
-        &.low {
-            box-shadow: none;
-
-            .currentammo {
-                color: red;
-                animation-name: lowammo;
-                animation-duration: 1s;
-                animation-timing-function: linear;
-                animation-iteration-count: infinite;
-            }
-
-            .bullet {
-                background-color: red;
-            }
-        }
-    }
 }
 
 @keyframes spentbullet {
@@ -226,37 +132,100 @@ Stance {
     }
 }
 
-Ammo {
-    border-right: 3px solid rgba( $theme-color, 1 );
-    padding-right: 30px;
+Ammo
+{
+    align-items: center;
+    flex-direction: row-reverse;
 
-    .info {
-        bottom: 4px;
-        flex-direction: column;
+    > .background
+    {
+        position: absolute;
+        width: 1024px;
+        left: -128px;
+        height: 128px;
+        background-image: radial-gradient( rgba( black, 0.5 ), rgba( black, 0.3 ), rgba( black, 0 ), rgba( black, 0 ), rgba( black, 0 ) );
+    }
+
+    .weapon-viewer
+    {
+        padding-left: 16px;
+        opacity: 0.75;
+    }
+
+    WeaponViewer
+    {
+        width: 256px;
+        height: 128px;
+        filter: saturate(0);
+        filter: invert(1);
+    }
+
+    opacity: 0;
+
+    &.active
+    {
+        opacity: 1;
+    }
+
+    .info
+    {
         font-weight: bolder;
         color: $theme-color;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0px;
+        flex-direction: column;
+        top: 3px;
+        gap: 2px;
 
-        .inventory {
-            padding-right: 2px;
-            width: 100%;
-            font-family: Oxanium;
-            font-weight: 400;
-            font-size: 20px;
-            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-            color: rgba(255, 255, 255, 0.54);
+        .row
+        {
+            align-items: flex-end;
         }
 
-        .currentammo {
-            width: 100%;
+        .inventory
+        {
+            font-family: $main-font;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.70);
+        }
+
+        .currentammo
+        {
             font-family: $main-font-bold;
-            font-size: 50px;
+            font-size: 38px;
             color: white;
-            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-            height: 55px;
+            height: 41px;
+            padding-right: 10px;
+        }
+    }
+
+    .gunname
+    {
+        font-family: $main-font-bold;
+        font-size: 20px;
+        color: white;
+        opacity: 1;
+    }
+
+    label
+    {
+        text-align: right;
+
+        &.danger
+        {
+            color: #f00;
+        }
+    }
+
+    &.low
+    {
+        box-shadow: none;
+
+        .currentammo
+        {
+            color: red;
+            animation-name: lowammo;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
         }
     }
 }

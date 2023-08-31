@@ -20,7 +20,7 @@
             <div class="scroll list">
                 @foreach ( var kv in CreateAClass.CustomClass.All )
                 {
-                    <ClassCard ClassName=@kv.Key CustomClass=@kv.Value />
+                    <ClassCard OnDelete=@OnDelete OnSave=@OnSave ClassName=@kv.Key CustomClass=@kv.Value />
                 }
 
                 <ClassCard ClassName="Create new class..." onclick=@CreateClass />
@@ -37,6 +37,16 @@
 
 @code
 {
+    void OnSave( string className, CreateAClass.CustomClass customClass )
+    {
+        CreateAClass.CustomClass.SaveOne( className, customClass );
+    }
+
+    void OnDelete( string className )
+    {
+        CreateAClass.CustomClass.Delete( className );
+    }
+
     void Return( PanelEvent e )
     {
         this.Navigate( "/" );

@@ -25,6 +25,15 @@ ClassModal
         pointer-events: all;
     }
 
+    .weapons
+    {
+        flex-shrink: 0;
+        flex-grow: 0;
+        height: 64px;
+        pointer-events: all;
+        gap: 16px;
+    }
+
     .attachment-slots
     {
         flex-shrink: 0;
@@ -66,12 +75,6 @@ ClassModal
         }
     }
 
-    .title
-    {
-        font-family: $main-font-bold;
-        font-size: 40px;
-    }
-
     .options
     {
         flex-shrink: 0;
@@ -90,6 +93,12 @@ ClassModal
         padding-top: 0;
         flex-direction: column;
         gap: 32px;
+
+        > .title
+        {
+            font-family: $main-font-bold;
+            font-size: 40px;
+        }
 
         .bold
         {

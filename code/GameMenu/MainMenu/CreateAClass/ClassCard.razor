@@ -19,8 +19,15 @@
     public CreateAClass.CustomClass CustomClass { get; set; }
     public string ClassName { get; set; }
 
-    protected override void OnClick(MousePanelEvent e)
+    public Action<string, CreateAClass.CustomClass> OnSave;
+    public Action<string> OnDelete;
+
+    protected override void OnClick( MousePanelEvent e )
     {
-            UI.ModalSystem.Push( new ClassModal( ClassName, CustomClass, () => Log.Info("yep" ) ) );
+        UI.ModalSystem.Push( new ClassModal( ClassName, CustomClass ) 
+        {
+            OnSave = OnSave,
+            OnDelete = OnDelete
+        } );
     }
 }

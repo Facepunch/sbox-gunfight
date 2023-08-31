@@ -13,14 +13,14 @@
 
         @if ( Weapon is null )
         {
-            <div class="options">
-                <ActionButton onclick=@( () => Select( CustomClass.PrimaryWeapon ) )>
-                    <Title>@CustomClass.PrimaryWeapon.Name</Title>
-                </ActionButton>
-                <ActionButton onclick=@( () => Select( CustomClass.SecondaryWeapon ) )>
-                    <Title>@CustomClass.SecondaryWeapon.Name</Title>
-                </ActionButton>
+            <div style="flex-grow: 1;" />
+
+            <div class="weapons">
+                <WeaponCard Weapon:bind=@CustomClass.PrimaryWeapon onclick=@( () => Select( CustomClass.PrimaryWeapon ) ) />
+                <WeaponCard Weapon:bind=@CustomClass.SecondaryWeapon onclick=@( () => Select( CustomClass.SecondaryWeapon ) ) />
             </div>
+
+            <div style="flex-grow: 1;" />
 
             <div class="options">
                 <ActionButton onclick=@( () => Save() )>
@@ -34,7 +34,7 @@
         else
         {
             <div class="weapon-view">
-                <WeaponViewer @ref="WeaponViewer" />
+                <WeaponViewer Weapon:bind=@Weapon @ref=WeaponViewer />
             </div>
 
             <div class="attachment-slots">
@@ -64,7 +64,8 @@
     public string ClassName { get; set; }
     public WeaponViewer WeaponViewer { get; set; }
 
-    public Action OnSave;
+    public Action<string, CreateAClass.CustomClass> OnSave;
+    public Action<string> OnDelete;
 
     public Gunfight.CreateAClass.CustomClass CustomClass { get; set; }
 
@@ -72,7 +73,9 @@
 
     public void Save()
     {
-        OnSave?.Invoke();
+        OnSave?.Invoke( ClassName, CustomClass );
+        CloseModal( true );
+        NotificationSystem.Notify( $"{ClassName} saved!", "Create A Class" );
     }
 
     void Return()
@@ -88,6 +91,8 @@
 
     public void Delete()
     {
+        OnDelete?.Invoke( ClassName );
+        CloseModal( true );
     }
 
     string AttachmentClass( WeaponAttachment att )
@@ -115,57 +120,17 @@
     {
         if ( WeaponViewer is null ) return;
 
-        var def = WeaponDefinition.Find( Weapon.Name );
-        if ( def == null ) return;
-
-        WeaponViewer.SetModel( def.Model );
-
-        foreach ( var att in Weapon.Attachments.Select( x => WeaponAttachment.Get( x ) ).OrderBy( x => x.Priority ) )
-        {
-            att?.SetupSceneModel( WeaponViewer.Model );
-        }
+        WeaponViewer.Update();
     }
 
-    public ClassModal( string name, Gunfight.CreateAClass.CustomClass customClass, Action callback = null )
+    public ClassModal( string name, Gunfight.CreateAClass.CustomClass customClass )
     {
         ClassName = name;
         CustomClass = customClass;
-        OnSave = callback;
-    }
-
-    void Update()
-    {
-        if ( WeaponViewer is null ) return;
-
-        var bounds = WeaponViewer.Model.Bounds;
-        var middle = (bounds.Mins + bounds.Maxs) * 0.5f;
-
-        var size = 0f;
-        size = MathF.Max( size, MathF.Abs( bounds.Mins.x ) + MathF.Abs( bounds.Maxs.x ) );
-        size = MathF.Max( size, MathF.Abs( bounds.Mins.y ) + MathF.Abs( bounds.Maxs.y ) );
-        size = MathF.Max( size, MathF.Abs( bounds.Mins.z ) + MathF.Abs( bounds.Maxs.z ) );
-
-        WeaponViewer.Camera.Position = Vector3.Right * -middle.y + Vector3.Up * middle.z + Vector3.Backward * ( 40f + ( size * 2f ) );
-        WeaponViewer.Camera.FieldOfView = 23;
-        WeaponViewer.Camera.ZNear = 5;
-        WeaponViewer.Camera.ZFar = 15000;
-        WeaponViewer.Camera.AmbientLightColor = Color.Gray * 0.5f;
-
-        //We should be using the map fog but use this for now. - louie
-        WeaponViewer.World.GradientFog.Enabled = true;
-        WeaponViewer.World.GradientFog.Color = new Color(0.03f, 0.11f, 0.19f);
-        WeaponViewer.World.GradientFog.MaximumOpacity = 0.28f;
-        WeaponViewer.World.GradientFog.StartHeight = 0;
-        WeaponViewer.World.GradientFog.EndHeight = 2000;
-        WeaponViewer.World.GradientFog.DistanceFalloffExponent = 2;
-        WeaponViewer.World.GradientFog.VerticalFalloffExponent = 0;
-        WeaponViewer.World.GradientFog.StartDistance = 500;
-        WeaponViewer.World.GradientFog.EndDistance = 1000;
     }
 
     protected override void OnAfterTreeRender( bool firstTime )
     {
         Refresh();
-        Update();
     }
 }

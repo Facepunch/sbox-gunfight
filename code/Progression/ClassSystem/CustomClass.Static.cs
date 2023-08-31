@@ -30,4 +30,14 @@ public partial class CustomClass
 		All[className] = newClass;
 		PersistenceSystem.Instance.Set( PERSISTENCE_BUCKET, className, newClass );
 	}
+
+	/// <summary>
+	/// Delete a custom class
+	/// </summary>
+	/// <param name="className"></param>
+	public static void Delete( string className )
+	{
+		All.Remove( className );
+		PersistenceSystem.Instance.Remove( PERSISTENCE_BUCKET, className );
+	}
 }

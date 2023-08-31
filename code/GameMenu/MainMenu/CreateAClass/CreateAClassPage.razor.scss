@@ -23,12 +23,19 @@ CreateAClassPage
 
     .list
     {
+        left: -32px;
         gap: 8px;
-        flex-direction: column;
+        flex-direction: row;
+        overflow-x: scroll;
+
+        padding-left: 32px;
+        padding-right: 32px;
+
+        mask: linear-gradient( to right, black, white 2%, white 98%, black );
     }
 
     .scroll
     {
-        overflow: scroll;
+        overflow-x: scroll;
     }
 }

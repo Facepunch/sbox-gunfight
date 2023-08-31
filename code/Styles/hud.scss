@@ -79,13 +79,16 @@ vitals {
     }
 }
 
-.bottom-left {
+.bottom-left
+{
+    bottom: 40px;
     left: 64px;
     flex-direction: column;
 }
 
 .bottom-right {
-    right: 32px;
+    bottom: 64px;
+    right: 64px;
     flex-direction: column-reverse;
 
     Ammo {
@@ -95,7 +98,6 @@ vitals {
 
 .bottom-left, .bottom-right {
     position: absolute;
-    bottom: 80px;
 }
 
 @keyframes spentbullet {

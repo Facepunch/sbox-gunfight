@@ -2,15 +2,16 @@
 {
     position: absolute;
     width: 100%;
-    bottom: 0;
+    bottom: 6px;
     left: 0;
     z-index: -1;
-    padding: 8px;
-    padding-left: 80px;
-    padding-right: 80px;
+    padding-left: 8px;
+    padding-right: 2px;
     padding-bottom: 0;
     align-items: center;
     gap: 8px;
+    mix-blend-mode: lighten;
+    opacity: 0.5;
 
     .segments
     {
@@ -21,7 +22,7 @@
         {
             height: 10px;
             width: 10%;
-            background-color: rgba( black, 0.2 );
+            background-color: rgba( #282828, 1 );
 
             .inner-bar
             {
@@ -38,8 +39,9 @@
         justify-content: center;
         text-align: center;
         padding: 0px 8px 0px 8px;
-        font-family: $main-font-semibold;
+        font-family: $main-font-bold;
         color: rgba( white, 0.8 );
         font-size: 24px;
+        display: none;
     }
 }

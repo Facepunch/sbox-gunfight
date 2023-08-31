@@ -51,6 +51,9 @@ public partial class GunfightPlayer
 	/// </summary>
 	public override Ray AimRay => new Ray( EyePosition, EyeRotation.Forward );
 
+	[ConVar.Client( "gunfight_gyro_aim" )]
+	public static bool UseGyroAim { get; set; } = true;
+
 	public override void BuildInput()
 	{
 		if ( Game.LocalClient.Components.Get<DevCamera>() != null ) return;
@@ -60,8 +63,16 @@ public partial class GunfightPlayer
 
 		BuildWeaponInput();
 
+		var look = Input.AnalogLook;
+		if ( UseGyroAim && Input.Down( "attack2" ) )
+		{
+			var velo = Input.MotionData.AngularVelocity;
+			velo *= 0.00025f;
+			look += new Angles( -velo.x, velo.y, 0 );
+		}
+
 		MoveInput = Input.AnalogMove;
-		var lookInput = (LookInput + Input.AnalogLook).Normal;
+		var lookInput = (LookInput + look).Normal;
 
 		if ( GamemodeSystem.Current?.AllowMovement == false )
 		{

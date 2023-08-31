@@ -22,9 +22,13 @@
                 {
                     <ClassCard OnDelete=@OnDelete OnSave=@OnSave ClassName=@kv.Key CustomClass=@kv.Value />
                 }
-
-                <ClassCard ClassName="Create new class..." onclick=@CreateClass />
             </div>
+
+            <ActionButton onclick=@CreateClass>
+                <Title>
+                    Create New Class
+                </Title>
+            </ActionButton>
 
 			<ActionButton onclick=@Return>
 				<Title>

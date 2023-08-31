@@ -9,6 +9,17 @@
 <root>
     <div class="background" />
 
+    @if ( CustomClass != null )
+    {
+        <div class="primary">
+            <WeaponViewer Weapon:bind=@CustomClass.PrimaryWeapon @ref=PrimaryWeaponViewer />
+        </div>
+
+        <div class="secondary">
+            <WeaponViewer Weapon:bind=@CustomClass.SecondaryWeapon @ref=SecondaryWeaponViewer />
+        </div>
+    }
+
     <div class="title">
         @ClassName
     </div>
@@ -21,6 +32,22 @@
 
     public Action<string, CreateAClass.CustomClass> OnSave;
     public Action<string> OnDelete;
+
+    public WeaponViewer PrimaryWeaponViewer { get; set; }
+    public WeaponViewer SecondaryWeaponViewer { get; set; }
+
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        if ( CustomClass != null )
+        {
+            PrimaryWeaponViewer.NoRotation = true;
+            PrimaryWeaponViewer.Update();
+
+            SecondaryWeaponViewer.NoRotation = true;
+            SecondaryWeaponViewer.Update();
+        }
+    }
 
     protected override void OnClick( MousePanelEvent e )
     {

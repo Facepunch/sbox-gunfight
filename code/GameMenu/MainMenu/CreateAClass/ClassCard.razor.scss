@@ -2,15 +2,36 @@
 
 ClassCard
 {
-    width: 356px;
+    width: 340px;
     height: 128px;
-    padding: 12px 26px;
+    padding: 12px 12px;
     align-items: center;
+    justify-content: center;
     pointer-events: all;
     cursor: pointer;
+    flex-shrink: 0;
+
+    .primary, .secondary
+    {
+        top: -8px;
+        width: 100%;
+        height: 100%;
+    }
+
+    WeaponViewer
+    {
+        height: 100%;
+        width: 100%;
+        filter: saturate(0);
+        filter: invert(1);
+        opacity: 0.5;
+    }
 
     .title
     {
+        left: 8px;
+        bottom: 8px;
+        position: absolute;
         font-family: $main-font-bold;
         font-size: 18px;
         text-transform: uppercase;
@@ -32,7 +53,6 @@ ClassCard
     &:hover
     {
         opacity: 0.7;
-        border-left: 4px solid $theme-color;
 
         .title
         {

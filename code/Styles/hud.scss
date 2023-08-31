@@ -86,6 +86,11 @@ vitals {
 
 .bottom-right {
     right: 32px;
+    flex-direction: column-reverse;
+
+    Ammo {
+        height: 96px;
+    }
 }
 
 .bottom-left, .bottom-right {
@@ -136,6 +141,7 @@ Ammo
 {
     align-items: center;
     flex-direction: row-reverse;
+    gap: 16px;
 
     > .background
     {
@@ -148,7 +154,6 @@ Ammo
 
     .weapon-viewer
     {
-        padding-left: 16px;
         opacity: 0.75;
     }
 
@@ -226,6 +231,31 @@ Ammo
             animation-duration: 1s;
             animation-timing-function: linear;
             animation-iteration-count: infinite;
+        }
+    }
+
+    InputHint
+    {
+        opacity: 0;
+    }
+
+    &.inactive
+    {
+        transform: scale(0.65);
+        right: 45px;
+        opacity: 0.6;
+
+
+        InputHint
+        {
+            transform:scale(1.66);
+            right: -64px;
+            opacity: 1;
+        }
+
+        .info
+        {
+            display: none;
         }
     }
 }

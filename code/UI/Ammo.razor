@@ -1,7 +1,7 @@
 ﻿@using Sandbox.UI;
 @using Sandbox.UI.Construct;
 
-@namespace Facepunch.Gunfight
+@namespace Facepunch.Gunfight.UI
 @inherits Panel
 
 <root>
@@ -21,12 +21,14 @@
 
             <label class="gunname">@Weapon.Name</label>
         </div>
+
+        <InputHint Button="SwitchWeapon" />
     }
 </root>
 
 @code
 {
-    public GunfightWeapon Weapon => GunfightCamera.Target?.ActiveChild as GunfightWeapon;
+    public GunfightWeapon Weapon { get; set; }
 
     public WeaponViewer WeaponViewer { get; set; }
     public CreateAClass.Weapon CCWeapon => new()

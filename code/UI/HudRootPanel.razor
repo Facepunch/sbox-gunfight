@@ -11,7 +11,11 @@
         </div>
 
         <div class="bottom-right">
-            <Ammo></Ammo>
+            @if ( Player.IsValid() )
+            {
+                <Ammo Weapon=@WeaponOne />
+                <Ammo class="inactive" Weapon=@WeaponTwo />
+            }
         </div>
 
         <div class="top-middle">
@@ -41,11 +45,19 @@
 
 @code
 {
+    public GunfightPlayer Player => Game.LocalPawn as GunfightPlayer;
+    public GunfightWeapon WeaponOne => Player?.ActiveChild as GunfightWeapon;
+    public GunfightWeapon WeaponTwo => ( Player?.ActiveChild as GunfightWeapon ) == Player.Inventory.PrimaryWeapon ? Player.Inventory.SecondaryWeapon : Player.Inventory.PrimaryWeapon;
     public static HudRootPanel Current;
 
     public HudRootPanel()
     {
         Current = this;
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( WeaponOne );
     }
 
     public override void Tick()

@@ -1,3 +1,5 @@
+using System;
+
 namespace Facepunch.Gunfight;
 
 public partial class GunfightPlayer
@@ -31,9 +33,22 @@ public partial class GunfightPlayer
 
 	public void BuildWeaponInput()
 	{
-		for ( int i = 1; i < 6; i++ )
+		if ( Input.Pressed( "SwitchWeapon" ) )
 		{
-			TrySlotFromInput( $"Slot{i}" );
+			Input.Clear( "SwitchWeapon" );
+
+			var current = Inventory.Active;
+			int index = 0;
+
+			if ( current == Inventory.PrimaryWeapon )
+			{
+				index = 1;
+			}
+
+			if ( Inventory.GetSlot( index ) is Entity weapon )
+			{
+				ActiveChildInput = weapon;
+			}
 		}
 
 		if ( Input.MouseWheel != 0 )

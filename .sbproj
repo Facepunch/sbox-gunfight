@@ -272,59 +272,25 @@
           "Name": "attack1",
           "KeyboardCode": "mouse1",
           "GamepadCode": "RightTrigger",
-          "GroupName": "Actions"
+          "GroupName": "Weapon Handling"
         },
         {
           "Name": "attack2",
           "KeyboardCode": "mouse2",
           "GamepadCode": "LeftTrigger",
-          "GroupName": "Actions"
+          "GroupName": "Weapon Handling"
         },
         {
           "Name": "reload",
           "KeyboardCode": "r",
           "GamepadCode": "X",
-          "GroupName": "Actions"
+          "GroupName": "Weapon Handling"
         },
         {
           "Name": "Interact",
           "KeyboardCode": "f",
           "GamepadCode": "Y",
           "GroupName": "Actions"
-        },
-        {
-          "Name": "Slot1",
-          "KeyboardCode": "1",
-          "GamepadCode": "DpadWest",
-          "GroupName": "Inventory"
-        },
-        {
-          "Name": "Slot2",
-          "KeyboardCode": "2",
-          "GamepadCode": "DpadEast",
-          "GroupName": "Inventory"
-        },
-        {
-          "Name": "Slot4",
-          "KeyboardCode": "4",
-          "GroupName": "Inventory"
-        },
-        {
-          "Name": "Slot5",
-          "KeyboardCode": "5",
-          "GroupName": "Inventory"
-        },
-        {
-          "Name": "SlotPrev",
-          "KeyboardCode": "mouse4",
-          "GamepadCode": "SwitchLeftBumper",
-          "GroupName": "Inventory"
-        },
-        {
-          "Name": "SlotNext",
-          "KeyboardCode": "mouse5",
-          "GamepadCode": "SwitchRightBumper",
-          "GroupName": "Inventory"
         },
         {
           "Name": "View",
@@ -349,12 +315,6 @@
           "GroupName": "Other"
         },
         {
-          "Name": "Menu",
-          "KeyboardCode": "Q",
-          "GamepadCode": "SwitchRightMenu",
-          "GroupName": "Other"
-        },
-        {
           "Name": "Chat",
           "KeyboardCode": "enter",
           "GroupName": "Other"
@@ -366,8 +326,8 @@
           "GroupName": "Weapon Handling"
         },
         {
-          "Name": "FireMode",
-          "KeyboardCode": "B",
+          "Name": "SwitchWeapon",
+          "KeyboardCode": "Q",
           "GamepadCode": "DpadSouth",
           "GroupName": "Weapon Handling"
         },
@@ -378,9 +338,10 @@
           "GroupName": "Movement"
         },
         {
-          "Name": "Slot3",
-          "KeyboardCode": "3",
-          "GroupName": "Inventory"
+          "Name": "FireMode",
+          "KeyboardCode": "B",
+          "GamepadCode": "DpadNorth",
+          "GroupName": "Weapon Handling"
         }
       ]
     },

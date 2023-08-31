@@ -92,6 +92,6 @@ public partial class CoverAimMechanic : BaseMoveMechanic
 	{
 		if ( WallHeight == 0f ) return null;
 
-		return WallHeight;
+		return WallHeight + 16f;
 	}
 }

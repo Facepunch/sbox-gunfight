@@ -24,6 +24,8 @@
 
     protected override void OnClick( MousePanelEvent e )
     {
+        if ( CustomClass == null ) return;
+
         UI.ModalSystem.Push( new ClassModal( ClassName, CustomClass ) 
         {
             OnSave = OnSave,

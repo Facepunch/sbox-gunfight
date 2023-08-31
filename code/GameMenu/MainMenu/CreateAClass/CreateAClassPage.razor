@@ -54,7 +54,16 @@
 
     void CreateClass( PanelEvent e )
     {
-        CreateAClass.CustomClass.SaveOne( $"Custom Class #{Gunfight.CreateAClass.CustomClass.All.Count() + 1}", new( "mp5", "usp" ) );
+        var name = $"Custom Class #{Gunfight.CreateAClass.CustomClass.All.Count() + 1}";
+        var customClass = new CreateAClass.CustomClass( "mp5", "usp" );
+
+        CreateAClass.CustomClass.SaveOne( name, customClass );
+        
+        UI.ModalSystem.Push( new ClassModal( name, customClass ) 
+        {
+            OnSave = OnSave,
+            OnDelete = OnDelete
+        } );
     }
 
     protected override int BuildHash()

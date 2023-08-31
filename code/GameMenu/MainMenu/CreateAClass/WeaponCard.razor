@@ -14,14 +14,14 @@
     </div>
 
     <div class="title">
-        @Definition.WeaponName
+        @Definition?.WeaponName
     </div>
 </root>
 
 @code
 {
     public CreateAClass.Weapon Weapon { get; set; }
-    public WeaponDefinition Definition => WeaponDefinition.Find( Weapon.Name );
+    public WeaponDefinition Definition => WeaponDefinition.Find( Weapon?.Name );
     public WeaponViewer WeaponViewer { get; set; }
 
     protected override void OnClick( MousePanelEvent e )

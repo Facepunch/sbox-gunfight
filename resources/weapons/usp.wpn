@@ -31,7 +31,7 @@
   "AmmoType": "Pistol",
   "ClipSize": 15,
   "StandardClip": 15,
-  "ReloadTime": 2,
+  "ReloadTime": 1.11,
   "ReloadSingle": false,
   "MaxEffectiveRange": 2048,
   "ViewModelSetup": {

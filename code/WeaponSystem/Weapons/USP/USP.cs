@@ -22,8 +22,8 @@ public partial class USP : GunfightWeapon
 		arms.SetParent( ViewModelEntity, true );
 		arms.EnableViewmodelRendering = true;
 
-		ViewModelEntity.SetAnimParameter( "b_twohanded", true );
-		
+//		ViewModelEntity.SetAnimParameter( "b_twohanded", true );
+
 		return ViewModelEntity;
 	}
 }

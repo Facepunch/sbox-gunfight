@@ -147,6 +147,8 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref climbLerp, ( climbing ) ? 1.0f : 0.0f , 10f );
 		LerpTowards( ref vaultLerp, ( vaulting ) ? 1.0f : 0.0f , 10f );
 
+		SetAnimParameter( "b_empty", weapon.AmmoClip < 1 );
+
 		var leftAmt = left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal );
 		LerpTowards( ref sideLerp, leftAmt * ( 1 - aimLerp ), 5f );
 

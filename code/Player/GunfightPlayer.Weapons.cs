@@ -18,13 +18,20 @@ public partial class GunfightPlayer
 		var player = cl?.Pawn as GunfightPlayer;
 		if ( !player.IsValid() ) return;
 
-		if ( json is not null )
+		if ( !string.IsNullOrEmpty( json ) )
 		{
-			var customClass = Json.Deserialize<CustomClass>( json );
-			if ( customClass != null )
+			try
 			{
-				player.SelectedLoadout = customClass;
-				Log.Info( "Updated player loadout" );
+				var customClass = Json.Deserialize<CustomClass>( json );
+				if ( customClass != null )
+				{
+					player.SelectedLoadout = customClass;
+					Log.Info( "Updated player loadout" );
+				}
+			}
+			catch
+			{
+				Log.Warning( "Tried to load custom class json" );
 			}
 		}
 

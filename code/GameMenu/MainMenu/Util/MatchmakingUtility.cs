@@ -77,6 +77,18 @@ public partial class MatchmakingSystem
 		CancellationToken.Cancel();
 	}
 
+	public static async Task<ILobby> CreateLobby( string map, string gamemode, string state = "lobby" )
+	{
+		// Make the lobby
+		var lobby = await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
+		lobby.Map = map;
+		lobby.State = state;
+		lobby.SetData( "convar.gunfight_gamemode", gamemode ?? "FFAGamemode" );
+		lobby.Title = $"{lobby.Owner.Name}'s game";
+
+		return lobby;
+	}
+
 	private static async Task<string> TryMatchmake( string mode = null, string[] maps = null, int reservedSlots = 1 )
 	{
 		while ( CurrentState != State.Found )
@@ -86,12 +98,7 @@ public partial class MatchmakingSystem
 				CurrentState = State.Found;
 				await Task.Delay( 1000 );
 
-				// Make the lobby
-				var lobby = await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
-				lobby.Map = Game.Random.FromArray( maps );
-				lobby.State = "lobby";
-				lobby.SetData( "convar.gunfight_gamemode", mode );
-				lobby.Title = $"{lobby.Owner.Name}'s game";
+				await CreateLobby( Game.Random.FromArray( maps ), mode );
 
 				CurrentState = State.Empty;
 

@@ -62,16 +62,21 @@
 			<span style="gap: 16px;">
 				<ActionButton onclick=@CreateLobby>
 					<Title>
-						Create Lobby
+						Make Lobby
 					</Title>
 					<Extra>
 						<i>wifi</i>
 					</Extra>
 				</ActionButton>
-				<ActionButton onclick=@Search>
+				<ActionButton onclick=@CreateServer>
 					<Title>
-						Search
+						Quick-Start
 					</Title>
+					<Extra>
+                        <i>right-to-bracket</i>
+					</Extra>
+				</ActionButton>
+				<ActionButton class="icon-only" onclick=@Search>
 					<Extra>
 						<i>search</i>
 					</Extra>
@@ -84,9 +89,15 @@
 
 @code
 {
-	List<Package> SelectedMaps { get; set; } = new();
-	string SelectedMode { get; set; } = "KillConfirmedGamemode";
-	
+    List<Package> SelectedMaps { get; set; } = new();
+    string SelectedMode { get; set; } = "KillConfirmedGamemode";
+
+    async void CreateServer( PanelEvent e )
+    { 
+        var lobby = await MatchmakingSystem.CreateLobby( Game.Random.FromArray( SelectedMaps.Select( x => x.FullIdent ).ToArray() ), SelectedMode );
+        await lobby.LaunchGameAsync();
+    }
+
 	void OnMapSelectionChanged( List<Package> packages )
 	{
 		SelectedMaps = packages;
@@ -127,12 +138,6 @@
 			return;
 		}
 		
-		await Game.Menu.CreateLobbyAsync( 16, "gunfight", true );
-
-		var lobby = MainMenu.CurrentLobby;
-		lobby.State = "lobby";
-		lobby.Map = Game.Random.FromArray( SelectedMaps.Select( x => x.FullIdent ).ToArray() );
-		lobby.SetData( "convar.gunfight_gamemode", SelectedMode );
-		lobby.Title = $"{lobby.Owner.Name}'s game";
+        var lobby = await MatchmakingSystem.CreateLobby( Game.Random.FromArray( SelectedMaps.Select( x => x.FullIdent ).ToArray() ), SelectedMode );
 	}
 }

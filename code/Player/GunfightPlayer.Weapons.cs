@@ -137,6 +137,8 @@ public partial class GunfightPlayer
 	/// </summary>
 	public virtual void OnActiveChildChanged( Entity previous, Entity next )
 	{
+		ActiveChildInput = null;
+
 		if ( previous is BaseCarriable previousBc )
 		{
 			previousBc?.ActiveEnd( this, previousBc.Owner != this );

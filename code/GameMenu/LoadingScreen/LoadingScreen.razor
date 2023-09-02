@@ -46,7 +46,7 @@
 					<label class="stat">This map has been played @Map.Usage.Total.Users times, for a total of @( TimeSpan.FromSeconds( Map.Usage.Total.Seconds ).TotalHours.ToString( "0" ) ) hours.</label>
 					<label class="stat">You've played this map @Map.Interaction.Sessions times, for a total of @( TimeSpan.FromSeconds( Map.Interaction.Seconds ).TotalMinutes.ToString( "0" ) ) minutes.</label>
 					<span style="gap: 16px;">
-						<i>update</i>
+						<i>code-commit</i>
 						<label class="stat">Last Update - @Map.Updated.ToString( "D" ).</label>
 					</span>
 				</div>
@@ -77,61 +77,60 @@
 
 @code
 {
-	public LoadingProgress Progress;
+    public LoadingProgress Progress;
 
-	Panel BackgroundPanel { get; set; }
-	Package Map { get; set; }
+    Panel BackgroundPanel { get; set; }
+    Package Map { get; set; }
 
-	GunfightLobby Lobby => MainMenu.CurrentLobby;
+    GunfightLobby Lobby => MainMenu.CurrentLobby;
 
-	bool IsTest => Progress.Title.Equals( "Testing Loading Progress.." );
+    bool IsTest => Progress.Title.Equals( "Testing Loading Progress.." );
 
-	Task mapTask;
-	public void OnLoadingProgress( LoadingProgress progress )
-	{
-		Progress = progress;
-		StateHasChanged();
+    public void OnLoadingProgress( LoadingProgress progress )
+    {
+        Progress = progress;
+        StateHasChanged();
 
-		if ( Map != null && Lobby.IsValid() && Lobby.Map != Map.FullIdent )
-		{
-			mapTask = SyncMap();
-		}
+        _ = SyncMap();
+    }
 
-		if ( Map == null && mapTask == null )
-		{
-			mapTask = SyncMap();
-		}
+    async Task FetchMapPackage( string mapIdent )
+    {
+        Map = await Package.Fetch( mapIdent, false );
+
+        if ( Map == null ) return;
+
+        if ( Map.Screenshots is { Length: > 0 } )
+        {
+            var screenshot = Game.Random.FromArray( Map.Screenshots );
+            if ( screenshot != null )
+            {
+                BackgroundPanel.Style.BackgroundImage = Texture.Load( screenshot.Url );
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    async Task SyncMap()
+    {
+        if ( IsTest )
+        {
+            await FetchMapPackage( "eagleone.killhouse_chimona" );
+
+            return;
+        }
+
+        var map = Game.Server.MapIdent ?? Lobby?.Map ?? null;
+
+        if ( map is null ) return;
+
+        if ( Map?.FullIdent == map )
+        {
+            // Already has been set
+            return;
+        }
+
+		await FetchMapPackage( map );
 	}
-
-	async Task FetchMapPackage( string mapIdent )
-	{
-		Map = await Package.Fetch( mapIdent, false );
-
-		if ( Map.Screenshots is { Length: > 0 } )
-		{
-			var screenshot = Game.Random.FromArray( Map.Screenshots );
-			if ( screenshot != null )
-			{
-				BackgroundPanel.Style.BackgroundImage = Texture.Load( screenshot.Url );
-			}
-		}
-		
-		StateHasChanged();
-	}
-
-	async Task SyncMap()
-	{
-		if ( IsTest )
-		{
-			await FetchMapPackage( "eagleone.killhouse_chimona" );
-
-			return;
-		}
-			
-		if ( Lobby == null ) return;
-
-		await FetchMapPackage( Lobby.Map );
-	}
-	
-	
 }

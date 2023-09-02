@@ -49,6 +49,11 @@ public partial class PlayerController : PawnController
 		Mechanics.Add( new SlideMechanic( this ) );
 		Mechanics.Add( new DuckMechanic( this ) );
 		Mechanics.Add( new UnstuckMechanic( this ) );
+
+		if ( Game.IsEditor )
+		{
+			Mechanics.Add( new NoclipMechanic( this ) );
+		}
 	}
 
 	public T GetMechanic<T>() where T : BaseMoveMechanic
@@ -156,7 +161,7 @@ public partial class PlayerController : PawnController
 		Player.EyeLocalPosition = Vector3.Up * CurrentEyeHeight;
 	}
 
-	[ConVar.Client(( "gunfight_aim_debug" ) )]
+	[ConVar.Client( "gunfight_aim_debug" )]
 	public static bool UseAimDebug { get; set; }
 
 	public override void Simulate()
@@ -177,6 +182,10 @@ public partial class PlayerController : PawnController
 		{
 			IsAiming = false;
 		}
+
+		SimulateMechanics();
+
+		if ( GetMechanic<NoclipMechanic>()?.IsActive ?? false ) return;
 
 		CheckLadder();
 		Swimming = Pawn.GetWaterLevel() > 0.6f;
@@ -333,9 +342,6 @@ public partial class PlayerController : PawnController
 				}
 			}
 		}
-
-
-		SimulateMechanics();
 	}
 
 	static TimeSince LastDoorSlam = 5f;

@@ -342,6 +342,11 @@
           "KeyboardCode": "B",
           "GamepadCode": "DpadNorth",
           "GroupName": "Weapon Handling"
+        },
+        {
+          "Name": "Noclip",
+          "KeyboardCode": "MOUSE4",
+          "GroupName": "Development"
         }
       ]
     },
@@ -358,17 +363,7 @@
         "PostLaunchCommand": "gunfight_gamemode FFAGamemode"
       },
       {
-        "Name": "sv_lan 1",
-        "GameIdent": "facepunch.gunfight#local",
-        "MapName": "eagleone.killhouse_chimona",
-        "MaxPlayers": 16,
-        "GameSettings": {},
-        "Addons": "",
-        "PreLaunchCommand": "sv_lan 1",
-        "PostLaunchCommand": "GunfightGamemode KillConfirmedGamemode"
-      },
-      {
-        "Name": "FFA - motel",
+        "Name": "FFA - gkaf.motel",
         "GameIdent": "facepunch.gunfight#local",
         "MapName": "gkaf.motel",
         "MaxPlayers": 16,
@@ -378,7 +373,7 @@
         "PostLaunchCommand": "gunfight_gamemode FFAGamemode"
       },
       {
-        "Name": "KC - Motel",
+        "Name": "KC - gkaf.motel",
         "GameIdent": "facepunch.gunfight#local",
         "MapName": "gkaf.motel",
         "MaxPlayers": 16,
@@ -388,7 +383,7 @@
         "PostLaunchCommand": "gunfight_gamemode KillConfirmedGamemode;bot_add true;bot_add true;bot_add true;"
       },
       {
-        "Name": "FFA Short - Motel",
+        "Name": "FFA gkaf.motel (s5)",
         "GameIdent": "facepunch.gunfight#local",
         "MapName": "gkaf.motel",
         "MaxPlayers": 16,
@@ -398,7 +393,7 @@
         "PostLaunchCommand": "gunfight_gamemode FFAGamemode;gunfight_ffa_max_score 5"
       },
       {
-        "Name": "KC Short - Motel",
+        "Name": "KC gkaf.motel (s5)",
         "GameIdent": "facepunch.gunfight#local",
         "MapName": "gkaf.motel",
         "MaxPlayers": 16,
@@ -406,6 +401,16 @@
         "Addons": "",
         "PreLaunchCommand": "",
         "PostLaunchCommand": "gunfight_gamemode KillConfirmedGamemode;;gunfight_kc_max_score 5"
+      },
+      {
+        "Name": "FFA - Small Town",
+        "GameIdent": "facepunch.gunfight#local",
+        "MapName": "strikeforce.smalltown",
+        "MaxPlayers": 64,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": "gunfight_gamemode FFAGamemode;gunfight_ffa_max_score 5"
       }
     ]
   }

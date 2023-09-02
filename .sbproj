@@ -327,7 +327,7 @@
         },
         {
           "Name": "SwitchWeapon",
-          "KeyboardCode": "Q",
+          "KeyboardCode": "2",
           "GamepadCode": "DpadSouth",
           "GroupName": "Weapon Handling"
         },

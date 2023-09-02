@@ -181,9 +181,11 @@ Ammo
         flex-direction: column;
         top: 3px;
         gap: 2px;
+        width: 256px;
 
         .row
         {
+            justify-content: flex-end;
             align-items: flex-end;
         }
 
@@ -250,7 +252,7 @@ Ammo
 
         InputHint
         {
-            transform:scale(1.66);
+            transform: scale(1.66);
             right: -64px;
             opacity: 1;
         }

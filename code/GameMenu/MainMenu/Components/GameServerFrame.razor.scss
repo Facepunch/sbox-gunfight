@@ -39,14 +39,17 @@ GameServerFrame
             {
                 > .server-name
                 {
-                    font-size: 28px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    font-size: 18px;
                     text-shadow: 5px 5px 2px rgba( black, 0.5 );
                     font-family: $main-font-bold;
                 }
 
                 > .map-name
                 {
-                    font-size: 24px;
+                    font-size: 18px;
                     text-shadow: 5px 5px 2px rgba( black, 0.5 );
                     font-family: $main-font-semibold;
                 }

@@ -179,8 +179,9 @@ public abstract partial class Gamemode : Entity
 			loadout = DefaultClasses.First();
 		}
 
-		player.GiveWeapon( loadout.PrimaryWeapon.Name, true, loadout.PrimaryWeapon.Attachments.ToArray() );
 		player.GiveWeapon( loadout.SecondaryWeapon.Name, false, loadout.SecondaryWeapon.Attachments.ToArray() );
+
+		player.GiveWeapon( loadout.PrimaryWeapon.Name, true, loadout.PrimaryWeapon.Attachments.ToArray() );
 
 
 		return false;

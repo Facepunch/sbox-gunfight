@@ -45,6 +45,12 @@ public partial class ClimbMechanic : BaseMoveMechanic
 		Vector3 vaultTop = Controller.Position.WithZ( vaultEnd.z );
 		if ( IsStuck( vaultEnd ) || IsStuck( vaultTop ) ) return false;
 
+		//
+		// Check to see if we're going through walls or something because surely we should have done this at some point
+		//
+		var tr = Trace.Ray( Player.EyePosition, vaultEnd ).Ignore( Player ).Run();
+		if ( tr.Hit ) return false;
+
 		return true;
 	}
 

@@ -5,7 +5,7 @@
 
 <root>
     <label class="left @GetFriendClass( Attacker )">
-        @Attacker.Name
+        @Attacker?.Name
     </label>
 
     @if ( Weapon != null )
@@ -17,9 +17,13 @@
 
         <WeaponViewer Weapon:bind=@Weapon />
     }
+    else
+    {
+        <i>skull-crossbones</i>
+    }
 
     <label class="right @GetFriendClass( Victim )">
-        @Victim.Name
+        @Victim?.Name
     </label>
 </root>
 

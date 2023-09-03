@@ -25,13 +25,17 @@ public partial class KillFeed : Panel
 		e.Attacker = attacker;
 		e.IsHeadshot = isHeadshot;
 
-		var wpn = new CreateAClass.Weapon
+		if ( weapon.IsValid() )
 		{
-			Name = weapon.WeaponDefinition.WeaponShortName,
-			Attachments = weapon.Attachments.Select( x => x.Identifier ).ToList()
-		};
+			var wpn = new CreateAClass.Weapon
+			{
+				Name = weapon.WeaponDefinition.WeaponShortName,
+				Attachments = weapon.Attachments.Select( x => x.Identifier ).ToList()
+			};
 
-		e.Weapon = wpn;
+			e.Weapon = wpn;
+		}
+
 		e.Victim = victim;
 
 		return e;

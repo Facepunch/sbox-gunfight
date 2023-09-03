@@ -5,7 +5,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 	protected bool Wish { get; set; }
 
 	public float MinimumSpeed => 55f;
-	public float SlideSpeed => 850.0f;
+	public float SlideSpeed => 500.0f;
 	public SlideMechanic() { }
 	public SlideMechanic( PlayerController ctrl ) : base( ctrl ) 
 	{
@@ -30,9 +30,9 @@ public partial class SlideMechanic : BaseMoveMechanic
 		if ( !ShouldSlide() ) return false;
 
 		// Give it an initial boost
-		var slopeForward = new Vector3( Controller.Velocity.x, Controller.Velocity.y, 0 ).Normal;
+		var slopeFwd = new Vector3( Controller.Velocity.x, Controller.Velocity.y, 0 ).Normal;
 		
-		Controller.Velocity += slopeForward * 300.0f;
+		Controller.Velocity += slopeFwd * 300.0f;
 
 		Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.stop.sound" );
 
@@ -57,14 +57,16 @@ public partial class SlideMechanic : BaseMoveMechanic
 		var hitNormal = Controller.GroundNormal;
 
 		var slopeDir = Vector3.Cross( Vector3.Up, Vector3.Cross( Vector3.Up, Controller.GroundNormal ) );
-		var slopeForward = new Vector3( hitNormal.x, hitNormal.y, 0 );
 
-		if ( Controller.Velocity.Length < SlideSpeed )
-			Controller.Velocity += slopeForward * Time.Delta * SlideSpeed;
+//		if ( Controller.Velocity.Length < ( SlideSpeed / 2f ) )
+//			Controller.Velocity += InitialSlopeForward * Time.Delta * SlideSpeed;
 
 		Controller.SetTag( "sliding" );
 		
-		if ( TimeSinceActivate > 1f && Controller.Velocity.Length < 250f )
+		// Gets boring otherwise
+		if ( TimeSinceActivate > 0.8f && Controller.Velocity.Length < 250f ||
+			// Maybe hit a wall straight away?
+			TimeSinceActivate > 0.1f && Controller.Velocity.Length < 100f  )
 		{
 			StopTry();
 		}

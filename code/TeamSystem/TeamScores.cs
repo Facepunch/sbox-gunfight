@@ -8,8 +8,6 @@ public partial class TeamScores : BaseNetworkable
 
 		foreach ( var v in Enum.GetValues<Team>() )
 		{
-			if ( v == Team.Unassigned ) continue;
-
 			Scores[v] = MinimumScore;
 		}
 	}

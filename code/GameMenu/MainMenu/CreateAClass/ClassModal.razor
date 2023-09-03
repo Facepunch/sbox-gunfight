@@ -125,14 +125,7 @@
 
     public void ToggleAttachment( WeaponAttachment att )
     {
-        if ( Weapon.Attachments.Contains( att.Identifier ) )
-        {
-            Weapon.Attachments.Remove( att.Identifier );
-        }
-        else
-        {
-            Weapon.Attachments.Add( att.Identifier );
-        }
+        Weapon.SetAttachment( att, !Weapon.HasAttachment( att ) );
 
         Refresh();
     }

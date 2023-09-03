@@ -54,18 +54,9 @@ public partial class Awards
 		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_payback.sound" );
 	}
 	
-	// Multi Kill
-
-	[ClientRpc]
-	public static void KillFeedMessage( long steamid, string left, string method )
-	{
-		KillFeed.Current.AddInformation( steamid, left, method );
-	}
-
 	[Award( Title = "Double Kill", PointsGiven = 100, Description = "Double Kill" )]
 	public static void DoubleKill( GunfightPlayer player )
 	{
-		KillFeedMessage( To.Everyone, player.Client.SteamId, player.Client.Name, "got a Double Kill!" );
 		player.Client.AddInt( "stat_doublekills", 1 );
 		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_doublekill.sound" );
 	}
@@ -73,7 +64,6 @@ public partial class Awards
 	[Award( Title = "Triple Kill", PointsGiven = 200, Description = "Triple Kill" )]
 	public static void TripleKill( GunfightPlayer player )
 	{
-		KillFeedMessage( To.Everyone, player.Client.SteamId, player.Client.Name, "got a Triple Kill!" );
 		player.Client.AddInt( "stat_triplekills", 1 );
 		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_triplekill.sound" );
 	}
@@ -81,7 +71,6 @@ public partial class Awards
 	[Award( Title = "Ultra Kill", PointsGiven = 500, Description = "Ultra Kill" )]
 	public static void QuadKill( GunfightPlayer player )
 	{
-		KillFeedMessage( To.Everyone, player.Client.SteamId, player.Client.Name, "got a Ultra Kill!" );
 		player.Client.AddInt( "stat_ultrakills", 1 );
 		Sound.FromScreen( To.Single( player.Client ), "sounds/announcer/announcer_ultrakill.sound" );
 	}

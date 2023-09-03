@@ -10,6 +10,7 @@ killfeed
 	width: 500px;
 	font-family: $main-font;
 	font-size: 18px;
+	gap: 8px;
 	align-items: flex-start;
 }
 
@@ -68,6 +69,23 @@ KillFeedEntry
 		}
 	}
 
+	i
+	{
+		color: red;
+		opacity: 0.5;
+	}
+
+	WeaponViewer
+	{
+		top: -14px;
+		left: 12px;
+		width: 128px;
+		height: 48px;
+		filter: saturate(0);
+		filter: invert(1);
+		opacity: 0.5;
+	}
+
 	.method
 	{
 		opacity: 0.3;
@@ -91,8 +109,10 @@ KillFeedEntry
 		display: none;
 	}
 
-	&.information {
-		.method {
+	&.information
+	{
+		.method
+		{
 			opacity: 1;
 			color: $theme-color;
 		}

@@ -1,0 +1,52 @@
+﻿@using Sandbox.UI;
+@using Sandbox.UI.Construct;
+
+@namespace Facepunch.Gunfight.UI
+
+<root>
+    <label class="left @GetFriendClass( Attacker )">
+        @Attacker.Name
+    </label>
+
+    @if ( Weapon != null )
+    {
+        if ( IsHeadshot )
+        {
+            <i>heart-crack</i>
+        }
+
+        <WeaponViewer Weapon:bind=@Weapon />
+    }
+
+    <label class="right @GetFriendClass( Victim )">
+        @Victim.Name
+    </label>
+</root>
+
+@code
+{
+    public IClient Attacker { get; set; }
+    public IClient Victim { get; set; }
+    public CreateAClass.Weapon Weapon { get; set; }
+    public bool IsHeadshot { get; set; } = false;
+
+    public RealTimeSince TimeSinceBorn = 0;
+
+    public override void Tick() 
+    {
+        base.Tick();
+
+        if ( TimeSinceBorn > 6 ) 
+        { 
+            Delete();
+        }
+    }
+
+    public string GetFriendClass( IClient cl )
+    {
+        if (cl == Game.LocalClient) return "me";
+        if (TeamSystem.GetFriendState(Game.LocalClient, cl) == TeamSystem.FriendlyStatus.Friendly) return "friendly";
+
+        return "enemy";
+    }
+}

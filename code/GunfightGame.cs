@@ -249,9 +249,9 @@ partial class GunfightGame : GameManager
 	}
 
 	[ClientRpc]
-	public override void OnKilledMessage( long leftid, string left, long rightid, string right, string method )
+	public void DoKilledMessage( IClient attacker, IClient killer, GunfightWeapon weapon = null, string method = null, bool isHeadshot = false )
 	{
-		KillFeed.Current?.AddEntry( leftid, left, rightid, right, method );
+		UI.KillFeed.Current?.AddEntry( attacker, killer, weapon, method, isHeadshot );
 	}
 
 	/// <summary>
@@ -272,22 +272,22 @@ partial class GunfightGame : GameManager
 				var wep = pawn.LastAttackerWeapon as GunfightWeapon;
 				if ( wep != null )
 				{
-					OnKilledMessage( pawn.LastAttacker.Client.SteamId, pawn.LastAttacker.Client.Name, client.SteamId, client.Name, wep.WeaponDefinition.WeaponShortName );
+					var player = pawn as GunfightPlayer;
+					DoKilledMessage( pawn.LastAttacker.Client, client, wep, null, player?.LastDamage.Hitbox.HasTag( "head" ) ?? false );
 				}
 				else
 				{
-					OnKilledMessage( pawn.LastAttacker.Client.SteamId, pawn.LastAttacker.Client.Name, client.SteamId, client.Name, pawn.LastAttackerWeapon?.ClassName );
-
+					DoKilledMessage( pawn.LastAttacker.Client, client, null, "killed" );
 				}
 			}
 			else
 			{
-				OnKilledMessage( pawn.LastAttacker.NetworkIdent, pawn.LastAttacker.ToString(), client.SteamId, client.Name, "killed" );
+				DoKilledMessage( null, client, null, "killed" );
 			}
 		}
 		else
 		{
-			OnKilledMessage( 0, "", client.SteamId, client.Name, "died" );
+			DoKilledMessage( null, client, null, "killed" );
 
 			GunfightHud.ShowDeathInformation( To.Single( client ), client );
 		}

@@ -371,7 +371,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 		}
 	}
 	
-	DamageInfo LastDamage;
+	public DamageInfo LastDamage { get; private set; }
 
 	public override void TakeDamage( DamageInfo info )
 	{

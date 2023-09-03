@@ -71,9 +71,17 @@ public class WeaponViewer : ScenePanel
 		World = null;
 	}
 
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		if ( firstTime )
+		{
+			Update();
+		}
+	}
+
 	protected float MouseWidthNormal;
 	protected float MouseHeightNormal;
-	public bool NoRotation { get; set; }
+	public bool NoRotation { get; set; } = true;
 	bool FirstUpdate = false;
 
 	public override void Tick()

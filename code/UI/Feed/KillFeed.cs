@@ -1,6 +1,6 @@
 ﻿using Sandbox.UI;
 
-namespace Facepunch.Gunfight;
+namespace Facepunch.Gunfight.UI;
 
 public partial class KillFeed : Panel
 {
@@ -10,7 +10,7 @@ public partial class KillFeed : Panel
 	{
 		Current = this;
 
-		StyleSheet.Load( "/ui/killfeed/KillFeed.scss" );
+		StyleSheet.Load( "/ui/feed/KillFeed.scss" );
 	}
 
 	protected IClient GetClient( long steamId )
@@ -18,68 +18,21 @@ public partial class KillFeed : Panel
 		return Game.Clients.FirstOrDefault( x => x.SteamId == steamId );
 	}
 
-	public virtual Panel AddEntry( long lsteamid, string left, long rsteamid, string right, string method )
+	public virtual Panel AddEntry( IClient attacker, IClient victim, GunfightWeapon weapon = null, string method = null, bool isHeadshot = false )
 	{
 		var e = Current.AddChild<KillFeedEntry>();
 
-		e.Left.Text = left;
-		e.Left.SetClass( "me", lsteamid == Game.SteamId );
+		e.Attacker = attacker;
+		e.IsHeadshot = isHeadshot;
 
-		e.AddClass( method );
-
-		var gun = WeaponDefinition.Find( method );
-		if ( gun != null )
+		var wpn = new CreateAClass.Weapon
 		{
-			e.Method.Text = gun.WeaponName;
-		}
-		else
-			e.Method.Text = method;
+			Name = weapon.WeaponDefinition.WeaponShortName,
+			Attachments = weapon.Attachments.Select( x => x.Identifier ).ToList()
+		};
 
-		e.Right.Text = right;
-		e.Right.SetClass( "me", rsteamid == Game.SteamId );
-
-		if ( lsteamid != 0 )
-		{
-			var leftFriendState = TeamSystem.GetFriendState( GetClient( lsteamid ), TeamSystem.MyTeam );
-			e.Left.SetClass( "friendly", leftFriendState == TeamSystem.FriendlyStatus.Friendly );
-			e.Left.SetClass( "enemy", leftFriendState == TeamSystem.FriendlyStatus.Hostile );
-		}
-
-		if ( rsteamid != 0 )
-		{
-			var rightFriendState = TeamSystem.GetFriendState( GetClient( rsteamid ), TeamSystem.MyTeam );
-			e.Right.SetClass( "friendly", rightFriendState == TeamSystem.FriendlyStatus.Friendly );
-			e.Right.SetClass( "enemy", rightFriendState == TeamSystem.FriendlyStatus.Hostile );
-		}
-
-		return e;
-	}
-
-	public virtual Panel AddInformation( long lsteamid, string left, string method )
-	{
-		var e = Current.AddChild<KillFeedEntry>();
-
-		e.Left.Text = left;
-		e.Left.SetClass( "me", lsteamid == Game.SteamId );
-
-		e.AddClass( method );
-
-		e.AddClass( "information" );
-
-		var gun = WeaponDefinition.Find( method );
-		if ( gun != null )
-		{
-			e.Method.Text = gun.WeaponName;
-		}
-		else
-			e.Method.Text = method;
-
-		if ( lsteamid != 0 )
-		{
-			var leftFriendState = TeamSystem.GetFriendState( GetClient( lsteamid ), TeamSystem.MyTeam );
-			e.Left.SetClass( "friendly", leftFriendState == TeamSystem.FriendlyStatus.Friendly );
-			e.Left.SetClass( "enemy", leftFriendState == TeamSystem.FriendlyStatus.Hostile );
-		}
+		e.Weapon = wpn;
+		e.Victim = victim;
 
 		return e;
 	}

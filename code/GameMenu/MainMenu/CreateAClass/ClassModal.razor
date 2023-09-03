@@ -7,9 +7,21 @@
 
 <root>
     <div class="main">
-        <div class="title">
-            @ClassName
+        <div class="row">
+            @if ( Weapon is not null )
+            {
+                <ActionButton class="icon-only" onclick=@( () => Return() )>
+                    <Extra>
+                        <i>chevron-left</i>
+                    </Extra>
+                </ActionButton>       
+            }
+
+            <div class="main-title">
+                @ClassName
+            </div>
         </div>
+
 
         @if ( Weapon is null )
         {
@@ -51,23 +63,24 @@
 
             <div style="flex-grow: 1;" />
 
-            <div class="attachment-slots">
+            @foreach ( var group in WeaponAttachment.For( Weapon.Name ).GroupBy( x => x.Category ) )
+            {
+                <div class="attachment-slots">
 
-                @foreach ( var group in WeaponAttachment.For( Weapon.Name ).GroupBy( x => x.Category ) )
-                {
+                    <div class="category">
+                        <div class="background" />
+                        <label class="group">@group.Key</label>
+                    </div>
+
                     @foreach ( var attachment in group )
                     {
                         <div class="slot @( AttachmentClass( attachment ) )" onclick=@(() => ToggleAttachment( attachment ) )>
-                            <label class="group">@group.Key</label>
                             <label>@attachment.Name</label>
                         </div>
                     }
-                }
-            </div>
 
-            <ActionButton onclick=@( () => Return() )>
-                <Title>Return</Title>
-            </ActionButton>
+                </div>
+            }
         }
     </div>
 </root>

@@ -5,7 +5,7 @@ public partial class USPRMRAttachment : BodygroupAttachment
 {
 	public override string ForWeapon => "usp";
 	public override string Identifier => "usp_rmr";
-	public override string Category => "Optics";
+	public override string Category => "Optic";
 	public override string Name => "RMR";
 
 	public override int Priority => 5;

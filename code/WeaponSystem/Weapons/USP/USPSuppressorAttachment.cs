@@ -5,7 +5,7 @@ namespace Facepunch.Gunfight;
 public partial class USPSuppressorAttachment : BodygroupAttachment
 {
 	public override string ForWeapon => "usp";
-	public override string Category => "Barrels";
+	public override string Category => "Barrel";
 	public override string Identifier => "usp_sd";
 	public override string Name => "Silencer";
 

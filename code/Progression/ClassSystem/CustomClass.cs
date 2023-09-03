@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Facepunch.Gunfight.CreateAClass;
 
 public class Weapon

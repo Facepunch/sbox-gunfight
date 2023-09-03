@@ -5,7 +5,7 @@ public partial class USPMatchAttachment : BodygroupAttachment
 {
 	public override string ForWeapon => "usp";
 	public override string Identifier => "usp_match";
-	public override string Category => "Barrels";
+	public override string Category => "Barrel";
 	public override string Name => "Match";
 
 	public override Dictionary<int, int> Bodygroups => new()

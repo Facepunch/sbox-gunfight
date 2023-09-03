@@ -39,21 +39,54 @@ ClassModal
     {
         flex-shrink: 0;
         flex-grow: 0;
-        gap: 16px;
-        height: 128px;
+        gap: 8px;
+        height: 96px;
+
+        .category
+        {
+            height: 100%;
+            aspect-ratio: 3.5;
+            justify-content: center;
+            align-items: center;
+            font-size: 52px;
+            font-family: $main-font-bold;
+            cursor: pointer;
+            flex-direction: column;
+            background-color: rgba( $main-color, 0.2 );
+            box-shadow: 0px 0px 10px rgba( black, 0.4 );
+            text-transform: uppercase;
+            color: rgba( $main-color, 1 );
+
+            > .background
+            {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                transition: all 0.1s ease;
+                background-size: contain;
+                mask-mode: luminance;
+                background-color: rgba( 10, 10, 10, 1 );
+                opacity: 0.5;
+                mask-image: url( https://files.facepunch.com/tony/1b2611b1/dots_repeat.png );
+                box-shadow: 4px 4px 25px rgba( black, 0.2 );
+            }
+        }
 
         .slot
         {
             height: 100%;
-            aspect-ratio: 1.2;
+            aspect-ratio: 1.75;
             background-color: rgba( black, 0.2 );
             justify-content: center;
             align-items: center;
-            font-size: 12px;
+            font-size: 16px;
             pointer-events: all;
             cursor: pointer;
+            text-shadow: 2px 2px 5px rgba( black, 0.4 );
             flex-direction: column;
             gap: 8px;
+            box-shadow: 0px 0px 10px rgba( black, 0.4 );
 
             .group
             {
@@ -69,7 +102,7 @@ ClassModal
 
             &.active
             {
-                background-color: rgba( black, 0.5 );
+                background-color: rgba( $main-color, 0.2 );
                 color: white;
                 font-family: $main-font-bold;
             }
@@ -91,7 +124,16 @@ ClassModal
         justify-content: center;
         padding-top: 0;
         flex-direction: column;
-        gap: 32px;
+        gap: 16px;
+
+        .main-title
+        {
+            text-transform: uppercase;
+            font-family: $main-font-bold;
+            font-size: 50px;
+            text-shadow: 5px 5px 50px black;
+            mix-blend-mode: lighten;
+        }
 
         .bold
         {
@@ -127,13 +169,6 @@ ClassModal
         }
     }
 
-    .subtitle
-    {
-        text-transform: uppercase;
-        font-family: $main-font-bold;
-        font-size: 18px;
-    }
-
     PackageCard, GamemodeCard
     {
         pointer-events: all;
@@ -143,6 +178,7 @@ ClassModal
     {
         flex-direction: row;
         gap: 16px;
+        align-items: center;
     }
 
     .column

@@ -84,6 +84,9 @@ public class WeaponViewer : ScenePanel
 	public bool NoRotation { get; set; } = true;
 	bool FirstUpdate = false;
 
+	public bool FlipYaw { get; set; } = false;
+	public float ViewYaw => FlipYaw ? -90 : 90;
+
 	public override void Tick()
 	{
 		if ( WeaponModel is null ) return;
@@ -96,7 +99,7 @@ public class WeaponViewer : ScenePanel
 
 		if ( NoRotation )
 		{
-			WeaponModel.Rotation = Rotation.From( 0, 90, 0 );
+			WeaponModel.Rotation = Rotation.From( 0, ViewYaw, 0 );
 		}
 		else
 		{
@@ -107,7 +110,7 @@ public class WeaponViewer : ScenePanel
 			MouseHeightNormal = MouseHeightNormal.LerpTo( mdH, Time.Delta * 2f );
 
 			WeaponModel.Rotation = WeaponModel.Rotation.Angles()
-				.WithYaw( 90 + ((MouseWidthNormal - 0.5f) * 50f) )
+				.WithYaw( ViewYaw + ((MouseWidthNormal - 0.5f) * 50f) )
 				.WithRoll( 0 + ((MouseHeightNormal - 0.5f) * -10f) )
 				.ToRotation();
 		}

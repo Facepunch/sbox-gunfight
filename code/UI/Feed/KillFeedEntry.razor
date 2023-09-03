@@ -10,12 +10,12 @@
 
     @if ( Weapon != null )
     {
+        <WeaponViewer FlipYaw=@true Weapon:bind=@Weapon />
+                
         if ( IsHeadshot )
         {
-            <i>heart-crack</i>
+            <i>skull</i>
         }
-
-        <WeaponViewer Weapon:bind=@Weapon />
     }
     else
     {

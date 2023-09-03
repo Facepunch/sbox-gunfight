@@ -57,6 +57,7 @@ public partial class ViewModel : BaseViewModel
 	float sideLerp = 0;
 	float speedLerp = 0;
 	float climbLerp = 0;
+	float holsterLerp = 0;
 	private float vaultLerp = 0;
 
 	protected float MouseDeltaLerpX;
@@ -146,6 +147,7 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref speedLerp, ( aim || sliding || sprint ) ? 0.0f : speed, 10f );
 		LerpTowards( ref climbLerp, ( climbing ) ? 1.0f : 0.0f , 10f );
 		LerpTowards( ref vaultLerp, ( vaulting ) ? 1.0f : 0.0f , 10f );
+		LerpTowards( ref holsterLerp, owner.IsHolstering ? 1 : 0, 6f );
 
 		SetAnimParameter( "b_empty", weapon.AmmoClip < 1 );
 
@@ -236,7 +238,9 @@ public partial class ViewModel : BaseViewModel
 		}
 
 		// Climbing
-		rotationOffsetTarget *= Rotation.From( new Angles(40,0,0) * climbLerp );
+		rotationOffsetTarget *= Rotation.From( new Angles( 40,0,0 ) * climbLerp );
+
+		rotationOffsetTarget *= Rotation.From( Setup.HolsterAngleOffset * holsterLerp );
 
 		// Sliding
 		var slideRotationOffset = Rotation.From( Angles.Zero.WithRoll( leftAmt ) * slideCameraLerp * -15.0f );

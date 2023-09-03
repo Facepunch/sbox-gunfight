@@ -49,6 +49,9 @@ public struct ViewModelSetup
 	public Vector3 BurstSprintPositionOffset { get; set; }
 	public Angles BurstSprintAngleOffset { get; set; }
 
+	// Holster
+	public Angles HolsterAngleOffset { get; set; }
+
 	public Vector3 GetSprintPosOffset( bool burst = false )
 	{
 		if ( burst && BurstSprintPositionOffset != Vector3.Zero ) return BurstSprintPositionOffset;

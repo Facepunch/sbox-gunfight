@@ -94,6 +94,9 @@
 
     void SetActive()
     {
+        // save when making active
+        OnSave?.Invoke( ClassName, CustomClass );
+
         CreateAClass.CustomClass.SetSelected( ClassName );
         CloseModal( true );
         NotificationSystem.Notify($"{ClassName} set as active class", "Create A Class");

@@ -134,6 +134,7 @@ public partial class PlayerController : PawnController
 	{
 		if ( !Weapon.IsValid() ) return false;
 		if ( Weapon.TimeSinceDeployed < 0.3f ) return false;
+		if ( Player.IsHolstering ) return false;
 		if ( Weapon.WeaponDefinition.AimingDisabled ) return false;
 		if ( !GroundEntity.IsValid() ) return false;
 		if ( IsSprinting ) return false;

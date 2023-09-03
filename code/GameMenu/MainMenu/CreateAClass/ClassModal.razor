@@ -35,20 +35,20 @@
             <div style="flex-grow: 1;" />
 
             <div class="options">
-                <ActionButton onclick=@( () => SetActive() )>
-                    <Title>Set Active</Title>
+                <ActionButton onclick=@( () => SetActive() ) tooltip="Sets this as your preferred class in any gamemode.'">
+                    <Title>
+                        Set Active
+                    </Title>
                     <Extra>
                         <i>check</i>
                     </Extra>
                 </ActionButton>
-                <ActionButton onclick=@( () => Save() )>
-                    <Title>Save</Title>
+                <ActionButton class="icon-only" onclick=@( () => Save() )>
                     <Extra>
                         <i>save</i>
                     </Extra>
                 </ActionButton>
-                <ActionButton onclick=@( () => Delete() )>
-                    <Title>Delete</Title>
+                <ActionButton class="icon-only" onclick=@( () => Delete() )>
                     <Extra>
                         <i>trash</i>
                     </Extra>

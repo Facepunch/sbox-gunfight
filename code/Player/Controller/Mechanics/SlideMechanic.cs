@@ -4,24 +4,26 @@ public partial class SlideMechanic : BaseMoveMechanic
 {
 	protected bool Wish { get; set; }
 
-	public float MinimumSpeed => 155f;
-	public float SlideSpeed => 750.0f;
+	public float MinimumSpeed => 55f;
+	public float SlideSpeed => 850.0f;
 	public SlideMechanic() { }
 	public SlideMechanic( PlayerController ctrl ) : base( ctrl ) 
 	{
 	}
 
+	public TimeSince TimeSinceStopped;
+
 	protected bool ShouldSlide()
 	{
 		if ( Controller.GroundEntity == null ) return false;
-		if ( Controller.Velocity.Length <= MinimumSpeed ) return false;
+		if ( TimeSinceStopped < 1f ) return false;
 
 		return true;
 	}
 
 	protected override bool TryActivate()
 	{
-		Wish = Input.Down( "Slide" );
+		Wish = Input.Down( "Slide" ) || Input.Down( "Duck" );
 
 		if ( Controller.Velocity.Length < Controller.DefaultSpeed ) return false;
 		if ( !Wish ) return false;
@@ -29,17 +31,25 @@ public partial class SlideMechanic : BaseMoveMechanic
 
 		// Give it an initial boost
 		var slopeForward = new Vector3( Controller.Velocity.x, Controller.Velocity.y, 0 ).Normal;
-		if( Controller.Velocity.Length < 300.0f )
-			Controller.Velocity += slopeForward * 200.0f;
+		
+		Controller.Velocity += slopeForward * 300.0f;
 
 		Controller.Pawn.PlaySound( "sounds/player/foley/slide/ski.stop.sound" );
 
 		return true;
 	}
 
+	public override void StopTry()
+	{
+		base.StopTry();
+
+		TimeSinceStopped = 0;
+	}
+
 	public override void PreSimulate()
 	{
 		if ( !ShouldSlide() ) StopTry();
+		if ( TimeSinceActivate > 0.5f && ( Input.Pressed( "Slide" ) || Input.Pressed( "Duck" ) ) ) StopTry();
 	}
 
 	public override void Simulate()
@@ -53,6 +63,11 @@ public partial class SlideMechanic : BaseMoveMechanic
 			Controller.Velocity += slopeForward * Time.Delta * SlideSpeed;
 
 		Controller.SetTag( "sliding" );
+		
+		if ( TimeSinceActivate > 1f && Controller.Velocity.Length < 250f )
+		{
+			StopTry();
+		}
 	}
 
 	public override float? GetEyeHeight()

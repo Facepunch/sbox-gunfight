@@ -7,7 +7,7 @@ public partial class PlayerController : PawnController
 	public float SprintSpeed => 250.0f;
 	public float WalkSpeed => 120.0f;
 	public float DefaultSpeed => 175.0f;
-	public float Acceleration => 6.0f;
+	public float Acceleration => 8.0f;
 	public float StopSpeed => 100.0f;
 	public float GroundAngle => 46.0f;
 	public float StepSize => 16f;

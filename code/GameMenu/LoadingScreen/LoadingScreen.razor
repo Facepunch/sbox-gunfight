@@ -17,27 +17,26 @@
 				Loading
 			</div>
 			
-			<div class="game-subtitle">
-				Map Information
-			</div>
-			
-			<div class="column" style="padding-left: 16px; gap: 8px;">
-				<div class="info">
-					<img src="@Map?.Thumb" />
-					<span>@( Map?.Title ?? "a map" )</span>
-				</div>
-	            
-				<div class="info">
-					<img src="@Map?.Org.Thumb" />
-					<span>Made by @( Map?.Org?.Title ?? "Facepunch Studios Ltd" )</span>
-				</div>
-			</div>
-			
-			<div style="height: 64px;" />
-			
-			
 			@if ( Map != null )
 			{
+                <div class="game-subtitle">
+                    Map Information
+                </div>
+
+                <div class="column" style="padding-left: 16px; gap: 8px;">
+                    <div class="info">
+                        <img src="@Map?.Thumb" />
+                        <span>@(Map?.Title ?? "a map")</span>
+                    </div>
+
+                    <div class="info">
+                        <img src="@Map?.Org.Thumb" />
+                        <span>Made by @(Map?.Org?.Title ?? "Facepunch Studios Ltd")</span>
+                    </div>
+                </div>
+
+                <div style="height: 64px;" />
+
 				<div class="game-subtitle">
 					Stats
 				</div>
@@ -116,7 +115,7 @@
     {
         if ( IsTest )
         {
-            await FetchMapPackage( "eagleone.killhouse_chimona" );
+            // await FetchMapPackage( "eagleone.killhouse_chimona" );
 
             return;
         }

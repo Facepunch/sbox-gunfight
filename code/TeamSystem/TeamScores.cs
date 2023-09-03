@@ -1,58 +1,49 @@
 namespace Facepunch.Gunfight;
 
-public partial class TeamScores : BaseNetworkable, INetworkSerializer
+public partial class TeamScores : BaseNetworkable
 {
 	public TeamScores()
 	{
-		Scores = new int[ArraySize];
 		Reset();
+
+		foreach ( var v in Enum.GetValues<Team>() )
+		{
+			if ( v == Team.Unassigned ) continue;
+
+			Scores[v] = MinimumScore;
+		}
 	}
 
-	public virtual int MinimumScore => 0;
+	[Net] protected IDictionary<Team, int> Scores { get; set; }
 
+	public virtual int MinimumScore => 0;
 	public int MaximumScore => GamemodeSystem.Current?.MaximumScore ?? 4; 
 
-	protected static int ArraySize => Enum.GetNames( typeof( Team ) ).Length;
-	protected int[] Scores { get; set; }
 
 	public Team GetHighestTeam()
 	{
-		Team highest = Team.Unassigned;
-		float lastHighestValue = 0;
+		var list = Scores
+			.OrderBy( x => x.Value )
+			.Select( x => ( Team: x.Key, Score: x.Value ) )
+			.ToList();
 
-		for ( int i = 0; i < Scores.Length; i++ )
-		{
-			var score = Scores[i];
-			Team team = (Team)i;
+		var highest = list.Last();
+		if ( highest.Score == list[^2].Score ) return Team.Unassigned;
 
-			if ( score > lastHighestValue )
-			{
-				highest = team;
-				lastHighestValue = score;
-			}
-			else if ( score == lastHighestValue )
-			{
-				// We have a draw!
-				highest = Team.Unassigned;
-			}
-		}
-
-		return highest;
+		return highest.Team;
 	}
 
 	public void SetScore( Team team, int score )
 	{
 		var newScore = Math.Clamp( score, MinimumScore, MaximumScore );
-		Scores[(int)team] = newScore;
+		Scores[team] = newScore;
 
 		GamemodeSystem.Current?.OnScoreChanged( team, newScore, newScore == MaximumScore );
-
-		WriteNetworkData();
 	}
 
 	public int GetScore( Team team )
 	{
-		return Scores[(int)team];
+		return Scores[team];
 	}
 
 	public int AddScore( Team team, int score )
@@ -67,25 +58,6 @@ public partial class TeamScores : BaseNetworkable, INetworkSerializer
 		var newScore = GetScore( team ) - score;
 		SetScore( team, newScore );
 		return newScore;
-	}
-
-	public void Read( ref NetRead read )
-	{
-		Scores = new int[ArraySize];
-
-		int count = read.Read<int>();
-		for ( int i = 0; i < count; i++ )
-			Scores[i] = read.Read<int>();
-
-		Event.Run( "gunfight.scores.changed" );
-	}
-
-	public void Write( NetWrite write )
-	{
-		write.Write( Scores.Length );
-
-		foreach ( var score in Scores )
-			write.Write( score );
 	}
 
 	public void Reset()

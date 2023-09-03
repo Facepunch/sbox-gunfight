@@ -130,6 +130,8 @@ public partial class KillConfirmedGamemode : Gamemode
 			TimeUntilNextState = RoundLength;
 		else if ( after == GameState.GameWon )
 		{
+			WinningTeam = Scores.GetHighestTeam();
+
 			Progression.MatchHistory.Record();
 
 			TimeUntilNextState = GameWonLength;
@@ -195,7 +197,6 @@ public partial class KillConfirmedGamemode : Gamemode
 	{
 		if ( maxReached )
 		{
-			WinningTeam = Scores.GetHighestTeam();
 			SetGameState( GameState.GameWon );
 		}
 	}
@@ -242,7 +243,12 @@ public partial class KillConfirmedGamemode : Gamemode
 	[ConCmd.Admin( "gunfight_debug_kc_wingame" )]
 	public static void WinGameDebug()
 	{
-		( GamemodeSystem.Current as KillConfirmedGamemode )?.SetGameState( GameState.GameWon );
+		var gm = (GamemodeSystem.Current as KillConfirmedGamemode);
+
+		gm.Scores.SetScore( Team.OPFOR, 5 );
+		gm.Scores.SetScore( Team.BLUFOR, 4 );
+
+		gm?.SetGameState( GameState.GameWon );
 	}
 
 	public enum GameState

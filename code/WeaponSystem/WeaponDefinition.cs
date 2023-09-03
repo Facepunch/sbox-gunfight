@@ -182,6 +182,9 @@ public partial class WeaponDefinition : GameResource
 	public float ReloadTime { get; set; } = 3;
 
 	[Category( "Ammo" )]
+	public float EmptyReloadTime { get; set; } = 3;
+
+	[Category( "Ammo" )]
 	public bool ReloadSingle { get; set; } = false;
 
 	[Category( "Shooting" )]

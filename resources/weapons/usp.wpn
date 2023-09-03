@@ -32,6 +32,7 @@
   "ClipSize": 15,
   "StandardClip": 15,
   "ReloadTime": 1.11,
+  "EmptyReloadTime": 1.4,
   "ReloadSingle": false,
   "MaxEffectiveRange": 2048,
   "ViewModelSetup": {

@@ -12,7 +12,7 @@ public enum FireMode
 public partial class GunfightWeapon : BaseWeapon, IUse
 {
 	[Net, Predicted] public int AmmoClip { get; set; }
-	[Net, Predicted] public TimeSince TimeSinceReload { get; set; }
+	[Net, Predicted] public TimeUntil TimeUntilReloaded { get; set; }
 	[Net, Predicted] public bool IsReloading { get; set; }
 	public TimeSince TimeSinceDeployed { get; set; }
 	[Net, Predicted] public TimeSince TimeSincePrimaryAttack { get; set; }
@@ -45,7 +45,6 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 	public float PrimaryFireRate => WeaponDefinition.BaseFireRate;
 	public bool IsBurst => CurrentFireMode == FireMode.Burst;
 	public int ClipSize => WeaponDefinition.ClipSize;
-	public float ReloadTime => WeaponDefinition.ReloadTime;
 	public AmmoType AmmoType => WeaponDefinition?.AmmoType ?? AmmoType.None;
 	public float BulletSpread => WeaponDefinition.BulletSpread;
 	public float BulletForce => WeaponDefinition.BulletForce;
@@ -172,7 +171,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 		base.ActiveStart( ent );
 
 		TimeSinceDeployed = 0;
-		TimeSinceReload = ReloadTime;
+		TimeUntilReloaded = 0;
 		CameraRecoil = 0;
 		WeaponSpreadRecoil = 0;
 		TimeSinceBurstFinished = WeaponDefinition.BurstCooldown;
@@ -257,7 +256,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 		if ( AmmoClip >= ClipSize ) return;
 
-		TimeSinceReload = 0;
+		TimeUntilReloaded = AmmoClip == 0 ? WeaponDefinition.EmptyReloadTime : WeaponDefinition.ReloadTime;
 
 		if ( Owner is GunfightPlayer player )
 		{
@@ -415,7 +414,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 			AttackPrimary();
 		}
 
-		if ( IsReloading && TimeSinceReload > ReloadTime )
+		if ( IsReloading && TimeUntilReloaded )
 		{
 			OnReloadFinish();
 		}

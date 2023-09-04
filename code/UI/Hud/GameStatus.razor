@@ -16,11 +16,11 @@
 
 @code
 {
-    public string PlayerLocation => Game.LocalClient.GetLocation();
+    public string PlayerLocation => Game.LocalClient?.GetLocation();
     public string TimeLeft => GamemodeSystem.Current?.GetTimeLeftLabel() ?? "00:00";
 
-    public int FriendlyScore => GunfightGame.Current.Scores.GetScore( TeamSystem.MyTeam );
-    public int EnemyScore => GunfightGame.Current.Scores.GetScore( TeamSystem.MyTeam.GetOpponent() );
+    public int FriendlyScore => GunfightGame.Current.Scores?.GetScore( TeamSystem.MyTeam ) ?? 0;
+    public int EnemyScore => GunfightGame.Current.Scores?.GetScore( TeamSystem.MyTeam.GetOpponent() ) ?? 0;
 
     protected override int BuildHash()
     {

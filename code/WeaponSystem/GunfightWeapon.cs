@@ -360,7 +360,7 @@ public partial class GunfightWeapon : BaseWeapon, IUse
 
 	public override void Simulate( IClient cl )
 	{
-		ViewModelEntity?.SetAnimParameter( "b_grounded", Player?.Controller.GroundEntity.IsValid() ?? false );
+		ViewModelEntity?.SetAnimParameter( "b_grounded", Player?.Controller?.GroundEntity.IsValid() ?? false );
 
 		IsFiring = false;
 		

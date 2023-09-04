@@ -87,22 +87,28 @@
         }
     }
 
-	protected override void OnAfterTreeRender( bool firstTime )
-	{
-		base.OnAfterTreeRender( firstTime );
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        base.OnAfterTreeRender( firstTime );
 
-		if ( !string.IsNullOrEmpty( Server.Map ) )
-		{
-			_ = SyncMap();
-		}
-	}
-	
-	async Task SyncMap()
-	{
-		MapPackage = await Package.Fetch( Server.Map, false );
-		StateHasChanged();
+        if ( !string.IsNullOrEmpty( Server.Map ) )
+        {
+            _ = SyncMap();
+        }
+    }
 
-		MapBackground.Style.BackgroundImage = Texture.Load( MapPackage.Screenshots?.FirstOrDefault()?.Url ?? MapPackage.Thumb  );
+    async Task SyncMap()
+    {
+        MapPackage = await Package.Fetch( Server.Map, false );
+
+        if ( MapPackage == null )
+        {
+            return;
+        }
+
+        StateHasChanged();
+
+        MapBackground.Style.BackgroundImage = Texture.Load(MapPackage.Screenshots?.FirstOrDefault()?.Url ?? MapPackage.Thumb);
 	}
 
 	protected override int BuildHash()

@@ -129,7 +129,7 @@ public partial class FFAGamemode : Gamemode
 		{
 			TimeUntilNextState = GameWonLength;
 			
-			if ( !WinningPlayer.IsValid() )
+			if ( WinningPlayer.IsValid() )
 			{
 				UI.GunfightChatbox.AddChatEntry( To.Everyone, WinningPlayer.Name, "is the winner!", WinningPlayer.SteamId, false );
 			}

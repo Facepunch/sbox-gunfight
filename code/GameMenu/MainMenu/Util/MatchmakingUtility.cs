@@ -18,7 +18,7 @@ public partial class MatchmakingSystem
 
 		CurrentState = State.Empty;
 		// Join server
-		Game.Menu.ConnectToServer( server.SteamId );
+		Game.Menu?.ConnectToServer( server.SteamId );
 
 		return true;
 	}

@@ -202,7 +202,7 @@ public partial class PlayerInventory : BaseNetworkable
 	{
 		var realIndex = i - (int)WeaponSlot.Gadget;
 
-		if ( Gadgets.Count > realIndex )
+		if ( Gadgets.Count > realIndex + 1 )
 			return Gadgets[realIndex];
 
 		return null;

@@ -4,7 +4,7 @@ namespace Facepunch.Gunfight;
 
 public partial class MatchmakingSystem
 {
-	public static IEnumerable<ILobby> Lobbies => Game.Menu.Lobbies?.Where( IsCompatibleLobby );
+	public static IEnumerable<ILobby> Lobbies => Game.Menu?.Lobbies?.Where( IsCompatibleLobby );
 	
 	// Check to see if a lobby has a compatible map with our query
 	static bool CompatibleMap( ILobby lobby, string[] maps = null )

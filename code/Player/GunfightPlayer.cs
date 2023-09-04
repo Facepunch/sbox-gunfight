@@ -382,7 +382,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 			return;
 
 		var attacker = info.Attacker as GunfightPlayer;
-		if ( attacker.IsValid() && !GamemodeSystem.Current.AllowFriendlyFire && Gamemode.FriendlyFireOverride == false )
+		if ( attacker.IsValid() && !( GamemodeSystem.Current?.AllowFriendlyFire ?? true ) && Gamemode.FriendlyFireOverride == false )
 		{
 			if ( attacker.Team == Team )
 				return;

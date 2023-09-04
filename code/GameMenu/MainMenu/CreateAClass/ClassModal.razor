@@ -8,14 +8,11 @@
 <root>
     <div class="main">
         <div class="row">
-            @if ( Weapon is not null )
-            {
-                <ActionButton class="icon-only" onclick=@( () => Return() )>
-                    <Extra>
-                        <i>chevron-left</i>
-                    </Extra>
-                </ActionButton>       
-            }
+            <ActionButton class="icon-only" onclick=@( () => OnReturnPressed() )>
+                <Extra>
+                    <i>chevron-left</i>
+                </Extra>
+            </ActionButton>       
 
             <div class="main-title">
                 @ClassName
@@ -97,6 +94,11 @@
     public Gunfight.CreateAClass.CustomClass CustomClass { get; set; }
 
     public Gunfight.CreateAClass.Weapon Weapon { get; set; }
+
+    void OnReturnPressed()
+    {
+        if (Weapon is not null) Return(); else CloseModal(true);     
+    }
 
     public void Save()
     {

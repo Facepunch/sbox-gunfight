@@ -35,7 +35,21 @@ public partial class GunfightPlayer
 			}
 		}
 
-		GamemodeSystem.Current?.PlayerLoadout( player );
+		if ( GamemodeSystem.Current.IsValid() )
+		{
+			GamemodeSystem.Current?.PlayerLoadout( player );
+		}
+		else
+		{
+			var loadout = player.SelectedLoadout;
+			if ( loadout is null )
+			{
+				loadout = GunfightGame.Current.DefaultClasses.First();
+			}
+
+			player.GiveWeapon( loadout.SecondaryWeapon.Name, false, loadout.SecondaryWeapon.Attachments.ToArray() );
+			player.GiveWeapon( loadout.PrimaryWeapon.Name, true, loadout.PrimaryWeapon.Attachments.ToArray() );
+		}
 	}
 
 	[ClientRpc]

@@ -14,6 +14,15 @@ partial class GunfightGame : GameManager
 	[Net] public GunfightHud Hud { get; set; }
 	[Net] public TeamScores Scores { get; set; }
 
+	public List<CreateAClass.CustomClass> DefaultClasses => new()
+	{
+		new()
+		{
+			PrimaryWeapon = { Name = "mp5" },
+			SecondaryWeapon = { Name = "usp", Attachments = new() { "usp_rmr", "usp_sd" } }
+		}
+	};
+
 	public GunfightGame()
 	{
 		//
@@ -92,7 +101,14 @@ partial class GunfightGame : GameManager
 		var player = entity as GunfightPlayer;
 		var gamemode = GamemodeSystem.Current;
 
-		gamemode?.PreSpawn( player );
+		if ( gamemode.IsValid() )
+		{
+			gamemode!.PreSpawn( player );
+		}
+		else
+		{
+			player.AskForLoadout( To.Single( player ) );
+		}
 
 		var transform = gamemode?.GetDefaultSpawnPoint( player );
 		if ( transform is null )

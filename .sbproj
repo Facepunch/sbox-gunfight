@@ -411,6 +411,16 @@
         "Addons": "",
         "PreLaunchCommand": "",
         "PostLaunchCommand": "gunfight_gamemode FFAGamemode;gunfight_ffa_max_score 5"
+      },
+      {
+        "Name": "No Gamemode Motel",
+        "GameIdent": "facepunch.gunfight#local",
+        "MapName": "gkaf.motel",
+        "MaxPlayers": 64,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": "gunfight_gamemode \u0022\u0022"
       }
     ]
   }

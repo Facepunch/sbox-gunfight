@@ -157,14 +157,7 @@ public abstract partial class Gamemode : Entity
 		PlayerCount--;
 	}
 
-	public virtual List<CreateAClass.CustomClass> DefaultClasses => new()
-	{
-		new()
-		{
-			PrimaryWeapon = { Name = "mp5" },
-			SecondaryWeapon = { Name = "usp", Attachments = new() { "usp_rmr", "usp_sd" } } 
-		}
-	};
+	public virtual List<CreateAClass.CustomClass> DefaultClasses => GunfightGame.Current.DefaultClasses;
 
 	/// <summary>
 	/// Used to apply a loadout to a player
@@ -180,9 +173,7 @@ public abstract partial class Gamemode : Entity
 		}
 
 		player.GiveWeapon( loadout.SecondaryWeapon.Name, false, loadout.SecondaryWeapon.Attachments.ToArray() );
-
 		player.GiveWeapon( loadout.PrimaryWeapon.Name, true, loadout.PrimaryWeapon.Attachments.ToArray() );
-
 
 		return false;
 	}

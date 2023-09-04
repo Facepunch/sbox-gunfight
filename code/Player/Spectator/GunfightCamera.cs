@@ -30,7 +30,7 @@ public class GunfightCamera
 	}
 
 	public float CurrentDistance { get; set; } = 0f;
-	public float CameraDistance => 60f;
+	public float CameraDistance => 45f;
 	public float RightOffset => 8f;
 	public float CameraChangeSpeed { get; set; } = 10f;
 

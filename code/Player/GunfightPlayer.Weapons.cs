@@ -156,9 +156,6 @@ public partial class GunfightPlayer
 
 		PlayerCamera?.Update();
 		ActiveChild?.FrameSimulate( cl );
-		
-		if ( !Camera.FirstPersonViewer.IsValid() )
-			return;
 
 		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
 		

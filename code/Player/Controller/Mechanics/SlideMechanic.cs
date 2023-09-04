@@ -74,7 +74,7 @@ public partial class SlideMechanic : BaseMoveMechanic
 
 	public override float? GetEyeHeight()
 	{
-		return 20f;
+		return 22f;
 	}
 
 	public override float? GetGroundFriction()

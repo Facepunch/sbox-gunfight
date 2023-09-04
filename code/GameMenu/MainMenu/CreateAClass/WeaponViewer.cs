@@ -25,6 +25,12 @@ public class WeaponViewer : ScenePanel
 		WeaponModel?.Delete();
 		WeaponModel = null;
 
+		if ( Definition == null )
+		{
+			// Couldn't find weapon definition?
+			return;
+		}
+
 		SetModel( Definition.CachedModel );
 
 		var bounds = WeaponModel.Bounds;
@@ -34,8 +40,6 @@ public class WeaponViewer : ScenePanel
 		size = MathF.Max( size, MathF.Abs( bounds.Mins.x ) + MathF.Abs( bounds.Maxs.x ) );
 		size = MathF.Max( size, MathF.Abs( bounds.Mins.y ) + MathF.Abs( bounds.Maxs.y ) );
 		size = MathF.Max( size, MathF.Abs( bounds.Mins.z ) + MathF.Abs( bounds.Maxs.z ) );
-
-		// NoRotation = true;
 
 		Camera.Position = Vector3.Right * -middle.y + Vector3.Up * middle.z + Vector3.Backward * (40f + (size * 2f));
 		Camera.FieldOfView = 23;

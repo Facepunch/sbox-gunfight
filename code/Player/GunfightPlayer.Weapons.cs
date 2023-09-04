@@ -170,17 +170,5 @@ public partial class GunfightPlayer
 
 		PlayerCamera?.Update();
 		ActiveChild?.FrameSimulate( cl );
-
-		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
-		
-		GunfightGame.AddedCameraFOV = 0f;
-		if ( Controller != null )
-		{
-			if ( Controller.IsSprinting )
-				GunfightGame.AddedCameraFOV += 3f;
-
-			if ( Controller.IsAiming )
-				GunfightGame.AddedCameraFOV += -10f;
-		}
 	}
 }

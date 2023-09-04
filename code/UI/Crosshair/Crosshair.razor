@@ -104,7 +104,7 @@
 
         if ( !GunfightCamera.IsThirdPerson )
         {
-            SetClass( "visible", ( !isAiming || PlayerController.UseAimDebug ) && player.LifeState == LifeState.Alive && !(weapon?.IsReloading ?? false) );
+            SetClass( "visible", ( !isAiming || PlayerController.UseAimDebug ) && player?.LifeState == LifeState.Alive && !(weapon?.IsReloading ?? false) );
         }
         else
         {

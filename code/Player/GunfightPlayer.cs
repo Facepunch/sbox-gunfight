@@ -47,7 +47,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 	{
 		PlayerCamera = new();
 	}
-	
+
 	public void Respawn()
 	{
 		Game.AssertServer();

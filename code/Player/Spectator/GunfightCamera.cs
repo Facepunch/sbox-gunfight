@@ -59,6 +59,9 @@ public class GunfightCamera
 		if ( !Target.IsValid() )
 			Target = GetPlayers().FirstOrDefault();
 
+		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
+		GunfightGame.AddedCameraFOV = 0f;
+
 		var target = Target;
 		if ( !target.IsValid() )
 			return;
@@ -86,11 +89,22 @@ public class GunfightCamera
 		else
 			Camera.Rotation = Rotation.Slerp( Camera.Rotation, rotation, Time.Delta * 20f );
 
+		Camera.Rotation = Camera.Rotation.Angles().WithRoll( 0f ).ToRotation();
+
 		Sound.Listener = new()
 		{
 			Position = Camera.Position,
 			Rotation = Camera.Rotation
 		};
+
+		if ( Target.Controller != null )
+		{
+			if ( Target.Controller.IsSprinting )
+				GunfightGame.AddedCameraFOV += 3f;
+
+			if ( Target.Controller.IsAiming )
+				GunfightGame.AddedCameraFOV += -10f;
+		}
 	}
 
 	public virtual void BuildInput()

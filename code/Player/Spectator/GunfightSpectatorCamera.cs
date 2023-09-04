@@ -71,10 +71,10 @@ internal class GunfightSpectatorCamera : GunfightCamera
 		if ( Input.Pressed( "Jump" ) )
 			ToggleFree();
 
-		if ( Input.Pressed( "Menu" ) )
+		if ( Input.Pressed( "SpectatorPrev" ) )
 			SpectateNextPlayer( false );
 
-		if ( Input.Pressed( "Interact" ) )
+		if ( Input.Pressed( "SpectatorNext" ) )
 			SpectateNextPlayer();
 
 		MoveMultiplier = GetSpeedMultiplier();

@@ -347,6 +347,18 @@
           "Name": "Noclip",
           "KeyboardCode": "MOUSE4",
           "GroupName": "Development"
+        },
+        {
+          "Name": "SpectatorNext",
+          "KeyboardCode": "E",
+          "GamepadCode": "DpadWest",
+          "GroupName": "Spectator"
+        },
+        {
+          "Name": "SpectatorPrev",
+          "KeyboardCode": "Q",
+          "GamepadCode": "DpadEast",
+          "GroupName": "Spectator"
         }
       ]
     },

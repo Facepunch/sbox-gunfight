@@ -107,7 +107,16 @@ partial class GunfightGame : GameManager
 		}
 		else
 		{
-			player.AskForLoadout( To.Single( player ) );
+			if ( player.Client.IsBot )
+			{
+				var loadout = GunfightGame.Current.DefaultClasses.First();
+				player.GiveWeapon( loadout.SecondaryWeapon.Name, false, loadout.SecondaryWeapon.Attachments.ToArray() );
+				player.GiveWeapon( loadout.PrimaryWeapon.Name, true, loadout.PrimaryWeapon.Attachments.ToArray() );
+			}
+			else
+			{
+				player.AskForLoadout( To.Single( player ) );
+			}
 		}
 
 		var transform = gamemode?.GetDefaultSpawnPoint( player );

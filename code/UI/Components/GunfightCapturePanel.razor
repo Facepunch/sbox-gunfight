@@ -19,7 +19,7 @@
 
 @code
 {
-    public CapturePointEntity Flag => (Game.LocalPawn as GunfightPlayer)?.CapturePoint;
+    public CapturePointEntity Flag => (GunfightCamera.Target as GunfightPlayer)?.CapturePoint;
     public float CaptureAmount => Flag?.Captured ?? 0f;
 
     // @ref

@@ -220,7 +220,7 @@ public partial class GunfightPlayer : AnimatedEntity, IHudMarker
 	[GameEvent.Tick.Client]
 	protected void HeartbeatTick()
 	{
-		if ( this != Game.LocalPawn ) return;
+		if ( this != GunfightCamera.Target ) return;
 
 		var hp = Health;
 		if ( LifeState != LifeState.Alive ) hp = 100;

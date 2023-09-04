@@ -144,7 +144,7 @@ partial class GunfightGame : GameManager
 	[GameEvent.Client.PostCamera]
 	public void PostCameraSetup()
 	{
-		if ( Game.LocalPawn.LifeState != LifeState.Alive )
+		if ( GunfightCamera.Target.LifeState != LifeState.Alive )
 		{
 			return;
 		}

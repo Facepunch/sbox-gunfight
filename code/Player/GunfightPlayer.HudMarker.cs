@@ -9,7 +9,7 @@ public partial class GunfightPlayer
 	bool CalculateVisibility()
 	{
 		var tr = Trace.Ray( Camera.Position, AimRay.Position )
-			.Ignore( Game.LocalPawn )
+			.Ignore( GunfightCamera.Target )
 			.Run();
 
 		if ( tr.Hit && tr.Entity == this )
@@ -23,7 +23,7 @@ public partial class GunfightPlayer
 		if ( !this.IsValid() )
 			return false;
 
-		if ( this == Game.LocalPawn ) 
+		if ( this == GunfightCamera.Target ) 
 			return false;
 
 		if ( LifeState != LifeState.Alive )

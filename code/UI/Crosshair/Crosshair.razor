@@ -25,7 +25,7 @@
     Panel Bottom;
     Panel Dot;
 
-    GunfightPlayer Player => Game.LocalPawn as GunfightPlayer;
+    GunfightPlayer Player => GunfightCamera.Target as GunfightPlayer;
     GunfightWeapon Weapon => Player?.ActiveChild as GunfightWeapon;
 
     float BaseDistance => 10 + ( Weapon.BulletSpread * 250f );
@@ -98,7 +98,7 @@
 
     public override void Tick()
     {
-        var player = Game.LocalPawn as GunfightPlayer;
+        var player = GunfightCamera.Target as GunfightPlayer;
         var weapon = player?.ActiveChild as GunfightWeapon;
         var isAiming = player?.IsAiming ?? false;
 

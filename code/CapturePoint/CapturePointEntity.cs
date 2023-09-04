@@ -255,7 +255,7 @@ public partial class CapturePointEntity : BaseTrigger, IHudMarker, ISpawnPoint
 		if ( !this.IsValid() )
 			return false;
 
-		if ( Game.LocalPawn is GunfightPlayer player && player.CapturePoint == this )
+		if ( GunfightCamera.Target is GunfightPlayer player && player.CapturePoint == this )
 			return false;
 
 		info.Text = Identity;

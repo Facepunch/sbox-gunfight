@@ -44,7 +44,7 @@
 
 @code
 {
-    public GunfightPlayer Player => Game.LocalPawn as GunfightPlayer;
+    public GunfightPlayer Player => GunfightCamera.Target as GunfightPlayer;
     public GunfightWeapon WeaponOne => Player?.ActiveChild as GunfightWeapon;
     public GunfightWeapon WeaponTwo => ( Player?.ActiveChild as GunfightWeapon ) == Player.Inventory.PrimaryWeapon ? Player.Inventory.SecondaryWeapon : Player.Inventory.PrimaryWeapon;
     public static HudRootPanel Current;

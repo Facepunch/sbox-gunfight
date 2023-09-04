@@ -19,7 +19,7 @@ public partial class GunfightDeathCamera : GunfightCamera
 
 	public override void Update()
 	{
-		ModelEntity focusEntity = FocusEntity ?? Game.LocalPawn as ModelEntity;
+		ModelEntity focusEntity = FocusEntity ?? GunfightCamera.Target as ModelEntity;
 		bool isRagdoll = false;
 
 		if ( focusEntity is GunfightPlayer focusPlayer )

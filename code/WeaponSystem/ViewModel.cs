@@ -110,9 +110,6 @@ public partial class ViewModel : BaseViewModel
 		var weapon = Weapon as GunfightWeapon;
 		var velLen = Owner.Velocity.Length;
 		var speed = velLen.LerpInverse( 0, 750 );
-
-		SetAnimParameter( "move_groundspeed", velLen );
-
 		var sideSpeed = velLen.LerpInverse( 0, 350 );
 		var bobSpeed = SmoothedVelocity.Length.LerpInverse( -250, 700 );
 		var left = Camera.Rotation.Left;
@@ -134,6 +131,9 @@ public partial class ViewModel : BaseViewModel
 
 		var avoidanceVal = avoidanceTrace.Hit ? (1f - avoidanceTrace.Fraction) : 0;
 		avoidanceVal *= 1 - ( aimLerp * 0.8f );
+
+		SetAnimParameter( "b_sprint", sprint );
+		SetAnimParameter( "move_groundspeed", velLen );
 
 		LerpTowards( ref avoidance, avoidanceVal, 10f );
 		LerpTowards( ref sprintLerp, sprint && !burstSprint && !sliding ? 1 : 0, 10f );

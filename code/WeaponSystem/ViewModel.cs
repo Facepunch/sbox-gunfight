@@ -33,6 +33,7 @@ public partial class ViewModel : BaseViewModel
 	Vector3 SprintPositionOffset => Setup.SprintPositionOffset;
 	Vector3 BurstSprintPositionOffset => Setup.GetSprintPosOffset( true );
 	Angles BurstSprintAngleOffset => Setup.GetSprintAngleOffset( true );
+	protected float InertiaDamping => 20.0f;
 
 	// Utility
 	float DeltaTime => Time.Delta;
@@ -78,6 +79,11 @@ public partial class ViewModel : BaseViewModel
 	{
 		return Setup.AimAngleOffset;
 	}
+
+	private float lastPitch;
+	private float lastYaw;
+	public float YawInertia { get; private set; }
+	public float PitchInertia { get; private set; }
 
 	public override void PlaceViewmodel()
 	{
@@ -150,6 +156,17 @@ public partial class ViewModel : BaseViewModel
 		LerpTowards( ref holsterLerp, owner.IsHolstering ? 1 : 0, 6f );
 
 		SetAnimParameter( "b_empty", weapon.AmmoClip < 1 );
+
+
+		var newPitch = Rotation.Pitch();
+		var newYaw = Rotation.Yaw();
+
+		var pitchDelta = Angles.NormalizeAngle( newPitch - lastPitch );
+		var yawDelta = Angles.NormalizeAngle( lastYaw - newYaw );
+
+		PitchInertia += pitchDelta;
+		YawInertia += yawDelta;
+
 
 		var leftAmt = left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal );
 		LerpTowards( ref sideLerp, leftAmt * ( 1 - aimLerp ), 5f );
@@ -281,6 +298,17 @@ public partial class ViewModel : BaseViewModel
 
 		Camera.FieldOfView -= 10f * aimLerp;
 		Camera.Main.SetViewModelCamera( 90f, 1, 2048 );
+
+		SetAnimParameter( "aim_yaw_inertia", YawInertia );
+		SetAnimParameter( "aim_pitch_inertia", PitchInertia );
+
+		lastPitch = newPitch;
+		lastYaw = newYaw;
+
+		YawInertia = YawInertia.LerpTo( 0, Time.Delta * InertiaDamping );
+		PitchInertia = PitchInertia.LerpTo( 0, Time.Delta * InertiaDamping );
+
+		Log.Info( YawInertia );
 	}
 
 	protected void ApplyPositionOffset( Vector3 offset, float delta )

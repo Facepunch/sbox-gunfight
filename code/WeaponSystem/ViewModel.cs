@@ -307,8 +307,6 @@ public partial class ViewModel : BaseViewModel
 
 		YawInertia = YawInertia.LerpTo( 0, Time.Delta * InertiaDamping );
 		PitchInertia = PitchInertia.LerpTo( 0, Time.Delta * InertiaDamping );
-
-		Log.Info( YawInertia );
 	}
 
 	protected void ApplyPositionOffset( Vector3 offset, float delta )

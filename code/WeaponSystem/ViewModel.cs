@@ -1,4 +1,6 @@
-﻿namespace Facepunch.Gunfight;
+﻿using Sandbox.Utility;
+
+namespace Facepunch.Gunfight;
 
 // TODO - Clean all this up, it's a fucking mess.
 public partial class ViewModel : BaseViewModel
@@ -39,6 +41,16 @@ public partial class ViewModel : BaseViewModel
 		{
 			var val = Setup.InertiaDampening;
 			if ( val == 0 ) return 20f;
+			return val;
+		}
+	}
+
+	protected Vector2 MaxInertia
+	{
+		get
+		{
+			var val = Setup.MaxInertia;
+			if ( val.Length == 0 ) return new Vector2( 100, 100 );
 			return val;
 		}
 	}
@@ -92,6 +104,9 @@ public partial class ViewModel : BaseViewModel
 	private float lastYaw;
 	public float YawInertia { get; private set; }
 	public float PitchInertia { get; private set; }
+
+	public float YawInertiaScaled { get; private set; }
+	public float PitchInertiaScaled { get; private set; }
 
 	public override void PlaceViewmodel()
 	{
@@ -175,6 +190,8 @@ public partial class ViewModel : BaseViewModel
 		PitchInertia += pitchDelta;
 		YawInertia += yawDelta;
 
+		YawInertiaScaled = Easing.ExpoOut( YawInertia.LerpInverse( -MaxInertia.x, MaxInertia.x, false ) - 0.5f );
+		PitchInertiaScaled = Easing.ExpoOut( PitchInertia.LerpInverse( -MaxInertia.y, MaxInertia.y, false ) - 0.5f );
 
 		var leftAmt = left.WithZ( 0 ).Normal.Dot( Owner.Velocity.Normal );
 		LerpTowards( ref sideLerp, leftAmt * ( 1 - aimLerp ), 5f );
@@ -307,8 +324,8 @@ public partial class ViewModel : BaseViewModel
 		Camera.FieldOfView -= 10f * aimLerp;
 		Camera.Main.SetViewModelCamera( 90f, 1, 2048 );
 
-		SetAnimParameter( "aim_yaw_inertia", YawInertia );
-		SetAnimParameter( "aim_pitch_inertia", PitchInertia );
+		SetAnimParameter( "aim_yaw_inertia", YawInertiaScaled * MaxInertia.x );
+		SetAnimParameter( "aim_pitch_inertia", PitchInertiaScaled * MaxInertia.y );
 
 		lastPitch = newPitch;
 		lastYaw = newYaw;

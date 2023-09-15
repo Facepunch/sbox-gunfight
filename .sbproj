@@ -433,6 +433,16 @@
         "Addons": "",
         "PreLaunchCommand": "",
         "PostLaunchCommand": "gunfight_gamemode \u0022\u0022"
+      },
+      {
+        "Name": "Square",
+        "GameIdent": "facepunch.gunfight#local",
+        "MapName": "facepunch.square",
+        "MaxPlayers": 1,
+        "GameSettings": {},
+        "Addons": "",
+        "PreLaunchCommand": "",
+        "PostLaunchCommand": "gunfight_gamemode FFAGamemode"
       }
     ]
   }

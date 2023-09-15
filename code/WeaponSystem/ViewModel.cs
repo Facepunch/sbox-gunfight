@@ -33,7 +33,15 @@ public partial class ViewModel : BaseViewModel
 	Vector3 SprintPositionOffset => Setup.SprintPositionOffset;
 	Vector3 BurstSprintPositionOffset => Setup.GetSprintPosOffset( true );
 	Angles BurstSprintAngleOffset => Setup.GetSprintAngleOffset( true );
-	protected float InertiaDamping => 20.0f;
+	protected float InertiaDamping
+	{
+		get
+		{
+			var val = Setup.InertiaDampening;
+			if ( val == 0 ) return 20f;
+			return val;
+		}
+	}
 
 	// Utility
 	float DeltaTime => Time.Delta;

@@ -7,6 +7,7 @@ public struct ViewModelSetup
 	public float WeightReturnForce { get; set; }
 	public float WeightDamping { get; set; }
 	public float AccelerationDamping { get; set; }
+	public float InertiaDampening { get; set; }
 	public float VelocityScale { get; set; }
 	public float RotationalPivotForce { get; set; }
 	public float RotationalScale { get; set; }

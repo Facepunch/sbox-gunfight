@@ -56,6 +56,9 @@ public sealed class PlayerController : Component
 			EyeAngles.yaw -= Input.MouseDelta.x * 0.1f;
 			EyeAngles.roll = 0;
 
+			// we're a shooter game!
+			EyeAngles.pitch = EyeAngles.pitch.Clamp( -90, 90 );
+
 			var cam = CameraController.Camera;
 			var lookDir = EyeAngles.ToRotation();
 
@@ -148,7 +151,7 @@ public sealed class PlayerController : Component
 
 	public void BuildWishVelocity()
 	{
-		var rot = EyeAngles.ToRotation();
+		var rot = EyeAngles.WithPitch( 0f ).ToRotation();
 
 		WishVelocity = 0;
 

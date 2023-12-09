@@ -18,27 +18,27 @@ public sealed class Client : Component, Component.INetworkListener
 	/// <summary>
 	/// Are we connected to a server?
 	/// </summary>
-	public bool IsConnected { get; set; } = false;
+	public bool IsConnected { get; private set; } = false;
 
 	/// <summary>
 	/// Is this client me? (The local client)
 	/// </summary>
-	public bool IsMe { get; set; } = false;
+	[Property] public bool IsMe { get; private set; } = false;
 
 	/// <summary>
 	/// Is this client hosting the current game session?
 	/// </summary>
-	public bool IsHost { get; set; } = false;
+	[Property] public bool IsHost { get; private set; } = false;
 
 	/// <summary>
 	/// The client's SteamId
 	/// </summary>
-	public ulong SteamId { get; set; } = 0;
+	[Property] public ulong SteamId { get; private set; } = 0;
 
 	/// <summary>
 	/// The client's DisplayName
 	/// </summary>
-	public string DisplayName { get; set; } = "User";
+	[Property] public string DisplayName { get; private set; } = "User";
 
 	/// <summary>
 	/// This method is called by having our component implement INetworkListener.

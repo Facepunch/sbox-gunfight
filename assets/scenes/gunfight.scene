@@ -165,6 +165,21 @@
           "__type": "CameraController",
           "__enabled": true,
           "camera": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c"
+        },
+        {
+          "__type": "CharacterController",
+          "__enabled": true,
+          "Acceleration": 10,
+          "GroundAngle": 45,
+          "Height": 64,
+          "IgnoreLayers": "",
+          "Radius": 16,
+          "StepHeight": 18
+        },
+        {
+          "__type": "Client",
+          "__enabled": true,
+          "DisplayName": "User"
         }
       ],
       "Children": [

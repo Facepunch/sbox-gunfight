@@ -157,6 +157,14 @@
       "Enabled": true,
       "Components": [
         {
+          "__type": "Client",
+          "__enabled": true,
+          "DisplayName": "User",
+          "IsHost": false,
+          "IsMe": false,
+          "SteamId": 0
+        },
+        {
           "__type": "PlayerController",
           "__enabled": true,
           "Body": "a5eeac8e-e56d-48b9-9155-266a684c3551"
@@ -175,11 +183,6 @@
           "IgnoreLayers": "",
           "Radius": 16,
           "StepHeight": 18
-        },
-        {
-          "__type": "Client",
-          "__enabled": true,
-          "DisplayName": "User"
         }
       ],
       "Children": [

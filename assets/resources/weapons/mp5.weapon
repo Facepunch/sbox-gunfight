@@ -1,0 +1,7 @@
+{
+  "Name": "MP5",
+  "Description": "A submachine gun that fires 9x19mm Parabellum cartridges, developed in the 1960s.",
+  "MainPrefab": null,
+  "ViewModelPrefab": null,
+  "__references": []
+}

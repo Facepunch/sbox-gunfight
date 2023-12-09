@@ -180,13 +180,13 @@
     }
   ],
   "SceneProperties": {
+    "Lerping": true,
     "UseFixedUpdate": true,
     "ThreadedAnimation": true,
     "TimeScale": 1,
-    "NetworkFrequency": 60,
-    "Lerping": true,
     "MaxFixedUpdates": 5,
-    "FixedUpdateFrequency": 50
+    "FixedUpdateFrequency": 50,
+    "NetworkFrequency": 60
   },
   "Title": "minimal",
   "Description": "",

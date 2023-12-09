@@ -8,7 +8,7 @@
   "HasAssets": true,
   "AssetsPath": "",
   "Resources": null,
-  "MenuResources": "/fonts/*\n/UI/*\n/GameMenu/*\n/Styles/*",
+  "MenuResources": "assets/fonts/*\nassets/UI/*\nassets/GameMenu/*\nassets/sounds/*\nassets/models/*\nassets/particles/*\nassets/materials/*\nassets/scenes/*",
   "HasCode": true,
   "CodePath": "/code/",
   "PackageReferences": [
@@ -113,9 +113,14 @@
       "SoftBodySubsteps": 1
     },
     "Compiler": {
-      "RootNamespace": "Facepunch.Gunfight",
+      "RootNamespace": "Gunfight",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
-      "NoWarn": "1701;1702;1591;"
+      "NoWarn": "1701;1702;1591;",
+      "WarningsAsErrors": "",
+      "ReleaseMode": "Release",
+      "AssemblyReferences": [],
+      "IgnoreFolders": [],
+      "DistinctAssemblyReferences": []
     },
     "GameCategory": "Shooter",
     "ControlModes": {
@@ -444,6 +449,7 @@
         "PreLaunchCommand": "",
         "PostLaunchCommand": "gunfight_gamemode FFAGamemode"
       }
-    ]
+    ],
+    "StartupScene": "assets/scenes/gunfight.scene"
   }
 }

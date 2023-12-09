@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<AssemblyName>gunfight.editor</AssemblyName>
+		<PackageId>gunfight.editor</PackageId>
+		<LangVersion>11</LangVersion>
+		<NoWarn>1701;1702;1591;</NoWarn>
+		<WarningsAsErrors></WarningsAsErrors>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<DefineConstants>SANDBOX;ADDON;DEBUG</DefineConstants>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		
+		<None Update="**\*.cs.scss" DependentUpon="%(Filename)" />
+		<Compile Update="**\*.razor.cs" DependentUpon="%(Filename)" />
+		<None Update="**\*.razor.scss" DependentUpon="%(Filename)" />
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<AdditionalFiles Include="**/*.razor" />
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<Using Include="Sandbox.Internal.GlobalToolsNamespace" Static="true" />
+		<Using Include="Sandbox.Internal.GlobalGameNamespace" Static="true" />
+	</ItemGroup>
+
+  <PropertyGroup>
+	<OutputPath>..\..\..\sbox\game/.vs/output/</OutputPath>
+	<DocumentationFile>..\..\..\sbox\game/.vs/output/gunfight.editor.xml</DocumentationFile>
+	<RootNamespace>Facepunch.Gunfight</RootNamespace>
+	<Nullable>disable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Analyzer Include="..\..\..\sbox\game\bin\managed\Sandbox.Generator.dll"/>
+		<Reference Include="..\..\..\sbox\game\bin\managed/Sandbox.System.dll" />
+		<Reference Include="..\..\..\sbox\game\bin\managed/Sandbox.Engine.dll" />
+		<Reference Include="..\..\..\sbox\game\bin\managed/Sandbox.Game.dll" />
+		<Reference Include="..\..\..\sbox\game\bin\managed/Sandbox.Event.dll" />
+		<Reference Include="..\..\..\sbox\game\bin\managed/Sandbox.Reflection.dll" />
+		<Reference Include="..\..\..\sbox\game\bin\managed/Sandbox.Tools.dll" />
+		<Reference Include="..\..\..\sbox\game\bin\managed/Sandbox.Bind.dll" />
+		<Reference Include="..\..\..\sbox\game\bin\managed/Facepunch.ActionGraphs.dll" />
+	</ItemGroup>
+
+  <ItemGroup>
+		<ProjectReference Include="C:\git\sbox-gunfight\\code\\gunfight.csproj" />
+		<ProjectReference Include="C:\git\sbox\game\addons\tools\\code\Base Editor Library.csproj" />
+
+  </ItemGroup>
+
+</Project>

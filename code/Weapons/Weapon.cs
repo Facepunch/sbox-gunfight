@@ -8,7 +8,12 @@ public partial class Weapon : Component
 	/// <summary>
 	/// A reference to the weapon's <see cref="WeaponDataResource"/>.
 	/// </summary>
-	public WeaponDataResource Resource { get; set; }
+	[Property] public WeaponDataResource Resource { get; set; }
+
+	/// <summary>
+	/// The default holdtype for this weapon.
+	/// </summary>
+	[Property] public CitizenAnimationHelper.HoldTypes HoldType { get; set; } = CitizenAnimationHelper.HoldTypes.Rifle;
 
 	/// <summary>
 	/// How long it's been since we used this attack.
@@ -19,6 +24,15 @@ public partial class Weapon : Component
 	/// How long it's been since we used this attack.
 	/// </summary>
 	protected TimeSince TimeSinceSecondaryAttack { get; set; }
+
+	/// <summary>
+	/// Allow weapons to override holdtypes at any notice.
+	/// </summary>
+	/// <returns></returns>
+	public virtual CitizenAnimationHelper.HoldTypes GetHoldType()
+	{
+		return HoldType;
+	}
 
 	/// <summary>
 	/// Called when trying to shoot the weapon with the "Attack1" input action.

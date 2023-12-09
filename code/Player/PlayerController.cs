@@ -27,12 +27,17 @@ public sealed class PlayerController : Component
 	/// </summary>
 	CameraController CameraController { get; set; }
 
+	/// <summary>
+	/// The current holdtype for the player.
+	/// </summary>
+	[Property] CitizenAnimationHelper.HoldTypes CurrentHoldType { get; set; } = CitizenAnimationHelper.HoldTypes.None;
+
 	// Properties used only in this component.
 	Vector3 WishVelocity;
 	Angles EyeAngles;
 	bool IsRunning;
 	bool IsDucking;
-
+	
 	protected override void OnAwake()
 	{
 		// Try to find the character controller.
@@ -98,6 +103,7 @@ public sealed class PlayerController : Component
 			AnimationHelper.WithLook( EyeAngles.Forward, 1, 1, 1.0f );
 			AnimationHelper.MoveStyle = IsRunning ? CitizenAnimationHelper.MoveStyles.Run : CitizenAnimationHelper.MoveStyles.Walk;
 			AnimationHelper.DuckLevel = IsDucking ? 100 : 0;
+			AnimationHelper.HoldType = CurrentHoldType;
 		}
 	}
 

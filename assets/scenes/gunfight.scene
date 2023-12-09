@@ -172,11 +172,6 @@
           ]
         }
       ]
-    },
-    {
-      "Id": "1060cc2e-eaf5-4640-bb27-056c5a932f24",
-      "Name": "GameObject",
-      "Enabled": true
     }
   ],
   "SceneProperties": {

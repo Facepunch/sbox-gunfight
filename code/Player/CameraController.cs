@@ -7,6 +7,11 @@ public sealed class CameraController : Component
 	/// </summary>
 	[Property] public CameraComponent Camera { get; set; }
 
+	/// <summary>
+	/// Hide the local player's body?
+	/// </summary>
+	[Property] public bool HideBody { get; set; } = true;
+
 	protected override void OnAwake()
 	{
 		// Make sure the camera is disabled if we're not actively in charge of it.
@@ -14,7 +19,7 @@ public sealed class CameraController : Component
 		Camera.Enabled = !IsProxy;
 
 		// If the camera is enabled, let's get rid of the player's body, otherwise it's gonna be in the way.
-		if ( Camera.Enabled )
+		if ( Camera.Enabled && HideBody )
 		{
 			var playerController = Components.Get<PlayerController>();
 			if ( playerController == null ) throw new ComponentNotFoundException( "CameraController - couldn't find PlayerController component." );

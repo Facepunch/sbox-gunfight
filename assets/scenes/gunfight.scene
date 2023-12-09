@@ -153,7 +153,8 @@
     {
       "Id": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
       "Name": "Player",
-      "Position": "-242.6006,-424.1199,99.46105",
+      "Position": "-242.6006,-424.1199,45.6832",
+      "Rotation": "0.00000005306496,0.0000000000000002222778,0.8902823,0.4554094",
       "Tags": "player",
       "Enabled": true,
       "Components": [
@@ -175,7 +176,8 @@
         {
           "__type": "CameraController",
           "__enabled": true,
-          "Camera": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c"
+          "Camera": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c",
+          "HideBody": false
         },
         {
           "__type": "CharacterController",
@@ -199,7 +201,7 @@
             {
               "__type": "SkinnedModelRenderer",
               "__enabled": true,
-              "BodyGroups": 18446744073709551615,
+              "BodyGroups": 18446744073709551275,
               "BoneMergeTarget": null,
               "CreateBoneObjects": false,
               "MaterialOverride": null,
@@ -225,6 +227,159 @@
               "Renderer": "a5eeac8e-e56d-48b9-9155-266a684c3551",
               "Target": "a5eeac8e-e56d-48b9-9155-266a684c3551"
             }
+          ],
+          "Children": [
+            {
+              "Id": "4a0215c5-ab2d-4d12-b9bc-b4f09633f032",
+              "Name": "Clothes",
+              "Position": "0,0,0",
+              "Tags": "player",
+              "Enabled": true,
+              "Children": [
+                {
+                  "Id": "1a266896-9bd7-47a9-9459-e7da04542926",
+                  "Name": "Helmet",
+                  "Position": "242.6006,424.1199,-99.46105",
+                  "Tags": "player",
+                  "Enabled": true,
+                  "Components": [
+                    {
+                      "__type": "SkinnedModelRenderer",
+                      "__enabled": true,
+                      "BodyGroups": 18446744073709551615,
+                      "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                      "CreateBoneObjects": false,
+                      "MaterialOverride": null,
+                      "Model": "models/citizen_clothes/hat/tactical_helmet/models/tactical_helmet.vmdl",
+                      "ShouldCastShadows": true,
+                      "Tint": "1,1,1,1"
+                    }
+                  ]
+                },
+                {
+                  "Id": "60ce5d42-8bf1-4111-9172-893fe1abfc96",
+                  "Name": "Balaclava",
+                  "Position": "403.8836,-889.8362,-145.1443",
+                  "Rotation": "-0.00000005306495,-0.0000000000000002222778,-0.890282,0.4554093",
+                  "Tags": "player",
+                  "Enabled": true,
+                  "Components": [
+                    {
+                      "__type": "SkinnedModelRenderer",
+                      "__enabled": true,
+                      "BodyGroups": 18446744073709551615,
+                      "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                      "CreateBoneObjects": false,
+                      "MaterialOverride": null,
+                      "Model": "models/citizen_clothes/hat/balaclava/models/balaclava.vmdl",
+                      "ShouldCastShadows": true,
+                      "Tint": "1,1,1,1"
+                    }
+                  ]
+                },
+                {
+                  "Id": "2a816a0a-7e0d-494d-bb77-c8c94f2a7836",
+                  "Name": "Tactical Vest",
+                  "Position": "403.884,-889.8361,-145.1443",
+                  "Rotation": "-0.00000005306495,-0.0000000000000002222778,-0.890282,0.4554093",
+                  "Tags": "player",
+                  "Enabled": true,
+                  "Components": [
+                    {
+                      "__type": "SkinnedModelRenderer",
+                      "__enabled": true,
+                      "BodyGroups": 18446744073709551615,
+                      "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                      "CreateBoneObjects": false,
+                      "MaterialOverride": null,
+                      "Model": "models/citizen_clothes/vest/tactical_vest/models/tactical_vest.vmdl",
+                      "ShouldCastShadows": true,
+                      "Tint": "1,1,1,1"
+                    }
+                  ]
+                },
+                {
+                  "Id": "8d895d5d-f78e-411f-9d86-38c391f8bab2",
+                  "Name": "Top",
+                  "Position": "0,0,0",
+                  "Tags": "player",
+                  "Enabled": true,
+                  "Components": [
+                    {
+                      "__type": "SkinnedModelRenderer",
+                      "__enabled": true,
+                      "BodyGroups": 18446744073709551615,
+                      "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                      "CreateBoneObjects": false,
+                      "MaterialOverride": null,
+                      "Model": "models/citizen_clothes/shirt/army_shirt/model/army_shirt.vmdl",
+                      "ShouldCastShadows": true,
+                      "Tint": "1,1,1,1"
+                    }
+                  ]
+                },
+                {
+                  "Id": "59384378-efec-46b3-93e8-2976a1f63bad",
+                  "Name": "Gloves",
+                  "Position": "242.6006,424.1199,-99.46105",
+                  "Tags": "player",
+                  "Enabled": true,
+                  "Components": [
+                    {
+                      "__type": "SkinnedModelRenderer",
+                      "__enabled": true,
+                      "BodyGroups": 18446744073709551615,
+                      "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                      "CreateBoneObjects": false,
+                      "MaterialOverride": null,
+                      "Model": "models/citizen_clothes/gloves/tactical_gloves/models/tactical_gloves.vmdl",
+                      "ShouldCastShadows": true,
+                      "Tint": "1,1,1,1"
+                    }
+                  ]
+                },
+                {
+                  "Id": "a2eb2c1d-2df3-4375-bd27-fef12d5b90a6",
+                  "Name": "Pants",
+                  "Position": "242.6006,424.1199,-99.46105",
+                  "Tags": "player",
+                  "Enabled": true,
+                  "Components": [
+                    {
+                      "__type": "SkinnedModelRenderer",
+                      "__enabled": true,
+                      "BodyGroups": 18446744073709551615,
+                      "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                      "CreateBoneObjects": false,
+                      "MaterialOverride": null,
+                      "Model": "models/citizen_clothes/trousers/cargopants/models/cargo_pants.vmdl",
+                      "ShouldCastShadows": true,
+                      "Tint": "1,1,1,1"
+                    }
+                  ]
+                },
+                {
+                  "Id": "15df205c-8ab9-4555-abf3-856d215414ab",
+                  "Name": "Boots",
+                  "Position": "242.6006,424.1199,-99.46105",
+                  "Tags": "player",
+                  "Enabled": true,
+                  "Components": [
+                    {
+                      "__type": "SkinnedModelRenderer",
+                      "__enabled": true,
+                      "BodyGroups": 18446744073709551615,
+                      "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                      "CreateBoneObjects": false,
+                      "MaterialOverride": null,
+                      "Model": "models/citizen_clothes/shoes/boots/models/army_boots.vmdl",
+                      "ShouldCastShadows": true,
+                      "Tint": "1,1,1,1"
+                    }
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
@@ -237,18 +392,25 @@
             {
               "__type": "CameraComponent",
               "__enabled": true,
-              "BackgroundColor": "0.33333,0.46275,0.52157,1",
+              "BackgroundColor": "0.75478,0.83828,0.87624,1",
               "ClearFlags": "All",
-              "FieldOfView": 60,
+              "FieldOfView": 90,
               "Orthographic": false,
               "OrthographicHeight": 1204,
               "RenderExcludeTags": "",
               "RenderTags": "",
               "TargetEye": "None",
               "ZFar": 10000,
-              "ZNear": 10
+              "ZNear": 0.5
             }
           ]
+        },
+        {
+          "Id": "184292e3-f59e-4601-8802-59ea1e21cae4",
+          "Name": "Weapons",
+          "Position": "0,0,0",
+          "Tags": "player",
+          "Enabled": true
         }
       ]
     }

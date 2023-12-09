@@ -40,29 +40,6 @@
       ]
     },
     {
-      "Id": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
-      "Name": "Camera",
-      "Position": "-116.9319,-243.2814,254.4213",
-      "Rotation": "-0.2056158,0.322752,0.4964002,0.7791919",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "CameraComponent",
-          "__enabled": true,
-          "BackgroundColor": "0.33333,0.46275,0.52157,1",
-          "ClearFlags": "All",
-          "FieldOfView": 60,
-          "Orthographic": false,
-          "OrthographicHeight": 1204,
-          "RenderExcludeTags": "",
-          "RenderTags": "",
-          "TargetEye": "None",
-          "ZFar": 10000,
-          "ZNear": 10
-        }
-      ]
-    },
-    {
       "Id": "30268525-6df6-4ed9-af3d-4a88a0e23778",
       "Name": "Main Floor",
       "Enabled": true,
@@ -168,6 +145,67 @@
               "Scale": "100,100,0.5",
               "Static": false,
               "Surface": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
+      "Name": "Player",
+      "Position": "-242.6006,-424.1199,45.92329",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "PlayerController",
+          "__enabled": true,
+          "Body": "a5eeac8e-e56d-48b9-9155-266a684c3551"
+        },
+        {
+          "__type": "CameraController",
+          "__enabled": true,
+          "camera": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c"
+        }
+      ],
+      "Children": [
+        {
+          "Id": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+          "Name": "Body",
+          "Position": "0,0,0",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "SkinnedModelRenderer",
+              "__enabled": true,
+              "BodyGroups": 18446744073709551615,
+              "BoneMergeTarget": null,
+              "CreateBoneObjects": false,
+              "MaterialOverride": null,
+              "Model": "models/citizen/citizen.vmdl",
+              "ShouldCastShadows": true,
+              "Tint": "1,1,1,1"
+            }
+          ]
+        },
+        {
+          "Id": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c",
+          "Name": "Camera",
+          "Position": "0,0,59.90165",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "CameraComponent",
+              "__enabled": true,
+              "BackgroundColor": "0.33333,0.46275,0.52157,1",
+              "ClearFlags": "All",
+              "FieldOfView": 60,
+              "Orthographic": false,
+              "OrthographicHeight": 1204,
+              "RenderExcludeTags": "",
+              "RenderTags": "",
+              "TargetEye": "None",
+              "ZFar": 10000,
+              "ZNear": 10
             }
           ]
         }

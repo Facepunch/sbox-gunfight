@@ -28,6 +28,11 @@ public sealed class PlayerController : Component
 	CameraController CameraController { get; set; }
 
 	/// <summary>
+	/// Finds the first enabled weapon on our player.
+	/// </summary>
+	Weapon Weapon => Components.Get<Weapon>( FindMode.EnabledInSelfAndChildren );
+
+	/// <summary>
 	/// The current holdtype for the player.
 	/// </summary>
 	[Property] CitizenAnimationHelper.HoldTypes CurrentHoldType { get; set; } = CitizenAnimationHelper.HoldTypes.None;

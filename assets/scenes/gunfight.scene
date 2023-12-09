@@ -30,29 +30,12 @@
           "__type": "EnvmapProbe",
           "__enabled": true,
           "Bounds": {
-            "Mins": "-512,-512,-512",
+            "Mins": "-1536,-1536,0",
             "Maxs": "512,512,512"
           },
           "Projection": "Sphere",
           "Texture": "textures/cubemaps/default2.vtex",
           "TintColor": "1,1,1,1"
-        }
-      ]
-    },
-    {
-      "Id": "6ad70641-3c6c-4402-9c85-9a4969af4764",
-      "Name": "Plane",
-      "Scale": "3,3,3",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "ModelRenderer",
-          "__enabled": true,
-          "BodyGroups": 18446744073709551615,
-          "MaterialOverride": "materials/dev/dev_metal_rough50.vmat",
-          "Model": "models/dev/plane.vmdl",
-          "ShouldCastShadows": true,
-          "Tint": "1,1,1,1"
         }
       ]
     },
@@ -78,16 +61,132 @@
           "ZNear": 10
         }
       ]
+    },
+    {
+      "Id": "30268525-6df6-4ed9-af3d-4a88a0e23778",
+      "Name": "Main Floor",
+      "Enabled": true,
+      "Children": [
+        {
+          "Id": "499878ba-3010-4926-95c5-78c5d4f1636a",
+          "Name": "Plane",
+          "Position": "-1027.281,-1051.025,42.28922",
+          "Scale": "10,10,10",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "ModelRenderer",
+              "__enabled": true,
+              "BodyGroups": 18446744073709551615,
+              "MaterialOverride": "materials/dev/gray_grid_8.vmat",
+              "Model": "models/dev/plane.vmdl",
+              "ShouldCastShadows": true,
+              "Tint": "1,1,1,1"
+            },
+            {
+              "__type": "ColliderBoxComponent",
+              "__enabled": true,
+              "IsTrigger": false,
+              "Scale": "100,100,0.5",
+              "Static": false,
+              "Surface": null
+            }
+          ]
+        },
+        {
+          "Id": "6146e0fc-04ad-4142-a73f-9bceef790f5f",
+          "Name": "Plane",
+          "Position": "-27.28112,-1051.025,42.28922",
+          "Scale": "10,10,10",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "ModelRenderer",
+              "__enabled": true,
+              "BodyGroups": 18446744073709551615,
+              "MaterialOverride": "materials/dev/gray_grid_8.vmat",
+              "Model": "models/dev/plane.vmdl",
+              "ShouldCastShadows": true,
+              "Tint": "1,1,1,1"
+            },
+            {
+              "__type": "ColliderBoxComponent",
+              "__enabled": true,
+              "IsTrigger": false,
+              "Scale": "100,100,0.5",
+              "Static": false,
+              "Surface": null
+            }
+          ]
+        },
+        {
+          "Id": "3f1f0a83-9015-47e8-b603-3163b1be19b0",
+          "Name": "Plane (1)",
+          "Position": "-1027.281,-51.02454,42.28922",
+          "Scale": "10,10,10",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "ModelRenderer",
+              "__enabled": true,
+              "BodyGroups": 18446744073709551615,
+              "MaterialOverride": "materials/dev/gray_grid_8.vmat",
+              "Model": "models/dev/plane.vmdl",
+              "ShouldCastShadows": true,
+              "Tint": "1,1,1,1"
+            },
+            {
+              "__type": "ColliderBoxComponent",
+              "__enabled": true,
+              "IsTrigger": false,
+              "Scale": "100,100,0.5",
+              "Static": false,
+              "Surface": null
+            }
+          ]
+        },
+        {
+          "Id": "7ae016b9-99d6-4424-b8d0-c9c1208327c8",
+          "Name": "Plane",
+          "Position": "-27.28112,-51.02454,42.28922",
+          "Scale": "10,10,10",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "ModelRenderer",
+              "__enabled": true,
+              "BodyGroups": 18446744073709551615,
+              "MaterialOverride": "materials/dev/gray_grid_8.vmat",
+              "Model": "models/dev/plane.vmdl",
+              "ShouldCastShadows": true,
+              "Tint": "1,1,1,1"
+            },
+            {
+              "__type": "ColliderBoxComponent",
+              "__enabled": true,
+              "IsTrigger": false,
+              "Scale": "100,100,0.5",
+              "Static": false,
+              "Surface": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "1060cc2e-eaf5-4640-bb27-056c5a932f24",
+      "Name": "GameObject",
+      "Enabled": true
     }
   ],
   "SceneProperties": {
-    "Lerping": true,
     "UseFixedUpdate": true,
     "ThreadedAnimation": true,
     "TimeScale": 1,
+    "NetworkFrequency": 60,
+    "Lerping": true,
     "MaxFixedUpdates": 5,
-    "FixedUpdateFrequency": 50,
-    "NetworkFrequency": 60
+    "FixedUpdateFrequency": 50
   },
   "Title": "minimal",
   "Description": "",

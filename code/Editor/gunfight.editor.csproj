@@ -36,7 +36,7 @@
   <PropertyGroup>
 	<OutputPath>..\..\..\sbox\game/.vs/output/</OutputPath>
 	<DocumentationFile>..\..\..\sbox\game/.vs/output/gunfight.editor.xml</DocumentationFile>
-	<RootNamespace>Facepunch.Gunfight</RootNamespace>
+	<RootNamespace>Gunfight</RootNamespace>
 	<Nullable>disable</Nullable>
   </PropertyGroup>
 

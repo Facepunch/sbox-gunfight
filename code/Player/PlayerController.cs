@@ -31,6 +31,7 @@ public sealed class PlayerController : Component
 	Vector3 WishVelocity;
 	Angles EyeAngles;
 	bool IsRunning;
+	bool IsDucking;
 
 	protected override void OnAwake()
 	{
@@ -64,7 +65,13 @@ public sealed class PlayerController : Component
 
 			cam.Transform.Rotation = lookDir;
 
-			IsRunning = Input.Down( "Run" );
+			IsRunning = false;
+			IsDucking = false;
+
+			if ( Input.Down( "Run" ) )
+				IsRunning = true;
+			else if ( Input.Down( "Duck" ) )
+				IsDucking = true;
 		}
 
 		float rotateDifference = 0;
@@ -74,18 +81,11 @@ public sealed class PlayerController : Component
 		{
 			var targetAngle = new Angles( 0, EyeAngles.yaw, 0 ).ToRotation();
 
-			var v = cc.Velocity.WithZ( 0 );
-
-			if ( v.Length > 10.0f )
-			{
-				targetAngle = Rotation.LookAt( v, Vector3.Up );
-			}
-
 			rotateDifference = Body.Transform.Rotation.Distance( targetAngle );
 
 			if ( rotateDifference > 50.0f || cc.Velocity.Length > 10.0f )
 			{
-				Body.Transform.Rotation = Rotation.Lerp( Body.Transform.Rotation, targetAngle, Time.Delta * 2.0f );
+				Body.Transform.Rotation = Rotation.Lerp( Body.Transform.Rotation, targetAngle, Time.Delta * 10.0f );
 			}
 		}
 
@@ -97,6 +97,7 @@ public sealed class PlayerController : Component
 			AnimationHelper.FootShuffle = rotateDifference;
 			AnimationHelper.WithLook( EyeAngles.Forward, 1, 1, 1.0f );
 			AnimationHelper.MoveStyle = IsRunning ? CitizenAnimationHelper.MoveStyles.Run : CitizenAnimationHelper.MoveStyles.Walk;
+			AnimationHelper.DuckLevel = IsDucking ? 100 : 0;
 		}
 	}
 
@@ -165,6 +166,7 @@ public sealed class PlayerController : Component
 		if ( !WishVelocity.IsNearZeroLength ) WishVelocity = WishVelocity.Normal;
 
 		if ( Input.Down( "Run" ) ) WishVelocity *= 320.0f;
+		else if ( Input.Down( "Duck" ) ) WishVelocity *= 85f;
 		else WishVelocity *= 110.0f;
 	}
 

@@ -22,17 +22,17 @@
           "bin/placeholder/Base Library.dll": {}
         }
       },
-      "gunfight/1.0.0": {
+      "gunfight_2/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "Base Library": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/gunfight.dll": {}
+          "bin/placeholder/gunfight_2.dll": {}
         },
         "runtime": {
-          "bin/placeholder/gunfight.dll": {}
+          "bin/placeholder/gunfight_2.dll": {}
         }
       }
     }
@@ -48,16 +48,16 @@
       "path": "../../../sbox/game/addons/base/code/Base Library.csproj",
       "msbuildProject": "../../../sbox/game/addons/base/code/Base Library.csproj"
     },
-    "gunfight/1.0.0": {
+    "gunfight_2/1.0.0": {
       "type": "project",
-      "path": "../gunfight.csproj",
-      "msbuildProject": "../gunfight.csproj"
+      "path": "../gunfight_2.csproj",
+      "msbuildProject": "../gunfight_2.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "Base Editor Library >= 1.0.0",
-      "gunfight >= 1.0.0"
+      "gunfight_2 >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -66,9 +66,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\git\\sbox-gunfight\\code\\Editor\\gunfight.editor.csproj",
-      "projectName": "gunfight.editor",
-      "projectPath": "C:\\git\\sbox-gunfight\\code\\Editor\\gunfight.editor.csproj",
+      "projectUniqueName": "C:\\git\\sbox-gunfight\\code\\Editor\\gunfight_2.editor.csproj",
+      "projectName": "gunfight_2.editor",
+      "projectPath": "C:\\git\\sbox-gunfight\\code\\Editor\\gunfight_2.editor.csproj",
       "packagesPath": "C:\\Users\\Tony\\.nuget\\packages\\",
       "outputPath": "C:\\git\\sbox-gunfight\\code\\Editor\\obj\\",
       "projectStyle": "PackageReference",
@@ -87,8 +87,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\git\\sbox-gunfight\\code\\gunfight.csproj": {
-              "projectPath": "C:\\git\\sbox-gunfight\\code\\gunfight.csproj"
+            "C:\\git\\sbox-gunfight\\code\\gunfight_2.csproj": {
+              "projectPath": "C:\\git\\sbox-gunfight\\code\\gunfight_2.csproj"
             },
             "C:\\git\\sbox\\game\\addons\\tools\\code\\Base Editor Library.csproj": {
               "projectPath": "C:\\git\\sbox\\game\\addons\\tools\\code\\Base Editor Library.csproj"

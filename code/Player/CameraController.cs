@@ -12,7 +12,7 @@ public sealed class CameraController : Component
 	/// </summary>
 	[Property] public bool HideBody { get; set; } = true;
 
-	protected override void OnAwake()
+	protected override void OnStart()
 	{
 		// Make sure the camera is disabled if we're not actively in charge of it.
 		// Note: let's figure out spectator stuff in a nice way

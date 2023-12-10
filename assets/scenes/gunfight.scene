@@ -159,14 +159,6 @@
       "Enabled": true,
       "Components": [
         {
-          "__type": "Client",
-          "__enabled": true,
-          "DisplayName": "User",
-          "IsHost": false,
-          "IsMe": false,
-          "SteamId": 0
-        },
-        {
           "__type": "PlayerController",
           "__enabled": true,
           "AnimationHelper": "a5eeac8e-e56d-48b9-9155-266a684c3551",
@@ -431,7 +423,7 @@
                 {
                   "Id": "78e5b99e-cc53-4d7b-a80d-bdfc0406fdba",
                   "Name": "Model",
-                  "Position": "0,0,0.00002271195",
+                  "Position": "0,0,0",
                   "Tags": "player",
                   "Enabled": true,
                   "Components": [
@@ -508,16 +500,30 @@
           ]
         }
       ]
+    },
+    {
+      "Id": "0f04ee6a-6956-44a5-851e-aa6b5151fa34",
+      "Name": "GameNetworkManager",
+      "Position": "-403.784,-123.1075,115.0067",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "GameNetworkManager",
+          "__enabled": true,
+          "PlayerPrefab": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
+          "SpawnPoint": "0f04ee6a-6956-44a5-851e-aa6b5151fa34"
+        }
+      ]
     }
   ],
   "SceneProperties": {
-    "NetworkFrequency": 60,
     "Lerping": true,
     "UseFixedUpdate": true,
     "ThreadedAnimation": true,
     "TimeScale": 1,
     "MaxFixedUpdates": 5,
-    "FixedUpdateFrequency": 50
+    "FixedUpdateFrequency": 50,
+    "NetworkFrequency": 60
   },
   "Title": "minimal",
   "Description": "",

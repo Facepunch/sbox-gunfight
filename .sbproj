@@ -1,8 +1,8 @@
 {
-  "Title": "Gunfight",
+  "Title": "Gunfight 2",
   "Type": "game",
   "Org": "facepunch",
-  "Ident": "gunfight",
+  "Ident": "gunfight_2",
   "Tags": "",
   "Schema": 1,
   "HasAssets": true,

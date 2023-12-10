@@ -3,7 +3,7 @@ namespace Gunfight;
 /// <summary>
 /// Placed on the player (or maybe just in loose space, we'll see), the client component holds network info about a player, and serves as an easy way to iterate through players in a game.
 /// </summary>
-public sealed class Client : Component, Component.INetworkListener
+public sealed class Client : Component
 {
 	/// <summary>
 	/// Get a list of all clients in the game's active scene.
@@ -40,16 +40,14 @@ public sealed class Client : Component, Component.INetworkListener
 	/// </summary>
 	[Property] public string DisplayName { get; private set; } = "User";
 
-	/// <summary>
-	/// This method is called by having our component implement INetworkListener.
-	/// </summary>
-	/// <param name="channel"></param>
-	public void OnActive( Connection channel )
+	public void Setup( Connection channel )
 	{
 		IsConnected = true;
 		SteamId = channel.SteamId;
 		DisplayName = channel.DisplayName;
 		IsHost = channel.IsHost;
 		IsMe = Connection.Local == channel;
+
+		Log.Info( $"Setup: {SteamId}" );
 	}
 }

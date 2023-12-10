@@ -15,7 +15,7 @@ public partial class ViewModel : Component
 	/// </summary>
 	CameraController CameraController => Components.Get<CameraController>( FindMode.InAncestors );
 
-	protected override void OnAwake()
+	protected override void OnStart()
 	{
 		if ( IsProxy )
 		{

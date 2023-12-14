@@ -55,6 +55,7 @@
               "__type": "ModelRenderer",
               "__enabled": true,
               "BodyGroups": 18446744073709551615,
+              "MaterialGroup": null,
               "MaterialOverride": "materials/dev/gray_grid_8.vmat",
               "Model": "models/dev/plane.vmdl",
               "ShouldCastShadows": true,
@@ -81,6 +82,7 @@
               "__type": "ModelRenderer",
               "__enabled": true,
               "BodyGroups": 18446744073709551615,
+              "MaterialGroup": null,
               "MaterialOverride": "materials/dev/gray_grid_8.vmat",
               "Model": "models/dev/plane.vmdl",
               "ShouldCastShadows": true,
@@ -107,6 +109,7 @@
               "__type": "ModelRenderer",
               "__enabled": true,
               "BodyGroups": 18446744073709551615,
+              "MaterialGroup": null,
               "MaterialOverride": "materials/dev/gray_grid_8.vmat",
               "Model": "models/dev/plane.vmdl",
               "ShouldCastShadows": true,
@@ -133,6 +136,7 @@
               "__type": "ModelRenderer",
               "__enabled": true,
               "BodyGroups": 18446744073709551615,
+              "MaterialGroup": null,
               "MaterialOverride": "materials/dev/gray_grid_8.vmat",
               "Model": "models/dev/plane.vmdl",
               "ShouldCastShadows": true,
@@ -197,11 +201,14 @@
               "BackgroundColor": "0.75478,0.83828,0.87624,1",
               "ClearFlags": "All",
               "FieldOfView": 90,
+              "IsMainCamera": true,
               "Orthographic": false,
               "OrthographicHeight": 1204,
-              "RenderExcludeTags": "",
+              "Priority": 1,
+              "RenderExcludeTags": "viewmodel",
               "RenderTags": "",
               "TargetEye": "None",
+              "Viewport": "0,0,1,1",
               "ZFar": 10000,
               "ZNear": 0.5
             }
@@ -220,6 +227,7 @@
               "BodyGroups": 18446744073709551275,
               "BoneMergeTarget": null,
               "CreateBoneObjects": false,
+              "MaterialGroup": null,
               "MaterialOverride": null,
               "Model": "models/citizen/citizen.vmdl",
               "ShouldCastShadows": true,
@@ -265,6 +273,7 @@
                       "BodyGroups": 18446744073709551615,
                       "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
                       "CreateBoneObjects": false,
+                      "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/hat/tactical_helmet/models/tactical_helmet.vmdl",
                       "ShouldCastShadows": true,
@@ -286,6 +295,7 @@
                       "BodyGroups": 18446744073709551615,
                       "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
                       "CreateBoneObjects": false,
+                      "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/hat/balaclava/models/balaclava.vmdl",
                       "ShouldCastShadows": true,
@@ -307,6 +317,7 @@
                       "BodyGroups": 18446744073709551615,
                       "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
                       "CreateBoneObjects": false,
+                      "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/vest/tactical_vest/models/tactical_vest.vmdl",
                       "ShouldCastShadows": true,
@@ -327,6 +338,7 @@
                       "BodyGroups": 18446744073709551615,
                       "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
                       "CreateBoneObjects": false,
+                      "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/shirt/army_shirt/model/army_shirt.vmdl",
                       "ShouldCastShadows": true,
@@ -347,6 +359,7 @@
                       "BodyGroups": 18446744073709551615,
                       "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
                       "CreateBoneObjects": false,
+                      "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/gloves/tactical_gloves/models/tactical_gloves.vmdl",
                       "ShouldCastShadows": true,
@@ -367,6 +380,7 @@
                       "BodyGroups": 18446744073709551615,
                       "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
                       "CreateBoneObjects": false,
+                      "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/trousers/cargopants/models/cargo_pants.vmdl",
                       "ShouldCastShadows": true,
@@ -387,6 +401,7 @@
                       "BodyGroups": 18446744073709551615,
                       "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
                       "CreateBoneObjects": false,
+                      "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/shoes/boots/models/army_boots.vmdl",
                       "ShouldCastShadows": true,
@@ -433,6 +448,7 @@
                       "BodyGroups": 18446744073709551615,
                       "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
                       "CreateBoneObjects": false,
+                      "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/weapons/sbox_smg_mp5/w_mp5.vmdl",
                       "ShouldCastShadows": true,
@@ -447,51 +463,81 @@
         {
           "Id": "eb44edd6-bdc7-48bd-ae04-e1b50c01cab6",
           "Name": "ViewModels",
-          "Position": "24.58078,0.00002200343,57.59097",
+          "Position": "0,0.00002200343,0",
           "Tags": "player",
           "Enabled": true,
           "Children": [
             {
-              "Id": "a59714ae-2f10-4742-acfa-f67e413e087f",
-              "Name": "MP5_ViewModel",
+              "Id": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
+              "Name": "Camera",
               "Position": "0,0,0",
               "Tags": "player",
               "Enabled": true,
               "Components": [
                 {
-                  "__type": "SkinnedModelRenderer",
+                  "__type": "CameraComponent",
                   "__enabled": true,
-                  "BodyGroups": 18446744073709551615,
-                  "BoneMergeTarget": null,
-                  "CreateBoneObjects": false,
-                  "MaterialOverride": null,
-                  "Model": "models/weapons/sbox_smg_mp5/v_mp5.vmdl",
-                  "ShouldCastShadows": true,
-                  "Tint": "1,1,1,1"
-                },
-                {
-                  "__type": "ViewModel",
-                  "__enabled": true
+                  "BackgroundColor": "1,1,1,0",
+                  "ClearFlags": "Depth",
+                  "FieldOfView": 93.23,
+                  "IsMainCamera": false,
+                  "Orthographic": false,
+                  "OrthographicHeight": 1204,
+                  "Priority": 2,
+                  "RenderExcludeTags": "",
+                  "RenderTags": "viewmodel",
+                  "TargetEye": "None",
+                  "Viewport": "0,0,1,1",
+                  "ZFar": 10000,
+                  "ZNear": 0.1
                 }
               ],
               "Children": [
                 {
-                  "Id": "18bd49b2-1079-42a9-9519-34e6fe9224d1",
-                  "Name": "Object",
+                  "Id": "a59714ae-2f10-4742-acfa-f67e413e087f",
+                  "Name": "MP5_ViewModel",
                   "Position": "0,0,0",
-                  "Tags": "player",
+                  "Tags": "viewmodel,player",
                   "Enabled": true,
                   "Components": [
                     {
                       "__type": "SkinnedModelRenderer",
                       "__enabled": true,
-                      "BodyGroups": 18446744073709551511,
-                      "BoneMergeTarget": "a59714ae-2f10-4742-acfa-f67e413e087f",
+                      "BodyGroups": 18446744073709551615,
+                      "BoneMergeTarget": null,
                       "CreateBoneObjects": false,
+                      "MaterialGroup": null,
                       "MaterialOverride": null,
-                      "Model": "models/first_person/first_person_arms.vmdl",
+                      "Model": "models/weapons/sbox_smg_mp5/v_mp5.vmdl",
                       "ShouldCastShadows": true,
                       "Tint": "1,1,1,1"
+                    },
+                    {
+                      "__type": "ViewModel",
+                      "__enabled": true
+                    }
+                  ],
+                  "Children": [
+                    {
+                      "Id": "18bd49b2-1079-42a9-9519-34e6fe9224d1",
+                      "Name": "Object",
+                      "Position": "0,0,0",
+                      "Tags": "viewmodel,player",
+                      "Enabled": true,
+                      "Components": [
+                        {
+                          "__type": "SkinnedModelRenderer",
+                          "__enabled": true,
+                          "BodyGroups": 18446744073709551511,
+                          "BoneMergeTarget": "a59714ae-2f10-4742-acfa-f67e413e087f",
+                          "CreateBoneObjects": false,
+                          "MaterialGroup": null,
+                          "MaterialOverride": null,
+                          "Model": "models/first_person/first_person_arms.vmdl",
+                          "ShouldCastShadows": true,
+                          "Tint": "1,1,1,1"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -517,13 +563,13 @@
     }
   ],
   "SceneProperties": {
+    "FixedUpdateFrequency": 50,
     "Lerping": true,
-    "UseFixedUpdate": true,
+    "MaxFixedUpdates": 5,
+    "NetworkFrequency": 60,
     "ThreadedAnimation": true,
     "TimeScale": 1,
-    "MaxFixedUpdates": 5,
-    "FixedUpdateFrequency": 50,
-    "NetworkFrequency": 60
+    "UseFixedUpdate": true
   },
   "Title": "minimal",
   "Description": "",

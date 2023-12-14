@@ -27,13 +27,13 @@ public partial class ViewModel : Component
 
 	protected override void OnUpdate()
 	{
-		var camera = CameraController.Camera;
+		//var camera = CameraController.Camera;
 		
 		// Try to attach
-		if ( camera != null )
-		{
+		// if ( camera != null )
+		//{
 			// Move the ViewModel's gameobject to match the camera position. This won't be a problem once we have camera tags and multiple cameras.
-			Transform.World = camera.Transform.World;
-		}
+			// Transform.World = camera.Transform.World;
+		//}
 	}
 }

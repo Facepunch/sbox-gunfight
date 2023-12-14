@@ -66,11 +66,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\git\\sbox-gunfight\\code\\Editor\\gunfight_2.editor.csproj",
+      "projectUniqueName": "D:\\git\\sbox-gunfight\\code\\Editor\\gunfight_2.editor.csproj",
       "projectName": "gunfight_2.editor",
-      "projectPath": "C:\\git\\sbox-gunfight\\code\\Editor\\gunfight_2.editor.csproj",
+      "projectPath": "D:\\git\\sbox-gunfight\\code\\Editor\\gunfight_2.editor.csproj",
       "packagesPath": "C:\\Users\\Tony\\.nuget\\packages\\",
-      "outputPath": "C:\\git\\sbox-gunfight\\code\\Editor\\obj\\",
+      "outputPath": "D:\\git\\sbox-gunfight\\code\\Editor\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Tony\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -87,11 +87,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\git\\sbox-gunfight\\code\\gunfight_2.csproj": {
-              "projectPath": "C:\\git\\sbox-gunfight\\code\\gunfight_2.csproj"
+            "D:\\git\\sbox-gunfight\\code\\gunfight_2.csproj": {
+              "projectPath": "D:\\git\\sbox-gunfight\\code\\gunfight_2.csproj"
             },
-            "C:\\git\\sbox\\game\\addons\\tools\\code\\Base Editor Library.csproj": {
-              "projectPath": "C:\\git\\sbox\\game\\addons\\tools\\code\\Base Editor Library.csproj"
+            "D:\\git\\sbox\\game\\addons\\tools\\code\\Base Editor Library.csproj": {
+              "projectPath": "D:\\git\\sbox\\game\\addons\\tools\\code\\Base Editor Library.csproj"
             }
           }
         }
@@ -116,7 +116,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

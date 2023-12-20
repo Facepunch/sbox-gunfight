@@ -12,6 +12,11 @@ public sealed class CameraController : Component
 	/// </summary>
 	[Property] public bool HideBody { get; set; } = true;
 
+	/// <summary>
+	/// Constructs a ray using the camera's GameObject
+	/// </summary>
+	public Ray AimRay => new Ray( Camera.Transform.Position, Camera.Transform.Position + Camera.Transform.Rotation.Forward );
+
 	protected override void OnStart()
 	{
 		// Make sure the camera is disabled if we're not actively in charge of it.

@@ -2,9 +2,16 @@ namespace Gunfight;
 
 public static class GameObjectExtensions
 {
-	private static HealthComponent GetHealthComponent( this GameObject go )
+	/// <summary>
+	/// Gets a health component from a specific GameObject.
+	/// </summary>
+	/// <param name="go">The GameObject in question.</param>
+	/// <param name="create">Should we make one if it doesn't exist?</param>
+	/// <returns></returns>
+	private static HealthComponent GetHealthComponent( this GameObject go, bool create = false )
 	{
-		return go.Components.GetOrCreate<HealthComponent>();
+		if ( create ) return go.Components.GetOrCreate<HealthComponent>();
+		return go.Components.Get<HealthComponent>();
 	}
 
 	/// <summary>
@@ -15,7 +22,7 @@ public static class GameObjectExtensions
 	/// <returns></returns>
 	public static float GetHealth( this GameObject go )
 	{
-		return GetHealthComponent( go ).Health;
+		return GetHealthComponent( go )?.Health ?? 0;
 	}
 
 	/// <summary>
@@ -26,7 +33,7 @@ public static class GameObjectExtensions
 	/// <param name="newHealth"></param>
 	public static void SetHealth( this GameObject go, float newHealth )
 	{
-		var healthComponent = GetHealthComponent( go );
+		var healthComponent = GetHealthComponent( go, true );
 		healthComponent.Health = newHealth;
 	}
 }

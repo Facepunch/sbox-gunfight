@@ -3,16 +3,17 @@
     {
       "Id": "bfc59c12-1ed2-4f91-8956-a95a315eac3c",
       "Name": "Sun",
-      "Rotation": "-0.0000000377291,0.6329893,0.0000000000000005185386,0.774161",
+      "Position": "445.0681,1144.973,1044.812",
+      "Rotation": "0.3464704,0.2151882,-0.7756222,0.4817287",
       "Tags": "light",
       "Enabled": true,
       "Components": [
         {
           "__type": "DirectionalLight",
           "__enabled": true,
-          "LightColor": "0.91373,0.98039,1,1",
+          "LightColor": "1.36634,0.9402,1.10213,1",
           "Shadows": true,
-          "SkyColor": "0.51282,0.68253,0.76733,1"
+          "SkyColor": "0.18317,0.18317,0.18317,1"
         }
       ]
     },
@@ -24,25 +25,15 @@
         {
           "__type": "SkyBox2D",
           "__enabled": true,
-          "SkyMaterial": "materials/skybox/light_test_sky_sunny02.vmat",
+          "SkyMaterial": "materials/skybox/light_test_sky_sunset.vmat",
           "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "EnvmapProbe",
-          "__enabled": true,
-          "Bounds": {
-            "Mins": "-1536,-1536,0",
-            "Maxs": "512,512,512"
-          },
-          "Projection": "Sphere",
-          "Texture": "textures/cubemaps/default2.vtex",
-          "TintColor": "1,1,1,1"
         }
       ]
     },
     {
       "Id": "30268525-6df6-4ed9-af3d-4a88a0e23778",
       "Name": "Main Floor",
+      "Position": "523.7975,493.2021,0.00003122077",
       "Enabled": true,
       "Children": [
         {
@@ -165,7 +156,6 @@
       "Position": "-242.6006,-424.1199,45.6832",
       "Rotation": "0.00000005306496,0.0000000000000002222778,0.8902823,0.4554094",
       "Tags": "player",
-      "Enabled": true,
       "Components": [
         {
           "__type": "PlayerController",
@@ -175,7 +165,10 @@
           "CameraController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
           "CharacterController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
           "CurrentHoldType": "None",
-          "Gravity": "0,0,800"
+          "Gravity": "0,0,800",
+          "IsAiming": false,
+          "IsRunning": false,
+          "OnJump": null
         },
         {
           "__type": "CameraController",
@@ -536,6 +529,7 @@
                 {
                   "__type": "ShootWeaponAbility",
                   "__enabled": true,
+                  "AmmoContainer": "459dcb5a-c6e1-4631-ae4a-c8b381707650",
                   "BaseDamage": 25,
                   "BaseDamageFalloff": [
                     {
@@ -547,6 +541,8 @@
                   ],
                   "BulletSize": 1,
                   "BulletTrail": null,
+                  "DryFireDelay": 0.5,
+                  "DryFireSound": "assets/sounds/guns/gun_dryfire.sound",
                   "InputActions": [
                     "Attack1"
                   ],
@@ -555,11 +551,18 @@
                   "MuzzleFlash": null,
                   "OnWeaponAbilityAction": null,
                   "RequiresAllInputActions": false,
+                  "RequiresAmmoContainer": true,
                   "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
                   "TimeSinceShoot": {
-                    "Relative": 4323.1064
+                    "Relative": 312.15964
                   },
                   "WeaponShootDelay": 0.095
+                },
+                {
+                  "__type": "AmmoContainer",
+                  "__enabled": true,
+                  "Ammo": 30,
+                  "HasAmmo": true
                 }
               ],
               "Children": [
@@ -599,42 +602,45 @@
         {
           "__type": "GameNetworkManager",
           "__enabled": true,
-          "IsMultiplayer": false,
+          "IsMultiplayer": true,
           "PlayerPrefab": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
           "SpawnPoint": "0f04ee6a-6956-44a5-851e-aa6b5151fa34"
         }
       ]
     },
     {
-      "Id": "4792308a-edec-417f-b02c-05e356c84f05",
-      "Name": "Cube",
-      "Position": "-492.8084,-430.6128,77.40459",
+      "Id": "652d4e8d-a737-4d00-8e9b-78aa2cbec2ee",
+      "Name": "Probe",
+      "Position": "0,0,100",
       "Enabled": true,
       "Components": [
         {
-          "__type": "ModelRenderer",
+          "__type": "EnvmapProbe",
           "__enabled": true,
-          "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
-          "Model": "models/dev/box.vmdl",
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
+          "Bounds": {
+            "Mins": "-1024,-1024,-512",
+            "Maxs": "1024,1024,512"
+          },
+          "Projection": "Box",
+          "Texture": "textures/cubemaps/default2.vtex",
+          "TintColor": "1,0.66584,0.33168,1"
         }
       ]
     },
     {
-      "Id": "42343344-1eed-4ba6-8c70-e9e820aadc05",
-      "Name": "Point Light",
-      "Position": "-404.1653,-298.4217,136.195",
-      "Tags": "light",
+      "Id": "d556fd19-e528-47a6-9cf2-2205dfe09f5d",
+      "Name": "Fog",
       "Enabled": true,
       "Components": [
         {
-          "__type": "PointLight",
+          "__type": "VolumetricFogVolume",
           "__enabled": true,
-          "LightColor": "0.91373,0.98039,1,1",
-          "Radius": 243.50021
+          "Bounds": {
+            "Mins": "-1500,-1500,-500",
+            "Maxs": "1500,1500,500"
+          },
+          "FalloffExponent": 4,
+          "Strength": 0.6
         }
       ]
     }

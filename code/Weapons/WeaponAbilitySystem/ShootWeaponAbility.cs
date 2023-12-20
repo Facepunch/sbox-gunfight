@@ -9,6 +9,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 
 	[Property, Category( "Bullet" )] public float BaseDamage { get; set; } = 25.0f;
 	[Property, Category( "Bullet" )] public float WeaponShootDelay { get; set; } = 0.2f;
+	[Property, Category( "Bullet" )] public float DryFireDelay { get; set; } = 1f;
 	[Property, Category( "Bullet" )] public float MaxRange { get; set; } = 1024000;
 	[Property, Category( "Bullet" )] public Curve BaseDamageFalloff { get; set; } = new( new List<Curve.Frame>() { new( 0, 1 ), new( 1, 0 ) } );
 	[Property, Category( "Bullet" )] public float BulletSize { get; set; } = 1.0f;
@@ -16,10 +17,14 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 	[Property, Category( "Effects" )] public GameObject MuzzleFlash { get; set; }
 	[Property, Category( "Effects" )] public GameObject BulletTrail { get; set; }
 	[Property, Category( "Effects" )] public SoundEvent ShootSound { get; set; }
+	[Property, Category( "Effects" )] public SoundEvent DryFireSound { get; set; }
 
 
 	// Functionality
-	[Property, ReadOnly( true )] public TimeSince TimeSinceShoot { get; set; }
+	[Property, ReadOnly( true ), Category( "Data" )] public TimeSince TimeSinceShoot { get; set; }
+
+	[Property, Category( "Ammo" )] public AmmoContainer AmmoContainer { get; set; }
+	[Property, Category( "Ammo" )] public bool RequiresAmmoContainer { get; set; } = false;
 
 	/// <summary>
 	/// Fetches the desired model renderer that we'll focus effects on like trail effects, muzzle flashes, etc.
@@ -75,6 +80,11 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 	{
 		TimeSinceShoot = 0;
 
+		if ( AmmoContainer is not null )
+		{
+			AmmoContainer.Ammo--;
+		}
+
 		var tr = GetShootTrace();
 
 		if ( !tr.Hit )
@@ -90,6 +100,27 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		tr.GameObject.TakeDamage( ref damageInfo );
 
 		Log.Trace( $"ShootWeaponAbility: We hit {tr.GameObject}!" );
+	}
+
+	protected void DryShoot()
+	{
+		TimeSinceShoot = 0;
+
+		DryShootEffects();
+	}
+
+	protected void DryShootEffects()
+	{
+		if ( DryFireSound is not null )
+		{
+			var snd = Sound.Play( DryFireSound, Weapon.Transform.Position );
+			snd.ListenLocal = !IsProxy;
+
+			Log.Trace( $"ShootWeaponAbility: ShootSound {DryFireSound.ResourceName}" );
+		}
+
+		// First person
+		Weapon.ViewModel?.ModelRenderer.Set( "b_attack_dry", true );
 	}
 
 	protected virtual Ray WeaponRay => Weapon.PlayerController.AimRay;
@@ -115,7 +146,14 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 	/// <returns></returns>
 	public bool CanShoot()
 	{
+		// Delay checks
 		if ( TimeSinceShoot < WeaponShootDelay )
+		{
+			return false;
+		}
+
+		// Ammo checks
+		if ( RequiresAmmoContainer && ( AmmoContainer == null || !AmmoContainer.HasAmmo ) )
 		{
 			return false;
 		}
@@ -128,6 +166,15 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		if ( CanShoot() )
 		{
 			Shoot();
+		}
+		else
+		{
+			if ( TimeSinceShoot < DryFireDelay )
+			{
+				return;
+			}
+
+			DryShoot();
 		}
 	}
 }

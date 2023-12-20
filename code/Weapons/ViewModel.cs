@@ -8,12 +8,17 @@ public partial class ViewModel : Component
 	/// <summary>
 	/// A reference to the <see cref="Weapon"/> we want to listen to.
 	/// </summary>
-	public Weapon Weapon { get; set; }
+	[Property] public Weapon Weapon { get; set; }
 
 	/// <summary>
 	/// Look up the tree to find the camera.
 	/// </summary>
 	CameraController CameraController => Components.Get<CameraController>( FindMode.InAncestors );
+
+	/// <summary>
+	/// Looks up the tree to find the player controller.
+	/// </summary>
+	PlayerController PlayerController => Weapon.PlayerController;
 
 	[Property] public SkinnedModelRenderer ModelRenderer { get; set; }
 
@@ -30,6 +35,16 @@ public partial class ViewModel : Component
 			// We might be spectating in the future - so work that out...
 			ViewModelCamera.Enabled = false;
 			Enabled = false;
+
+			return;
 		}
+
+		ModelRenderer.Set( "b_deploy", true );
+	}
+
+	protected override void OnUpdate()
+	{
+		ModelRenderer.Set( "move_groundspeed", PlayerController.CharacterController.Velocity.Length );
+		ModelRenderer.Set( "b_sprint", PlayerController.IsRunning );
 	}
 }

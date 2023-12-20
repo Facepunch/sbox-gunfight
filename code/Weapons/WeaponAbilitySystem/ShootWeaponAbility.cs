@@ -60,6 +60,12 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 
 			Log.Trace( $"ShootWeaponAbility: ShootSound {ShootSound.ResourceName}" );
 		}
+
+		// Third person
+		Weapon.PlayerController.BodyRenderer.Set( "b_attack", true );
+
+		// First person
+		Weapon.ViewModel?.ModelRenderer.Set( "b_attack", true );
 	}
 
 	/// <summary>

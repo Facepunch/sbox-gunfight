@@ -34,6 +34,11 @@ public sealed class PlayerController : Component
 	public Weapon Weapon => Components.Get<Weapon>( FindMode.EnabledInSelfAndDescendants );
 
 	/// <summary>
+	/// Finds the first <see cref="SkinnedModelRenderer"/> on <see cref="Body"/>
+	/// </summary>
+	public SkinnedModelRenderer BodyRenderer => Body.Components.Get<SkinnedModelRenderer>();
+
+	/// <summary>
 	/// An accessor to get the camera controller's aim ray.
 	/// </summary>
 	public Ray AimRay => CameraController.AimRay;
@@ -43,10 +48,14 @@ public sealed class PlayerController : Component
 	/// </summary>
 	[Property] AnimationHelper.HoldTypes CurrentHoldType { get; set; } = AnimationHelper.HoldTypes.None;
 
+	/// <summary>
+	/// Are we running?
+	/// </summary>
+	[Property, System.ComponentModel.ReadOnly( true )] public bool IsRunning { get; private set; }
+
 	// Properties used only in this component.
 	Vector3 WishVelocity;
 	Angles EyeAngles;
-	bool IsRunning;
 	bool IsDucking;
 	
 	protected override void OnUpdate()

@@ -267,8 +267,9 @@
                     {
                       "__type": "ViewModel",
                       "__enabled": true,
-                      "ModelRenderer": "18bd49b2-1079-42a9-9519-34e6fe9224d1",
-                      "ViewModelCamera": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee"
+                      "ModelRenderer": "a59714ae-2f10-4742-acfa-f67e413e087f",
+                      "ViewModelCamera": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
+                      "Weapon": "459dcb5a-c6e1-4631-ae4a-c8b381707650"
                     },
                     {
                       "__type": "SkinnedModelRenderer",
@@ -556,9 +557,9 @@
                   "RequiresAllInputActions": false,
                   "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
                   "TimeSinceShoot": {
-                    "Relative": 1644.4067
+                    "Relative": 4323.1064
                   },
-                  "WeaponShootDelay": 0.2
+                  "WeaponShootDelay": 0.095
                 }
               ],
               "Children": [

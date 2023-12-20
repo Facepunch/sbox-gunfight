@@ -230,7 +230,7 @@
                   "__type": "CameraComponent",
                   "__enabled": true,
                   "BackgroundColor": "1,1,1,0",
-                  "ClearFlags": "Depth",
+                  "ClearFlags": "Depth, Stencil",
                   "FieldOfView": 93.23,
                   "IsMainCamera": false,
                   "Orthographic": false,

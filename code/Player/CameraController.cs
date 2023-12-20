@@ -25,7 +25,12 @@ public sealed class CameraController : Component
 			if ( playerController == null ) throw new ComponentNotFoundException( "CameraController - couldn't find PlayerController component." );
 
 			// Disable the player's body so it doesn't render.
-			playerController.Body.Enabled = false;
+			var skinnedModels = playerController.Body.Components.GetAll<SkinnedModelRenderer>( FindMode.EnabledInSelfAndDescendants );
+
+			foreach ( var skinnedModel in skinnedModels )
+			{
+				skinnedModel.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+			}
 		}
 	}
 }

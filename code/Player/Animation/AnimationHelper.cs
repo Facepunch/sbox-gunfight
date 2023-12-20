@@ -1,6 +1,6 @@
 namespace Gunfight;
 
-public sealed class CitizenAnimationHelper : Component
+public sealed class AnimationHelper : Component
 {
 	[Property] public SkinnedModelRenderer Target { get; set; }
 

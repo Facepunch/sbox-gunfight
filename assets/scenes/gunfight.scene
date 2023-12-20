@@ -192,6 +192,12 @@
           "IgnoreLayers": "player",
           "Radius": 16,
           "StepHeight": 18
+        },
+        {
+          "__type": "HealthComponent",
+          "__enabled": true,
+          "Health": 100,
+          "OnHealthChanged": null
         }
       ],
       "Children": [
@@ -550,7 +556,7 @@
                   "RequiresAllInputActions": false,
                   "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
                   "TimeSinceShoot": {
-                    "Relative": 1226.523
+                    "Relative": 1644.4067
                   },
                   "WeaponShootDelay": 0.2
                 }

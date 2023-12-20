@@ -78,6 +78,12 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		}
 
 		DoShootEffects();
+
+		// Inflict damage on whatever we find.
+		var damageInfo = DamageInfo.Bullet( BaseDamage, Weapon.PlayerController.GameObject, Weapon.GameObject );
+		tr.GameObject.TakeDamage( ref damageInfo );
+
+		Log.Trace( $"ShootWeaponAbility: We hit {tr.GameObject}!" );
 	}
 
 	protected virtual Ray WeaponRay => Weapon.PlayerController.AimRay;

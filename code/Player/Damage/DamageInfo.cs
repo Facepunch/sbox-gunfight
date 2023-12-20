@@ -1,31 +1,112 @@
+using System.Numerics;
+
 namespace Gunfight;
 
 /// <summary>
 /// A damage info struct. When inflicting damage on GameObjects, this is what we'll pass around.
 /// </summary>
-public struct DamageInfo
+public partial struct DamageInfo
 {
+	/// <summary>
+	/// The attacker. This could be anything.
+	/// </summary>
 	public GameObject Attacker { get; set; }
+
+	/// <summary>
+	/// The victim. This could be anything.
+	/// </summary>
 	public GameObject Victim { get; set; }
+
+	/// <summary>
+	/// The inflictor. This is normally the same as the attacker,
+	/// though it lets us pass another responsible GameObject, such as a weapon, or a projectile.
+	/// </summary>
 	public GameObject Inflictor { get; set; }
+
+	/// <summary>
+	/// The damage taken.
+	/// </summary>
 	public float Damage { get; set; }
 
 	/// <summary>
-	/// Creates a generic DamageInfo struct.
+	/// A list of tags that we can parse when taking damage.
 	/// </summary>
-	/// <param name="damage"></param>
-	/// <param name="attacker"></param>
-	/// <param name="victim"></param>
-	/// <param name="inflictor"></param>
-	/// <returns></returns>
-	public static DamageInfo Generic( float damage, GameObject attacker = null, GameObject victim = null, GameObject inflictor = null )
+	public string[] Tags { get; set; }
+
+	/// <summary>
+	/// Include some tags.
+	/// </summary>
+	/// <param name="tags"></param>
+	public void WithTags( params string[] tags )
 	{
-		return new DamageInfo
+		Tags = tags;
+	}
+
+	/// <summary>
+	/// Do we have a tag?
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	public bool HasTag( string tag )
+	{
+		return Tags?.Contains( tag ) ?? false;
+	}
+
+	/// <summary>
+	/// Do we have any tag?
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	public bool HasAnyTag( string tag )
+	{
+		if ( Tags == null ) return false;
+
+		foreach ( var t in Tags )
 		{
-			Damage = damage,
-			Attacker = attacker,
-			Victim = victim,
-			Inflictor = inflictor
-		};
+			if ( t.Equals( tag, StringComparison.OrdinalIgnoreCase ) )
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Do we have all tags?
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	public bool HasAllTags( string tag )
+	{
+		if ( Tags == null ) return false;
+
+		foreach ( var t in Tags )
+		{
+			if ( !t.Equals( tag, StringComparison.OrdinalIgnoreCase ) )
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/// <summary>
+	/// Include an attacker.
+	/// </summary>
+	/// <param name="attacker"></param>
+	public void WithAttacker( GameObject attacker )
+	{
+		Attacker = attacker;
+	}
+
+	/// <summary>
+	/// Include an inflictor.
+	/// </summary>
+	/// <param name="inflictor"></param>
+	public void WithInflictor( GameObject inflictor )
+	{
+		Inflictor = inflictor;
 	}
 }

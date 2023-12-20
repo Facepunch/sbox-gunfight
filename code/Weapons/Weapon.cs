@@ -13,7 +13,7 @@ public partial class Weapon : Component
 	/// <summary>
 	/// The default holdtype for this weapon.
 	/// </summary>
-	[Property] public CitizenAnimationHelper.HoldTypes HoldType { get; set; } = CitizenAnimationHelper.HoldTypes.Rifle;
+	[Property] protected CitizenAnimationHelper.HoldTypes HoldType { get; set; } = CitizenAnimationHelper.HoldTypes.Rifle;
 
 	/// <summary>
 	/// How long it's been since we used this attack.

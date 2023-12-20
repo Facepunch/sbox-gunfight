@@ -29,8 +29,9 @@ public sealed class PlayerController : Component
 
 	/// <summary>
 	/// Finds the first enabled weapon on our player.
+	/// Make this quicker and not fetching components every time.
 	/// </summary>
-	Weapon Weapon => Components.Get<Weapon>( FindMode.EnabledInSelfAndChildren );
+	public Weapon Weapon => Components.Get<Weapon>( FindMode.EnabledInSelfAndDescendants );
 
 	/// <summary>
 	/// The current holdtype for the player.
@@ -59,6 +60,11 @@ public sealed class PlayerController : Component
 	protected override void OnUpdate()
 	{
 		var cc = CharacterController;
+
+		if ( Weapon.IsValid() )
+		{
+			CurrentHoldType = Weapon.GetHoldType();
+		}
 
 		// Eye input
 		if ( !IsProxy )

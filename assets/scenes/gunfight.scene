@@ -170,7 +170,7 @@
         {
           "__type": "PlayerController",
           "__enabled": true,
-          "AnimationHelper": null,
+          "AnimationHelper": "a5eeac8e-e56d-48b9-9155-266a684c3551",
           "Body": "a5eeac8e-e56d-48b9-9155-266a684c3551",
           "CurrentHoldType": "None",
           "Gravity": "0,0,800"

@@ -125,6 +125,15 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 
 	protected virtual Ray WeaponRay => Weapon.PlayerController.AimRay;
 
+	protected override void OnUpdate()
+	{
+		//var tr = GetShootTrace();
+
+		//Gizmo.Draw.Line( tr.StartPosition, tr.EndPosition );
+		//Gizmo.Draw.LineSphere( tr.StartPosition, 16 );
+		//Gizmo.Draw.LineSphere( tr.EndPosition, 16 );
+	}
+
 	/// <summary>
 	/// Runs a trace with all the data we have supplied it, and returns the result
 	/// </summary>
@@ -133,7 +142,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 	{
 		var tr = Scene.Trace.Ray( WeaponRay, MaxRange )
 			.Size( BulletSize )
-			.WithAnyTags( "player", "solid" )
+			.WithAnyTags( "solid" )
 			.UseHitboxes()
 			.Run();
 

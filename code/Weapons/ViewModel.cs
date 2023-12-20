@@ -57,7 +57,7 @@ public partial class ViewModel : Component
 		ModelRenderer.Set( "b_grounded", PlayerController.IsGrounded );
 
 		// Ironsights
-		ModelRenderer.Set( "ironsights", PlayerController.IsAiming ? 2 : 1 );
+		ModelRenderer.Set( "ironsights", PlayerController.IsAiming ? 2 : 0 );
 		ModelRenderer.Set( "ironsights_fire_scale", PlayerController.IsAiming ? 0.3f : 1f );
 	}
 }

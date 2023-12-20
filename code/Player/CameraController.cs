@@ -15,7 +15,7 @@ public sealed class CameraController : Component
 	/// <summary>
 	/// Constructs a ray using the camera's GameObject
 	/// </summary>
-	public Ray AimRay => new Ray( Camera.Transform.Position, Camera.Transform.Position + Camera.Transform.Rotation.Forward );
+	public Ray AimRay => new Ray( Camera.Transform.Position + Camera.Transform.Rotation.Forward * 25f, Camera.Transform.Rotation.Forward );
 
 	protected override void OnStart()
 	{

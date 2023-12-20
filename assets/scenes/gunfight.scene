@@ -34,6 +34,7 @@
       "Id": "30268525-6df6-4ed9-af3d-4a88a0e23778",
       "Name": "Main Floor",
       "Position": "523.7975,493.2021,0.00003122077",
+      "Tags": "solid",
       "Enabled": true,
       "Children": [
         {
@@ -41,6 +42,7 @@
           "Name": "Plane",
           "Position": "-1027.281,-1051.025,42.28922",
           "Scale": "10,10,10",
+          "Tags": "solid",
           "Enabled": true,
           "Components": [
             {
@@ -69,6 +71,7 @@
           "Name": "Plane",
           "Position": "-27.28112,-1051.025,42.28922",
           "Scale": "10,10,10",
+          "Tags": "solid",
           "Enabled": true,
           "Components": [
             {
@@ -97,6 +100,7 @@
           "Name": "Plane (1)",
           "Position": "-1027.281,-51.02454,42.28922",
           "Scale": "10,10,10",
+          "Tags": "solid",
           "Enabled": true,
           "Components": [
             {
@@ -125,6 +129,7 @@
           "Name": "Plane",
           "Position": "-27.28112,-51.02454,42.28922",
           "Scale": "10,10,10",
+          "Tags": "solid",
           "Enabled": true,
           "Components": [
             {
@@ -554,7 +559,7 @@
                   "RequiresAmmoContainer": true,
                   "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
                   "TimeSinceShoot": {
-                    "Relative": 312.15964
+                    "Relative": 2171.4934
                   },
                   "WeaponShootDelay": 0.095
                 },
@@ -596,7 +601,7 @@
     {
       "Id": "0f04ee6a-6956-44a5-851e-aa6b5151fa34",
       "Name": "GameNetworkManager",
-      "Position": "-403.784,-123.1075,115.0067",
+      "Position": "-403.784,-123.1075,41.92808",
       "Enabled": true,
       "Components": [
         {

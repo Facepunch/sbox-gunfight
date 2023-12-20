@@ -5,10 +5,11 @@
   "Decibels": 140,
   "SelectionMode": "Random",
   "Sounds": [
-    "sounds/guns/mp5/smg1_shoot1.vsnd",
-    "sounds/guns/mp5/smg1_shoot2.vsnd",
-    "sounds/guns/mp5/smg1_shoot3.vsnd"
+    "assets/sounds/guns/mp5/smg1_shoot1.vsnd",
+    "assets/sounds/guns/mp5/smg1_shoot2.vsnd",
+    "assets/sounds/guns/mp5/smg1_shoot3.vsnd"
   ],
   "MaximumDistance": 4479.734,
-  "MinimumDistance": 223.9867
+  "MinimumDistance": 223.9867,
+  "__references": []
 }

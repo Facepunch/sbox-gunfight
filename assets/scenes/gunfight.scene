@@ -550,7 +550,7 @@
                   "RequiresAllInputActions": false,
                   "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
                   "TimeSinceShoot": {
-                    "Relative": 896.25085
+                    "Relative": 1226.523
                   },
                   "WeaponShootDelay": 0.2
                 }

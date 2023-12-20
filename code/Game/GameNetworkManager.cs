@@ -7,8 +7,15 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 	[Property] public GameObject PlayerPrefab { get; set; }
 	[Property] public GameObject SpawnPoint { get; set; }
 
+	/// <summary>
+	/// Is this game multiplayer?
+	/// </summary>
+	[Property] public bool IsMultiplayer { get; set; } = true;
+
 	protected override void OnStart()
 	{
+		if ( !IsMultiplayer ) return;
+
 		//
 		// Create a lobby if we're not connected
 		//
@@ -20,6 +27,8 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 
 	public void OnActive( Connection channel )
 	{
+		if ( !IsMultiplayer ) return;
+
 		Log.Info( $"Player '{channel.DisplayName}' is becoming active" );
 
 		var player = SceneUtility.Instantiate( PlayerPrefab, SpawnPoint.Transform.World );

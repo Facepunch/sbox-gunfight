@@ -516,6 +516,23 @@
                   "__enabled": true,
                   "HoldType": "Rifle",
                   "Resource": "assets/resources/weapons/mp5.weapon"
+                },
+                {
+                  "__type": "ShootWeaponAbility",
+                  "__enabled": true,
+                  "BaseDamage": 25,
+                  "BulletSize": 1,
+                  "InputActions": [
+                    "Attack1"
+                  ],
+                  "InputType": "Down",
+                  "MaxEffectiveRange": 1024000,
+                  "MuzzleEffect": null,
+                  "OnWeaponAbilityAction": null,
+                  "RequiresAllInputActions": false,
+                  "Sound": null,
+                  "TrailEffect": null,
+                  "WeaponShootDelay": 0.2
                 }
               ],
               "Children": [

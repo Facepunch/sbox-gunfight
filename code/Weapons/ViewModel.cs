@@ -60,5 +60,9 @@ public partial class ViewModel : Component
 		ModelRenderer.Set( "move_groundspeed", PlayerController.CharacterController.Velocity.Length );
 		ModelRenderer.Set( "b_sprint", PlayerController.IsRunning );
 		ModelRenderer.Set( "b_grounded", PlayerController.IsGrounded );
+
+		// Ironsights
+		ModelRenderer.Set( "ironsights", PlayerController.IsAiming ? 2 : 1 );
+		ModelRenderer.Set( "ironsights_fire_scale", PlayerController.IsAiming ? 0.3f : 1f );
 	}
 }

@@ -53,6 +53,8 @@ public sealed class PlayerController : Component
 	/// </summary>
 	[Property, System.ComponentModel.ReadOnly( true )] public bool IsRunning { get; private set; }
 
+	[Property, System.ComponentModel.ReadOnly( true )] public bool IsAiming { get; private set; }
+
 	/// <summary>
 	/// Called when the player jumps.
 	/// </summary>
@@ -96,6 +98,8 @@ public sealed class PlayerController : Component
 				IsRunning = true;
 			else if ( Input.Down( "Duck" ) )
 				IsDucking = true;
+
+			IsAiming = Input.Down( "Attack2" );
 		}
 
 		float rotateDifference = 0;

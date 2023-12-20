@@ -40,11 +40,25 @@ public partial class ViewModel : Component
 		}
 
 		ModelRenderer.Set( "b_deploy", true );
+
+		// Register an event.
+		PlayerController.OnJump += OnPlayerJumped;
+	}
+
+	protected override void OnDestroy()
+	{
+		PlayerController.OnJump -= OnPlayerJumped;
+	}
+
+	void OnPlayerJumped()
+	{
+		ModelRenderer.Set( "b_jump", true );
 	}
 
 	protected override void OnUpdate()
 	{
 		ModelRenderer.Set( "move_groundspeed", PlayerController.CharacterController.Velocity.Length );
 		ModelRenderer.Set( "b_sprint", PlayerController.IsRunning );
+		ModelRenderer.Set( "b_grounded", PlayerController.IsGrounded );
 	}
 }

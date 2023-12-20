@@ -53,10 +53,17 @@ public sealed class PlayerController : Component
 	/// </summary>
 	[Property, System.ComponentModel.ReadOnly( true )] public bool IsRunning { get; private set; }
 
+	/// <summary>
+	/// Called when the player jumps.
+	/// </summary>
+	[Property] public Action OnJump { get; set; }
+
 	// Properties used only in this component.
 	Vector3 WishVelocity;
 	Angles EyeAngles;
 	bool IsDucking;
+
+	public bool IsGrounded { get; set; }
 	
 	protected override void OnUpdate()
 	{
@@ -106,11 +113,19 @@ public sealed class PlayerController : Component
 			}
 		}
 
+		var wasGrounded = IsGrounded;
+		IsGrounded = cc.IsOnGround;
+
+		if ( wasGrounded != IsGrounded )
+		{
+			GroundedChanged();
+		}
+
 		if ( AnimationHelper is not null && cc is not null )
 		{
 			AnimationHelper.WithVelocity( cc.Velocity );
 			AnimationHelper.WithWishVelocity( WishVelocity );
-			AnimationHelper.IsGrounded = cc.IsOnGround;
+			AnimationHelper.IsGrounded = IsGrounded;
 			AnimationHelper.FootShuffle = rotateDifference;
 			AnimationHelper.WithLook( EyeAngles.Forward, 1, 1, 1.0f );
 			AnimationHelper.MoveStyle = IsRunning ? AnimationHelper.MoveStyles.Run : AnimationHelper.MoveStyles.Walk;
@@ -119,10 +134,20 @@ public sealed class PlayerController : Component
 		}
 	}
 
+	private void GroundedChanged()
+	{
+		var nowOffGround = IsGrounded == false;
+	}
+
 	/// <summary>
 	/// A network message that lets other users that we've triggered a jump.
 	/// </summary>
-	[Broadcast] public void OnJump() => AnimationHelper?.TriggerJump();
+	[Broadcast]
+	public void BroadcastPlayerJumped()
+	{
+		AnimationHelper?.TriggerJump();
+		OnJump?.Invoke();
+	}
 
 	protected override void OnFixedUpdate()
 	{
@@ -142,7 +167,7 @@ public sealed class PlayerController : Component
 
 			cc.Punch( Vector3.Up * flMul * flGroundFactor );
 
-			OnJump();
+			BroadcastPlayerJumped();
 		}
 
 		if ( cc.IsOnGround )

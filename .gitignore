@@ -3,7 +3,7 @@ code/*.csproj
 code/obj
 code/Properties
 code/Editor/*.csproj
-code/Editor/obj
+code/Editor/obj/*
 code/Editor/Properties
 .intermediate
 _bakeresourcecache
@@ -11,4 +11,4 @@ tools_asset_info.bin
 tools_thumbnail_cache.bin
 *.los
 .vs/
-gunfight.sln
+*.sln

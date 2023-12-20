@@ -20,12 +20,12 @@ public sealed class PlayerController : Component
 	/// <summary>
 	/// The current character controller for this player.
 	/// </summary>
-	CharacterController CharacterController { get; set; }
+	[Property] public CharacterController CharacterController { get; set; }
 
 	/// <summary>
 	/// The current camera controller for this player.
 	/// </summary>
-	CameraController CameraController { get; set; }
+	[Property] public CameraController CameraController { get; set; }
 
 	/// <summary>
 	/// Finds the first enabled weapon on our player.
@@ -44,19 +44,6 @@ public sealed class PlayerController : Component
 	bool IsRunning;
 	bool IsDucking;
 	
-	protected override void OnAwake()
-	{
-		// Try to find the character controller.
-		CharacterController = Components.Get<CharacterController>();
-		// Throw a big tantrum if we can't find it, since the game can't operate without it.
-		if ( CharacterController == null ) throw new ComponentNotFoundException();
-
-		// Try to find the camera controller.
-		CameraController = Components.Get<CameraController>();
-		// Same again...
-		if ( CameraController == null ) throw new ComponentNotFoundException();
-	}
-
 	protected override void OnUpdate()
 	{
 		var cc = CharacterController;
@@ -67,7 +54,7 @@ public sealed class PlayerController : Component
 		}
 
 		// Eye input
-		if ( !IsProxy )
+		if ( !IsProxy && cc != null )
 		{
 			EyeAngles.pitch += Input.MouseDelta.y * 0.1f;
 			EyeAngles.yaw -= Input.MouseDelta.x * 0.1f;
@@ -99,13 +86,13 @@ public sealed class PlayerController : Component
 
 			rotateDifference = Body.Transform.Rotation.Distance( targetAngle );
 
-			if ( rotateDifference > 50.0f || cc.Velocity.Length > 10.0f )
+			if ( rotateDifference > 50.0f || ( cc != null && cc.Velocity.Length > 10.0f ) )
 			{
 				Body.Transform.Rotation = Rotation.Lerp( Body.Transform.Rotation, targetAngle, Time.Delta * 10.0f );
 			}
 		}
 
-		if ( AnimationHelper is not null )
+		if ( AnimationHelper is not null && cc is not null )
 		{
 			AnimationHelper.WithVelocity( cc.Velocity );
 			AnimationHelper.WithWishVelocity( WishVelocity );
@@ -131,6 +118,8 @@ public sealed class PlayerController : Component
 		BuildWishVelocity();
 
 		var cc = CharacterController;
+		if ( cc == null )
+			return;
 
 		if ( cc.IsOnGround && Input.Down( "Jump" ) )
 		{

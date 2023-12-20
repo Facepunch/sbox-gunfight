@@ -165,13 +165,14 @@
       "Position": "-242.6006,-424.1199,45.6832",
       "Rotation": "0.00000005306496,0.0000000000000002222778,0.8902823,0.4554094",
       "Tags": "player",
-      "Enabled": true,
       "Components": [
         {
           "__type": "PlayerController",
           "__enabled": true,
           "AnimationHelper": "a5eeac8e-e56d-48b9-9155-266a684c3551",
           "Body": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+          "CameraController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
+          "CharacterController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
           "CurrentHoldType": "None",
           "Gravity": "0,0,800"
         },
@@ -255,6 +256,7 @@
                     {
                       "__type": "ViewModel",
                       "__enabled": true,
+                      "ModelRenderer": null,
                       "ViewModelCamera": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee"
                     },
                     {
@@ -521,12 +523,20 @@
                   "__type": "ShootWeaponAbility",
                   "__enabled": true,
                   "BaseDamage": 25,
+                  "BaseDamageFalloff": [
+                    {
+                      "y": 1
+                    },
+                    {
+                      "x": 1
+                    }
+                  ],
                   "BulletSize": 1,
                   "InputActions": [
                     "Attack1"
                   ],
                   "InputType": "Down",
-                  "MaxEffectiveRange": 1024000,
+                  "MaxRange": 1024000,
                   "MuzzleEffect": null,
                   "OnWeaponAbilityAction": null,
                   "RequiresAllInputActions": false,

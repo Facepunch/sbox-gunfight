@@ -45,11 +45,6 @@ public partial class ViewModel : Component
 		PlayerController.OnJump += OnPlayerJumped;
 	}
 
-	protected override void OnDestroy()
-	{
-		PlayerController.OnJump -= OnPlayerJumped;
-	}
-
 	void OnPlayerJumped()
 	{
 		ModelRenderer.Set( "b_jump", true );

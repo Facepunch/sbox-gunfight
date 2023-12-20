@@ -15,7 +15,7 @@ public partial class ViewModel : Component
 	/// </summary>
 	CameraController CameraController => Components.Get<CameraController>( FindMode.InAncestors );
 
-	[Property] public ModelRenderer ModelRenderer { get; set; }
+	[Property] public SkinnedModelRenderer ModelRenderer { get; set; }
 
 	/// <summary>
 	/// The View Model camera - we'll turn this off if running as Proxy

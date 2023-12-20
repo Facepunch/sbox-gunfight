@@ -10,7 +10,7 @@ public sealed class PlayerController : Component
 	/// <summary>
 	/// A reference to the animation helper (normally on the Body GameObject)
 	/// </summary>
-	[Property] public CitizenAnimationHelper AnimationHelper { get; set; }
+	[Property] public AnimationHelper AnimationHelper { get; set; }
 
 	/// <summary>
 	/// The current gravity. Make this a gamerule thing later?
@@ -34,9 +34,14 @@ public sealed class PlayerController : Component
 	public Weapon Weapon => Components.Get<Weapon>( FindMode.EnabledInSelfAndDescendants );
 
 	/// <summary>
+	/// An accessor to get the camera controller's aim ray.
+	/// </summary>
+	public Ray AimRay => CameraController.AimRay;
+
+	/// <summary>
 	/// The current holdtype for the player.
 	/// </summary>
-	[Property] CitizenAnimationHelper.HoldTypes CurrentHoldType { get; set; } = CitizenAnimationHelper.HoldTypes.None;
+	[Property] AnimationHelper.HoldTypes CurrentHoldType { get; set; } = AnimationHelper.HoldTypes.None;
 
 	// Properties used only in this component.
 	Vector3 WishVelocity;
@@ -99,7 +104,7 @@ public sealed class PlayerController : Component
 			AnimationHelper.IsGrounded = cc.IsOnGround;
 			AnimationHelper.FootShuffle = rotateDifference;
 			AnimationHelper.WithLook( EyeAngles.Forward, 1, 1, 1.0f );
-			AnimationHelper.MoveStyle = IsRunning ? CitizenAnimationHelper.MoveStyles.Run : CitizenAnimationHelper.MoveStyles.Walk;
+			AnimationHelper.MoveStyle = IsRunning ? AnimationHelper.MoveStyles.Run : AnimationHelper.MoveStyles.Walk;
 			AnimationHelper.DuckLevel = IsDucking ? 100 : 0;
 			AnimationHelper.HoldType = CurrentHoldType;
 		}

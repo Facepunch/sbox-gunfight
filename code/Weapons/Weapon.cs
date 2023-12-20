@@ -11,9 +11,24 @@ public partial class Weapon : Component
 	[Property] public WeaponDataResource Resource { get; set; }
 
 	/// <summary>
+	/// A reference to the weapon's model renderer.
+	/// </summary>
+	[Property] public SkinnedModelRenderer ModelRenderer { get; set; }
+
+	/// <summary>
 	/// The default holdtype for this weapon.
 	/// </summary>
-	[Property] protected CitizenAnimationHelper.HoldTypes HoldType { get; set; } = CitizenAnimationHelper.HoldTypes.Rifle;
+	[Property] protected AnimationHelper.HoldTypes HoldType { get; set; } = AnimationHelper.HoldTypes.Rifle;
+
+	/// <summary>
+	/// A reference to the weapon's <see cref="Gunfight.ViewModel"/> if it has one.
+	/// </summary>
+	[Property] public ViewModel ViewModel { get; set; }
+
+	/// <summary>
+	/// Get the weapon's owner - namely the player controller
+	/// </summary>
+	public PlayerController PlayerController => Components.Get<PlayerController>( FindMode.EverythingInAncestors );
 
 	/// <summary>
 	/// How long it's been since we used this attack.
@@ -29,7 +44,7 @@ public partial class Weapon : Component
 	/// Allow weapons to override holdtypes at any notice.
 	/// </summary>
 	/// <returns></returns>
-	public virtual CitizenAnimationHelper.HoldTypes GetHoldType()
+	public virtual AnimationHelper.HoldTypes GetHoldType()
 	{
 		return HoldType;
 	}

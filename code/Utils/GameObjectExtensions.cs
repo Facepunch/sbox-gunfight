@@ -36,4 +36,18 @@ public static class GameObjectExtensions
 		var healthComponent = GetHealthComponent( go, true );
 		healthComponent.Health = newHealth;
 	}
+
+	/// <summary>
+	/// Inflict damage on a GameObject.
+	/// </summary>
+	/// <param name="go"></param>
+	/// <param name="info"></param>
+	public static void TakeDamage( this GameObject go, ref DamageInfo info )
+	{
+		// Let the health component make some changes to DamageInfo.
+		GetHealthComponent( go ).OnTakeDamage( ref info );
+
+		// Set the GameObject's health based on what we get in DamageInfo
+		SetHealth( go, GetHealth( go ) - info.Damage );
+	}
 }

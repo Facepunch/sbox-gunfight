@@ -59,8 +59,7 @@
               "MaterialGroup": null,
               "MaterialOverride": "materials/dev/gray_grid_8.vmat",
               "Model": "models/dev/plane.vmdl",
-              "RendererType": "Model",
-              "ShouldCastShadows": true,
+              "RenderType": "On",
               "Tint": "1,1,1,1"
             },
             {
@@ -88,8 +87,7 @@
               "MaterialGroup": null,
               "MaterialOverride": "materials/dev/gray_grid_8.vmat",
               "Model": "models/dev/plane.vmdl",
-              "RendererType": "Model",
-              "ShouldCastShadows": true,
+              "RenderType": "On",
               "Tint": "1,1,1,1"
             },
             {
@@ -117,8 +115,7 @@
               "MaterialGroup": null,
               "MaterialOverride": "materials/dev/gray_grid_8.vmat",
               "Model": "models/dev/plane.vmdl",
-              "RendererType": "Model",
-              "ShouldCastShadows": true,
+              "RenderType": "On",
               "Tint": "1,1,1,1"
             },
             {
@@ -146,8 +143,7 @@
               "MaterialGroup": null,
               "MaterialOverride": "materials/dev/gray_grid_8.vmat",
               "Model": "models/dev/plane.vmdl",
-              "RendererType": "Model",
-              "ShouldCastShadows": true,
+              "RenderType": "On",
               "Tint": "1,1,1,1"
             },
             {
@@ -214,7 +210,7 @@
               "Orthographic": false,
               "OrthographicHeight": 1204,
               "Priority": 1,
-              "RenderExcludeTags": "light,viewmodel",
+              "RenderExcludeTags": "viewmodel",
               "RenderTags": "",
               "TargetEye": "None",
               "Viewport": "0,0,1,1",
@@ -224,41 +220,60 @@
           ],
           "Children": [
             {
-              "Id": "eb44edd6-bdc7-48bd-ae04-e1b50c01cab6",
-              "Name": "ViewModels",
+              "Id": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
+              "Name": "ViewModel Camera",
               "Position": "28.27199,0.000008587822,0.09834022",
               "Tags": "player",
               "Enabled": true,
+              "Components": [
+                {
+                  "__type": "CameraComponent",
+                  "__enabled": true,
+                  "BackgroundColor": "1,1,1,0",
+                  "ClearFlags": "Depth",
+                  "FieldOfView": 93.23,
+                  "IsMainCamera": false,
+                  "Orthographic": false,
+                  "OrthographicHeight": 1204,
+                  "Priority": 2,
+                  "RenderExcludeTags": "",
+                  "RenderTags": "light,viewmodel",
+                  "TargetEye": "None",
+                  "Viewport": "0,0,1,1",
+                  "ZFar": 10000,
+                  "ZNear": 0.1
+                }
+              ],
               "Children": [
                 {
-                  "Id": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
-                  "Name": "Camera",
+                  "Id": "a59714ae-2f10-4742-acfa-f67e413e087f",
+                  "Name": "MP5_ViewModel",
                   "Position": "0,0,0",
-                  "Tags": "player",
+                  "Tags": "viewmodel,player",
                   "Enabled": true,
                   "Components": [
                     {
-                      "__type": "CameraComponent",
+                      "__type": "ViewModel",
                       "__enabled": true,
-                      "BackgroundColor": "1,1,1,0",
-                      "ClearFlags": "Depth",
-                      "FieldOfView": 93.23,
-                      "IsMainCamera": false,
-                      "Orthographic": false,
-                      "OrthographicHeight": 1204,
-                      "Priority": 2,
-                      "RenderExcludeTags": "",
-                      "RenderTags": "light,viewmodel",
-                      "TargetEye": "None",
-                      "Viewport": "0,0,1,1",
-                      "ZFar": 10000,
-                      "ZNear": 0.1
+                      "ViewModelCamera": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee"
+                    },
+                    {
+                      "__type": "SkinnedModelRenderer",
+                      "__enabled": true,
+                      "BodyGroups": 18446744073709551615,
+                      "BoneMergeTarget": null,
+                      "CreateBoneObjects": false,
+                      "MaterialGroup": null,
+                      "MaterialOverride": null,
+                      "Model": "models/weapons/sbox_smg_mp5/v_mp5.vmdl",
+                      "RenderType": "On",
+                      "Tint": "1,1,1,1"
                     }
                   ],
                   "Children": [
                     {
-                      "Id": "a59714ae-2f10-4742-acfa-f67e413e087f",
-                      "Name": "MP5_ViewModel",
+                      "Id": "18bd49b2-1079-42a9-9519-34e6fe9224d1",
+                      "Name": "Object",
                       "Position": "0,0,0",
                       "Tags": "viewmodel,player",
                       "Enabled": true,
@@ -266,43 +281,14 @@
                         {
                           "__type": "SkinnedModelRenderer",
                           "__enabled": true,
-                          "BodyGroups": 18446744073709551615,
-                          "BoneMergeTarget": null,
+                          "BodyGroups": 18446744073709551511,
+                          "BoneMergeTarget": "a59714ae-2f10-4742-acfa-f67e413e087f",
                           "CreateBoneObjects": false,
                           "MaterialGroup": null,
                           "MaterialOverride": null,
-                          "Model": "models/weapons/sbox_smg_mp5/v_mp5.vmdl",
-                          "RendererType": "Model",
-                          "ShouldCastShadows": true,
+                          "Model": "models/first_person/first_person_arms.vmdl",
+                          "RenderType": "On",
                           "Tint": "1,1,1,1"
-                        },
-                        {
-                          "__type": "ViewModel",
-                          "__enabled": true
-                        }
-                      ],
-                      "Children": [
-                        {
-                          "Id": "18bd49b2-1079-42a9-9519-34e6fe9224d1",
-                          "Name": "Object",
-                          "Position": "0,0,0",
-                          "Tags": "viewmodel,player",
-                          "Enabled": true,
-                          "Components": [
-                            {
-                              "__type": "SkinnedModelRenderer",
-                              "__enabled": true,
-                              "BodyGroups": 18446744073709551511,
-                              "BoneMergeTarget": "a59714ae-2f10-4742-acfa-f67e413e087f",
-                              "CreateBoneObjects": false,
-                              "MaterialGroup": null,
-                              "MaterialOverride": null,
-                              "Model": "models/first_person/first_person_arms.vmdl",
-                              "RendererType": "Model",
-                              "ShouldCastShadows": true,
-                              "Tint": "1,1,1,1"
-                            }
-                          ]
                         }
                       ]
                     }
@@ -328,8 +314,7 @@
               "MaterialGroup": null,
               "MaterialOverride": null,
               "Model": "models/citizen/citizen.vmdl",
-              "RendererType": "ModelAndShadows",
-              "ShouldCastShadows": true,
+              "RenderType": "On",
               "Tint": "1,1,1,1"
             },
             {
@@ -375,8 +360,7 @@
                       "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/hat/tactical_helmet/models/tactical_helmet.vmdl",
-                      "RendererType": "Model",
-                      "ShouldCastShadows": true,
+                      "RenderType": "On",
                       "Tint": "1,1,1,1"
                     }
                   ]
@@ -398,8 +382,7 @@
                       "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/hat/balaclava/models/balaclava.vmdl",
-                      "RendererType": "Model",
-                      "ShouldCastShadows": true,
+                      "RenderType": "On",
                       "Tint": "1,1,1,1"
                     }
                   ]
@@ -421,8 +404,7 @@
                       "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/vest/tactical_vest/models/tactical_vest.vmdl",
-                      "RendererType": "Model",
-                      "ShouldCastShadows": true,
+                      "RenderType": "On",
                       "Tint": "1,1,1,1"
                     }
                   ]
@@ -443,8 +425,7 @@
                       "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/shirt/army_shirt/model/army_shirt.vmdl",
-                      "RendererType": "Model",
-                      "ShouldCastShadows": true,
+                      "RenderType": "On",
                       "Tint": "1,1,1,1"
                     }
                   ]
@@ -465,8 +446,7 @@
                       "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/gloves/tactical_gloves/models/tactical_gloves.vmdl",
-                      "RendererType": "Model",
-                      "ShouldCastShadows": true,
+                      "RenderType": "On",
                       "Tint": "1,1,1,1"
                     }
                   ]
@@ -487,8 +467,7 @@
                       "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/trousers/cargopants/models/cargo_pants.vmdl",
-                      "RendererType": "Model",
-                      "ShouldCastShadows": true,
+                      "RenderType": "On",
                       "Tint": "1,1,1,1"
                     }
                   ]
@@ -509,8 +488,7 @@
                       "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/citizen_clothes/shoes/boots/models/army_boots.vmdl",
-                      "RendererType": "Model",
-                      "ShouldCastShadows": true,
+                      "RenderType": "On",
                       "Tint": "1,1,1,1"
                     }
                   ]
@@ -557,8 +535,7 @@
                       "MaterialGroup": null,
                       "MaterialOverride": null,
                       "Model": "models/weapons/sbox_smg_mp5/w_mp5.vmdl",
-                      "RendererType": "Model",
-                      "ShouldCastShadows": true,
+                      "RenderType": "On",
                       "Tint": "1,1,1,1"
                     }
                   ]
@@ -596,8 +573,7 @@
           "MaterialGroup": null,
           "MaterialOverride": null,
           "Model": "models/dev/box.vmdl",
-          "RendererType": "ModelAndShadows",
-          "ShouldCastShadows": true,
+          "RenderType": "On",
           "Tint": "1,1,1,1"
         }
       ]

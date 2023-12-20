@@ -15,25 +15,19 @@ public partial class ViewModel : Component
 	/// </summary>
 	CameraController CameraController => Components.Get<CameraController>( FindMode.InAncestors );
 
+	/// <summary>
+	/// The View Model camera - we'll turn this off if running as Proxy
+	/// </summary>
+	[Property] public CameraComponent ViewModelCamera { get; set; }
+
 	protected override void OnStart()
 	{
 		if ( IsProxy )
 		{
 			// Disable ourselves if we're proxy. We don't want to see viewmodels of other people's stuff.
 			// We might be spectating in the future - so work that out...
+			ViewModelCamera.Enabled = false;
 			Enabled = false;
 		}
-	}
-
-	protected override void OnUpdate()
-	{
-		//var camera = CameraController.Camera;
-		
-		// Try to attach
-		// if ( camera != null )
-		//{
-			// Move the ViewModel's gameobject to match the camera position. This won't be a problem once we have camera tags and multiple cameras.
-			// Transform.World = camera.Transform.World;
-		//}
 	}
 }

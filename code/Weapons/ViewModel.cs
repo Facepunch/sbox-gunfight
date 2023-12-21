@@ -8,7 +8,12 @@ public partial class ViewModel : Component
 	/// <summary>
 	/// A reference to the <see cref="Weapon"/> we want to listen to.
 	/// </summary>
-	[Property] public Weapon Weapon { get; set; }
+	public Weapon Weapon { get; set; }
+
+	/// <summary>
+	/// A reference to the viewmodel's arms.
+	/// </summary>
+	[Property] public SkinnedModelRenderer Arms { get; set; }
 
 	/// <summary>
 	/// Look up the tree to find the camera.
@@ -25,7 +30,7 @@ public partial class ViewModel : Component
 	/// <summary>
 	/// The View Model camera - we'll turn this off if running as Proxy
 	/// </summary>
-	[Property] public CameraComponent ViewModelCamera { get; set; }
+	public CameraComponent ViewModelCamera { get; set; }
 
 	protected override void OnStart()
 	{
@@ -50,6 +55,18 @@ public partial class ViewModel : Component
 		ModelRenderer.Set( "b_jump", true );
 	}
 
+	void ApplyAnimationTransform()
+	{
+		//var att = Weapon.ViewModel.Arms.GetBoneTransform( "camera", false );
+
+		//if ( att is Transform transform )
+		//{
+		//	var cameraGameObject = Weapon.PlayerController.CameraGameObject;
+		//	cameraGameObject.Transform.LocalPosition += transform.Position;
+		//	cameraGameObject.Transform.LocalRotation *= transform.Rotation;
+		//}
+	}
+
 	protected override void OnUpdate()
 	{
 		ModelRenderer.Set( "move_groundspeed", PlayerController.CharacterController.Velocity.Length );
@@ -59,5 +76,7 @@ public partial class ViewModel : Component
 		// Ironsights
 		ModelRenderer.Set( "ironsights", PlayerController.IsAiming ? 2 : 0 );
 		ModelRenderer.Set( "ironsights_fire_scale", PlayerController.IsAiming ? 0.3f : 1f );
+
+		ApplyAnimationTransform();
 	}
 }

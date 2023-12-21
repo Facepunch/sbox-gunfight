@@ -175,7 +175,8 @@
           "Head": "2a42e115-5ac3-4e05-b236-484212646987",
           "IsAiming": false,
           "IsRunning": false,
-          "OnJump": null
+          "OnJump": null,
+          "ViewModelCamera": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee"
         },
         {
           "__type": "CameraController",
@@ -218,7 +219,7 @@
             {
               "Id": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c",
               "Name": "Player Camera",
-              "Position": "0.00000565984,0.000002895199,0",
+              "Position": "0,0,0",
               "Tags": "player",
               "Enabled": true,
               "Components": [

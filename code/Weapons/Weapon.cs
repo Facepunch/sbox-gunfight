@@ -33,6 +33,8 @@ public partial class Weapon : Component
 			viewModel = value;
 			// Let the ViewModel know about our weapon
 			viewModel.Weapon = this;
+			// Risky
+			viewModel.ViewModelCamera = PlayerController.ViewModelCamera;
 		}
 	}
 

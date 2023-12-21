@@ -1,11 +1,16 @@
 namespace Gunfight;
 
-public sealed class PlayerController : Component
+public partial class PlayerController : Component
 {
 	/// <summary>
 	/// A reference to the player's body (the GameObject)
 	/// </summary>
 	[Property] public GameObject Body { get; set; }
+
+	/// <summary>
+	/// A reference to the player's head (the GameObject)
+	/// </summary>
+	[Property] public GameObject Head { get; set; }
 
 	/// <summary>
 	/// A reference to the animation helper (normally on the Body GameObject)
@@ -66,10 +71,21 @@ public sealed class PlayerController : Component
 	bool IsDucking;
 
 	public bool IsGrounded { get; set; }
+
+	protected float GetEyeHeightOffset()
+	{
+		if ( CurrentEyeHeightOverride is not null ) return CurrentEyeHeightOverride.Value;
+		return 0f;
+	}
+
+	float SmoothEyeHeight = 0f;
 	
 	protected override void OnUpdate()
 	{
 		var cc = CharacterController;
+
+		if ( !IsProxy )
+			OnUpdateMechanics();
 
 		if ( Weapon.IsValid() )
 		{
@@ -79,6 +95,14 @@ public sealed class PlayerController : Component
 		// Eye input
 		if ( !IsProxy && cc != null )
 		{
+			var cameraGameObject = CameraController.Camera.GameObject;
+
+			var eyeHeightOffset = GetEyeHeightOffset();
+
+			SmoothEyeHeight = SmoothEyeHeight.LerpTo( eyeHeightOffset, Time.Delta * 10f );
+
+			cameraGameObject.Transform.LocalPosition = Vector3.Zero.WithZ( SmoothEyeHeight );
+
 			EyeAngles.pitch += Input.MouseDelta.y * 0.1f;
 			EyeAngles.yaw -= Input.MouseDelta.x * 0.1f;
 			EyeAngles.roll = 0;
@@ -199,6 +223,14 @@ public sealed class PlayerController : Component
 		}
 	}
 
+	protected float GetWishSpeed()
+	{
+		if ( CurrentSpeedOverride is not null ) return CurrentSpeedOverride.Value;
+
+		// Default speed
+		return 110.0f;
+	}
+
 	public void BuildWishVelocity()
 	{
 		var rot = EyeAngles.WithPitch( 0f ).ToRotation();
@@ -215,8 +247,7 @@ public sealed class PlayerController : Component
 		if ( !WishVelocity.IsNearZeroLength ) WishVelocity = WishVelocity.Normal;
 
 		if ( Input.Down( "Run" ) ) WishVelocity *= 320.0f;
-		else if ( Input.Down( "Duck" ) ) WishVelocity *= 85f;
-		else WishVelocity *= 110.0f;
+		else WishVelocity *= GetWishSpeed();
 	}
 
 	public void Write( ref ByteStream stream )

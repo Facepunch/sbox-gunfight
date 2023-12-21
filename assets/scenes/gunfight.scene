@@ -172,6 +172,7 @@
           "CharacterController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
           "CurrentHoldType": "None",
           "Gravity": "0,0,800",
+          "Head": "2a42e115-5ac3-4e05-b236-484212646987",
           "IsAiming": false,
           "IsRunning": false,
           "OnJump": null
@@ -208,58 +209,67 @@
       ],
       "Children": [
         {
-          "Id": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c",
-          "Name": "Player Camera",
-          "Position": "0.00000565984,0.000002895199,59.90165",
+          "Id": "2a42e115-5ac3-4e05-b236-484212646987",
+          "Name": "Head",
+          "Position": "0,0,60",
           "Tags": "player",
           "Enabled": true,
-          "Components": [
-            {
-              "__type": "CameraComponent",
-              "__enabled": true,
-              "BackgroundColor": "0.75478,0.83828,0.87624,1",
-              "ClearFlags": "All",
-              "FieldOfView": 90,
-              "IsMainCamera": true,
-              "Orthographic": false,
-              "OrthographicHeight": 1204,
-              "Priority": 1,
-              "RenderExcludeTags": "viewmodel",
-              "RenderTags": "",
-              "TargetEye": "None",
-              "Viewport": "0,0,1,1",
-              "ZFar": 10000,
-              "ZNear": 0.5
-            },
-            {
-              "__type": "AudioListener",
-              "__enabled": true
-            }
-          ],
           "Children": [
             {
-              "Id": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
-              "Name": "ViewModel Camera",
-              "Position": "28.27199,0.000008587822,0.09834022",
+              "Id": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c",
+              "Name": "Player Camera",
+              "Position": "0.00000565984,0.000002895199,0",
               "Tags": "player",
               "Enabled": true,
               "Components": [
                 {
                   "__type": "CameraComponent",
                   "__enabled": true,
-                  "BackgroundColor": "1,1,1,0",
-                  "ClearFlags": "Depth, Stencil",
-                  "FieldOfView": 93.23,
-                  "IsMainCamera": false,
+                  "BackgroundColor": "0.75478,0.83828,0.87624,1",
+                  "ClearFlags": "All",
+                  "FieldOfView": 90,
+                  "IsMainCamera": true,
                   "Orthographic": false,
                   "OrthographicHeight": 1204,
-                  "Priority": 2,
-                  "RenderExcludeTags": "",
-                  "RenderTags": "light,viewmodel",
+                  "Priority": 1,
+                  "RenderExcludeTags": "viewmodel",
+                  "RenderTags": "",
                   "TargetEye": "None",
                   "Viewport": "0,0,1,1",
                   "ZFar": 10000,
-                  "ZNear": 0.1
+                  "ZNear": 0.5
+                },
+                {
+                  "__type": "AudioListener",
+                  "__enabled": true
+                }
+              ],
+              "Children": [
+                {
+                  "Id": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
+                  "Name": "ViewModel Camera",
+                  "Position": "28.27199,0.000008587822,0.09834022",
+                  "Tags": "player",
+                  "Enabled": true,
+                  "Components": [
+                    {
+                      "__type": "CameraComponent",
+                      "__enabled": true,
+                      "BackgroundColor": "1,1,1,0",
+                      "ClearFlags": "Depth, Stencil",
+                      "FieldOfView": 93.23,
+                      "IsMainCamera": false,
+                      "Orthographic": false,
+                      "OrthographicHeight": 1204,
+                      "Priority": 2,
+                      "RenderExcludeTags": "",
+                      "RenderTags": "light,viewmodel",
+                      "TargetEye": "None",
+                      "Viewport": "0,0,1,1",
+                      "ZFar": 10000,
+                      "ZNear": 0.1
+                    }
+                  ]
                 }
               ]
             }
@@ -470,6 +480,22 @@
           "Position": "0,0,0",
           "Tags": "player",
           "Enabled": true
+        },
+        {
+          "Id": "78e38942-ebd1-49fc-8c98-aea0160aa7f7",
+          "Name": "Mechanics",
+          "Position": "0,0,0",
+          "Tags": "player",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "CrouchMechanic",
+              "__enabled": true,
+              "IsActive": false,
+              "PlayerController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
+              "Priority": 0
+            }
+          ]
         }
       ]
     },

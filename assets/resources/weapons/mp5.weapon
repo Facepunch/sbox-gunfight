@@ -1,7 +1,7 @@
 {
   "Name": "MP5",
   "Description": "A submachine gun that fires 9x19mm Parabellum cartridges, developed in the 1960s.",
-  "MainPrefab": "assets/prefabs/weapons/mp5/mp5.object",
-  "ViewModelPrefab": "assets/prefabs/weapons/mp5/v_mp5.object",
+  "MainPrefab": "assets/prefabs/weapons/mp5/w_mp5.prefab",
+  "ViewModelPrefab": "assets/prefabs/weapons/mp5/vm_mp5.prefab",
   "__references": []
 }

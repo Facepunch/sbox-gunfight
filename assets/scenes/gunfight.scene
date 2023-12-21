@@ -161,6 +161,7 @@
       "Position": "-242.6006,-424.1199,45.6832",
       "Rotation": "0.00000005306496,0.0000000000000002222778,0.8902823,0.4554094",
       "Tags": "player",
+      "Enabled": true,
       "Components": [
         {
           "__type": "PlayerController",
@@ -196,6 +197,13 @@
           "__enabled": true,
           "Health": 100,
           "OnHealthChanged": null
+        },
+        {
+          "__type": "PlayerLoadout",
+          "__enabled": true,
+          "ViewModelGameObject": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
+          "Weapon": "assets/resources/weapons/mp5.weapon",
+          "WeaponGameObject": "184292e3-f59e-4601-8802-59ea1e21cae4"
         }
       ],
       "Children": [
@@ -252,59 +260,6 @@
                   "Viewport": "0,0,1,1",
                   "ZFar": 10000,
                   "ZNear": 0.1
-                }
-              ],
-              "Children": [
-                {
-                  "Id": "a59714ae-2f10-4742-acfa-f67e413e087f",
-                  "Name": "MP5_ViewModel",
-                  "Position": "0,0,0",
-                  "Tags": "viewmodel,player",
-                  "Enabled": true,
-                  "Components": [
-                    {
-                      "__type": "ViewModel",
-                      "__enabled": true,
-                      "ModelRenderer": "a59714ae-2f10-4742-acfa-f67e413e087f",
-                      "ViewModelCamera": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
-                      "Weapon": "459dcb5a-c6e1-4631-ae4a-c8b381707650"
-                    },
-                    {
-                      "__type": "SkinnedModelRenderer",
-                      "__enabled": true,
-                      "BodyGroups": 18446744073709551615,
-                      "BoneMergeTarget": null,
-                      "CreateBoneObjects": false,
-                      "MaterialGroup": null,
-                      "MaterialOverride": null,
-                      "Model": "models/weapons/sbox_smg_mp5/v_mp5.vmdl",
-                      "RenderType": "On",
-                      "Tint": "1,1,1,1"
-                    }
-                  ],
-                  "Children": [
-                    {
-                      "Id": "18bd49b2-1079-42a9-9519-34e6fe9224d1",
-                      "Name": "Object",
-                      "Position": "0,0,0",
-                      "Tags": "viewmodel,player",
-                      "Enabled": true,
-                      "Components": [
-                        {
-                          "__type": "SkinnedModelRenderer",
-                          "__enabled": true,
-                          "BodyGroups": 18446744073709551511,
-                          "BoneMergeTarget": "a59714ae-2f10-4742-acfa-f67e413e087f",
-                          "CreateBoneObjects": false,
-                          "MaterialGroup": null,
-                          "MaterialOverride": null,
-                          "Model": "models/first_person/first_person_arms.vmdl",
-                          "RenderType": "On",
-                          "Tint": "1,1,1,1"
-                        }
-                      ]
-                    }
-                  ]
                 }
               ]
             }
@@ -514,87 +469,7 @@
           "Name": "Weapons",
           "Position": "0,0,0",
           "Tags": "player",
-          "Enabled": true,
-          "Children": [
-            {
-              "Id": "459dcb5a-c6e1-4631-ae4a-c8b381707650",
-              "Name": "MP5",
-              "Position": "0,0,0",
-              "Tags": "player",
-              "Enabled": true,
-              "Components": [
-                {
-                  "__type": "Weapon",
-                  "__enabled": true,
-                  "HoldType": "Rifle",
-                  "ModelRenderer": "78e5b99e-cc53-4d7b-a80d-bdfc0406fdba",
-                  "Resource": "assets/resources/weapons/mp5.weapon",
-                  "ViewModel": "a59714ae-2f10-4742-acfa-f67e413e087f"
-                },
-                {
-                  "__type": "ShootWeaponAbility",
-                  "__enabled": true,
-                  "AmmoContainer": "459dcb5a-c6e1-4631-ae4a-c8b381707650",
-                  "BaseDamage": 25,
-                  "BaseDamageFalloff": [
-                    {
-                      "y": 1
-                    },
-                    {
-                      "x": 1
-                    }
-                  ],
-                  "BulletSize": 1,
-                  "BulletTrail": null,
-                  "DryFireDelay": 0.5,
-                  "DryFireSound": "assets/sounds/guns/gun_dryfire.sound",
-                  "InputActions": [
-                    "Attack1"
-                  ],
-                  "InputType": "Down",
-                  "MaxRange": 1024000,
-                  "MuzzleFlash": null,
-                  "OnWeaponAbilityAction": null,
-                  "RequiresAllInputActions": false,
-                  "RequiresAmmoContainer": true,
-                  "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
-                  "TimeSinceShoot": {
-                    "Relative": 2171.4934
-                  },
-                  "WeaponShootDelay": 0.095
-                },
-                {
-                  "__type": "AmmoContainer",
-                  "__enabled": true,
-                  "Ammo": 30,
-                  "HasAmmo": true
-                }
-              ],
-              "Children": [
-                {
-                  "Id": "78e5b99e-cc53-4d7b-a80d-bdfc0406fdba",
-                  "Name": "Model",
-                  "Position": "0,0,0",
-                  "Tags": "player",
-                  "Enabled": true,
-                  "Components": [
-                    {
-                      "__type": "SkinnedModelRenderer",
-                      "__enabled": true,
-                      "BodyGroups": 18446744073709551615,
-                      "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
-                      "CreateBoneObjects": false,
-                      "MaterialGroup": null,
-                      "MaterialOverride": null,
-                      "Model": "models/weapons/sbox_smg_mp5/w_mp5.vmdl",
-                      "RenderType": "On",
-                      "Tint": "1,1,1,1"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "Enabled": true
         }
       ]
     },
@@ -607,7 +482,7 @@
         {
           "__type": "GameNetworkManager",
           "__enabled": true,
-          "IsMultiplayer": true,
+          "IsMultiplayer": false,
           "PlayerPrefab": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
           "SpawnPoint": "0f04ee6a-6956-44a5-851e-aa6b5151fa34"
         }
@@ -661,8 +536,5 @@
   },
   "Title": "minimal",
   "Description": "",
-  "__references": [
-    "facepunch.v_mp5",
-    "facepunch.w_mp5"
-  ]
+  "__references": []
 }

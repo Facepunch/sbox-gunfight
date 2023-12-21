@@ -1,0 +1,86 @@
+{
+  "RootObject": {
+    "Id": "459dcb5a-c6e1-4631-ae4a-c8b381707650",
+    "Name": "MP5",
+    "Position": "0,0,0",
+    "Tags": "player",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Weapon",
+        "__enabled": true,
+        "HoldType": "Rifle",
+        "ModelRenderer": "78e5b99e-cc53-4d7b-a80d-bdfc0406fdba",
+        "Resource": "assets/resources/weapons/mp5.weapon",
+        "ViewModel": "a59714ae-2f10-4742-acfa-f67e413e087f"
+      },
+      {
+        "__type": "ShootWeaponAbility",
+        "__enabled": true,
+        "AmmoContainer": "459dcb5a-c6e1-4631-ae4a-c8b381707650",
+        "BaseDamage": 25,
+        "BaseDamageFalloff": [
+          {
+            "y": 1
+          },
+          {
+            "x": 1
+          }
+        ],
+        "BulletSize": 1,
+        "BulletTrail": null,
+        "DryFireDelay": 0.5,
+        "DryFireSound": "assets/sounds/guns/gun_dryfire.sound",
+        "InputActions": [
+          "Attack1"
+        ],
+        "InputType": "Down",
+        "MaxRange": 1024000,
+        "MuzzleFlash": null,
+        "OnWeaponAbilityAction": null,
+        "RequiresAllInputActions": false,
+        "RequiresAmmoContainer": true,
+        "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
+        "TimeSinceShoot": {
+          "Relative": 127.9854
+        },
+        "WeaponShootDelay": 0.095
+      },
+      {
+        "__type": "AmmoContainer",
+        "__enabled": true,
+        "Ammo": 30,
+        "HasAmmo": true
+      }
+    ],
+    "Children": [
+      {
+        "Id": "78e5b99e-cc53-4d7b-a80d-bdfc0406fdba",
+        "Name": "Model",
+        "Position": "0,0,0",
+        "Tags": "player",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "SkinnedModelRenderer",
+            "__enabled": true,
+            "BodyGroups": 18446744073709551615,
+            "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+            "CreateBoneObjects": false,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Model": "models/weapons/sbox_smg_mp5/w_mp5.vmdl",
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": [
+    "facepunch.w_mp5"
+  ]
+}

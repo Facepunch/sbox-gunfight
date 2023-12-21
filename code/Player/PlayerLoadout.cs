@@ -42,7 +42,8 @@ public sealed class PlayerLoadout : Component
 		}
 
 		// Create the weapon prefab and put it on the weapon gameobject.
-		PrefabUtility.CreateGameObject( Weapon.MainPrefab, WeaponGameObject );
+		var weaponGameObject = PrefabUtility.CreateGameObject( Weapon.MainPrefab, WeaponGameObject );
+		var weaponComponent = weaponGameObject.Components.Get<Weapon>();
 
 		// 
 		if ( !makeActive ) 
@@ -56,7 +57,11 @@ public sealed class PlayerLoadout : Component
 		if ( Weapon.ViewModelPrefab != null )
 		{
 			// Create the weapon prefab and put it on the weapon gameobject.
-			PrefabUtility.CreateGameObject( Weapon.ViewModelPrefab, ViewModelGameObject );
+			var viewModelGameObject = PrefabUtility.CreateGameObject( Weapon.ViewModelPrefab, ViewModelGameObject );
+			var viewModelComponent = viewModelGameObject.Components.Get<ViewModel>();
+
+			// Weapon needs to know about the ViewModel
+			weaponComponent.ViewModel = viewModelComponent;
 		}
 	}
 }

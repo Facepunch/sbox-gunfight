@@ -20,10 +20,21 @@ public partial class Weapon : Component
 	/// </summary>
 	[Property] protected AnimationHelper.HoldTypes HoldType { get; set; } = AnimationHelper.HoldTypes.Rifle;
 
+	private ViewModel viewModel;
+
 	/// <summary>
 	/// A reference to the weapon's <see cref="Gunfight.ViewModel"/> if it has one.
 	/// </summary>
-	[Property] public ViewModel ViewModel { get; set; }
+	[Property] public ViewModel ViewModel
+	{
+		get => viewModel;
+		set
+		{
+			viewModel = value;
+			// Let the ViewModel know about our weapon
+			viewModel.Weapon = this;
+		}
+	}
 
 	/// <summary>
 	/// Get the weapon's owner - namely the player controller

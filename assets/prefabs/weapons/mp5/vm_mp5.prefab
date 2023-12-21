@@ -1,0 +1,59 @@
+{
+  "RootObject": {
+    "Id": "a59714ae-2f10-4742-acfa-f67e413e087f",
+    "Name": "MP5_ViewModel",
+    "Position": "0,0,0",
+    "Tags": "viewmodel,player",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "ViewModel",
+        "__enabled": true,
+        "ModelRenderer": "a59714ae-2f10-4742-acfa-f67e413e087f",
+        "ViewModelCamera": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
+        "Weapon": "459dcb5a-c6e1-4631-ae4a-c8b381707650"
+      },
+      {
+        "__type": "SkinnedModelRenderer",
+        "__enabled": true,
+        "BodyGroups": 18446744073709551615,
+        "BoneMergeTarget": null,
+        "CreateBoneObjects": false,
+        "MaterialGroup": null,
+        "MaterialOverride": null,
+        "Model": "models/weapons/sbox_smg_mp5/v_mp5.vmdl",
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      }
+    ],
+    "Children": [
+      {
+        "Id": "18bd49b2-1079-42a9-9519-34e6fe9224d1",
+        "Name": "Object",
+        "Position": "0,0,0",
+        "Tags": "viewmodel,player",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "SkinnedModelRenderer",
+            "__enabled": true,
+            "BodyGroups": 18446744073709551511,
+            "BoneMergeTarget": "a59714ae-2f10-4742-acfa-f67e413e087f",
+            "CreateBoneObjects": false,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Model": "models/first_person/first_person_arms.vmdl",
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": [
+    "facepunch.v_mp5"
+  ]
+}

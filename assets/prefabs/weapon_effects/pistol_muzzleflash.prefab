@@ -1,0 +1,31 @@
+{
+  "RootObject": {
+    "Id": "cbfd9dd1-a25c-46a8-8b14-5dccd490fd20",
+    "Name": "pistol_muzzleflash",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "LegacyParticleSystem",
+        "__enabled": true,
+        "ControlPoints": [],
+        "Looped": true,
+        "Particles": "particles/pistol_muzzleflash.vpcf",
+        "PlaybackSpeed": 1
+      },
+      {
+        "__type": "TimedDestroyComponent",
+        "__enabled": true,
+        "Time": 1,
+        "TimeUntilDestroy": {
+          "Relative": -816.79926,
+          "Passed": 816.79926,
+          "Fraction": 1
+        }
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": []
+}

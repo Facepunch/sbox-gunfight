@@ -34,11 +34,6 @@ public partial class SprintMechanic : BasePlayerControllerMechanic
 		wish.y *= 0.5f;
 	}
 
-	public override float? GetEyeHeight()
-	{
-		return -2.0f;
-	}
-
 	public override float? GetSpeed()
 	{
 		return 300.0f;

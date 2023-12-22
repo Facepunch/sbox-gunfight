@@ -5,24 +5,24 @@ namespace Gunfight;
 /// </summary>
 public abstract partial class BasePlayerControllerMechanic : Component
 {
-	[Property] public PlayerController PlayerController { get; set; }
+	[Property, Category( "Base" )] public PlayerController PlayerController { get; set; }
 
 	/// <summary>
 	/// A priority for the controller mechanic.
 	/// </summary>
-	[Property] public virtual int Priority { get; set; } = 0;
+	[Property, Category( "Base" )] public virtual int Priority { get; set; } = 0;
 
 	/// <summary>
 	/// How long since <see cref="IsActive"/> changed.
 	/// </summary>
-	[Property, System.ComponentModel.ReadOnly( true )] protected TimeSince TimeSinceActiveChanged { get; set; }
+	[Property, Category( "Base" ), System.ComponentModel.ReadOnly( true )] protected TimeSince TimeSinceActiveChanged { get; set; }
 
 	private bool isActive; 
 
 	/// <summary>
 	/// Is this mechanic active?
 	/// </summary>
-	[Property, System.ComponentModel.ReadOnly( true )] public bool IsActive
+	[Property, Category( "Base" ), System.ComponentModel.ReadOnly( true )] public bool IsActive
 	{
 		get => isActive;
 		set

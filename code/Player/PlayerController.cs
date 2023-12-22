@@ -89,7 +89,12 @@ public partial class PlayerController : Component
 	}
 
 	float SmoothEyeHeight = 0f;
-	
+
+	protected override void OnAwake()
+	{
+		baseAcceleration = CharacterController.Acceleration;
+	}
+
 	protected override void OnUpdate()
 	{
 		var cc = CharacterController;
@@ -196,6 +201,19 @@ public partial class PlayerController : Component
 		return 4.0f;
 	}
 
+	private float baseAcceleration = 10;
+	private void ApplyAccceleration()
+	{
+		if ( CurrentAccelerationOverride is not null )
+		{
+			CharacterController.Acceleration = CurrentAccelerationOverride.Value;
+		}
+		else
+		{
+			CharacterController.Acceleration = baseAcceleration;
+		}
+	}
+
 	protected override void OnFixedUpdate()
 	{
 		if ( IsProxy )
@@ -221,6 +239,8 @@ public partial class PlayerController : Component
 
 			BroadcastPlayerJumped();
 		}
+
+		ApplyAccceleration();
 
 		if ( cc.IsOnGround )
 		{

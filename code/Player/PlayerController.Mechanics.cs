@@ -12,6 +12,7 @@ public partial class PlayerController
 	float? CurrentSpeedOverride;
 	float? CurrentEyeHeightOverride;
 	float? CurrentFrictionOverride;
+	float? CurrentAccelerationOverride;
 
 	BasePlayerControllerMechanic[] ActiveMechanics;
 
@@ -32,6 +33,7 @@ public partial class PlayerController
 		float? speedOverride = null;
 		float? eyeHeightOverride = null;
 		float? frictionOverride = null;
+		float? accelerationOverride = null;
 
 		foreach ( var mechanic in sortedMechanics )
 		{
@@ -44,12 +46,14 @@ public partial class PlayerController
 			var eyeHeight = mechanic.GetEyeHeight();
 			var speed = mechanic.GetSpeed();
 			var friction = mechanic.GetGroundFriction();
-			
+			var acceleration = mechanic.GetAcceleration();
+
 			mechanic.BuildWishInput( ref WishMove );
 
 			if ( speed is not null ) speedOverride = speed;
 			if ( eyeHeight is not null ) eyeHeightOverride = eyeHeight;
 			if ( friction is not null ) frictionOverride = friction;
+			if ( acceleration is not null ) accelerationOverride = acceleration;
 		}
 
 		ActiveMechanics = sortedMechanics.ToArray();
@@ -66,6 +70,7 @@ public partial class PlayerController
 		CurrentSpeedOverride = speedOverride;
 		CurrentEyeHeightOverride = eyeHeightOverride;
 		CurrentFrictionOverride = frictionOverride;
+		CurrentAccelerationOverride = accelerationOverride;
 
 		tags = currentTags.ToImmutableArray();
 	}

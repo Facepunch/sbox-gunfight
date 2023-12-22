@@ -140,6 +140,15 @@ public abstract partial class BasePlayerControllerMechanic : Component
 	}
 
 	/// <summary>
+	/// Mechanics can override the player's acceleration.
+	/// </summary>
+	/// <returns></returns>
+	public virtual float? GetAcceleration()
+	{
+		return null;
+	}
+
+	/// <summary>
 	/// Mechanics can override the player's wish input direction.
 	/// </summary>
 	public virtual void BuildWishInput( ref Vector3 wish )

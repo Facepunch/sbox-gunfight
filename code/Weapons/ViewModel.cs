@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Gunfight;
 
 /// <summary>
@@ -67,18 +69,38 @@ public partial class ViewModel : Component
 		//}
 	}
 
-	protected override void OnUpdate()
+	private Vector3 lerpedWishLook;
+	protected void ApplyVelocity()
 	{
-		var moveLen = PlayerController.CharacterController.Velocity.Length;
+		var moveVel = PlayerController.CharacterController.Velocity;
+		var moveLen = moveVel.Length;
 		if ( PlayerController.HasTag( "slide" ) ) moveLen = 0;
 
+		var wishLook = PlayerController.WishMove.Normal * 1f;
+		if ( PlayerController.IsAiming ) wishLook = 0;
+
+		lerpedWishLook = lerpedWishLook.LerpTo( wishLook, Time.Delta * 5.0f );
+
+		Transform.LocalRotation = Rotation.From( 0, -lerpedWishLook.y * 3f, 0 );
+		Transform.LocalPosition = -lerpedWishLook;
+
 		ModelRenderer.Set( "move_groundspeed", moveLen );
+	}
+
+	protected override void OnUpdate()
+	{
+		ApplyVelocity();
+
+
 		ModelRenderer.Set( "b_sprint", PlayerController.HasTag( "sprint" ) );
 		ModelRenderer.Set( "b_grounded", PlayerController.IsGrounded );
 
 		// Ironsights
 		ModelRenderer.Set( "ironsights", PlayerController.IsAiming ? 2 : 0 );
 		ModelRenderer.Set( "ironsights_fire_scale", PlayerController.IsAiming ? 0.3f : 1f );
+
+		// Weapon state
+		ModelRenderer.Set( "b_empty", !Weapon.Components.Get<AmmoContainer>()?.HasAmmo ?? false );
 
 		ApplyAnimationTransform();
 	}

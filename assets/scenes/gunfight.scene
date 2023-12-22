@@ -494,21 +494,36 @@
               "__enabled": true,
               "IsActive": false,
               "PlayerController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
-              "Priority": 0
+              "Priority": 0,
+              "TimeSinceActiveChanged": {
+                "Relative": 6112.3184
+              }
             },
             {
               "__type": "SprintMechanic",
               "__enabled": true,
               "IsActive": false,
               "PlayerController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
-              "Priority": 1
+              "Priority": 1,
+              "TimeSinceActiveChanged": {
+                "Relative": 6112.3184
+              }
             },
             {
               "__type": "SlideMechanic",
               "__enabled": true,
+              "EyeHeight": -20,
               "IsActive": false,
+              "MinimumSlideLength": 1,
+              "NextSlideCooldown": 0.5,
               "PlayerController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
-              "Priority": 0
+              "Priority": 100,
+              "SlideFriction": 0.01,
+              "SlideSpeed": 300,
+              "TimeSinceActiveChanged": {
+                "Relative": 6112.3184
+              },
+              "WishDirectionScale": 0.4
             }
           ]
         }

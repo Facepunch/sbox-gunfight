@@ -73,7 +73,6 @@ public partial class PlayerController : Component
 	// Properties used only in this component.
 	Vector3 WishVelocity;
 	Angles EyeAngles;
-	bool IsDucking;
 
 	public bool IsGrounded { get; set; }
 
@@ -156,7 +155,7 @@ public partial class PlayerController : Component
 			AnimationHelper.FootShuffle = rotateDifference;
 			AnimationHelper.WithLook( EyeAngles.Forward, 1, 1, 1.0f );
 			AnimationHelper.MoveStyle = HasTag( "sprint" ) ? AnimationHelper.MoveStyles.Run : AnimationHelper.MoveStyles.Walk;
-			AnimationHelper.DuckLevel = IsDucking ? 100 : 0;
+			AnimationHelper.DuckLevel = HasTag( "crouch" ) ? 100 : 0;
 			AnimationHelper.HoldType = CurrentHoldType;
 			AnimationHelper.SkidAmount = HasTag( "slide" ) ? 1 : 0;
 		}

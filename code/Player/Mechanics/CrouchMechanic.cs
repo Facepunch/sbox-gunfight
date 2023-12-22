@@ -4,7 +4,7 @@ public partial class CrouchMechanic : BasePlayerControllerMechanic
 {
 	public override bool ShouldBecomeActive()
 	{
-		return Input.Down( "Duck" ) && !HasAllTags( "sprint" );
+		return Input.Down( "Duck" ) && !HasAnyTag( "sprint", "slide" );
 	}
 
 	public override IEnumerable<string> GetTags()

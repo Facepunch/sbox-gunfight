@@ -20,7 +20,7 @@ public partial class SprintMechanic : BasePlayerControllerMechanic
 		// Don't sprint if we're only moving horizontally
 		if ( wish.y != 0.0f && wish.x.AlmostEqual( 0 ) ) return false;
 
-		return Input.Down( "Run" );
+		return Input.Down( "Run" ) && !HasAnyTag( "slide" );
 	}
 
 	public override IEnumerable<string> GetTags()

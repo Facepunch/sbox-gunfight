@@ -255,9 +255,8 @@ public partial class PlayerController : Component
 		WishVelocity = WishVelocity.WithZ( 0 );
 
 		if ( !WishVelocity.IsNearZeroLength ) WishVelocity = WishVelocity.Normal;
-
-		if ( Input.Down( "Run" ) ) WishVelocity *= 320.0f;
-		else WishVelocity *= GetWishSpeed();
+		
+		WishVelocity *= GetWishSpeed();
 	}
 
 	public void Write( ref ByteStream stream )

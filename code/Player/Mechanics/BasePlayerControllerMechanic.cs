@@ -40,6 +40,29 @@ public abstract partial class BasePlayerControllerMechanic : Component
 	}
 
 	/// <summary>
+	/// Return a list of tags to be used by the player controller / other mechanics.
+	/// </summary>
+	/// <returns></returns>
+	public virtual IEnumerable<string> GetTags()
+	{
+		return Enumerable.Empty<string>();
+	}
+	
+	/// <summary>
+	/// An accessor to see if the player controller has a tag.
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	public bool HasTag( string tag ) => PlayerController.HasTag( tag );
+
+	/// <summary>
+	/// An accessor to see if the player controller has all matched tags.
+	/// </summary>
+	/// <param name="tags"></param>
+	/// <returns></returns>
+	public bool HasAllTags( params string[] tags ) => PlayerController.HasAllTags( tags );
+
+	/// <summary>
 	/// Called when <see cref="IsActive"/> changes.
 	/// </summary>
 	/// <param name="before"></param>

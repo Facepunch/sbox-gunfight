@@ -70,7 +70,7 @@ public partial class ViewModel : Component
 	protected override void OnUpdate()
 	{
 		ModelRenderer.Set( "move_groundspeed", PlayerController.CharacterController.Velocity.Length );
-		ModelRenderer.Set( "b_sprint", PlayerController.IsRunning );
+		ModelRenderer.Set( "b_sprint", PlayerController.HasTag( "sprint" ) );
 		ModelRenderer.Set( "b_grounded", PlayerController.IsGrounded );
 
 		// Ironsights

@@ -4,7 +4,12 @@ public partial class CrouchMechanic : BasePlayerControllerMechanic
 {
 	public override bool ShouldUpdateMechanic()
 	{
-		return Input.Down( "Duck" ) && !PlayerController.IsRunning;
+		return Input.Down( "Duck" ) && !HasAllTags( "sprint" );
+	}
+
+	public override IEnumerable<string> GetTags()
+	{
+		yield return "crouch";
 	}
 
 	public override float? GetEyeHeight()

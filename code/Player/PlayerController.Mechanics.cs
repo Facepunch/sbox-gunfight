@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 namespace Gunfight;
 
 public partial class PlayerController
@@ -5,7 +7,7 @@ public partial class PlayerController
 	/// <summary>
 	/// Maintains a list of mechanics that are associated with this player controller.
 	/// </summary>
-	public IEnumerable<BasePlayerControllerMechanic> Mechanics => Components.GetAll<BasePlayerControllerMechanic>( FindMode.EnabledInSelfAndDescendants );
+	public IEnumerable<BasePlayerControllerMechanic> Mechanics => Components.GetAll<BasePlayerControllerMechanic>( FindMode.EnabledInSelfAndDescendants ).OrderBy( x => x.Priority );
 
 	float? CurrentSpeedOverride;
 	float? CurrentEyeHeightOverride;
@@ -16,7 +18,13 @@ public partial class PlayerController
 	/// </summary>
 	protected void OnUpdateMechanics()
 	{
-		var sortedMechanics = Mechanics.OrderBy( x => x.Priority ).Where( x => x.ShouldUpdateMechanic() );
+		var sortedMechanics = Mechanics.Where( x => x.ShouldUpdateMechanic() );
+
+		// Copy the previous update's tags so we can compare / send tag changed events later.
+		var previousUpdateTags = tags;
+
+		// Clear the current tags
+		var currentTags = new List<string>();
 
 		float? speedOverride = null;
 		float? eyeHeightOverride = null;
@@ -25,6 +33,9 @@ public partial class PlayerController
 		foreach ( var mechanic in sortedMechanics )
 		{
 			mechanic.UpdateMechanic();
+
+			// Add tags where we can
+			currentTags.AddRange( mechanic.GetTags() );
 
 			var eyeHeight = mechanic.GetEyeHeight();
 			var speed = mechanic.GetSpeed();
@@ -38,5 +49,7 @@ public partial class PlayerController
 		CurrentSpeedOverride = speedOverride;
 		CurrentEyeHeightOverride = eyeHeightOverride;
 		CurrentFrictionOverride = frictionOverride;
+
+		tags = currentTags.ToImmutableArray();
 	}
 }

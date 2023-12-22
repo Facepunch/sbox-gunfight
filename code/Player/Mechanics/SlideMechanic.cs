@@ -9,6 +9,8 @@ public partial class SlideMechanic : BasePlayerControllerMechanic
 	[Property] public float MinimumSlideLength { get; set; } = 1.0f;
 	[Property] public float SlideFriction { get; set; } = 0.01f;
 	[Property] public float EyeHeight { get; set; } = -20.0f;
+	[Property] public float WishDirectionScale { get; set; } = 0.2f;
+	[Property] public float SlideSpeed { get; set; } = 300.0f;
 
 	public override bool ShouldBecomeActive()
 	{
@@ -31,6 +33,8 @@ public partial class SlideMechanic : BasePlayerControllerMechanic
 		yield return "slide";
 	}
 
+	public override void BuildWishInput( ref Vector3 wish ) => wish.y *= WishDirectionScale;
+	public override float? GetSpeed() => SlideSpeed;
 	public override float? GetEyeHeight() => EyeHeight;
 	public override float? GetGroundFriction() => SlideFriction;
 }

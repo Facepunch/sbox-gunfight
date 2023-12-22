@@ -69,7 +69,10 @@ public partial class ViewModel : Component
 
 	protected override void OnUpdate()
 	{
-		ModelRenderer.Set( "move_groundspeed", PlayerController.CharacterController.Velocity.Length );
+		var moveLen = PlayerController.CharacterController.Velocity.Length;
+		if ( PlayerController.HasTag( "slide" ) ) moveLen = 0;
+
+		ModelRenderer.Set( "move_groundspeed", moveLen );
 		ModelRenderer.Set( "b_sprint", PlayerController.HasTag( "sprint" ) );
 		ModelRenderer.Set( "b_grounded", PlayerController.IsGrounded );
 

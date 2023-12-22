@@ -4,7 +4,7 @@ namespace Gunfight;
 
 public partial class PlayerController
 {
-	private ImmutableArray<string> tags;
+	private ImmutableArray<string> tags = ImmutableArray.Create<string>();
 
 	/// <summary>
 	/// Do we have a tag?

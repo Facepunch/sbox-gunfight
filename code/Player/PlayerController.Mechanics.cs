@@ -54,10 +54,13 @@ public partial class PlayerController
 
 		ActiveMechanics = sortedMechanics.ToArray();
 
-		foreach ( var mechanic in lastUpdate.Except( sortedMechanics ) )
+		if ( lastUpdate is not null )
 		{
-			// This mechanic shouldn't be active anymore
-			mechanic.IsActive = false;
+			foreach ( var mechanic in lastUpdate?.Except( sortedMechanics ) )
+			{
+				// This mechanic shouldn't be active anymore
+				mechanic.IsActive = false;
+			}
 		}
 
 		CurrentSpeedOverride = speedOverride;

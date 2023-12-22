@@ -71,6 +71,13 @@ public abstract partial class BasePlayerControllerMechanic : Component
 	public bool HasAllTags( params string[] tags ) => PlayerController.HasAllTags( tags );
 
 	/// <summary>
+	/// An accessor to see if the player controller has any tag.
+	/// </summary>
+	/// <param name="tags"></param>
+	/// <returns></returns>
+	public bool HasAnyTag( params string[] tags ) => PlayerController.HasAnyTag( tags );
+
+	/// <summary>
 	/// Called when <see cref="IsActive"/> changes.
 	/// </summary>
 	/// <param name="before"></param>

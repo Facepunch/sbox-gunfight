@@ -40,6 +40,8 @@ public partial class PlayerController
 			var eyeHeight = mechanic.GetEyeHeight();
 			var speed = mechanic.GetSpeed();
 			var friction = mechanic.GetGroundFriction();
+			
+			mechanic.BuildWishInput( ref WishMove );
 
 			if ( speed is not null ) speedOverride = speed;
 			if ( eyeHeight is not null ) eyeHeightOverride = eyeHeight;

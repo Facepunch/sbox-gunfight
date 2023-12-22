@@ -94,9 +94,6 @@ public partial class PlayerController : Component
 	{
 		var cc = CharacterController;
 
-		if ( !IsProxy )
-			OnUpdateMechanics();
-
 		if ( Weapon.IsValid() )
 		{
 			CurrentHoldType = Weapon.GetHoldType();
@@ -187,16 +184,33 @@ public partial class PlayerController : Component
 		OnJump?.Invoke();
 	}
 
+	/// <summary>
+	/// Get the current friction.
+	/// </summary>
+	/// <returns></returns>
+	private float GetFriction()
+	{
+		if ( !CharacterController.IsOnGround ) return 0.1f;
+		if ( CurrentFrictionOverride is not null ) return CurrentFrictionOverride.Value;
+
+		return 4.0f;
+	}
+
 	protected override void OnFixedUpdate()
 	{
 		if ( IsProxy )
 			return;
 
-		BuildWishVelocity();
-
 		var cc = CharacterController;
 		if ( cc == null )
 			return;
+
+		BuildWishInput();
+
+		// Wish direction could change here
+		OnUpdateMechanics();
+
+		BuildWishVelocity();
 
 		if ( cc.IsOnGround && Input.Down( "Jump" ) )
 		{
@@ -212,15 +226,14 @@ public partial class PlayerController : Component
 		{
 			cc.Velocity = cc.Velocity.WithZ( 0 );
 			cc.Accelerate( WishVelocity );
-			cc.ApplyFriction( 4.0f );
 		}
 		else
 		{
 			cc.Velocity -= Gravity * Time.Delta * 0.5f;
 			cc.Accelerate( WishVelocity.ClampLength( 50 ) );
-			cc.ApplyFriction( 0.1f );
 		}
 
+		cc.ApplyFriction( GetFriction() );
 		cc.Move();
 
 		if ( !cc.IsOnGround )
@@ -241,22 +254,27 @@ public partial class PlayerController : Component
 		return 110.0f;
 	}
 
+	public Vector3 WishMove;
+
+	public void BuildWishInput()
+	{
+		WishMove = 0;
+
+		if ( Input.Down( "forward", false ) ) WishMove += Vector3.Forward;
+		if ( Input.Down( "backward", false ) ) WishMove += Vector3.Backward;
+		if ( Input.Down( "left", false ) ) WishMove += Vector3.Left;
+		if ( Input.Down( "right", false ) ) WishMove += Vector3.Right;
+	}
+
 	public void BuildWishVelocity()
 	{
-		var rot = EyeAngles.WithPitch( 0f ).ToRotation();
-
 		WishVelocity = 0;
-
-		if ( Input.Down( "Forward" ) ) WishVelocity += rot.Forward;
-		if ( Input.Down( "Backward" ) ) WishVelocity += rot.Backward;
-		if ( Input.Down( "Left" ) ) WishVelocity += rot.Left;
-		if ( Input.Down( "Right" ) ) WishVelocity += rot.Right;
-
-		WishVelocity = WishVelocity.WithZ( 0 );
-
-		if ( !WishVelocity.IsNearZeroLength ) WishVelocity = WishVelocity.Normal;
 		
-		WishVelocity *= GetWishSpeed();
+		var rot = EyeAngles.WithPitch( 0f ).ToRotation();
+		var wishDirection = WishMove * rot;
+		wishDirection = wishDirection.WithZ( 0 );
+
+		WishVelocity = wishDirection * GetWishSpeed();
 	}
 
 	public void Write( ref ByteStream stream )

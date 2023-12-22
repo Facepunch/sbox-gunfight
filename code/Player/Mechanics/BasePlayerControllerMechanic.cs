@@ -114,4 +114,11 @@ public abstract partial class BasePlayerControllerMechanic : Component
 	{
 		return null;
 	}
+
+	/// <summary>
+	/// Mechanics can override the player's wish input direction.
+	/// </summary>
+	public virtual void BuildWishInput( ref Vector3 wish )
+	{
+	}
 }

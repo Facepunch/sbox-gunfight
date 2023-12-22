@@ -70,6 +70,13 @@ public partial class ViewModel : Component
 	}
 
 	private Vector3 lerpedWishLook;
+
+	private Vector3 localPosition;
+	private Rotation localRotation;
+
+	private Vector3 lerpedLocalPosition;
+	private Rotation lerpedlocalRotation;
+
 	protected void ApplyVelocity()
 	{
 		var moveVel = PlayerController.CharacterController.Velocity;
@@ -81,17 +88,23 @@ public partial class ViewModel : Component
 
 		lerpedWishLook = lerpedWishLook.LerpTo( wishLook, Time.Delta * 5.0f );
 
-		Transform.LocalRotation = Rotation.From( 0, -lerpedWishLook.y * 3f, 0 );
-		Transform.LocalPosition = -lerpedWishLook;
+		localRotation *= Rotation.From( 0, -lerpedWishLook.y * 3f, 0 );
+		localPosition += -lerpedWishLook;
 
 		ModelRenderer.Set( "move_groundspeed", moveLen );
 	}
 
-	protected override void OnUpdate()
+	void ApplyStates()
 	{
-		ApplyVelocity();
+		if ( PlayerController.HasTag( "slide" ) )
+		{
+			localPosition += Vector3.Backward * 2f;
+			localRotation *= Rotation.From( 10, 25, -5 );
+		}
+	}
 
-
+	void ApplyAnimationParameters()
+	{
 		ModelRenderer.Set( "b_sprint", PlayerController.HasTag( "sprint" ) );
 		ModelRenderer.Set( "b_grounded", PlayerController.IsGrounded );
 
@@ -101,7 +114,23 @@ public partial class ViewModel : Component
 
 		// Weapon state
 		ModelRenderer.Set( "b_empty", !Weapon.Components.Get<AmmoContainer>()?.HasAmmo ?? false );
+	}
 
+	protected override void OnUpdate()
+	{
+		// Reset every frame
+		localRotation = Rotation.Identity;
+		localPosition = Vector3.Zero;
+
+		ApplyVelocity();
+		ApplyStates();
+		ApplyAnimationParameters();
 		ApplyAnimationTransform();
+
+		lerpedlocalRotation = Rotation.Lerp( lerpedlocalRotation, localRotation, Time.Delta * 10f );
+		lerpedLocalPosition = lerpedLocalPosition.LerpTo( localPosition, Time.Delta * 10f );
+
+		Transform.LocalRotation = lerpedlocalRotation;
+		Transform.LocalPosition = lerpedLocalPosition;
 	}
 }

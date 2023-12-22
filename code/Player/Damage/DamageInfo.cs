@@ -55,18 +55,14 @@ public partial struct DamageInfo
 	/// <summary>
 	/// Do we have any tag?
 	/// </summary>
-	/// <param name="tag"></param>
+	/// <param name="tags"></param>
 	/// <returns></returns>
-	public bool HasAnyTag( string tag )
+	public bool HasAnyTag( params string[] tags )
 	{
-		if ( Tags == null ) return false;
-
-		foreach ( var t in Tags )
+		foreach ( var tag in tags )
 		{
-			if ( t.Equals( tag, StringComparison.OrdinalIgnoreCase ) )
-			{
+			if ( HasTag( tag ) )
 				return true;
-			}
 		}
 
 		return false;
@@ -75,18 +71,14 @@ public partial struct DamageInfo
 	/// <summary>
 	/// Do we have all tags?
 	/// </summary>
-	/// <param name="tag"></param>
+	/// <param name="tags"></param>
 	/// <returns></returns>
-	public bool HasAllTags( string tag )
+	public bool HasAllTags( params string[] tags )
 	{
-		if ( Tags == null ) return false;
-
-		foreach ( var t in Tags )
+		foreach ( var tag in tags )
 		{
-			if ( !t.Equals( tag, StringComparison.OrdinalIgnoreCase ) )
-			{
+			if ( !HasTag( tag ) )
 				return false;
-			}
 		}
 
 		return true;

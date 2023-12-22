@@ -182,6 +182,12 @@ public sealed class AnimationHelper : Component
 		set => Target.Set( "b_swim", value );
 	}
 
+	public float SkidAmount
+	{
+		get => Target.GetFloat( "skid" );
+		set => Target.Set( "skid", value );
+	}
+
 	public bool IsClimbing
 	{
 		get => Target.GetBool( "b_climbing" );

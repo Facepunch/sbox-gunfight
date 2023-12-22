@@ -63,11 +63,6 @@ public partial class PlayerController : Component
 	/// </summary>
 	[Property] AnimationHelper.HoldTypes CurrentHoldType { get; set; } = AnimationHelper.HoldTypes.None;
 
-	/// <summary>
-	/// Are we running?
-	/// </summary>
-	[Property, System.ComponentModel.ReadOnly( true )] public bool IsRunning { get; private set; }
-
 	[Property, System.ComponentModel.ReadOnly( true )] public bool IsAiming { get; private set; }
 
 	/// <summary>
@@ -127,14 +122,6 @@ public partial class PlayerController : Component
 
 			cam.Transform.Rotation = lookDir;
 
-			IsRunning = false;
-			IsDucking = false;
-
-			if ( Input.Down( "Run" ) )
-				IsRunning = true;
-			else if ( Input.Down( "Duck" ) )
-				IsDucking = true;
-
 			IsAiming = Input.Down( "Attack2" );
 		}
 
@@ -168,9 +155,10 @@ public partial class PlayerController : Component
 			AnimationHelper.IsGrounded = IsGrounded;
 			AnimationHelper.FootShuffle = rotateDifference;
 			AnimationHelper.WithLook( EyeAngles.Forward, 1, 1, 1.0f );
-			AnimationHelper.MoveStyle = IsRunning ? AnimationHelper.MoveStyles.Run : AnimationHelper.MoveStyles.Walk;
+			AnimationHelper.MoveStyle = HasTag( "sprint" ) ? AnimationHelper.MoveStyles.Run : AnimationHelper.MoveStyles.Walk;
 			AnimationHelper.DuckLevel = IsDucking ? 100 : 0;
 			AnimationHelper.HoldType = CurrentHoldType;
+			AnimationHelper.SkidAmount = HasTag( "slide" ) ? 1 : 0;
 		}
 	}
 
@@ -299,13 +287,11 @@ public partial class PlayerController : Component
 
 	public void Write( ref ByteStream stream )
 	{
-		stream.Write( IsRunning );
 		stream.Write( EyeAngles );
 	}
 
 	public void Read( ByteStream stream )
 	{
-		IsRunning = stream.Read<bool>();
 		EyeAngles = stream.Read<Angles>();
 	}
 }

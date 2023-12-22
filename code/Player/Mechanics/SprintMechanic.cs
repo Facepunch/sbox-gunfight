@@ -5,7 +5,7 @@ namespace Gunfight;
 /// </summary>
 public partial class SprintMechanic : BasePlayerControllerMechanic
 {
-	public override bool ShouldUpdateMechanic()
+	public override bool ShouldBecomeActive()
 	{
 		if ( !PlayerController.IsGrounded ) return false;
 

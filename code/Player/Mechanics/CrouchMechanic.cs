@@ -2,7 +2,7 @@ namespace Gunfight;
 
 public partial class CrouchMechanic : BasePlayerControllerMechanic
 {
-	public override bool ShouldUpdateMechanic()
+	public override bool ShouldBecomeActive()
 	{
 		return Input.Down( "Duck" ) && !HasAllTags( "sprint" );
 	}

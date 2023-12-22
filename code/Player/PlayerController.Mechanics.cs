@@ -21,7 +21,7 @@ public partial class PlayerController
 	protected void OnUpdateMechanics()
 	{
 		var lastUpdate = ActiveMechanics;
-		var sortedMechanics = Mechanics.Where( x => x.ShouldUpdateMechanic() );
+		var sortedMechanics = Mechanics.Where( x => x.ShouldBecomeActive() || !x.ShouldBecomeInactive() );
 
 		// Copy the previous update's tags so we can compare / send tag changed events later.
 		var previousUpdateTags = tags;
@@ -36,7 +36,7 @@ public partial class PlayerController
 		foreach ( var mechanic in sortedMechanics )
 		{
 			mechanic.IsActive = true;
-			mechanic.UpdateMechanic();
+			mechanic.OnActiveUpdate();
 
 			// Add tags where we can
 			currentTags.AddRange( mechanic.GetTags() );

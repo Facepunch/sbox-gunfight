@@ -12,6 +12,11 @@ public abstract partial class BasePlayerControllerMechanic : Component
 	/// </summary>
 	[Property] public virtual int Priority { get; set; } = 0;
 
+	/// <summary>
+	/// How long since <see cref="IsActive"/> changed.
+	/// </summary>
+	[Property, System.ComponentModel.ReadOnly( true )] protected TimeSince TimeSinceActiveChanged { get; set; }
+
 	private bool isActive; 
 
 	/// <summary>
@@ -26,7 +31,10 @@ public abstract partial class BasePlayerControllerMechanic : Component
 			isActive = value;
 
 			if ( isActive != before )
+			{
+				TimeSinceActiveChanged = 0;
 				OnActiveChanged( before, isActive );
+			}
 		}
 	}
 
@@ -73,9 +81,9 @@ public abstract partial class BasePlayerControllerMechanic : Component
 	}
 
 	/// <summary>
-	/// Called by <see cref="PlayerController"/>, treat this like a Tick/Update.
+	/// Called by <see cref="PlayerController"/>, treat this like a Tick/Update while the mechanic is active.
 	/// </summary>
-	public virtual void UpdateMechanic()
+	public virtual void OnActiveUpdate()
 	{
 		//
 	}
@@ -84,9 +92,18 @@ public abstract partial class BasePlayerControllerMechanic : Component
 	/// Should we be ticking this mechanic at all?
 	/// </summary>
 	/// <returns></returns>
-	public virtual bool ShouldUpdateMechanic()
+	public virtual bool ShouldBecomeActive()
 	{
 		return false;
+	}
+
+	/// <summary>
+	/// Should we be inactive?
+	/// </summary>
+	/// <returns></returns>
+	public virtual bool ShouldBecomeInactive()
+	{
+		return !ShouldBecomeActive();
 	}
 
 	/// <summary>

@@ -1,6 +1,6 @@
 namespace Gunfight;
 
-public static class GameObjectExtensions
+public static partial class GameObjectExtensions
 {
 	/// <summary>
 	/// Gets a health component from a specific GameObject.

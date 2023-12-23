@@ -36,6 +36,13 @@
       "Position": "523.7975,493.2021,0.00003122077",
       "Tags": "solid",
       "Enabled": true,
+      "Components": [
+        {
+          "__type": "SurfaceComponent",
+          "__enabled": true,
+          "Surface": "surfaces/wood.surface"
+        }
+      ],
       "Children": [
         {
           "Id": "499878ba-3010-4926-95c5-78c5d4f1636a",
@@ -203,6 +210,108 @@
           },
           "FalloffExponent": 4,
           "Strength": 0.6
+        }
+      ]
+    },
+    {
+      "Id": "413152ce-26ee-42e0-bfeb-6eb0306ff969",
+      "Name": "Cube",
+      "Position": "-428.0356,606.5086,116.6491",
+      "Scale": "1,3,3",
+      "Tags": "solid",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "__enabled": true,
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "SurfaceComponent",
+          "__enabled": true,
+          "Surface": "surfaces/glass.surface"
+        },
+        {
+          "__type": "BoxCollider",
+          "__enabled": true,
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        }
+      ]
+    },
+    {
+      "Id": "80ee03b2-f353-448f-a3be-abb0e229428c",
+      "Name": "Cube (1)",
+      "Position": "-428.0356,264.0391,116.6491",
+      "Scale": "1,3,3",
+      "Tags": "solid",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "__enabled": true,
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "SurfaceComponent",
+          "__enabled": true,
+          "Surface": "surfaces/metal.surface"
+        },
+        {
+          "__type": "BoxCollider",
+          "__enabled": true,
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        }
+      ]
+    },
+    {
+      "Id": "8bdacb9e-7778-4307-b0e5-a6830c3ee7f5",
+      "Name": "Cube (2)",
+      "Position": "-428.0356,436.1295,116.6491",
+      "Scale": "1,3,3",
+      "Tags": "solid",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "__enabled": true,
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "SurfaceComponent",
+          "__enabled": true,
+          "Surface": "surfaces/default.surface"
+        },
+        {
+          "__type": "BoxCollider",
+          "__enabled": true,
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
         }
       ]
     }

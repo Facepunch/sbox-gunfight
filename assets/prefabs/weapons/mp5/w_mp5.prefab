@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "d6068946-aa41-4de0-96dc-f926e8a4f826",
+    "Id": "e13e5e43-4e07-4954-84df-a14252fdf52e",
     "Name": "w_mp5",
     "Tags": "player",
     "Enabled": true,
@@ -9,14 +9,14 @@
         "__type": "Weapon",
         "__enabled": true,
         "HoldType": "Rifle",
-        "ModelRenderer": "81720986-c90f-47de-b274-bec5ee348559",
+        "ModelRenderer": "fce46f0d-b390-43ae-9f81-25d8ce260d1b",
         "Resource": "assets/resources/weapons/mp5.weapon",
         "ViewModel": null
       },
       {
         "__type": "ShootWeaponAbility",
         "__enabled": true,
-        "AmmoContainer": "d6068946-aa41-4de0-96dc-f926e8a4f826",
+        "AmmoContainer": "e13e5e43-4e07-4954-84df-a14252fdf52e",
         "BaseDamage": 25,
         "BaseDamageFalloff": [
           {
@@ -41,7 +41,7 @@
         "RequiresAmmoContainer": true,
         "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
         "TimeSinceShoot": {
-          "Relative": 783.7236
+          "Relative": 1347.9202
         },
         "WeaponShootDelay": 0.095
       },
@@ -49,12 +49,25 @@
         "__type": "AmmoContainer",
         "__enabled": true,
         "Ammo": 30,
-        "HasAmmo": true
+        "HasAmmo": true,
+        "MaxAmmo": 30
+      },
+      {
+        "__type": "ReloadWeaponAbility",
+        "__enabled": true,
+        "AmmoContainer": "e13e5e43-4e07-4954-84df-a14252fdf52e",
+        "InputActions": [
+          "Reload"
+        ],
+        "InputType": "Down",
+        "OnWeaponAbilityAction": null,
+        "ReloadTime": 1.5,
+        "RequiresAllInputActions": false
       }
     ],
     "Children": [
       {
-        "Id": "81720986-c90f-47de-b274-bec5ee348559",
+        "Id": "fce46f0d-b390-43ae-9f81-25d8ce260d1b",
         "Name": "Model",
         "Enabled": true,
         "Components": [

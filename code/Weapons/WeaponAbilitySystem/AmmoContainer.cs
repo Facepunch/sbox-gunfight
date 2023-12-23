@@ -19,6 +19,8 @@ public partial class AmmoContainer : Component
 		}
 	}
 
+	[Property] public int MaxAmmo { get; set; } = 30;
+
 	/// <summary>
 	/// Do we have any ammo?
 	/// </summary>

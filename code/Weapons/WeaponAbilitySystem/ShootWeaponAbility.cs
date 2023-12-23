@@ -89,10 +89,11 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		return tr.Surface;
 	}
 
-	private void CreateParticleSystem( string particle, Vector3 pos )
+	private void CreateParticleSystem( string particle, Vector3 pos, Rotation rot )
 	{
 		var gameObject = Scene.CreateObject();
 		gameObject.Transform.Position = pos;
+		gameObject.Transform.Rotation = rot;
 
 		var p = gameObject.Components.Create<LegacyParticleSystem>();
 		p.Particles = ParticleSystem.Load( particle );
@@ -110,7 +111,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		var decalPath = Game.Random.FromArray( surface.ImpactEffects.BulletDecal, "decals/bullethole.decal" );
 		if ( ResourceLibrary.TryGet<DecalDefinition>( decalPath, out var decalResource ) )
 		{
-			CreateParticleSystem( Game.Random.FromArray( surface.ImpactEffects.Bullet ), pos );
+			CreateParticleSystem( Game.Random.FromArray( surface.ImpactEffects.Bullet ), pos, Rotation.LookAt( normal ) );
 			
 			var decal = Game.Random.FromList( decalResource.Decals );
 

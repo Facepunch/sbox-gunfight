@@ -89,11 +89,28 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		return tr.Surface;
 	}
 
+	private void CreateParticleSystem( string particle, Vector3 pos )
+	{
+		var gameObject = Scene.CreateObject();
+		gameObject.Transform.Position = pos;
+
+		var p = gameObject.Components.Create<LegacyParticleSystem>();
+		p.Particles = ParticleSystem.Load( particle );
+		p.ControlPoints = new()
+		{
+			new() { Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = pos }
+		};
+	}
+
 	private void CreateImpactEffects( Surface surface, Vector3 pos, Vector3 normal )
 	{
 		var decalPath = Game.Random.FromArray( surface.ImpactEffects.BulletDecal, "decals/bullethole.decal" );
 		if ( ResourceLibrary.TryGet<DecalDefinition>( decalPath, out var decalResource ) )
 		{
+			CreateParticleSystem( Game.Random.FromArray( surface.ImpactEffects.Bullet ), pos );
+			
+			var decal = Game.Random.FromList( decalResource.Decals );
+
 			var gameObject = Scene.CreateObject();
 			gameObject.Transform.Position = pos;
 			gameObject.Transform.Rotation = Rotation.LookAt( -normal );
@@ -101,7 +118,8 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 			// what the fuck? did I fuck something big time here
 			gameObject.Transform.Rotation *= Rotation.FromAxis( Vector3.Left, -90f );
 
-			var decal = Game.Random.FromList( decalResource.Decals );
+			// Random rotation
+			gameObject.Transform.Rotation *= Rotation.FromAxis( Vector3.Up, decal.Rotation.GetValue() );
 
 			var decalRenderer = gameObject.Components.Create<DecalRenderer>();
 			decalRenderer.Material = decal.Material;

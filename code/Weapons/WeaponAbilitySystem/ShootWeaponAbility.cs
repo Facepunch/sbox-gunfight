@@ -110,6 +110,11 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 			// Creates a destruction component to destroy the gameobject after a while
 			gameObject.DestroyAsync( 30f );
 		}
+
+		if ( !string.IsNullOrEmpty( surface.Sounds.Bullet ) )
+		{
+			Sound.Play( surface.Sounds.Bullet, pos );
+		}
 	}
 
 	/// <summary>

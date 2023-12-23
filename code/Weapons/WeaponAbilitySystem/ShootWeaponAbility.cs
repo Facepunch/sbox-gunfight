@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Gunfight;
 
@@ -74,6 +75,44 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 	}
 
 	/// <summary>
+	/// Gets a surface from a trace. Trying to find a SurfaceComponent before using the one from the model.
+	/// </summary>
+	/// <param name="tr"></param>
+	/// <returns></returns>
+	private Surface GetSurfaceFromTrace( SceneTraceResult tr )
+	{
+		if ( tr.GameObject?.GetSurface() is Surface surface )
+		{
+			return surface;
+		}
+
+		return tr.Surface;
+	}
+
+	private void CreateImpactEffects( Surface surface, Vector3 pos, Vector3 normal )
+	{
+		var decalPath = Game.Random.FromArray( surface.ImpactEffects.BulletDecal, "decals/bullethole.decal" );
+		if ( ResourceLibrary.TryGet<DecalDefinition>( decalPath, out var decalResource ) )
+		{
+			var gameObject = Scene.CreateObject();
+			gameObject.Transform.Position = pos;
+			gameObject.Transform.Rotation = Rotation.LookAt( -normal );
+
+			// what the fuck? did I fuck something big time here
+			gameObject.Transform.Rotation *= Rotation.FromAxis( Vector3.Left, -90f );
+
+			var decal = Game.Random.FromList( decalResource.Decals );
+
+			var decalRenderer = gameObject.Components.Create<DecalRenderer>();
+			decalRenderer.Material = decal.Material;
+			decalRenderer.Size = new( decal.Width.GetValue(), decal.Height.GetValue(), decal.Depth.GetValue() );
+
+			// Creates a destruction component to destroy the gameobject after a while
+			gameObject.DestroyAsync( 30f );
+		}
+	}
+
+	/// <summary>
 	/// Shoot the gun!
 	/// </summary>
 	public void Shoot()
@@ -94,6 +133,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		}
 
 		DoShootEffects();
+		CreateImpactEffects( GetSurfaceFromTrace( tr ), tr.EndPosition, tr.Normal );
 
 		// Inflict damage on whatever we find.
 		var damageInfo = DamageInfo.Bullet( BaseDamage, Weapon.PlayerController.GameObject, Weapon.GameObject );

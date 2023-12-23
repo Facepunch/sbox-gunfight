@@ -216,8 +216,8 @@
     {
       "Id": "413152ce-26ee-42e0-bfeb-6eb0306ff969",
       "Name": "Cube",
-      "Position": "-428.0356,606.5086,116.6491",
-      "Scale": "1,3,3",
+      "Position": "-428.0356,448,116.6491",
+      "Scale": "1,1.5,3",
       "Tags": "solid",
       "Enabled": true,
       "Components": [
@@ -234,7 +234,7 @@
         {
           "__type": "SurfaceComponent",
           "__enabled": true,
-          "Surface": "surfaces/glass.surface"
+          "Surface": "surfaces/brick.surface"
         },
         {
           "__type": "BoxCollider",
@@ -250,8 +250,8 @@
     {
       "Id": "80ee03b2-f353-448f-a3be-abb0e229428c",
       "Name": "Cube (1)",
-      "Position": "-428.0356,264.0391,116.6491",
-      "Scale": "1,3,3",
+      "Position": "-428.0356,256,116.6491",
+      "Scale": "1,1.5,3",
       "Tags": "solid",
       "Enabled": true,
       "Components": [
@@ -284,8 +284,8 @@
     {
       "Id": "8bdacb9e-7778-4307-b0e5-a6830c3ee7f5",
       "Name": "Cube (2)",
-      "Position": "-428.0356,436.1295,116.6491",
-      "Scale": "1,3,3",
+      "Position": "-428.0356,352,116.6491",
+      "Scale": "1,1.5,3",
       "Tags": "solid",
       "Enabled": true,
       "Components": [

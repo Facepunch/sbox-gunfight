@@ -100,9 +100,12 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		{
 			new() { Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = pos }
 		};
+
+		// Clear off in a suitable amount of time.
+		gameObject.DestroyAsync( 5f );
 	}
 
-	private void CreateImpactEffects( Surface surface, Vector3 pos, Vector3 normal )
+	private void CreateImpactEffects( GameObject hitObject, Surface surface, Vector3 pos, Vector3 normal )
 	{
 		var decalPath = Game.Random.FromArray( surface.ImpactEffects.BulletDecal, "decals/bullethole.decal" );
 		if ( ResourceLibrary.TryGet<DecalDefinition>( decalPath, out var decalResource ) )
@@ -131,7 +134,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 
 		if ( !string.IsNullOrEmpty( surface.Sounds.Bullet ) )
 		{
-			Sound.Play( surface.Sounds.Bullet, pos );
+			hitObject.PlaySound( surface.Sounds.Bullet );
 		}
 	}
 
@@ -156,7 +159,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		}
 
 		DoShootEffects();
-		CreateImpactEffects( GetSurfaceFromTrace( tr ), tr.EndPosition, tr.Normal );
+		CreateImpactEffects( tr.GameObject, GetSurfaceFromTrace( tr ), tr.EndPosition, tr.Normal );
 
 		// Inflict damage on whatever we find.
 		var damageInfo = DamageInfo.Bullet( BaseDamage, Weapon.PlayerController.GameObject, Weapon.GameObject );

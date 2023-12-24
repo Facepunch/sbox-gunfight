@@ -9,19 +9,25 @@ $button-standard-padding: 12px 24px;
     &.standard
     {
         padding: $button-standard-padding;
-        background-color: black;
+        border-left: 4px solid white;
+        background-color: rgba( black, 0.5 );
         pointer-events: all;
         cursor: pointer;
         text-transform: uppercase;
 
+        label
+        {
+            text-shadow: 1px 1px 2px rgba( black, 0.5 );
+            transition: all 0.1s ease;
+        }
+
         &:hover
         {
-            background-color: #4a4a4a;
+            background-color: rgba( black, 0.75 );
 
             label
             {
-                transition: all 0.1s ease;
-                transform: translateX( 2px );
+                transform: translateX( 4px );
             }
         }
     }

@@ -20,6 +20,16 @@ $layout-insane-padding: 64px;
         padding: $layout-insane-padding;
     }
 
+    &.gap
+    {
+        gap: 8px;
+    }
+
+    &.flex-grow
+    {
+        flex-grow: 1;
+    }
+
     &.row
     {
         flex-direction: row;

@@ -450,6 +450,6 @@
         "PostLaunchCommand": "gunfight_gamemode FFAGamemode"
       }
     ],
-    "StartupScene": "assets/scenes/gunfight.scene"
+    "StartupScene": "assets/scenes/gunfight_main_menu.scene"
   }
 }

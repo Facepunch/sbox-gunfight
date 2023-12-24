@@ -1,0 +1,37 @@
+
+$layout-standard-padding: 8px;
+$layout-extra-padding: 16px;
+$layout-insane-padding: 64px;
+
+.gunfight .layout
+{
+    &.padding
+    {
+        padding: $layout-standard-padding;
+    }
+
+    &.padding-extra
+    {
+        padding: $layout-extra-padding;
+    }
+    
+    &.padding-insane
+    {
+        padding: $layout-insane-padding;
+    }
+
+    &.row
+    {
+        flex-direction: row;
+    }
+
+    &.column
+    {
+        flex-direction: column;
+    }
+
+    &.pointer-events
+    {
+        pointer-events: all;
+    }
+}

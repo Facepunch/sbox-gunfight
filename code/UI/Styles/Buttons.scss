@@ -1,0 +1,28 @@
+$button-standard-padding: 12px 24px;
+
+.gunfight .button
+{
+    font-family: $main-font;
+    font-size: 20px;
+    color: white;
+
+    &.standard
+    {
+        padding: $button-standard-padding;
+        background-color: black;
+        pointer-events: all;
+        cursor: pointer;
+        text-transform: uppercase;
+
+        &:hover
+        {
+            background-color: #4a4a4a;
+
+            label
+            {
+                transition: all 0.1s ease;
+                transform: translateX( 2px );
+            }
+        }
+    }
+}

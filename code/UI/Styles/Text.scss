@@ -1,0 +1,17 @@
+
+.gunfight .text
+{
+    font-family: $main-font;
+    color: white;
+    font-size: 20px;
+
+    &.header
+    {
+        font-size: 48px;
+    }
+
+    &.sub-header
+    {
+        font-size: 32px;
+    }
+}

@@ -5,7 +5,6 @@ namespace Gunfight;
 /// </summary>
 public sealed class SoundEmitter : Component
 {
-	SoundEvent soundEvent;
 	SoundHandle handle;
 
 	/// <summary>

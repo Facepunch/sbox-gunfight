@@ -1,5 +1,8 @@
+using Sandbox;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 
 namespace Gunfight;
 
@@ -89,7 +92,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		return tr.Surface;
 	}
 
-	private void CreateParticleSystem( string particle, Vector3 pos, Rotation rot )
+	private LegacyParticleSystem CreateParticleSystem( string particle, Vector3 pos, Rotation rot, List<ParticleControlPoint> cps = null, float decay = 5f )
 	{
 		var gameObject = Scene.CreateObject();
 		gameObject.Transform.Position = pos;
@@ -97,13 +100,15 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 
 		var p = gameObject.Components.Create<LegacyParticleSystem>();
 		p.Particles = ParticleSystem.Load( particle );
-		p.ControlPoints = new()
+		p.ControlPoints = cps ?? new()
 		{
 			new() { Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = pos }
 		};
 
 		// Clear off in a suitable amount of time.
-		gameObject.DestroyAsync( 5f );
+		gameObject.DestroyAsync( decay );
+
+		return p;
 	}
 
 	private void CreateImpactEffects( GameObject hitObject, Surface surface, Vector3 pos, Vector3 normal )
@@ -151,28 +156,65 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 			AmmoContainer.Ammo--;
 		}
 
-		var tr = GetShootTrace();
+		int count = 0;
 
-		if ( !tr.Hit )
+		foreach ( var tr in GetShootTrace() )
 		{
+			if ( !tr.Hit )
+			{
+				DoShootEffects();
+				return;
+			}
+
 			DoShootEffects();
-			return;
+			CreateImpactEffects( tr.GameObject, GetSurfaceFromTrace( tr ), tr.EndPosition, tr.Normal );
+			DoTracer( tr.StartPosition, tr.EndPosition, tr.Distance, count );
+
+			// Inflict damage on whatever we find.
+			var damageInfo = DamageInfo.Bullet( BaseDamage, Weapon.PlayerController.GameObject, Weapon.GameObject );
+			tr.GameObject.TakeDamage( ref damageInfo );
+
+			Log.Trace( $"ShootWeaponAbility: We hit {tr.GameObject}!" );
+			count++;
+		}
+	}
+
+	protected void DoTracer( Vector3 startPosition, Vector3 endPosition, float distance, int count )
+	{
+		var effectPath = "assets/particles/gameplay/guns/trail/trail_smoke.vpcf";
+
+		// For when we have bullet penetration implemented.
+		if ( count > 0 )
+		{
+			effectPath = "assets/particles/gameplay/guns/trail/rico_trail_smoke.vpcf";
+
+			// Project backward
+			Vector3 dir = (startPosition - endPosition).Normal;
+			var tr = Scene.Trace.Ray( endPosition, startPosition + (dir * 50f) )
+				.Radius( 1f )
+				.WithoutTags( "weapon" )
+				.Run();
+
+			if ( tr.Hit )
+			{
+				CreateImpactEffects( tr.GameObject, GetSurfaceFromTrace( tr ), tr.StartPosition, dir );
+			}
 		}
 
-		DoShootEffects();
-		CreateImpactEffects( tr.GameObject, GetSurfaceFromTrace( tr ), tr.EndPosition, tr.Normal );
+		var origin = count == 0 ? EffectsRenderer.GetAttachment( "muzzle" )?.Position ?? startPosition : startPosition;
 
-		// Inflict damage on whatever we find.
-		var damageInfo = DamageInfo.Bullet( BaseDamage, Weapon.PlayerController.GameObject, Weapon.GameObject );
-		tr.GameObject.TakeDamage( ref damageInfo );
-
-		Log.Trace( $"ShootWeaponAbility: We hit {tr.GameObject}!" );
+		// What in tarnation is this 
+		CreateParticleSystem( effectPath, startPosition, Rotation.Identity, new()
+		{
+			new() { StringCP = "0", Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = origin },
+			new() { StringCP = "1", Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = endPosition },
+			new() { StringCP = "2", Value = ParticleControlPoint.ControlPointValueInput.Float, FloatValue = distance }
+		}, 50f );
 	}
 
 	protected void DryShoot()
 	{
 		TimeSinceShoot = 0;
-
 		DryShootEffects();
 	}
 
@@ -205,7 +247,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 	/// Runs a trace with all the data we have supplied it, and returns the result
 	/// </summary>
 	/// <returns></returns>
-	protected virtual SceneTraceResult GetShootTrace()
+	protected virtual IEnumerable<SceneTraceResult> GetShootTrace()
 	{
 		var tr = Scene.Trace.Ray( WeaponRay, MaxRange )
 			.Size( BulletSize )
@@ -213,7 +255,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 			.UseHitboxes()
 			.Run();
 
-		return tr;
+		yield return tr;
 	}
 
 	/// <summary>

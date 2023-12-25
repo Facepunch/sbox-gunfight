@@ -59,14 +59,11 @@ public partial class ViewModel : Component
 
 	void ApplyAnimationTransform()
 	{
-		//var att = Weapon.ViewModel.Arms.GetBoneTransform( "camera", false );
+		var att = Weapon.ViewModel.ModelRenderer.SceneModel.GetBoneLocalTransform( "camera" );
+		var attWorld = Weapon.ViewModel.ModelRenderer.SceneModel.GetBoneWorldTransform( "camera" );
 
-		//if ( att is Transform transform )
-		//{
-		//	var cameraGameObject = Weapon.PlayerController.CameraGameObject;
-		//	cameraGameObject.Transform.LocalPosition += transform.Position;
-		//	cameraGameObject.Transform.LocalRotation *= transform.Rotation;
-		//}
+		Log.Trace( "local: " + att.Position );
+		Log.Trace( "world: " + attWorld.Position );
 	}
 
 	private Vector3 lerpedWishLook;

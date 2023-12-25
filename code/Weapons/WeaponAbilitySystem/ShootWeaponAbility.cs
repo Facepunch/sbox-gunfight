@@ -1,8 +1,4 @@
-using Sandbox;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 
 namespace Gunfight;
 
@@ -12,7 +8,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 	public override string Name => "Shoot";
 
 	[Property, Category( "Bullet" )] public float BaseDamage { get; set; } = 25.0f;
-	[Property, Category( "Bullet" )] public float WeaponShootDelay { get; set; } = 0.2f;
+	[Property, Category( "Bullet" )] public float FireRate { get; set; } = 0.2f;
 	[Property, Category( "Bullet" )] public float DryFireDelay { get; set; } = 1f;
 	[Property, Category( "Bullet" )] public float MaxRange { get; set; } = 1024000;
 	[Property, Category( "Bullet" )] public Curve BaseDamageFalloff { get; set; } = new( new List<Curve.Frame>() { new( 0, 1 ), new( 1, 0 ) } );
@@ -234,15 +230,6 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 
 	protected virtual Ray WeaponRay => Weapon.PlayerController.AimRay;
 
-	protected override void OnUpdate()
-	{
-		//var tr = GetShootTrace();
-
-		//Gizmo.Draw.Line( tr.StartPosition, tr.EndPosition );
-		//Gizmo.Draw.LineSphere( tr.StartPosition, 16 );
-		//Gizmo.Draw.LineSphere( tr.EndPosition, 16 );
-	}
-
 	/// <summary>
 	/// Runs a trace with all the data we have supplied it, and returns the result
 	/// </summary>
@@ -258,6 +245,11 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		yield return tr;
 	}
 
+	protected float RPMToSeconds()
+	{
+		return 60 / FireRate;
+	}
+
 	/// <summary>
 	/// Can we shoot this gun right now?
 	/// </summary>
@@ -265,7 +257,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 	public bool CanShoot()
 	{
 		// Delay checks
-		if ( TimeSinceShoot < WeaponShootDelay )
+		if ( TimeSinceShoot < RPMToSeconds() )
 		{
 			return false;
 		}
@@ -294,5 +286,12 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 
 			DryShoot();
 		}
+	}
+
+	protected override void OnStart()
+	{
+		// Try to fetch relevant stats from the weapon 
+		BaseDamage = Stats.Get( WeaponStat.BaseDamage, BaseDamage );
+		FireRate = Stats.Get( WeaponStat.FireRate, FireRate );
 	}
 }

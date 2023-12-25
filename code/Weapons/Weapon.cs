@@ -11,6 +11,11 @@ public partial class Weapon : Component
 	[Property] public WeaponDataResource Resource { get; set; }
 
 	/// <summary>
+	/// A list of stats for this weapon. The <see cref="Resource"/> will set this when instantiated.
+	/// </summary>
+	public WeaponStats Stats { get; set; } = new();
+
+	/// <summary>
 	/// A reference to the weapon's model renderer.
 	/// </summary>
 	[Property] public SkinnedModelRenderer ModelRenderer { get; set; }

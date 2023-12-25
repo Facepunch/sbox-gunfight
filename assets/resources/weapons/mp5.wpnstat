@@ -1,0 +1,34 @@
+{
+  "Stats": {
+    "Stats": [
+      {
+        "Value": 18
+      },
+      {
+        "Stat": "ADSSpeed",
+        "Value": 0.5
+      },
+      {
+        "Stat": "FireRate",
+        "Value": 900
+      },
+      {
+        "Stat": "ReloadSpeed",
+        "Value": 1.5
+      },
+      {
+        "Stat": "HorizontalRecoil",
+        "Value": 0.5
+      },
+      {
+        "Stat": "VerticalRecoil",
+        "Value": 0.25
+      },
+      {
+        "Stat": "Spread",
+        "Value": 0.1
+      }
+    ]
+  },
+  "__references": []
+}

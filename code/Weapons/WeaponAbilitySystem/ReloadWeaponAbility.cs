@@ -50,4 +50,10 @@ public partial class ReloadWeaponAbility : InputActionWeaponAbility
 		// Tags will be better so we can just react to stimuli.
 		Weapon.ViewModel?.ModelRenderer.Set( "b_reload", false );
 	}
+
+	protected override void OnStart()
+	{
+		// Try to fetch relevant stats from the weapon 
+		ReloadTime = Stats.Get( WeaponStat.ReloadSpeed, ReloadTime );
+	}
 }

@@ -17,7 +17,6 @@ public sealed class PlayerLoadout : Component
 	/// </summary>
 	[Property] public GameObject ViewModelGameObject { get; set; }
 
-
 	protected override void OnStart()
 	{
 		if ( IsProxy )
@@ -44,6 +43,9 @@ public sealed class PlayerLoadout : Component
 		// Create the weapon prefab and put it on the weapon gameobject.
 		var weaponGameObject = PrefabUtility.CreateGameObject( Weapon.MainPrefab, WeaponGameObject );
 		var weaponComponent = weaponGameObject.Components.Get<Weapon>();
+
+		// Push the weapon stats to the weapon.
+		weaponComponent.Stats = Weapon.StatsResource.Stats;
 
 		// 
 		if ( !makeActive ) 

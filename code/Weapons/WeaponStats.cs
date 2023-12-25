@@ -37,35 +37,28 @@ public enum WeaponStat
 	Spread
 }
 
-public struct StatEntry
-{
-	public WeaponStat Stat { get; set; }
-	public float Value { get; set; }
-}
-
 public struct WeaponStats
 {
-	public WeaponStats()
-	{
-	}
+	[Category( "Damage" )]
+	public float BaseDamage { get; set; }
+	
+	[Category( "Damage" )]
+	public Curve BaseDamageFalloff { get; set; }
 
-	public List<StatEntry> Stats { get; set; } = new();
+	[Category( "Timing" )]
+	public float AimSpeed { get; set; }
+	
+	[Category( "Timing" )]
+	public float FireRate { get; set; }
 
-	/// <summary>
-	/// Fetches a stat from <see cref="Stats"/> and returns a fallback value if it's not set by a developer.
-	/// </summary>
-	/// <param name="stat"></param>
-	/// <param name="fallback"></param>
-	/// <returns></returns>
-	public float Get( WeaponStat stat, float fallback = 0.0f )
-	{
-		if ( Stats.FirstOrDefault( x => x.Stat == stat ) is StatEntry entry )
-		{
-			return entry.Value;
-		}
+	[Category( "Timing" )]
+	public float ReloadSpeed { get; set; }
 
-		return fallback;
-	}
+	[Category( "Recoil" )]
+	public float HorizontalRecoil { get; set; }
+
+	[Category( "Recoil" )]
+	public float VerticalRecoil { get; set; }
 }
 
 [GameResource( "Gunfight/Weapon Stats", "wpnstat", "", IconBgColor = "#E07058", Icon = "bar_chart" )]

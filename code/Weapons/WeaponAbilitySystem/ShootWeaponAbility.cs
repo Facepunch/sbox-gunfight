@@ -290,8 +290,11 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 
 	protected override void OnStart()
 	{
-		// Try to fetch relevant stats from the weapon 
-		BaseDamage = Stats.Get( WeaponStat.BaseDamage, BaseDamage );
-		FireRate = Stats.Get( WeaponStat.FireRate, FireRate );
+		if ( Stats is WeaponStats stats )
+		{
+			// Try to fetch relevant stats from the weapon 
+			BaseDamage = stats.BaseDamage;
+			FireRate = stats.FireRate;
+		}
 	}
 }

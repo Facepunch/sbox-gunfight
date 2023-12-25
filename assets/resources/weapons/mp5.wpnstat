@@ -1,34 +1,19 @@
 {
   "Stats": {
-    "Stats": [
+    "BaseDamage": 18,
+    "BaseDamageFalloff": [
       {
-        "Value": 18
+        "y": 1
       },
       {
-        "Stat": "ADSSpeed",
-        "Value": 0.5
-      },
-      {
-        "Stat": "FireRate",
-        "Value": 900
-      },
-      {
-        "Stat": "ReloadSpeed",
-        "Value": 1.5
-      },
-      {
-        "Stat": "HorizontalRecoil",
-        "Value": 0.5
-      },
-      {
-        "Stat": "VerticalRecoil",
-        "Value": 0.25
-      },
-      {
-        "Stat": "Spread",
-        "Value": 0.1
+        "x": 1
       }
-    ]
+    ],
+    "AimSpeed": 0.5,
+    "FireRate": 800,
+    "ReloadSpeed": 1.5,
+    "HorizontalRecoil": 0.5,
+    "VerticalRecoil": 0.5
   },
   "__references": []
 }

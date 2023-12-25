@@ -12,5 +12,5 @@ public abstract class BaseWeaponAbility : Component
 	/// <summary>
 	/// Gets a reference to the weapon's stats.
 	/// </summary>
-	public WeaponStats Stats => Weapon.Stats; 
+	public WeaponStats? Stats => Weapon.Stats; 
 }

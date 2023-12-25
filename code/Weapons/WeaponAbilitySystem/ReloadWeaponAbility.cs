@@ -53,7 +53,10 @@ public partial class ReloadWeaponAbility : InputActionWeaponAbility
 
 	protected override void OnStart()
 	{
-		// Try to fetch relevant stats from the weapon 
-		ReloadTime = Stats.Get( WeaponStat.ReloadSpeed, ReloadTime );
+		if ( Stats is WeaponStats stats )
+		{
+			// Try to fetch relevant stats from the weapon 
+			ReloadTime = stats.ReloadSpeed;
+		}
 	}
 }

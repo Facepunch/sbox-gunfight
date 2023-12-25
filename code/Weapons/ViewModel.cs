@@ -59,11 +59,10 @@ public partial class ViewModel : Component
 
 	void ApplyAnimationTransform()
 	{
-		var att = Weapon.ViewModel.ModelRenderer.SceneModel.GetBoneLocalTransform( "camera" );
-		var attWorld = Weapon.ViewModel.ModelRenderer.SceneModel.GetBoneWorldTransform( "camera" );
-
-		Log.Trace( "local: " + att.Position );
-		Log.Trace( "world: " + attWorld.Position );
+		var bone = Weapon.ViewModel.ModelRenderer.SceneModel.GetBoneLocalTransform( "camera" );
+		var camera = Weapon.PlayerController.CameraGameObject;
+		camera.Transform.LocalPosition += bone.Position;
+		camera.Transform.LocalRotation *= bone.Rotation;
 	}
 
 	private Vector3 lerpedWishLook;

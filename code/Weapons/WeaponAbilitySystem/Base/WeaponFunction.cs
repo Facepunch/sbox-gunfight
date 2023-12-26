@@ -13,7 +13,7 @@ public abstract class WeaponFunction : Component
 	/// <summary>
 	/// Gets a reference to the weapon's stats.
 	/// </summary>
-	public WeaponStats? Stats => Weapon.Stats; 
+	public WeaponStats Stats => Weapon.Stats; 
 
 	/// <summary>
 	/// A reference to a stats resource which will get combined with other stats resources and applied to the weapon.

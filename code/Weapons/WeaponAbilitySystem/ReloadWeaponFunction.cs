@@ -53,10 +53,7 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 
 	internal override void UpdateStats()
 	{
-		if ( Stats is WeaponStats stats )
-		{
-			// Try to fetch relevant stats from the weapon 
-			ReloadTime = stats.ReloadSpeed;
-		}
+		// Try to fetch relevant stats from the weapon 
+		ReloadTime = Stats.ReloadSpeed;
 	}
 }

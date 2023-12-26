@@ -55,10 +55,10 @@ public struct WeaponStats
 	public float ReloadSpeed { get; set; }
 
 	[Category( "Recoil" )]
-	public float HorizontalRecoil { get; set; }
+	public Vector2 HorizontalRecoil { get; set; }
 
 	[Category( "Recoil" )]
-	public float VerticalRecoil { get; set; }
+	public Vector2 VerticalRecoil { get; set; }
 	
 	[Category( "Recoil" )]
 	public float Spread { get; set; }

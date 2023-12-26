@@ -76,7 +76,7 @@
             "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
             "StatsResource": null,
             "TimeSinceShoot": {
-              "Relative": 2009.6226
+              "Relative": 2393.1414
             }
           },
           {
@@ -90,6 +90,11 @@
             "OnFunctionExecuteAction": null,
             "ReloadTime": 1.5,
             "RequiresAllInputActions": false,
+            "StatsResource": null
+          },
+          {
+            "__type": "RecoilFunction",
+            "__enabled": true,
             "StatsResource": null
           }
         ]

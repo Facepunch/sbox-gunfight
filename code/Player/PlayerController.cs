@@ -72,7 +72,7 @@ public partial class PlayerController : Component
 
 	// Properties used only in this component.
 	Vector3 WishVelocity;
-	Angles EyeAngles;
+	public Angles EyeAngles;
 
 	public bool IsGrounded { get; set; }
 

@@ -154,6 +154,9 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 
 		int count = 0;
 
+		// If we have a recoil function, let it know.
+		Weapon.GetFunction<RecoilFunction>()?.Shoot();
+
 		foreach ( var tr in GetShootTrace() )
 		{
 			if ( !tr.Hit )
@@ -290,11 +293,8 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 
 	internal override void UpdateStats()
 	{
-		if ( Stats is WeaponStats stats )
-		{
-			// Try to fetch relevant stats from the weapon 
-			BaseDamage = stats.BaseDamage;
-			FireRate = stats.FireRate;
-		}
+		// Try to fetch relevant stats from the weapon 
+		BaseDamage = Stats.BaseDamage;
+		FireRate = Stats.FireRate;
 	}
 }

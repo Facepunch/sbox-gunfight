@@ -12,6 +12,8 @@ public sealed class CameraController : Component
 	/// </summary>
 	[Property] public bool HideBody { get; set; } = true;
 
+	[Property] public PlayerController PlayerController { get; set; }
+
 	/// <summary>
 	/// Constructs a ray using the camera's GameObject
 	/// </summary>
@@ -36,6 +38,19 @@ public sealed class CameraController : Component
 			{
 				skinnedModel.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
 			}
+		}
+	}
+
+	protected override void OnUpdate()
+	{
+		ApplyRecoil();
+	}
+
+	void ApplyRecoil()
+	{
+		if ( PlayerController.Weapon.GetFunction<RecoilFunction>() is var fn )
+		{
+			PlayerController.EyeAngles += fn.GetFrame();
 		}
 	}
 }

@@ -1,29 +1,30 @@
 {
   "RootObject": {
-    "Id": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
-    "Name": "Player",
+    "Id": "99f47a2d-29ca-4d1a-849a-7868a90a168d",
+    "Name": "player",
     "Tags": "player",
     "Enabled": true,
     "Components": [
       {
         "__type": "PlayerController",
         "__enabled": true,
-        "AnimationHelper": "a5eeac8e-e56d-48b9-9155-266a684c3551",
-        "Body": "a5eeac8e-e56d-48b9-9155-266a684c3551",
-        "CameraController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
-        "CharacterController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
+        "AnimationHelper": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
+        "Body": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
+        "CameraController": "99f47a2d-29ca-4d1a-849a-7868a90a168d",
+        "CharacterController": "99f47a2d-29ca-4d1a-849a-7868a90a168d",
         "CurrentHoldType": "None",
         "Gravity": "0,0,800",
-        "Head": "2a42e115-5ac3-4e05-b236-484212646987",
+        "Head": "790c55b4-aa2e-4c7c-9d16-7a4074568215",
         "IsAiming": false,
         "OnJump": null,
-        "ViewModelCamera": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee"
+        "ViewModelCamera": "0c22caee-f45f-4bb6-82f6-9f95648d2c2b"
       },
       {
         "__type": "CameraController",
         "__enabled": true,
-        "Camera": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c",
-        "HideBody": true
+        "Camera": "cb402c6a-74d3-4988-a1c6-7292ab5f1f7d",
+        "HideBody": true,
+        "PlayerController": "99f47a2d-29ca-4d1a-849a-7868a90a168d"
       },
       {
         "__type": "CharacterController",
@@ -44,20 +45,20 @@
       {
         "__type": "PlayerLoadout",
         "__enabled": true,
-        "ViewModelGameObject": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
+        "ViewModelGameObject": "0c22caee-f45f-4bb6-82f6-9f95648d2c2b",
         "Weapon": "assets/resources/weapons/mp5.weapon",
-        "WeaponGameObject": "184292e3-f59e-4601-8802-59ea1e21cae4"
+        "WeaponGameObject": "955e7183-8461-48d2-a26f-a13f1d470148"
       }
     ],
     "Children": [
       {
-        "Id": "2a42e115-5ac3-4e05-b236-484212646987",
+        "Id": "790c55b4-aa2e-4c7c-9d16-7a4074568215",
         "Name": "Head",
         "Position": "0,0,60",
         "Enabled": true,
         "Children": [
           {
-            "Id": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c",
+            "Id": "cb402c6a-74d3-4988-a1c6-7292ab5f1f7d",
             "Name": "Player Camera",
             "Position": "0,0,0",
             "Enabled": true,
@@ -86,7 +87,7 @@
             ],
             "Children": [
               {
-                "Id": "bbb4aa75-c9b0-47dc-9ade-c23baee553ee",
+                "Id": "0c22caee-f45f-4bb6-82f6-9f95648d2c2b",
                 "Name": "ViewModel Camera",
                 "Position": "28.27199,0.000008587822,0.09834022",
                 "Enabled": true,
@@ -115,7 +116,7 @@
         ]
       },
       {
-        "Id": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+        "Id": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
         "Name": "Body",
         "Enabled": true,
         "Components": [
@@ -134,30 +135,30 @@
           {
             "__type": "ModelHitboxes",
             "__enabled": true,
-            "Renderer": "a5eeac8e-e56d-48b9-9155-266a684c3551",
-            "Target": "a5eeac8e-e56d-48b9-9155-266a684c3551"
+            "Renderer": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
+            "Target": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc"
           },
           {
             "__type": "AnimationHelper",
             "__enabled": true,
-            "EyeSource": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c",
+            "EyeSource": "cb402c6a-74d3-4988-a1c6-7292ab5f1f7d",
             "Height": 1,
             "IkLeftFoot": null,
             "IkLeftHand": null,
             "IkRightFoot": null,
             "IkRightHand": null,
-            "LookAtObject": "41ac90e6-ada4-460c-bd1c-aeb2d0fabd1c",
-            "Target": "a5eeac8e-e56d-48b9-9155-266a684c3551"
+            "LookAtObject": "cb402c6a-74d3-4988-a1c6-7292ab5f1f7d",
+            "Target": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc"
           }
         ],
         "Children": [
           {
-            "Id": "4a0215c5-ab2d-4d12-b9bc-b4f09633f032",
+            "Id": "00d12bf3-f0b9-4cfc-b949-8c49aa38fbb9",
             "Name": "Clothes",
             "Enabled": true,
             "Children": [
               {
-                "Id": "1a266896-9bd7-47a9-9459-e7da04542926",
+                "Id": "4dc58bf5-d37a-4f02-a5ce-b7310fb87c98",
                 "Name": "Helmet",
                 "Position": "242.6006,424.1199,-99.46105",
                 "Enabled": true,
@@ -166,7 +167,7 @@
                     "__type": "SkinnedModelRenderer",
                     "__enabled": true,
                     "BodyGroups": 18446744073709551615,
-                    "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                    "BoneMergeTarget": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
                     "CreateBoneObjects": false,
                     "MaterialGroup": null,
                     "MaterialOverride": null,
@@ -177,7 +178,7 @@
                 ]
               },
               {
-                "Id": "60ce5d42-8bf1-4111-9172-893fe1abfc96",
+                "Id": "9350f41e-ae05-4964-a289-1bdade3d709f",
                 "Name": "Balaclava",
                 "Position": "403.8836,-889.8362,-145.1443",
                 "Rotation": "-0.00000005306495,-0.0000000000000002222778,-0.890282,0.4554093",
@@ -187,7 +188,7 @@
                     "__type": "SkinnedModelRenderer",
                     "__enabled": true,
                     "BodyGroups": 18446744073709551615,
-                    "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                    "BoneMergeTarget": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
                     "CreateBoneObjects": false,
                     "MaterialGroup": null,
                     "MaterialOverride": null,
@@ -198,7 +199,7 @@
                 ]
               },
               {
-                "Id": "2a816a0a-7e0d-494d-bb77-c8c94f2a7836",
+                "Id": "614dd743-ba41-49ac-aa47-6390d596427a",
                 "Name": "Tactical Vest",
                 "Position": "403.884,-889.8361,-145.1443",
                 "Rotation": "-0.00000005306495,-0.0000000000000002222778,-0.890282,0.4554093",
@@ -208,7 +209,7 @@
                     "__type": "SkinnedModelRenderer",
                     "__enabled": true,
                     "BodyGroups": 18446744073709551615,
-                    "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                    "BoneMergeTarget": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
                     "CreateBoneObjects": false,
                     "MaterialGroup": null,
                     "MaterialOverride": null,
@@ -219,7 +220,7 @@
                 ]
               },
               {
-                "Id": "8d895d5d-f78e-411f-9d86-38c391f8bab2",
+                "Id": "f4ffb5a5-9175-4697-a0bc-c314e164a4a4",
                 "Name": "Top",
                 "Enabled": true,
                 "Components": [
@@ -227,7 +228,7 @@
                     "__type": "SkinnedModelRenderer",
                     "__enabled": true,
                     "BodyGroups": 18446744073709551615,
-                    "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                    "BoneMergeTarget": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
                     "CreateBoneObjects": false,
                     "MaterialGroup": null,
                     "MaterialOverride": null,
@@ -238,7 +239,7 @@
                 ]
               },
               {
-                "Id": "59384378-efec-46b3-93e8-2976a1f63bad",
+                "Id": "d2da6db0-0b7a-4cfd-ac4e-fc257105603b",
                 "Name": "Gloves",
                 "Position": "242.6006,424.1199,-99.46105",
                 "Enabled": true,
@@ -247,7 +248,7 @@
                     "__type": "SkinnedModelRenderer",
                     "__enabled": true,
                     "BodyGroups": 18446744073709551615,
-                    "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                    "BoneMergeTarget": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
                     "CreateBoneObjects": false,
                     "MaterialGroup": null,
                     "MaterialOverride": null,
@@ -258,7 +259,7 @@
                 ]
               },
               {
-                "Id": "a2eb2c1d-2df3-4375-bd27-fef12d5b90a6",
+                "Id": "09671e2f-375c-4808-846d-e40dbe08676f",
                 "Name": "Pants",
                 "Position": "242.6006,424.1199,-99.46105",
                 "Enabled": true,
@@ -267,7 +268,7 @@
                     "__type": "SkinnedModelRenderer",
                     "__enabled": true,
                     "BodyGroups": 18446744073709551615,
-                    "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                    "BoneMergeTarget": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
                     "CreateBoneObjects": false,
                     "MaterialGroup": null,
                     "MaterialOverride": null,
@@ -278,7 +279,7 @@
                 ]
               },
               {
-                "Id": "15df205c-8ab9-4555-abf3-856d215414ab",
+                "Id": "f45c77bb-bca4-4655-8f86-603abe999dd3",
                 "Name": "Boots",
                 "Position": "242.6006,424.1199,-99.46105",
                 "Enabled": true,
@@ -287,7 +288,7 @@
                     "__type": "SkinnedModelRenderer",
                     "__enabled": true,
                     "BodyGroups": 18446744073709551615,
-                    "BoneMergeTarget": "a5eeac8e-e56d-48b9-9155-266a684c3551",
+                    "BoneMergeTarget": "fc76c4ae-1bdb-4a5c-96df-9eda33fb2bfc",
                     "CreateBoneObjects": false,
                     "MaterialGroup": null,
                     "MaterialOverride": null,
@@ -302,12 +303,12 @@
         ]
       },
       {
-        "Id": "184292e3-f59e-4601-8802-59ea1e21cae4",
+        "Id": "955e7183-8461-48d2-a26f-a13f1d470148",
         "Name": "Weapons",
         "Enabled": true
       },
       {
-        "Id": "78e38942-ebd1-49fc-8c98-aea0160aa7f7",
+        "Id": "3f798da9-4fb3-4c18-9165-cc9d8f00bbbc",
         "Name": "Mechanics",
         "Enabled": true,
         "Components": [
@@ -315,20 +316,20 @@
             "__type": "CrouchMechanic",
             "__enabled": true,
             "IsActive": false,
-            "PlayerController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
+            "PlayerController": "99f47a2d-29ca-4d1a-849a-7868a90a168d",
             "Priority": 0,
             "TimeSinceActiveChanged": {
-              "Relative": 323.32797
+              "Relative": 2450.9512
             }
           },
           {
             "__type": "SprintMechanic",
             "__enabled": true,
             "IsActive": false,
-            "PlayerController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
+            "PlayerController": "99f47a2d-29ca-4d1a-849a-7868a90a168d",
             "Priority": 1,
             "TimeSinceActiveChanged": {
-              "Relative": 323.32797
+              "Relative": 2450.9512
             }
           },
           {
@@ -338,12 +339,12 @@
             "IsActive": false,
             "MinimumSlideLength": 1,
             "NextSlideCooldown": 0.5,
-            "PlayerController": "ca9271ad-6c28-47b5-84c6-08b80231cc7b",
+            "PlayerController": "99f47a2d-29ca-4d1a-849a-7868a90a168d",
             "Priority": 100,
             "SlideFriction": 0.01,
             "SlideSpeed": 300,
             "TimeSinceActiveChanged": {
-              "Relative": 323.32797
+              "Relative": 2450.9512
             },
             "WishDirectionScale": 0.4
           }

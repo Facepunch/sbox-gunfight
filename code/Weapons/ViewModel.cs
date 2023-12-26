@@ -106,10 +106,10 @@ public partial class ViewModel : Component
 
 		// Ironsights
 		ModelRenderer.Set( "ironsights", PlayerController.IsAiming ? 2 : 0 );
-		ModelRenderer.Set( "ironsights_fire_scale", PlayerController.IsAiming ? 0.3f : 1f );
+		ModelRenderer.Set( "ironsights_fire_scale", PlayerController.IsAiming ? 0.3f : 0f );
 
 		// Weapon state
-		ModelRenderer.Set( "b_empty", !Weapon.Components.Get<AmmoContainer>()?.HasAmmo ?? false );
+		ModelRenderer.Set( "b_empty", !Weapon.Components.Get<AmmoContainer>( FindMode.EnabledInSelfAndDescendants )?.HasAmmo ?? false );
 	}
 
 	protected override void OnUpdate()

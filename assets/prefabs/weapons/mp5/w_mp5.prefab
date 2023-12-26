@@ -12,13 +12,6 @@
         "ModelRenderer": "4f59ea85-b223-4406-89c3-27de8a67f148",
         "Resource": "assets/resources/weapons/mp5.weapon",
         "ViewModel": null
-      },
-      {
-        "__type": "AmmoContainer",
-        "__enabled": true,
-        "Ammo": 30,
-        "HasAmmo": true,
-        "MaxAmmo": 30
       }
     ],
     "Children": [
@@ -47,9 +40,16 @@
         "Enabled": true,
         "Components": [
           {
+            "__type": "AmmoContainer",
+            "__enabled": true,
+            "Ammo": 30,
+            "HasAmmo": true,
+            "MaxAmmo": 30
+          },
+          {
             "__type": "ShootWeaponFunction",
             "__enabled": true,
-            "AmmoContainer": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
+            "AmmoContainer": "dd15d5d5-c774-4161-a7c9-a87fa213f181",
             "BaseDamage": 25,
             "BaseDamageFalloff": [
               {
@@ -72,17 +72,17 @@
             "MuzzleFlash": "assets/prefabs/weapon_effects/pistol_muzzleflash.prefab",
             "OnFunctionExecuteAction": null,
             "RequiresAllInputActions": false,
-            "RequiresAmmoContainer": false,
+            "RequiresAmmoContainer": true,
             "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
             "StatsResource": null,
             "TimeSinceShoot": {
-              "Relative": 1602.4198
+              "Relative": 2009.6226
             }
           },
           {
             "__type": "ReloadWeaponFunction",
             "__enabled": true,
-            "AmmoContainer": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
+            "AmmoContainer": "dd15d5d5-c774-4161-a7c9-a87fa213f181",
             "InputActions": [
               "Reload"
             ],

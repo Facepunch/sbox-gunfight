@@ -5,25 +5,18 @@ public partial class RecoilFunction : WeaponFunction
 	[Property, Category( "Recoil" )] public RecoilPattern RecoilPattern { get; set; }
 	[Property, Category( "Recoil" )] public float HorizontalScale { get; set; } = 1f;
 	[Property, Category( "Recoil" )] public float VerticalScale { get; set; } = 1f;
+	[Property, Category( "Recoil" )] public float RecoilResetTime { get; set; } = 0.3f;
+	[Property, Category( "Recoil" )] public Vector2 HorizontalSpread { get; set; } = 0f;
+	[Property, Category( "Recoil" )] public Vector2 VerticalSpread { get; set; } = 0f;
 
-	Angles CurrentFrame;
-
-	/// <summary>
-	/// get the recoil to pass to the camera this frame
-	/// </summary>
-	/// <returns></returns>
-	public Angles GetFrame()
-	{
-		var frame = CurrentFrame;
-		return frame;
-	}
+	internal Angles Current { get; private set; }
 
 	TimeSince TimeSinceLastShot;
 	int currentFrame = 0;
 
 	internal void Shoot()
 	{
-		if (  TimeSinceLastShot > 1f  )
+		if ( TimeSinceLastShot > RecoilResetTime )
 		{
 			RecoilPattern.Reset();
 			currentFrame = 0;
@@ -33,21 +26,21 @@ public partial class RecoilFunction : WeaponFunction
 
 		var timeDelta = Time.Delta;
 		var point = RecoilPattern.GetPoint( ref currentFrame );
-		var newAngles = new Angles( -point.y * VerticalScale * timeDelta, point.x * HorizontalScale * timeDelta, 0 );
-		CurrentFrame = CurrentFrame + newAngles;
+		var newAngles = new Angles( ( -point.y - VerticalSpread.GetBetween() ) * VerticalScale * timeDelta, ( point.x + HorizontalSpread.GetBetween() ) * HorizontalScale * timeDelta, 0 );
 
+		Current = Current + newAngles;
 		currentFrame++;
 	}
 
 	protected override void OnUpdate()
 	{
-		CurrentFrame = CurrentFrame.LerpTo( Angles.Zero, Time.Delta * 10f );
+		Current = Current.LerpTo( Angles.Zero, Time.Delta * 10f );
 	}
 
 	internal override void UpdateStats()
 	{
-		//HorizontalRecoil = Stats.HorizontalRecoil;
-		//VerticalRecoil = Stats.VerticalRecoil;
+		HorizontalSpread = Stats.HorizontalSpread;
+		VerticalSpread = Stats.VerticalSpread;
 	}
 }
 

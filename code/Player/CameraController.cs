@@ -50,7 +50,7 @@ public sealed class CameraController : Component
 	{
 		if ( PlayerController.Weapon.GetFunction<RecoilFunction>() is var fn )
 		{
-			PlayerController.EyeAngles += fn.GetFrame();
+			PlayerController.EyeAngles += fn.Current;
 		}
 	}
 }

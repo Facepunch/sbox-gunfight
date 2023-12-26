@@ -55,13 +55,10 @@ public struct WeaponStats
 	public float ReloadSpeed { get; set; }
 
 	[Category( "Recoil" )]
-	public Vector2 HorizontalRecoil { get; set; }
+	public Vector2 HorizontalSpread { get; set; }
 
 	[Category( "Recoil" )]
-	public Vector2 VerticalRecoil { get; set; }
-	
-	[Category( "Recoil" )]
-	public float Spread { get; set; }
+	public Vector2 VerticalSpread { get; set; }
 
 	/// <summary>
 	/// Combines one WeaponStats resource with another.
@@ -78,9 +75,8 @@ public struct WeaponStats
 			AimSpeed = a.AimSpeed + b.AimSpeed,
 			FireRate = a.FireRate + b.FireRate,
 			ReloadSpeed = a.ReloadSpeed + b.ReloadSpeed,
-			HorizontalRecoil = a.HorizontalRecoil + b.HorizontalRecoil,
-			VerticalRecoil = b.VerticalRecoil + b.VerticalRecoil,
-
+			HorizontalSpread = a.HorizontalSpread + b.HorizontalSpread,
+			VerticalSpread = a.VerticalSpread + b.VerticalSpread
 		};
 
 		// todo: figure out falloff combo

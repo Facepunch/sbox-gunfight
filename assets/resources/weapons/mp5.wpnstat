@@ -12,9 +12,8 @@
     "AimSpeed": 0.5,
     "FireRate": 650,
     "ReloadSpeed": 1.5,
-    "HorizontalRecoil": "-2,2",
-    "VerticalRecoil": "-1,-6",
-    "Spread": 0.5
+    "HorizontalSpread": "-0.5,0.5",
+    "VerticalSpread": "0,0.2"
   },
   "__references": []
 }

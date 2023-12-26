@@ -35,11 +35,11 @@ public partial class RecoilPatternKey : GraphicsItem
 	public RecoilPatternKey( GraphicsItem parent, Vector2 key ) : base( parent )
 	{
 		HoverEvents = true;
-		Clip = true;
+		Clip = false;
 		Cursor = CursorShape.DragCopy;
 		Movable = true;
 		//Selectable = true;
-		Size = new( 32.0f, 16.0f );
+		Size = new( 16.0f, 16.0f );
 		Position = key;
 	}
 
@@ -47,14 +47,16 @@ public partial class RecoilPatternKey : GraphicsItem
 	{
 		var rect = LocalRect;
 
-		Paint.SetPen( Hovered ? Theme.Selection : Color.Gray.Darken( 0.2f ), 2 );
-		Paint.SetBrush( Color.Gray.Darken( 0.5f ) );
+		var mainColor = Hovered ? Theme.Selection : Color.Gray;
 
-		Paint.DrawRect( rect, 4 );
+		//Paint.SetPen( mainColor.Darken( 0.2f ), 2 );
+		//Paint.SetBrush( Color.Gray.Darken( 0.5f ) );
 
-		Paint.SetPen( Color.Gray.Lighten( 0.2f ) );
+		//Paint.DrawRect( rect, 4 );
+
+		Paint.SetPen( mainColor.Lighten( 0.2f ) );
 		Paint.DrawIcon( rect, "close", 16, Sandbox.TextFlag.LeftCenter );
-		Paint.DrawText( rect.Shrink( 4, 0 ), $"{GetIndex() + 1}", Sandbox.TextFlag.RightCenter );
+		//Paint.DrawText( rect.Shrink( 4, 0 ), $"{GetIndex() + 1}", Sandbox.TextFlag.RightCenter );
 	}
 
 	protected override void OnMousePressed( GraphicsMouseEvent e )
@@ -65,5 +67,10 @@ public partial class RecoilPatternKey : GraphicsItem
 		{
 			Instance.RemoveKey( this );
 		}
+	}
+
+	protected override void OnMoved()
+	{
+		Parent.Update();
 	}
 }

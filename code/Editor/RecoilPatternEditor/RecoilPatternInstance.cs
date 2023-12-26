@@ -44,6 +44,12 @@ public partial class RecoilPatternInstance : GraphicsItem
 		}
 	}
 
+	protected override void OnPaint()
+	{
+		Paint.SetPen( Color.Gray.WithAlpha( 0.5f ), 2, PenStyle.Dot );
+		Paint.DrawLine( Keys.Select( x => x.Position + new Vector2( 8.0f, 8.0f ) ) );
+	}
+
 	Vector2 DeserializePoint( Vector2 point )
 	{
 		var x = point.x;

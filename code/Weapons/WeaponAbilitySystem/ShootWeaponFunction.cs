@@ -2,8 +2,8 @@ using System.ComponentModel;
 
 namespace Gunfight;
 
-[Title( "Shoot Weapon Ability" ), Icon( "track_changes" )]
-public partial class ShootWeaponAbility : InputActionWeaponAbility
+[Icon( "track_changes" )]
+public partial class ShootWeaponFunction : InputActionWeaponFunction
 {
 	public override string Name => "Shoot";
 
@@ -288,7 +288,7 @@ public partial class ShootWeaponAbility : InputActionWeaponAbility
 		}
 	}
 
-	protected override void OnStart()
+	internal override void UpdateStats()
 	{
 		if ( Stats is WeaponStats stats )
 		{

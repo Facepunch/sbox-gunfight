@@ -1,6 +1,6 @@
 namespace Gunfight;
 
-public partial class ReloadWeaponAbility : InputActionWeaponAbility
+public partial class ReloadWeaponFunction : InputActionWeaponFunction
 {
 	[Property] public float ReloadTime { get; set; } = 1.0f;
 	[Property] public AmmoContainer AmmoContainer { get; set; }
@@ -51,7 +51,7 @@ public partial class ReloadWeaponAbility : InputActionWeaponAbility
 		Weapon.ViewModel?.ModelRenderer.Set( "b_reload", false );
 	}
 
-	protected override void OnStart()
+	internal override void UpdateStats()
 	{
 		if ( Stats is WeaponStats stats )
 		{

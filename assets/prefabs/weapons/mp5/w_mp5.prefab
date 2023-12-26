@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "e13e5e43-4e07-4954-84df-a14252fdf52e",
+    "Id": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
     "Name": "w_mp5",
     "Tags": "player",
     "Enabled": true,
@@ -9,14 +9,14 @@
         "__type": "Weapon",
         "__enabled": true,
         "HoldType": "Rifle",
-        "ModelRenderer": "fce46f0d-b390-43ae-9f81-25d8ce260d1b",
+        "ModelRenderer": "4f59ea85-b223-4406-89c3-27de8a67f148",
         "Resource": "assets/resources/weapons/mp5.weapon",
         "ViewModel": null
       },
       {
-        "__type": "ShootWeaponAbility",
+        "__type": "ShootWeaponFunction",
         "__enabled": true,
-        "AmmoContainer": "e13e5e43-4e07-4954-84df-a14252fdf52e",
+        "AmmoContainer": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
         "BaseDamage": 25,
         "BaseDamageFalloff": [
           {
@@ -28,8 +28,9 @@
         ],
         "BulletSize": 1,
         "BulletTrail": null,
-        "DryFireDelay": 0.5,
+        "DryFireDelay": 1,
         "DryFireSound": "assets/sounds/guns/gun_dryfire.sound",
+        "FireRate": 0.2,
         "InputActions": [
           "Attack1"
         ],
@@ -38,12 +39,25 @@
         "MuzzleFlash": "assets/prefabs/weapon_effects/pistol_muzzleflash.prefab",
         "OnWeaponAbilityAction": null,
         "RequiresAllInputActions": false,
-        "RequiresAmmoContainer": true,
+        "RequiresAmmoContainer": false,
         "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
+        "StatsResource": null,
         "TimeSinceShoot": {
-          "Relative": 1347.9202
-        },
-        "WeaponShootDelay": 0.095
+          "Relative": 1014.09937
+        }
+      },
+      {
+        "__type": "ReloadWeaponFunction",
+        "__enabled": true,
+        "AmmoContainer": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
+        "InputActions": [
+          "Reload"
+        ],
+        "InputType": "Down",
+        "OnWeaponAbilityAction": null,
+        "ReloadTime": 1.5,
+        "RequiresAllInputActions": false,
+        "StatsResource": null
       },
       {
         "__type": "AmmoContainer",
@@ -51,23 +65,11 @@
         "Ammo": 30,
         "HasAmmo": true,
         "MaxAmmo": 30
-      },
-      {
-        "__type": "ReloadWeaponAbility",
-        "__enabled": true,
-        "AmmoContainer": "e13e5e43-4e07-4954-84df-a14252fdf52e",
-        "InputActions": [
-          "Reload"
-        ],
-        "InputType": "Down",
-        "OnWeaponAbilityAction": null,
-        "ReloadTime": 1.5,
-        "RequiresAllInputActions": false
       }
     ],
     "Children": [
       {
-        "Id": "fce46f0d-b390-43ae-9f81-25d8ce260d1b",
+        "Id": "4f59ea85-b223-4406-89c3-27de8a67f148",
         "Name": "Model",
         "Enabled": true,
         "Components": [

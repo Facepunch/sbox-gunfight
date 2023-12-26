@@ -59,6 +59,39 @@ public struct WeaponStats
 
 	[Category( "Recoil" )]
 	public float VerticalRecoil { get; set; }
+	
+	[Category( "Recoil" )]
+	public float Spread { get; set; }
+
+	/// <summary>
+	/// Combines one WeaponStats resource with another.
+	/// </summary>
+	/// <param name="b"></param>
+	/// <returns></returns>
+	public WeaponStats Combine( WeaponStats b )
+	{
+		var a = this;
+
+		var newStats = new WeaponStats()
+		{
+			BaseDamage = a.BaseDamage + b.BaseDamage,
+			AimSpeed = a.AimSpeed + b.AimSpeed,
+			FireRate = a.FireRate + b.FireRate,
+			ReloadSpeed = a.ReloadSpeed + b.ReloadSpeed,
+			HorizontalRecoil = a.HorizontalRecoil + b.HorizontalRecoil,
+			VerticalRecoil = b.VerticalRecoil + b.VerticalRecoil,
+
+		};
+
+		// todo: figure out falloff combo
+
+		return newStats;
+	}
+
+	public static WeaponStats operator+(WeaponStats a, WeaponStats b)
+	{
+		return a.Combine( b );
+	}
 }
 
 [GameResource( "Gunfight/Weapon Stats", "wpnstat", "", IconBgColor = "#E07058", Icon = "bar_chart" )]

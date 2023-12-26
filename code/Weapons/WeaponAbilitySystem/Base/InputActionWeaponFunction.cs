@@ -1,6 +1,6 @@
 namespace Gunfight;
 
-public abstract class InputActionWeaponAbility : BaseWeaponAbility
+public abstract class InputActionWeaponFunction : WeaponFunction
 {
 	public enum InputListenerType
 	{
@@ -27,7 +27,7 @@ public abstract class InputActionWeaponAbility : BaseWeaponAbility
 	/// <summary>
 	/// ActionGraphs action so you can do stuff with visual scripting.
 	/// </summary>
-	[Property, Category( "Base" )] public Action<InputActionWeaponAbility> OnWeaponAbilityAction { get; set; }
+	[Property, Category( "Base" )] public Action<InputActionWeaponFunction> OnWeaponAbilityAction { get; set; }
 
 	/// <summary>
 	/// Gets the input method

@@ -3,16 +3,46 @@ namespace Gunfight;
 public partial class RecoilFunction : WeaponFunction
 {
 	[Property, Category( "Recoil" )] public RecoilPattern RecoilPattern { get; set; }
-	[Property, Category( "Recoil" )] public float HorizontalScale { get; set; } = 1f;
-	[Property, Category( "Recoil" )] public float VerticalScale { get; set; } = 1f;
 	[Property, Category( "Recoil" )] public float RecoilResetTime { get; set; } = 0.3f;
 	[Property, Category( "Recoil" )] public Vector2 HorizontalSpread { get; set; } = 0f;
 	[Property, Category( "Recoil" )] public Vector2 VerticalSpread { get; set; } = 0f;
+
+
+	[Property, Category( "Scaling" )] public float PlayerVelocityLimit { get; set; } = 300f;
+	[Property, Category( "Scaling" )] public float PlayerVelocitySpread { get; set; } = 1f;
 
 	internal Angles Current { get; private set; }
 
 	TimeSince TimeSinceLastShot;
 	int currentFrame = 0;
+
+	private float HorizontalScale
+	{
+		get
+		{
+			var scale = 1f;
+			// TODO: better accessor for stuff like this, this is mega shit
+			var velLen = Weapon.PlayerController.CharacterController.Velocity.Length;
+			scale += velLen.Remap( 0, PlayerVelocityLimit, 0, 1, true ) * PlayerVelocitySpread;
+
+			return scale;
+		}
+	}
+
+	private float VerticalScale
+	{
+		get
+		{
+			var scale = 1f;
+			// TODO: better accessor for stuff like this, this is mega shit
+			var velLen = Weapon.PlayerController.CharacterController.Velocity.Length;
+			scale += velLen.Remap( 0, PlayerVelocityLimit, 0, 1, true ) * PlayerVelocitySpread;
+
+			Log.Info( scale );
+
+			return scale;
+		}
+	}
 
 	internal void Shoot()
 	{

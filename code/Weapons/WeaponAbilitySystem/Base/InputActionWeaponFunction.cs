@@ -27,7 +27,7 @@ public abstract class InputActionWeaponFunction : WeaponFunction
 	/// <summary>
 	/// ActionGraphs action so you can do stuff with visual scripting.
 	/// </summary>
-	[Property, Category( "Base" )] public Action<InputActionWeaponFunction> OnWeaponAbilityAction { get; set; }
+	[Property, Category( "Base" )] public Action<InputActionWeaponFunction> OnFunctionExecuteAction { get; set; }
 
 	/// <summary>
 	/// Gets the input method
@@ -51,7 +51,7 @@ public abstract class InputActionWeaponFunction : WeaponFunction
 	/// <summary>
 	/// Called when the input method succeeds.
 	/// </summary>
-	protected virtual void OnWeaponAbility()
+	protected virtual void OnFunctionExecute()
 	{
 		//
 	}
@@ -81,8 +81,8 @@ public abstract class InputActionWeaponFunction : WeaponFunction
 
 		if ( matched )
 		{
-			OnWeaponAbility();
-			OnWeaponAbilityAction?.Invoke( this );
+			OnFunctionExecute();
+			OnFunctionExecuteAction?.Invoke( this );
 		}
 	}
 }

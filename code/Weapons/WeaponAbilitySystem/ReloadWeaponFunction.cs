@@ -8,7 +8,7 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 	bool IsReloading;
 	TimeUntil TimeUntilReload;
 
-	protected override void OnWeaponAbility()
+	protected override void OnFunctionExecute()
 	{
 		if ( CanReload() )
 		{

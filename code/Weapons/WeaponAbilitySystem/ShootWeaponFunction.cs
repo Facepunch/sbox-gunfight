@@ -63,7 +63,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 			var snd = Sound.Play( ShootSound, Weapon.Transform.Position );
 			snd.ListenLocal = !IsProxy;
 
-			Log.Trace( $"ShootWeaponAbility: ShootSound {ShootSound.ResourceName}" );
+			Log.Trace( $"ShootWeaponFunction: ShootSound {ShootSound.ResourceName}" );
 		}
 
 		// Third person
@@ -170,7 +170,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 			var damageInfo = DamageInfo.Bullet( BaseDamage, Weapon.PlayerController.GameObject, Weapon.GameObject );
 			tr.GameObject.TakeDamage( ref damageInfo );
 
-			Log.Trace( $"ShootWeaponAbility: We hit {tr.GameObject}!" );
+			Log.Trace( $"ShootWeaponFunction: We hit {tr.GameObject}!" );
 			count++;
 		}
 	}
@@ -221,7 +221,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 			var snd = Sound.Play( DryFireSound, Weapon.Transform.Position );
 			snd.ListenLocal = !IsProxy;
 
-			Log.Trace( $"ShootWeaponAbility: ShootSound {DryFireSound.ResourceName}" );
+			Log.Trace( $"ShootWeaponFunction: ShootSound {DryFireSound.ResourceName}" );
 		}
 
 		// First person
@@ -271,7 +271,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 		return true;
 	}
 
-	protected override void OnWeaponAbility()
+	protected override void OnFunctionExecute()
 	{
 		if ( CanShoot() )
 		{

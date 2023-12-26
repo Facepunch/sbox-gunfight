@@ -22,20 +22,20 @@ public partial class Weapon : Component
 	public void UpdateStats()
 	{
 		var stats = Resource.StatsResource.Stats;
-		var allAbilities = Components.GetAll<WeaponFunction>( FindMode.EverythingInSelfAndDescendants );
+		var functions = Components.GetAll<WeaponFunction>( FindMode.EverythingInSelfAndDescendants );
 
 		// First up, go and calculate all the stats.
-		foreach ( var ability in allAbilities )
+		foreach ( var fn in functions )
 		{
-			stats = stats += ability.StatsResource.Stats;
+			stats = stats += fn.StatsResource.Stats;
 		}
 
 		Stats = stats;
 
 		// Then go back and tell every stat to update their stats.
-		foreach ( var ability in allAbilities )
+		foreach ( var fn in functions )
 		{
-			ability.UpdateStats();
+			fn.UpdateStats();
 		}
 	}
 

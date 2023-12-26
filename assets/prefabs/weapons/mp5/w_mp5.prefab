@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
+    "Id": "92b8bfe9-b479-4437-9c22-8c42016546ef",
     "Name": "w_mp5",
     "Tags": "player",
     "Enabled": true,
@@ -9,14 +9,14 @@
         "__type": "Weapon",
         "__enabled": true,
         "HoldType": "Rifle",
-        "ModelRenderer": "4f59ea85-b223-4406-89c3-27de8a67f148",
+        "ModelRenderer": "f9ebce1c-3699-47de-80ff-94017c979f09",
         "Resource": "assets/resources/weapons/mp5.weapon",
         "ViewModel": null
       }
     ],
     "Children": [
       {
-        "Id": "4f59ea85-b223-4406-89c3-27de8a67f148",
+        "Id": "f9ebce1c-3699-47de-80ff-94017c979f09",
         "Name": "Model",
         "Enabled": true,
         "Components": [
@@ -35,7 +35,7 @@
         ]
       },
       {
-        "Id": "dd15d5d5-c774-4161-a7c9-a87fa213f181",
+        "Id": "5dafaf20-7b2d-43dd-8273-00a33a005173",
         "Name": "Functions",
         "Enabled": true,
         "Components": [
@@ -49,7 +49,7 @@
           {
             "__type": "ShootWeaponFunction",
             "__enabled": true,
-            "AmmoContainer": "dd15d5d5-c774-4161-a7c9-a87fa213f181",
+            "AmmoContainer": "5dafaf20-7b2d-43dd-8273-00a33a005173",
             "BaseDamage": 25,
             "BaseDamageFalloff": [
               {
@@ -72,17 +72,17 @@
             "MuzzleFlash": "assets/prefabs/weapon_effects/pistol_muzzleflash.prefab",
             "OnFunctionExecuteAction": null,
             "RequiresAllInputActions": false,
-            "RequiresAmmoContainer": true,
+            "RequiresAmmoContainer": false,
             "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
             "StatsResource": null,
             "TimeSinceShoot": {
-              "Relative": 2393.1414
+              "Relative": 1240.9438
             }
           },
           {
             "__type": "ReloadWeaponFunction",
             "__enabled": true,
-            "AmmoContainer": "dd15d5d5-c774-4161-a7c9-a87fa213f181",
+            "AmmoContainer": "5dafaf20-7b2d-43dd-8273-00a33a005173",
             "InputActions": [
               "Reload"
             ],
@@ -95,7 +95,43 @@
           {
             "__type": "RecoilFunction",
             "__enabled": true,
-            "StatsResource": null
+            "HorizontalScale": 5,
+            "RecoilPattern": {
+              "Points": [
+                "0.04444408,4.645833",
+                "0.04444408,4.354166",
+                "0.04444408,3.854167",
+                "0.0666666,3.458334",
+                "-0.2222223,3.0625",
+                "-0.5999999,2.666667",
+                "-1.222222,2.145833",
+                "-2,1.666667",
+                "-2.488889,0.9375",
+                "-2.444444,0.2708335",
+                "-1.822222,-0.0625",
+                "-0.688889,-0.166667",
+                "0.4444447,-0.2083335",
+                "1.4,-0.2708335",
+                "2.066667,-0.458333",
+                "2.244444,-0.5208335",
+                "1.911111,-0.708333",
+                "0.9555554,-0.6875",
+                "0.1999998,-0.6458335",
+                "-0.4888887,-0.5625",
+                "-1.333333,-0.4166665",
+                "-2.333333,-0.375",
+                "-3.177778,-0.375",
+                "-3.466667,-0.4375",
+                "-2.8,-0.708333",
+                "-1.733334,-0.7291665",
+                "-0.8000002,-0.7291665",
+                "-0.2222223,-0.8333335",
+                "0.04444408,-0.8958335"
+              ],
+              "Count": 29
+            },
+            "StatsResource": null,
+            "VerticalScale": 5
           }
         ]
       }

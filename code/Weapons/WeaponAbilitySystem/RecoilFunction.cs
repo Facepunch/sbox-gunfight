@@ -2,8 +2,9 @@ namespace Gunfight;
 
 public partial class RecoilFunction : WeaponFunction
 {
-	[Property] public Vector2 HorizontalRecoil { get; set; }
-	[Property] public Vector2 VerticalRecoil { get; set; }
+	[Property, Category( "Recoil" )] public RecoilPattern RecoilPattern { get; set; }
+	[Property, Category( "Recoil" )] public float HorizontalScale { get; set; } = 1f;
+	[Property, Category( "Recoil" )] public float VerticalScale { get; set; } = 1f;
 
 	Angles CurrentFrame;
 
@@ -17,10 +18,24 @@ public partial class RecoilFunction : WeaponFunction
 		return frame;
 	}
 
+	TimeSince TimeSinceLastShot;
+	int currentFrame = 0;
+
 	internal void Shoot()
 	{
+		if (  TimeSinceLastShot > 1f  )
+		{
+			currentFrame = 0;
+		}
+
+		TimeSinceLastShot = 0;
+
 		var timeDelta = Time.Delta;
-		CurrentFrame = new( VerticalRecoil.GetBetween() * timeDelta, HorizontalRecoil.GetBetween() * timeDelta, 0 );
+		var point = RecoilPattern.GetPoint( currentFrame );
+		var newAngles = new Angles( -point.y * VerticalScale * timeDelta, point.x * HorizontalScale * timeDelta, 0 );
+		CurrentFrame = CurrentFrame + newAngles;
+
+		currentFrame++;
 	}
 
 	protected override void OnUpdate()
@@ -30,8 +45,8 @@ public partial class RecoilFunction : WeaponFunction
 
 	internal override void UpdateStats()
 	{
-		HorizontalRecoil = Stats.HorizontalRecoil;
-		VerticalRecoil = Stats.VerticalRecoil;
+		//HorizontalRecoil = Stats.HorizontalRecoil;
+		//VerticalRecoil = Stats.VerticalRecoil;
 	}
 }
 

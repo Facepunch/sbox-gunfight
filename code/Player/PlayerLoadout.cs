@@ -44,9 +44,6 @@ public sealed class PlayerLoadout : Component
 		var weaponGameObject = PrefabUtility.CreateGameObject( Weapon.MainPrefab, WeaponGameObject );
 		var weaponComponent = weaponGameObject.Components.Get<Weapon>();
 
-		// Push the weapon stats to the weapon.
-		weaponComponent.Stats = Weapon.StatsResource.Stats;
-
 		// 
 		if ( !makeActive ) 
 			return;

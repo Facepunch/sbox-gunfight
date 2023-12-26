@@ -14,52 +14,6 @@
         "ViewModel": null
       },
       {
-        "__type": "ShootWeaponFunction",
-        "__enabled": true,
-        "AmmoContainer": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
-        "BaseDamage": 25,
-        "BaseDamageFalloff": [
-          {
-            "y": 1
-          },
-          {
-            "x": 1
-          }
-        ],
-        "BulletSize": 1,
-        "BulletTrail": null,
-        "DryFireDelay": 1,
-        "DryFireSound": "assets/sounds/guns/gun_dryfire.sound",
-        "FireRate": 0.2,
-        "InputActions": [
-          "Attack1"
-        ],
-        "InputType": "Down",
-        "MaxRange": 1024000,
-        "MuzzleFlash": "assets/prefabs/weapon_effects/pistol_muzzleflash.prefab",
-        "OnWeaponAbilityAction": null,
-        "RequiresAllInputActions": false,
-        "RequiresAmmoContainer": false,
-        "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
-        "StatsResource": null,
-        "TimeSinceShoot": {
-          "Relative": 1014.09937
-        }
-      },
-      {
-        "__type": "ReloadWeaponFunction",
-        "__enabled": true,
-        "AmmoContainer": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
-        "InputActions": [
-          "Reload"
-        ],
-        "InputType": "Down",
-        "OnWeaponAbilityAction": null,
-        "ReloadTime": 1.5,
-        "RequiresAllInputActions": false,
-        "StatsResource": null
-      },
-      {
         "__type": "AmmoContainer",
         "__enabled": true,
         "Ammo": 30,
@@ -84,6 +38,59 @@
             "Model": "models/weapons/sbox_smg_mp5/w_mp5.vmdl",
             "RenderType": "On",
             "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "Id": "dd15d5d5-c774-4161-a7c9-a87fa213f181",
+        "Name": "Functions",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "ShootWeaponFunction",
+            "__enabled": true,
+            "AmmoContainer": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
+            "BaseDamage": 25,
+            "BaseDamageFalloff": [
+              {
+                "y": 1
+              },
+              {
+                "x": 1
+              }
+            ],
+            "BulletSize": 1,
+            "BulletTrail": null,
+            "DryFireDelay": 1,
+            "DryFireSound": "assets/sounds/guns/gun_dryfire.sound",
+            "FireRate": 0.2,
+            "InputActions": [
+              "Attack1"
+            ],
+            "InputType": "Down",
+            "MaxRange": 1024000,
+            "MuzzleFlash": "assets/prefabs/weapon_effects/pistol_muzzleflash.prefab",
+            "OnFunctionExecuteAction": null,
+            "RequiresAllInputActions": false,
+            "RequiresAmmoContainer": false,
+            "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
+            "StatsResource": null,
+            "TimeSinceShoot": {
+              "Relative": 1602.4198
+            }
+          },
+          {
+            "__type": "ReloadWeaponFunction",
+            "__enabled": true,
+            "AmmoContainer": "2c702aad-e0b2-40e1-acfe-98e3bbd7d121",
+            "InputActions": [
+              "Reload"
+            ],
+            "InputType": "Down",
+            "OnFunctionExecuteAction": null,
+            "ReloadTime": 1.5,
+            "RequiresAllInputActions": false,
+            "StatsResource": null
           }
         ]
       }

@@ -13,7 +13,22 @@ public partial class Weapon : Component
 	/// <summary>
 	/// A list of stats for this weapon. The <see cref="Resource"/> will set this when instantiated.
 	/// </summary>
-	public WeaponStats Stats { get; set; }
+	public WeaponStats Stats
+	{
+		get
+		{
+			var stats = Resource.StatsResource.Stats;
+			var functions = Components.GetAll<WeaponFunction>( FindMode.EverythingInSelfAndDescendants );
+
+			// First up, go and calculate all the stats.
+			foreach ( var fn in functions.Where( x => x.StatsResource is not null ) )
+			{
+				stats = stats += fn.StatsResource.Stats;
+			}
+
+			return stats;
+		}
+	}
 
 	/// <summary>
 	/// Calls an update to all the weapon stats.
@@ -21,16 +36,7 @@ public partial class Weapon : Component
 	/// <returns></returns>
 	public void UpdateStats()
 	{
-		var stats = Resource.StatsResource.Stats;
 		var functions = Components.GetAll<WeaponFunction>( FindMode.EverythingInSelfAndDescendants );
-
-		// First up, go and calculate all the stats.
-		foreach ( var fn in functions )
-		{
-			stats = stats += fn.StatsResource.Stats;
-		}
-
-		Stats = stats;
 
 		// Then go back and tell every stat to update their stats.
 		foreach ( var fn in functions )

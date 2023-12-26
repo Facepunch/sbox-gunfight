@@ -38,8 +38,6 @@ public partial class RecoilFunction : WeaponFunction
 			var velLen = Weapon.PlayerController.CharacterController.Velocity.Length;
 			scale += velLen.Remap( 0, PlayerVelocityLimit, 0, 1, true ) * PlayerVelocitySpread;
 
-			Log.Info( scale );
-
 			return scale;
 		}
 	}
@@ -56,7 +54,7 @@ public partial class RecoilFunction : WeaponFunction
 
 		var timeDelta = Time.Delta;
 		var point = RecoilPattern.GetPoint( ref currentFrame );
-		var newAngles = new Angles( ( -point.y - VerticalSpread.GetBetween() ) * VerticalScale * timeDelta, ( point.x + HorizontalSpread.GetBetween() ) * HorizontalScale * timeDelta, 0 );
+		var newAngles = new Angles( ( -point.y - ( VerticalSpread.GetBetween() * VerticalScale ) ) * timeDelta, ( point.x + ( HorizontalSpread.GetBetween() * HorizontalScale ) ) * timeDelta, 0 );
 
 		Current = Current + newAngles;
 		currentFrame++;

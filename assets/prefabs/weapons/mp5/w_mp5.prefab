@@ -76,7 +76,7 @@
             "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
             "StatsResource": null,
             "TimeSinceShoot": {
-              "Relative": 6732.2744
+              "Relative": 7189.592
             }
           },
           {
@@ -96,8 +96,8 @@
             "__type": "RecoilFunction",
             "__enabled": true,
             "HorizontalSpread": "0,0",
-            "PlayerVelocityLimit": 150,
-            "PlayerVelocitySpread": 2.5,
+            "PlayerVelocityLimit": 200,
+            "PlayerVelocitySpread": 6,
             "RecoilPattern": {
               "Points": [
                 "0.02222252,4.8125",

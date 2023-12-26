@@ -25,13 +25,14 @@ public partial class RecoilFunction : WeaponFunction
 	{
 		if (  TimeSinceLastShot > 1f  )
 		{
+			RecoilPattern.Reset();
 			currentFrame = 0;
 		}
 
 		TimeSinceLastShot = 0;
 
 		var timeDelta = Time.Delta;
-		var point = RecoilPattern.GetPoint( currentFrame );
+		var point = RecoilPattern.GetPoint( ref currentFrame );
 		var newAngles = new Angles( -point.y * VerticalScale * timeDelta, point.x * HorizontalScale * timeDelta, 0 );
 		CurrentFrame = CurrentFrame + newAngles;
 

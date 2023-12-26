@@ -1,9 +1,7 @@
 using System;
-using System.Linq;
-using System.Security.Cryptography;
 using Editor;
 using Editor.GraphicsItems;
-using Sandbox;
+using static Editor.GraphicsItems.ChartBackground;
 
 namespace Gunfight.Editor;
 
@@ -26,8 +24,11 @@ public class RecoilPatternEditor : GraphicsView
 		{
 			Size = SceneRect.Size,
 			RangeX = new Vector2( -5, 5 ),
-			RangeY = new Vector2( -5, 5 )
+			RangeY = new Vector2( 0, 5 ),
+			AxisX = new AxisConfig { LineColor = Theme.White.WithAlpha( 0.2f ), Ticks = 11, Width = 30.0f, LabelColor = Theme.White.WithAlpha( 0.5f ) },
+			AxisY = new AxisConfig { LineColor = Theme.White.WithAlpha( 0.2f ), Ticks = 11, Width = 20.0f, LabelColor = Theme.White.WithAlpha( 0.5f ) }
 		};
+
 		Add( Background );
 	}
 

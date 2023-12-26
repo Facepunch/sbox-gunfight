@@ -1,15 +1,50 @@
+using System.Text.Json.Serialization;
+
 namespace Gunfight;
 
 public struct RecoilPattern
 {
+	public static Vector2 RangeX => new Vector2( -5, -5 );
+	public static Vector2 RangeY => new Vector2( 0, 5 );
+
 	public List<Vector2> Points { get; set; }
 
-	public Vector2? GetRawPoint( int index )
+	/// <summary>
+	/// Should we be using loop points?
+	/// </summary>
+	[JsonIgnore]
+	public bool UseLoopPoints => LoopStart != 0 && LoopEnd != 0;
+
+	/// <summary>
+	/// Which point index is our loop point start?
+	/// </summary>
+	public int LoopStart { get; set; }
+
+	/// <summary>
+	/// Which point index is our loop point start?
+	/// </summary>
+	public int LoopEnd { get; set; }
+
+	/// <summary>
+	/// Are we looping right now?
+	/// </summary>
+	public bool IsLooping { get; set; }
+
+	public int Count => Points.Count;
+
+	public void Reset()
+	{
+		IsLooping = false;
+	}
+
+	public Vector2? FetchPoint( int index )
 	{
 		var pointCount = Points.Count;
 		if ( index + 1 > pointCount ) return null;
 
 		var point = Points[index];
+		point.y = RangeY.y - point.y;
+
 		return point;
 	}
 
@@ -18,36 +53,35 @@ public struct RecoilPattern
 	/// </summary>
 	/// <param name="index"></param>
 	/// <returns></returns>
-	public Vector2 GetPoint( int index )
+	public Vector2 GetPoint( ref int index )
 	{
-		// TODO: Define this somehow in the recoil pattern itself and pass it to the editor
-		var range = new Vector2( -5, 5 );
 		var pointCount = Points.Count;
 
+		var loopStart = LoopStart == -1 ? 0 : LoopStart;
+		var loopEnd = LoopEnd == -1 ? 0 : pointCount - 1;
+
 		// Wrap around.
-		if ( index + 1 > pointCount )
+
+		if ( index + 1 > pointCount || ( IsLooping && index == loopEnd ) )
 		{
-			index = index % pointCount;
-			Log.Info( $"We exceeded {pointCount}, so wrapping around to {index}" );
+			// If we have a loop point, start at the loop point index and don't wrap around
+			if ( loopStart != -1 )
+			{
+
+				IsLooping = true;
+				index = loopStart;
+				Log.Info( $"We'rr at {loopStart} because we started looping!" );
+			}
+			else
+			{
+				index = index % pointCount;
+				Log.Info( $"We exceeded {pointCount}, so wrapping around to {index}" );
+			}
 		}
 
-		var rawPoint = GetRawPoint( index ) ?? default;
-		rawPoint.y = range.y - rawPoint.y;
-
-		// If we have nothing to compare against, use the raw point.
-		if ( index == 0 )
-		{
-			return rawPoint;
-		}
-		else
-		{
-			var lastPoint = index - 1;
-			Vector2 lastPointValue = lastPoint < 0 ? ( GetRawPoint( 0 ) ?? default ) : ( GetRawPoint( lastPoint ) ?? default );
-			lastPointValue.y = range.y - lastPointValue.y;
-
-			return new Vector2( rawPoint.x - lastPointValue.x, rawPoint.y - lastPointValue.y );
-		}
+		var rawPoint = FetchPoint( index ) ?? default;
+		var lastPoint = index - 1;
+		Vector2 lastPointValue = lastPoint < 0 ? (FetchPoint( 0 ) ?? default) : (FetchPoint( lastPoint ) ?? default);
+		return index == 0 ? rawPoint : new Vector2( rawPoint.x - lastPointValue.x, rawPoint.y - lastPointValue.y );
 	}
-
-	public int Count => Points.Count;
 }

@@ -19,15 +19,18 @@ public partial class RecoilPatternInstance : GraphicsItem
 	}
 
 	RecoilPattern _value;
-
 	public RecoilPattern Value
 	{
 		get => _value;
 		set
 		{
 			_value = value;
+			LoopEnd = _value.LoopEnd;
+			LoopStart = _value.LoopStart;
 		}
 	}
+	public int LoopEnd { get; set; } = -1;
+	public int LoopStart { get; set; } = -1;
 
 	internal void Refresh()
 	{
@@ -42,12 +45,29 @@ public partial class RecoilPatternInstance : GraphicsItem
 		{
 			AddKey( DeserializePoint( point ) );
 		}
+
+		Update();
 	}
 
 	protected override void OnPaint()
 	{
+		var offset = new Vector2( 8.0f, 8.0f );
+
 		Paint.SetPen( Color.Gray.WithAlpha( 0.5f ), 2, PenStyle.Dot );
-		Paint.DrawLine( Keys.Select( x => x.Position + new Vector2( 8.0f, 8.0f ) ) );
+		Paint.DrawLine( Keys.Select( x => x.Position + offset ) );
+
+
+		if ( Value.LoopEnd != -1 && Value.LoopStart != -1 )
+		{
+			var startKey = Keys[Value.LoopStart];
+			var endKey = Keys[Value.LoopEnd];
+
+			Paint.SetPen( Theme.Red.WithAlpha( 0.5f ), 2, PenStyle.Dot );
+
+			Paint.DrawLine( new List<Vector2> { startKey.Position + offset - new Vector2( 1, 1 ), endKey.Position + offset - new Vector2( 1, 1 ) } );
+			Paint.SetPen( Theme.Blue.WithAlpha( 0.5f ), 2, PenStyle.Dot );
+			Paint.DrawLine( new List<Vector2> { startKey.Position + offset + new Vector2( 1, 1 ), endKey.Position + offset + new Vector2( 1, 1 ) } );
+		}
 	}
 
 	Vector2 DeserializePoint( Vector2 point )
@@ -61,12 +81,15 @@ public partial class RecoilPatternInstance : GraphicsItem
 		return new Vector2( remappedX * Size.x, remappedY * Size.y ); ;
 	}
 
-	RecoilPattern Serialize()
+	internal RecoilPattern Serialize()
 	{
 		var pattern = new RecoilPattern()
 		{
-			Points = Keys.Select( x => x.Evaluate( RangeX, RangeY ) ).ToList()
+			Points = Keys.Select( x => x.Evaluate( RangeX, RangeY ) ).ToList(),
+			LoopStart = LoopStart,
+			LoopEnd = LoopEnd
 		};
+
 		return pattern;
 	}
 

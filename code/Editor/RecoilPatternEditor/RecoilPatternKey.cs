@@ -1,11 +1,15 @@
 ﻿using Editor;
 using Sandbox;
+using System.Diagnostics;
 
 namespace Gunfight.Editor;
 
 public partial class RecoilPatternKey : GraphicsItem
 {
 	RecoilPatternInstance Instance => Parent as RecoilPatternInstance;
+
+	public bool IsLoopStart => Instance.LoopStart == GetIndex();
+	public bool IsLoopEnd => Instance.LoopEnd == GetIndex();
 
 	/// <summary>
 	/// Gets the index of this key from the recoil pattern instance
@@ -46,17 +50,43 @@ public partial class RecoilPatternKey : GraphicsItem
 	protected override void OnPaint()
 	{
 		var rect = LocalRect;
-
 		var mainColor = Hovered ? Theme.Selection : Color.Gray;
 
-		//Paint.SetPen( mainColor.Darken( 0.2f ), 2 );
-		//Paint.SetBrush( Color.Gray.Darken( 0.5f ) );
+		var loopColor = Theme.Blue;
+		if ( IsLoopEnd ) loopColor = Theme.Red;
+		if ( Hovered ) mainColor = mainColor.Lighten( 0.2f );
 
-		//Paint.DrawRect( rect, 4 );
+		if ( IsLoopStart || IsLoopEnd )
+		{
+			Paint.ClearPen();
+			Paint.SetBrush( loopColor.WithAlpha( 0.2f ) );
+			Paint.DrawRect( rect );
+		}
 
 		Paint.SetPen( mainColor.Lighten( 0.2f ) );
 		Paint.DrawIcon( rect, "close", 16, Sandbox.TextFlag.LeftCenter );
-		//Paint.DrawText( rect.Shrink( 4, 0 ), $"{GetIndex() + 1}", Sandbox.TextFlag.RightCenter );
+	}
+
+	protected void OpenContextMenu()
+	{
+		var menu = new Menu( null );
+
+		var loop = menu.AddMenu( "Loop Points", "all_inclusive" );
+		loop.AddOption( "Mark as Start", null, () =>
+		{
+			Instance.LoopStart = GetIndex();
+			Instance.Value = Instance.Serialize();
+			Instance.Update();
+		} );
+		loop.AddOption( "Mark as End", null, () =>
+		{
+			Instance.LoopEnd = GetIndex();
+			Instance.Value = Instance.Serialize();
+			Instance.Update();
+		} );
+		menu.AddOption( "Delete", "trash", () => Instance.RemoveKey( this ) );
+
+		menu.OpenAtCursor();
 	}
 
 	protected override void OnMousePressed( GraphicsMouseEvent e )
@@ -65,12 +95,14 @@ public partial class RecoilPatternKey : GraphicsItem
 
 		if ( e.RightMouseButton )
 		{
-			Instance.RemoveKey( this );
+			OpenContextMenu();
 		}
 	}
 
 	protected override void OnMoved()
 	{
-		Parent.Update();
+		Instance.Value = Instance.Serialize();
+
+		Instance.Update();
 	}
 }

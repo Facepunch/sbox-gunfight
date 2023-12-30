@@ -39,8 +39,6 @@ public class RecoilPatternPopup : PopupWidget
         Layout = Layout.Column();
         Layout.Margin = 8;
         Layout.Add(Editor);
-
-        AddShadow();
     }
 
     Vector2? lastM;

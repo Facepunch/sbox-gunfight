@@ -33,6 +33,8 @@ public sealed class SoundEmitter : Component
 
 	protected override void OnUpdate()
 	{
+		if ( handle is null ) return;
+
 		// If we stopped playing, kill the game object
 		if ( handle.IsStopped )
 		{

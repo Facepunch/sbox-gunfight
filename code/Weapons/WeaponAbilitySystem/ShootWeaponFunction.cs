@@ -60,10 +60,11 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 
 		if ( ShootSound is not null )
 		{
-			var snd = Sound.Play( ShootSound, Weapon.Transform.Position );
-			snd.ListenLocal = !IsProxy;
-
-			Log.Trace( $"ShootWeaponFunction: ShootSound {ShootSound.ResourceName}" );
+			if ( Sound.Play( ShootSound, Weapon.Transform.Position ) is SoundHandle snd )
+			{
+				snd.ListenLocal = !IsProxy;
+				Log.Trace( $"ShootWeaponFunction: ShootSound {ShootSound.ResourceName}" );
+			}
 		}
 
 		// Third person
@@ -112,7 +113,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 		var decalPath = Game.Random.FromArray( surface.ImpactEffects.BulletDecal, "decals/bullethole.decal" );
 		if ( ResourceLibrary.TryGet<DecalDefinition>( decalPath, out var decalResource ) )
 		{
-			CreateParticleSystem( Game.Random.FromArray( surface.ImpactEffects.Bullet ), pos, Rotation.LookAt( normal ) );
+			CreateParticleSystem( Game.Random.FromArray( surface.ImpactEffects.Bullet ), pos, Rotation.LookAt( -normal ) );
 			
 			var decal = Game.Random.FromList( decalResource.Decals );
 
@@ -120,11 +121,8 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 			gameObject.Transform.Position = pos;
 			gameObject.Transform.Rotation = Rotation.LookAt( -normal );
 
-			// what the fuck? did I fuck something big time here
-			gameObject.Transform.Rotation *= Rotation.FromAxis( Vector3.Left, -90f );
-
 			// Random rotation
-			gameObject.Transform.Rotation *= Rotation.FromAxis( Vector3.Up, decal.Rotation.GetValue() );
+			gameObject.Transform.Rotation *= Rotation.FromAxis( Vector3.Forward, decal.Rotation.GetValue() );
 
 			var decalRenderer = gameObject.Components.Create<DecalRenderer>();
 			decalRenderer.Material = decal.Material;

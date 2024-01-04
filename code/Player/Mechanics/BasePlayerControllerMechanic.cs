@@ -15,14 +15,14 @@ public abstract partial class BasePlayerControllerMechanic : Component
 	/// <summary>
 	/// How long since <see cref="IsActive"/> changed.
 	/// </summary>
-	[Property, Category( "Base" ), System.ComponentModel.ReadOnly( true )] protected TimeSince TimeSinceActiveChanged { get; set; }
+	[Property, Category( "Base" ), ReadOnly] protected TimeSince TimeSinceActiveChanged { get; set; }
 
 	private bool isActive; 
 
 	/// <summary>
 	/// Is this mechanic active?
 	/// </summary>
-	[Property, Category( "Base" ), System.ComponentModel.ReadOnly( true )] public bool IsActive
+	[Property, Category( "Base" ), ReadOnly] public bool IsActive
 	{
 		get => isActive;
 		set

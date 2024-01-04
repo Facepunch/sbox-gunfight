@@ -63,7 +63,7 @@ public partial class PlayerController : Component
 	/// </summary>
 	[Property] AnimationHelper.HoldTypes CurrentHoldType { get; set; } = AnimationHelper.HoldTypes.None;
 
-	[Property, System.ComponentModel.ReadOnly( true )] public bool IsAiming { get; private set; }
+	[Property, ReadOnly] public bool IsAiming { get; private set; }
 
 	/// <summary>
 	/// Called when the player jumps.

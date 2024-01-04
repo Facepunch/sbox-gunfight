@@ -21,7 +21,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 
 
 	// Functionality
-	[Property, ReadOnly( true ), Category( "Data" )] public TimeSince TimeSinceShoot { get; set; }
+	[Property, Sandbox.ReadOnly, Category( "Data" )] public TimeSince TimeSinceShoot { get; set; }
 
 	[Property, Category( "Ammo" )] public AmmoContainer AmmoContainer { get; set; }
 	[Property, Category( "Ammo" )] public bool RequiresAmmoContainer { get; set; } = false;

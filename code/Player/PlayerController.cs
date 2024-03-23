@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Gunfight;
 
 public partial class PlayerController : Component
@@ -25,12 +27,12 @@ public partial class PlayerController : Component
 	/// <summary>
 	/// The current character controller for this player.
 	/// </summary>
-	[Property] public CharacterController CharacterController { get; set; }
+	[RequireComponent] public CharacterController CharacterController { get; set; }
 
 	/// <summary>
 	/// The current camera controller for this player.
 	/// </summary>
-	[Property] public CameraController CameraController { get; set; }
+	[RequireComponent] public CameraController CameraController { get; set; }
 
 	/// <summary>
 	/// A reference to the View Model's camera. This will be disabled by the View Model.
@@ -63,12 +65,11 @@ public partial class PlayerController : Component
 	/// </summary>
 	public Ray AimRay => CameraController.AimRay;
 
-	/// <summary>
-	/// The current holdtype for the player.
-	/// </summary>
+	// TODO: move this into something that isn't on the player, this should be on an animator being fed info like the weapon
 	[Property] AnimationHelper.HoldTypes CurrentHoldType { get; set; } = AnimationHelper.HoldTypes.None;
 
-	[Property, ReadOnly] public bool IsAiming { get; private set; }
+	// TODO: move this into something that isn't on the player, this is shit
+	[Property, ReadOnly, JsonIgnore] public bool IsAiming { get; private set; }
 
 	/// <summary>
 	/// Called when the player jumps.

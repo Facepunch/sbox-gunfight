@@ -55,7 +55,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 		// Create a muzzle flash from a GameObject / prefab
 		if ( MuzzleFlash.IsValid() )
 		{
-			SceneUtility.Instantiate( MuzzleFlash, EffectsRenderer.GetAttachment( "muzzle" ) ?? Weapon.Transform.World );
+			// SceneUtility.Instantiate( MuzzleFlash, EffectsRenderer.GetAttachment( "muzzle" ) ?? Weapon.Transform.World );
 		}
 
 		if ( ShootSound is not null )

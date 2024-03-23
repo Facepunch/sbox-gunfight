@@ -31,11 +31,11 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 
 		Log.Info( $"Player '{channel.DisplayName}' is becoming active" );
 
-		var player = SceneUtility.Instantiate( PlayerPrefab, SpawnPoint.Transform.World );
+		var player = PlayerPrefab.Clone( SpawnPoint.Transform.World );
 
 		var cl = player.Components.Create<Client>();
 		cl.Setup( channel );
 
-		player.Network.Spawn( channel );
+		player.NetworkSpawn();
 	}
 }

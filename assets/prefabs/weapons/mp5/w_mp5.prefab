@@ -1,28 +1,31 @@
 {
   "RootObject": {
-    "Id": "92b8bfe9-b479-4437-9c22-8c42016546ef",
+    "Id": "00af9f2a-89f1-4668-8eb4-4cca8c182d28",
     "Name": "w_mp5",
     "Tags": "player",
     "Enabled": true,
     "Components": [
       {
         "__type": "Weapon",
-        "__enabled": true,
         "HoldType": "Rifle",
-        "ModelRenderer": "f9ebce1c-3699-47de-80ff-94017c979f09",
+        "ModelRenderer": {
+          "_type": "component",
+          "go": "f8b677dd-e34c-4739-8787-e4f78b0cf3bd",
+          "component_type": "SkinnedModelRenderer"
+        },
         "Resource": "assets/resources/weapons/mp5.weapon",
         "ViewModel": null
       }
     ],
     "Children": [
       {
-        "Id": "f9ebce1c-3699-47de-80ff-94017c979f09",
+        "Id": "f8b677dd-e34c-4739-8787-e4f78b0cf3bd",
         "Name": "Model",
         "Enabled": true,
         "Components": [
           {
             "__type": "SkinnedModelRenderer",
-            "__enabled": true,
+            "AnimationGraph": null,
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": null,
             "CreateBoneObjects": false,
@@ -35,21 +38,23 @@
         ]
       },
       {
-        "Id": "5dafaf20-7b2d-43dd-8273-00a33a005173",
+        "Id": "d3aa6007-cf6b-4f2d-94e9-b04444d6cf39",
         "Name": "Functions",
         "Enabled": true,
         "Components": [
           {
             "__type": "AmmoContainer",
-            "__enabled": true,
             "Ammo": 30,
             "HasAmmo": true,
             "MaxAmmo": 30
           },
           {
             "__type": "ShootWeaponFunction",
-            "__enabled": true,
-            "AmmoContainer": "5dafaf20-7b2d-43dd-8273-00a33a005173",
+            "AmmoContainer": {
+              "_type": "component",
+              "go": "d3aa6007-cf6b-4f2d-94e9-b04444d6cf39",
+              "component_type": "AmmoContainer"
+            },
             "BaseDamage": 25,
             "BaseDamageFalloff": [
               {
@@ -69,20 +74,26 @@
             ],
             "InputType": "Down",
             "MaxRange": 1024000,
-            "MuzzleFlash": "assets/prefabs/weapon_effects/pistol_muzzleflash.prefab",
+            "MuzzleFlash": {
+              "_type": "gameobject",
+              "prefab": "assets/prefabs/weapon_effects/pistol_muzzleflash.prefab"
+            },
             "OnFunctionExecuteAction": null,
             "RequiresAllInputActions": false,
             "RequiresAmmoContainer": false,
             "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
             "StatsResource": null,
             "TimeSinceShoot": {
-              "Relative": 7189.592
+              "Relative": 432.78476
             }
           },
           {
             "__type": "ReloadWeaponFunction",
-            "__enabled": true,
-            "AmmoContainer": "5dafaf20-7b2d-43dd-8273-00a33a005173",
+            "AmmoContainer": {
+              "_type": "component",
+              "go": "d3aa6007-cf6b-4f2d-94e9-b04444d6cf39",
+              "component_type": "AmmoContainer"
+            },
             "InputActions": [
               "Reload"
             ],
@@ -94,43 +105,9 @@
           },
           {
             "__type": "RecoilFunction",
-            "__enabled": true,
             "HorizontalSpread": "0,0",
             "PlayerVelocityLimit": 200,
             "PlayerVelocitySpread": 6,
-            "RecoilPattern": {
-              "Points": [
-                "0.02222252,4.8125",
-                "0.02222252,4.697917",
-                "0.1333332,4.333333",
-                "0,4.020833",
-                "-0.4000001,3.75",
-                "-0.8888888,3.59375",
-                "-1.622222,3.375",
-                "-2.333333,3.010417",
-                "-2.733333,2.739583",
-                "-2.866667,2.53125",
-                "-2.511111,2.302083",
-                "-0.1777787,2.333333",
-                "1.088889,2.28125",
-                "2.288889,2.21875",
-                "3,2.0625",
-                "2.888889,1.927083",
-                "1.6,1.822917",
-                "0.2444448,1.84375",
-                "-1.377778,1.875",
-                "-2.866667,1.916667",
-                "-3.8,1.864583",
-                "-3.955555,1.760417",
-                "-3.066666,1.572917",
-                "-2.155555,1.479167",
-                "-0.8222222,1.46875",
-                "-0.1555557,1.40625"
-              ],
-              "LoopStart": 12,
-              "LoopEnd": 23,
-              "Count": 26
-            },
             "RecoilResetTime": 0.3,
             "StatsResource": null,
             "VerticalSpread": "0,0"

@@ -61,7 +61,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tony\\.nuget\\packages\\": {}
+    "C:\\Users\\devul\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -69,11 +69,11 @@
       "projectUniqueName": "C:\\git\\sbox-gunfight\\code\\Editor\\gunfight_2.editor.csproj",
       "projectName": "gunfight_2.editor",
       "projectPath": "C:\\git\\sbox-gunfight\\code\\Editor\\gunfight_2.editor.csproj",
-      "packagesPath": "C:\\Users\\Tony\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\devul\\.nuget\\packages\\",
       "outputPath": "C:\\git\\sbox-gunfight\\code\\Editor\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Tony\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\devul\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -116,7 +116,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

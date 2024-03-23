@@ -2,7 +2,6 @@ namespace Gunfight;
 
 public partial class RecoilFunction : WeaponFunction
 {
-	[Property, Category( "Recoil" )] public RecoilPattern RecoilPattern { get; set; }
 	[Property, Category( "Recoil" )] public float RecoilResetTime { get; set; } = 0.3f;
 	[Property, Category( "Recoil" )] public Vector2 HorizontalSpread { get; set; } = 0f;
 	[Property, Category( "Recoil" )] public Vector2 VerticalSpread { get; set; } = 0f;
@@ -46,15 +45,14 @@ public partial class RecoilFunction : WeaponFunction
 	{
 		if ( TimeSinceLastShot > RecoilResetTime )
 		{
-			RecoilPattern.Reset();
 			currentFrame = 0;
 		}
 
 		TimeSinceLastShot = 0;
 
 		var timeDelta = Time.Delta;
-		var point = RecoilPattern.GetPoint( ref currentFrame );
-		var newAngles = new Angles( ( -point.y - ( VerticalSpread.GetBetween() * VerticalScale ) ) * timeDelta, ( point.x + ( HorizontalSpread.GetBetween() * HorizontalScale ) ) * timeDelta, 0 );
+		var point = currentFrame;
+		var newAngles = new Angles( ( -point - ( VerticalSpread.GetBetween() * VerticalScale ) ) * timeDelta, ( point + ( HorizontalSpread.GetBetween() * HorizontalScale ) ) * timeDelta, 0 );
 
 		Current = Current + newAngles;
 		currentFrame++;

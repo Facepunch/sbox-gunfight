@@ -16,13 +16,13 @@ public partial class WeaponDataResource : GameResource
 	/// The prefab to create and attach to the player when spawning it in.
 	/// </summary>
 	[Category( "Prefabs" )]
-	public PrefabFile MainPrefab { get; set; }
+	public GameObject MainPrefab { get; set; }
 
 	/// <summary>
 	/// The prefab to create when making a viewmodel for this weapon.
 	/// </summary>
 	[Category( "Prefabs" )]
-	public PrefabFile ViewModelPrefab { get; set; }
+	public GameObject ViewModelPrefab { get; set; }
 
 	/// <summary>
 	/// A stats resource for this weapon. Will get passed to the gun.

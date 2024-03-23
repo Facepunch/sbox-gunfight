@@ -22,11 +22,11 @@
 
     void Play()
     {
-        GameManager.ActiveScene.Load( PlayScene );
+        Game.ActiveScene.Load( PlayScene );
     }
 
     void Quit()
     {
-        // IGameInstance.Current.Close();
+        Game.Close();
     }
 }

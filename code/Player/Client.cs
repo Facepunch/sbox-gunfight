@@ -8,7 +8,7 @@ public sealed class Client : Component
 	/// <summary>
 	/// Get a list of all clients in the game's active scene.
 	/// </summary>
-	public static IEnumerable<Client> All => GameManager.ActiveScene.GetAllComponents<Client>();
+	public static IEnumerable<Client> All => Game.ActiveScene.GetAllComponents<Client>();
 
 	/// <summary>
 	/// Gets a reference to the local client.

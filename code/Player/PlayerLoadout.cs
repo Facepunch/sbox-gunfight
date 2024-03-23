@@ -2,6 +2,8 @@ namespace Gunfight;
 
 public sealed class PlayerLoadout : Component
 {
+	[RequireComponent] public PlayerController Player { get; set; }
+
 	/// <summary>
 	/// The weapon to create for this player.
 	/// </summary>
@@ -11,11 +13,6 @@ public sealed class PlayerLoadout : Component
 	/// A <see cref="GameObject"/> that will hold all of our weapons.
 	/// </summary>
 	[Property] public GameObject WeaponGameObject { get; set; }
-
-	/// <summary>
-	/// A <see cref="GameObject"/> that will hold our ViewModel.
-	/// </summary>
-	[Property] public GameObject ViewModelGameObject { get; set; }
 
 	protected override void OnStart()
 	{
@@ -49,30 +46,6 @@ public sealed class PlayerLoadout : Component
 		} );
 		var weaponComponent = weaponGameObject.Components.Get<Weapon>();
 
-		// 
-		if ( !makeActive ) 
-			return;
-
-		foreach ( var child in ViewModelGameObject.Children )
-		{
-			child.DestroyImmediate();
-		}
-
-		if ( Weapon.ViewModelPrefab != null )
-		{
-			// Create the weapon prefab and put it on the weapon gameobject.
-			var viewModelGameObject = Weapon.ViewModelPrefab.Clone( new CloneConfig()
-			{
-				Transform = new Transform(),
-				Parent = ViewModelGameObject,
-				StartEnabled = true,
-			} );
-
-			var viewModelComponent = viewModelGameObject.Components.Get<ViewModel>();
-
-			// Weapon needs to know about the ViewModel
-			weaponComponent.ViewModel = viewModelComponent;
-
-		}
+		weaponComponent.OnEquip( Player );
 	}
 }

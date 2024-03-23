@@ -1,3 +1,4 @@
+
 namespace Gunfight;
 
 /// <summary>
@@ -145,5 +146,49 @@ public partial class Weapon : Component
 
 	protected override void OnUpdate()
 	{
+	}
+	
+	/// <summary>
+	/// Creates a viewmodel for the player to use.
+	/// </summary>
+	/// <param name="player"></param>
+	private void CreateViewModel( PlayerController player )
+	{
+		var res = Resource;
+
+		foreach ( var child in player.ViewModelGameObject.Children )
+		{
+			child.DestroyImmediate();
+		}
+
+		if ( res.ViewModelPrefab != null )
+		{
+			// Create the weapon prefab and put it on the weapon gameobject.
+			var viewModelGameObject = res.ViewModelPrefab.Clone( new CloneConfig()
+			{
+				Transform = new Transform(),
+				Parent = player.ViewModelGameObject,
+				StartEnabled = true,
+			} );
+
+			var viewModelComponent = viewModelGameObject.Components.Get<ViewModel>();
+
+			// Weapon needs to know about the ViewModel
+			ViewModel = viewModelComponent;
+		}
+	}
+
+	/// <summary>
+	/// Called when we're equipping a weapon from PlayerLoadout
+	/// </summary>
+	/// <param name="player"></param>
+	internal void OnEquip( PlayerController player )
+	{
+		if ( IsProxy )
+		{
+			return;
+		}
+
+		CreateViewModel( player );
 	}
 }

@@ -38,6 +38,11 @@ public partial class PlayerController : Component
 	[Property] public CameraComponent ViewModelCamera { get; set; }
 
 	/// <summary>
+	/// A <see cref="GameObject"/> that will hold our ViewModel.
+	/// </summary>
+	[Property] public GameObject ViewModelGameObject { get; set; }
+
+	/// <summary>
 	/// Get a quick reference to the real Camera GameObject.
 	/// </summary>
 	public GameObject CameraGameObject => CameraController.Camera.GameObject;

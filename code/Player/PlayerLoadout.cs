@@ -34,7 +34,7 @@ public sealed class PlayerLoadout : Component
 			return;
 		}
 
-		if ( Weapon.MainPrefab == null )
+		if ( !Weapon.MainPrefab.IsValid() )
 		{
 			Log.Error( "Weapon doesn't have a prefab?" );
 			return;
@@ -43,7 +43,9 @@ public sealed class PlayerLoadout : Component
 		// Create the weapon prefab and put it on the weapon gameobject.
 		var weaponGameObject = Weapon.MainPrefab.Clone( new CloneConfig()
 		{
+			Transform = new Transform(),
 			Parent = WeaponGameObject,
+			StartEnabled = true,
 		} );
 		var weaponComponent = weaponGameObject.Components.Get<Weapon>();
 
@@ -61,12 +63,16 @@ public sealed class PlayerLoadout : Component
 			// Create the weapon prefab and put it on the weapon gameobject.
 			var viewModelGameObject = Weapon.ViewModelPrefab.Clone( new CloneConfig()
 			{
+				Transform = new Transform(),
 				Parent = ViewModelGameObject,
+				StartEnabled = true,
 			} );
+
 			var viewModelComponent = viewModelGameObject.Components.Get<ViewModel>();
 
 			// Weapon needs to know about the ViewModel
 			weaponComponent.ViewModel = viewModelComponent;
+
 		}
 	}
 }

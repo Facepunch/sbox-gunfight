@@ -19,23 +19,15 @@
           "_type": "gameobject",
           "go": "01d3617e-dee6-4cb1-bef4-8cb4246167cf"
         },
-        "CameraController": {
-          "_type": "component",
-          "component_id": "cf96f707-40cd-4fa8-8753-d0c498050429",
-          "go": "ea430768-5709-48f2-b440-fa7d2fec049c",
-          "component_type": "CameraController"
-        },
-        "CharacterController": {
-          "_type": "component",
-          "component_id": "7445e6e6-b2b9-4e8e-b421-ba4058df081d",
-          "go": "ea430768-5709-48f2-b440-fa7d2fec049c",
-          "component_type": "CharacterController"
-        },
         "CurrentHoldType": "None",
         "Gravity": "0,0,800",
         "Head": {
           "_type": "gameobject",
           "go": "faa0a35a-24f5-4275-85a3-a1711bd08421"
+        },
+        "HUDGameObject": {
+          "_type": "gameobject",
+          "go": "bd3dd50f-4b5c-442e-b0bc-b76f84c95750"
         },
         "IsAiming": false,
         "ViewModelCamera": {
@@ -414,7 +406,7 @@
             },
             "Priority": 0,
             "TimeSinceActiveChanged": {
-              "Relative": 1219.1477
+              "Relative": 1830.1019
             }
           },
           {
@@ -429,7 +421,7 @@
             },
             "Priority": 1,
             "TimeSinceActiveChanged": {
-              "Relative": 1219.1477
+              "Relative": 1830.1019
             }
           },
           {
@@ -449,9 +441,36 @@
             "SlideFriction": 0.01,
             "SlideSpeed": 300,
             "TimeSinceActiveChanged": {
-              "Relative": 1219.1477
+              "Relative": 1830.1019
             },
             "WishDirectionScale": 0.4
+          }
+        ]
+      },
+      {
+        "__guid": "bd3dd50f-4b5c-442e-b0bc-b76f84c95750",
+        "Name": "HUD",
+        "Position": "300,0,60",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "Components": [
+          {
+            "__type": "ScreenPanel",
+            "__guid": "bbf676b8-2554-43c2-855e-a60f30f1057b",
+            "AutoScreenScale": true,
+            "Opacity": 1,
+            "Scale": 1,
+            "ZIndex": 100
+          },
+          {
+            "__type": "MainHUD",
+            "__guid": "548e327f-ff2e-4674-9ddb-1e570c679f7c",
+            "Player": {
+              "_type": "component",
+              "component_id": "5c208dd3-dec8-49b4-a6e3-1b0a91bf767d",
+              "go": "ea430768-5709-48f2-b440-fa7d2fec049c",
+              "component_type": "PlayerController"
+            }
           }
         ]
       }

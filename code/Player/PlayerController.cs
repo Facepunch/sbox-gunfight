@@ -72,6 +72,11 @@ public partial class PlayerController : Component
 	[Property, ReadOnly, JsonIgnore] public bool IsAiming { get; private set; }
 
 	/// <summary>
+	/// GameObject with the player's HUD. We'll only turn it on if we're the local connection.
+	/// </summary>
+	[Property] public GameObject HUDGameObject { get; set; }
+
+	/// <summary>
 	/// Called when the player jumps.
 	/// </summary>
 	[Property] public Action OnJump { get; set; }
@@ -93,6 +98,12 @@ public partial class PlayerController : Component
 	protected override void OnAwake()
 	{
 		baseAcceleration = CharacterController.Acceleration;
+
+		// If we're the local connection, turn the HUD on
+		if ( !IsProxy )
+		{
+			HUDGameObject.Enabled = true;
+		}
 	}
 
 	protected override void OnUpdate()

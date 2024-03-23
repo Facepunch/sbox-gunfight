@@ -1,0 +1,11 @@
+@namespace Gunfight.UI
+@inherits PanelComponent
+
+<root>
+    <WeaponInfoComponent Player=@Player />
+</root>
+
+@code
+{
+    [Property] public PlayerController Player { get; set; }
+}

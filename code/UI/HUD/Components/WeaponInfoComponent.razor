@@ -1,0 +1,32 @@
+@namespace Gunfight.UI
+@inherits Panel
+
+<style>
+    WeaponInfoComponent
+    {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 256px;
+        height: 64px;
+
+        background-color: white;
+    }
+</style>
+
+<root class="hud with-deadzone">
+
+</root>
+
+@code
+{
+    /// <summary>
+    /// The player.
+    /// </summary>
+    public PlayerController Player { get; set; }
+
+    /// <summary>
+    /// The player's weapon.
+    /// </summary>
+    public Weapon Weapon => Player.Weapon;
+}

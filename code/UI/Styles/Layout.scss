@@ -3,7 +3,10 @@ $layout-standard-padding: 8px;
 $layout-extra-padding: 16px;
 $layout-insane-padding: 64px;
 
-.gunfight .layout
+$hud-deadzone-x: 32px;
+$hud-deadzone-y: 16px;
+
+.layout
 {
     &.padding
     {

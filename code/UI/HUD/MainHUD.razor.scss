@@ -1,0 +1,9 @@
+@import "/UI/Styles/Theme.scss";
+
+MainHUD
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: $hud-deadzone-x $hud-deadzone-y;
+}

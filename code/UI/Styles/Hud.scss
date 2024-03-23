@@ -1,0 +1,10 @@
+$hud-deadzone-x: 32px;
+$hud-deadzone-y: 16px;
+
+.hud
+{
+    &.with-deadzone
+    {
+        margin: $hud-deadzone-x $hud-deadzone-y;
+    }
+}

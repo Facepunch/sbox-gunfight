@@ -5,11 +5,7 @@
   "Ident": "gunfight_2",
   "Tags": "",
   "Schema": 1,
-  "HasAssets": true,
-  "AssetsPath": "",
   "Resources": null,
-  "HasCode": true,
-  "CodePath": "/code/",
   "PackageReferences": [
     "facepunch.w_mp5",
     "facepunch.v_mp5",

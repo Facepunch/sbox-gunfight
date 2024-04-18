@@ -3,13 +3,13 @@
   "Description": "A submachine gun that fires 9x19mm Parabellum cartridges, developed in the 1960s.",
   "MainPrefab": {
     "_type": "gameobject",
-    "prefab": "assets/prefabs/weapons/mp5/w_mp5.prefab"
+    "prefab": "prefabs/weapons/mp5/w_mp5.prefab"
   },
   "ViewModelPrefab": {
     "_type": "gameobject",
-    "prefab": "assets/prefabs/weapons/mp5/vm_mp5.prefab"
+    "prefab": "prefabs/weapons/mp5/vm_mp5.prefab"
   },
-  "StatsResource": "assets/resources/weapons/mp5.wpnstat",
+  "StatsResource": "resources/weapons/mp5.wpnstat",
   "ResourceVersion": 0,
   "__version": 0,
   "__references": []

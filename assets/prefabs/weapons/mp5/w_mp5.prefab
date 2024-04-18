@@ -1,36 +1,36 @@
 {
   "RootObject": {
-    "Id": "00af9f2a-89f1-4668-8eb4-4cca8c182d28",
+    "__guid": "24b5d919-1a2c-4bf7-8a24-2333bc8e652d",
     "Name": "w_mp5",
     "Tags": "player",
     "Enabled": true,
+    "NetworkMode": 2,
     "Components": [
       {
-        "__type": "Weapon",
+        "__type": "Gunfight.Weapon",
+        "__guid": "100d3f29-3f5d-43a4-9969-2a7785b68e0f",
         "HoldType": "Rifle",
         "ModelRenderer": {
           "_type": "component",
-          "go": "f8b677dd-e34c-4739-8787-e4f78b0cf3bd",
+          "component_id": "0b065691-e2d4-4816-b009-b6327b1c512f",
+          "go": "e882fa57-2b3e-4308-84ab-dca99ea82f13",
           "component_type": "SkinnedModelRenderer"
         },
-        "Resource": "assets/resources/weapons/mp5.weapon",
-        "ViewModel": null
+        "Resource": "resources/weapons/mp5.weapon"
       }
     ],
     "Children": [
       {
-        "Id": "f8b677dd-e34c-4739-8787-e4f78b0cf3bd",
+        "__guid": "e882fa57-2b3e-4308-84ab-dca99ea82f13",
         "Name": "Model",
         "Enabled": true,
+        "NetworkMode": 2,
         "Components": [
           {
-            "__type": "SkinnedModelRenderer",
-            "AnimationGraph": null,
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "0b065691-e2d4-4816-b009-b6327b1c512f",
             "BodyGroups": 18446744073709551615,
-            "BoneMergeTarget": null,
             "CreateBoneObjects": false,
-            "MaterialGroup": null,
-            "MaterialOverride": null,
             "Model": "models/weapons/sbox_smg_mp5/w_mp5.vmdl",
             "RenderType": "On",
             "Tint": "1,1,1,1"
@@ -38,21 +38,25 @@
         ]
       },
       {
-        "Id": "d3aa6007-cf6b-4f2d-94e9-b04444d6cf39",
+        "__guid": "3a593e15-91eb-4eac-9232-e1807b0e1a83",
         "Name": "Functions",
         "Enabled": true,
+        "NetworkMode": 2,
         "Components": [
           {
-            "__type": "AmmoContainer",
+            "__type": "Gunfight.AmmoContainer",
+            "__guid": "ef903163-bc02-4eec-8bc3-aeb3b48ead7f",
             "Ammo": 30,
             "HasAmmo": true,
             "MaxAmmo": 30
           },
           {
-            "__type": "ShootWeaponFunction",
+            "__type": "Gunfight.ShootWeaponFunction",
+            "__guid": "f56134be-0c68-495f-9976-fcc9ff1499ff",
             "AmmoContainer": {
               "_type": "component",
-              "go": "d3aa6007-cf6b-4f2d-94e9-b04444d6cf39",
+              "component_id": "ef903163-bc02-4eec-8bc3-aeb3b48ead7f",
+              "go": "3a593e15-91eb-4eac-9232-e1807b0e1a83",
               "component_type": "AmmoContainer"
             },
             "BaseDamage": 25,
@@ -65,7 +69,6 @@
               }
             ],
             "BulletSize": 1,
-            "BulletTrail": null,
             "DryFireDelay": 1,
             "DryFireSound": "assets/sounds/guns/gun_dryfire.sound",
             "FireRate": 0.2,
@@ -74,42 +77,36 @@
             ],
             "InputType": "Down",
             "MaxRange": 1024000,
-            "MuzzleFlash": {
-              "_type": "gameobject",
-              "prefab": "assets/prefabs/weapon_effects/pistol_muzzleflash.prefab"
-            },
-            "OnFunctionExecuteAction": null,
             "RequiresAllInputActions": false,
             "RequiresAmmoContainer": false,
             "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
-            "StatsResource": null,
             "TimeSinceShoot": {
-              "Relative": 432.78476
+              "Relative": 1452.1729
             }
           },
           {
-            "__type": "ReloadWeaponFunction",
+            "__type": "Gunfight.ReloadWeaponFunction",
+            "__guid": "9598a32e-72ba-4f9c-92fd-450c6af31af4",
             "AmmoContainer": {
               "_type": "component",
-              "go": "d3aa6007-cf6b-4f2d-94e9-b04444d6cf39",
+              "component_id": "ef903163-bc02-4eec-8bc3-aeb3b48ead7f",
+              "go": "3a593e15-91eb-4eac-9232-e1807b0e1a83",
               "component_type": "AmmoContainer"
             },
             "InputActions": [
               "Reload"
             ],
             "InputType": "Down",
-            "OnFunctionExecuteAction": null,
             "ReloadTime": 1.5,
-            "RequiresAllInputActions": false,
-            "StatsResource": null
+            "RequiresAllInputActions": false
           },
           {
-            "__type": "RecoilFunction",
+            "__type": "Gunfight.RecoilFunction",
+            "__guid": "3474b0f3-df6a-4983-8d9b-1f82f2ed2166",
             "HorizontalSpread": "0,0",
             "PlayerVelocityLimit": 200,
             "PlayerVelocitySpread": 6,
             "RecoilResetTime": 0.3,
-            "StatsResource": null,
             "VerticalSpread": "0,0"
           }
         ]
@@ -119,6 +116,8 @@
   "ShowInMenu": false,
   "MenuPath": null,
   "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__version": 1,
   "__references": [
     "facepunch.w_mp5"
   ]

@@ -110,10 +110,10 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 
 	private void CreateImpactEffects( GameObject hitObject, Surface surface, Vector3 pos, Vector3 normal )
 	{
-		var decalPath = Game.Random.FromArray( surface.ImpactEffects.BulletDecal, "decals/bullethole.decal" );
+		var decalPath = Game.Random.FromList( surface.ImpactEffects.BulletDecal, "decals/bullethole.decal" );
 		if ( ResourceLibrary.TryGet<DecalDefinition>( decalPath, out var decalResource ) )
 		{
-			CreateParticleSystem( Game.Random.FromArray( surface.ImpactEffects.Bullet ), pos, Rotation.LookAt( -normal ) );
+			CreateParticleSystem( Game.Random.FromList( surface.ImpactEffects.Bullet ), pos, Rotation.LookAt( -normal ) );
 			
 			var decal = Game.Random.FromList( decalResource.Decals );
 

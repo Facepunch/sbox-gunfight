@@ -75,6 +75,17 @@ public partial class PlayerController : Component, IPawn
 	/// </summary>
 	[Property] public Action OnJump { get; set; }
 
+	/// <summary>
+	/// A shorthand accessor to say if we're controlling this player.
+	/// </summary>
+	public bool IsLocallyControlled
+	{
+		get
+		{
+			return ( this as IPawn ).IsPossessed && !IsProxy;
+		}
+	}
+
 	private Weapon currentWeapon;
 	/// <summary>
 	/// What weapon are we using?
@@ -111,7 +122,7 @@ public partial class PlayerController : Component, IPawn
 
 	// Properties used only in this component.
 	Vector3 WishVelocity;
-	public Angles EyeAngles;
+	[Sync] public Angles EyeAngles { get; set; }
 
 	public bool IsGrounded { get; set; }
 
@@ -128,9 +139,13 @@ public partial class PlayerController : Component, IPawn
 		baseAcceleration = CharacterController.Acceleration;
 
 		// If we're the local connection, turn the HUD on
-		if ( !IsProxy )
+		if ( ( this as IPawn).IsPossessed )
 		{
 			HUDGameObject.Enabled = true;
+		}
+		else
+		{
+			HUDGameObject.Enabled = false;
 		}
 	}
 
@@ -144,7 +159,7 @@ public partial class PlayerController : Component, IPawn
 		}
 
 		// Eye input
-		if ( !IsProxy && cc != null )
+		if ( IsLocallyControlled && cc != null )
 		{
 			var cameraGameObject = CameraController.Camera.GameObject;
 
@@ -155,9 +170,7 @@ public partial class PlayerController : Component, IPawn
 			cameraGameObject.Transform.LocalPosition = Vector3.Zero.WithZ( SmoothEyeHeight );
 
 			EyeAngles += Input.AnalogLook;
-
-			// we're a shooter game!
-			EyeAngles.pitch = EyeAngles.pitch.Clamp( -90, 90 );
+			EyeAngles = EyeAngles.WithPitch( EyeAngles.pitch.Clamp( -90, 90 ) );
 
 			var cam = CameraController.Camera;
 			var lookDir = EyeAngles.ToRotation();
@@ -253,14 +266,15 @@ public partial class PlayerController : Component, IPawn
 		if ( cc == null )
 			return;
 
-		BuildWishInput();
 
-		// Wish direction could change here
-		OnUpdateMechanics();
+		if ( IsLocallyControlled )
+		{
+			BuildWishInput();
+			OnUpdateMechanics();
+			BuildWishVelocity();
+		}
 
-		BuildWishVelocity();
-
-		if ( cc.IsOnGround && Input.Down( "Jump" ) )
+		if ( cc.IsOnGround && IsLocallyControlled && Input.Down( "Jump" ) )
 		{
 			float flGroundFactor = 1.0f;
 			float flMul = 268.3281572999747f * 1.2f;
@@ -309,6 +323,9 @@ public partial class PlayerController : Component, IPawn
 	public void BuildWishInput()
 	{
 		WishMove = 0;
+
+		if ( !IsLocallyControlled ) return;
+
 		WishMove += Input.AnalogMove;
 	}
 
@@ -321,15 +338,5 @@ public partial class PlayerController : Component, IPawn
 		wishDirection = wishDirection.WithZ( 0 );
 
 		WishVelocity = wishDirection * GetWishSpeed();
-	}
-
-	public void Write( ref ByteStream stream )
-	{
-		stream.Write( EyeAngles );
-	}
-
-	public void Read( ByteStream stream )
-	{
-		EyeAngles = stream.Read<Angles>();
 	}
 }

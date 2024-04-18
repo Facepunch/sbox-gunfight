@@ -1,9 +1,8 @@
-using System.Numerics;
-
 namespace Gunfight;
 
 /// <summary>
 /// A weapon's viewmodel. It's responsibility is to listen to events from a weapon.
+/// It should only exist on the client for the currently possessed pawn.
 /// </summary>
 public partial class ViewModel : Component
 {
@@ -30,22 +29,12 @@ public partial class ViewModel : Component
 	[Property] public SkinnedModelRenderer ModelRenderer { get; set; }
 
 	/// <summary>
-	/// The View Model camera - we'll turn this off if running as Proxy
+	/// The View Model camera 
 	/// </summary>
 	public CameraComponent ViewModelCamera { get; set; }
 
 	protected override void OnStart()
 	{
-		if ( IsProxy )
-		{
-			// Disable ourselves if we're proxy. We don't want to see viewmodels of other people's stuff.
-			// We might be spectating in the future - so work that out...
-			ViewModelCamera.Enabled = false;
-			Enabled = false;
-
-			return;
-		}
-
 		ModelRenderer.Set( "b_deploy", true );
 
 		// Register an event.

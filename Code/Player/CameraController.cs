@@ -7,7 +7,7 @@ public sealed class CameraController : Component
 	/// </summary>
 	[Property] public CameraComponent Camera { get; set; }
 
-	[Property] public PlayerController PlayerController { get; set; }
+	[Property] public PlayerController Player { get; set; }
 
 	/// <summary>
 	/// Constructs a ray using the camera's GameObject
@@ -22,15 +22,14 @@ public sealed class CameraController : Component
 
 	public void ShowBodyParts( bool show )
 	{
-		var playerController = Components.Get<PlayerController>();
-		if ( playerController == null ) throw new ComponentNotFoundException( "CameraController - couldn't find PlayerController component." );
-
 		// Disable the player's body so it doesn't render.
-		var skinnedModels = playerController.Body.Components.GetAll<SkinnedModelRenderer>( FindMode.EnabledInSelfAndDescendants );
+		var skinnedModels = Player.Body.Components.GetAll<SkinnedModelRenderer>( FindMode.EnabledInSelfAndDescendants );
 
 		foreach ( var skinnedModel in skinnedModels )
 		{
-			skinnedModel.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+			skinnedModel.RenderType = show ? 
+				ModelRenderer.ShadowRenderType.On : 
+				ModelRenderer.ShadowRenderType.ShadowsOnly;
 		}
 	}
 
@@ -41,9 +40,14 @@ public sealed class CameraController : Component
 
 	void ApplyRecoil()
 	{
-		if ( PlayerController.CurrentWeapon.GetFunction<RecoilFunction>() is var fn )
+		if ( !Player.IsLocallyControlled )
 		{
-			PlayerController.EyeAngles += fn.Current;
+			return;
+		}
+
+		if ( Player.CurrentWeapon.GetFunction<RecoilFunction>() is var fn )
+		{
+			Player.EyeAngles += fn.Current;
 		}
 	}
 }

@@ -37,7 +37,7 @@
         "__guid": "52a0e4b9-e634-4531-910b-a212fe3917a5",
         "Name": "Object",
         "Enabled": true,
-        "NetworkMode": 2,
+        "NetworkMode": 0,
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",

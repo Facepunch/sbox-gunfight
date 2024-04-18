@@ -59,7 +59,7 @@ public abstract class InputActionWeaponFunction : WeaponFunction
 	protected override void OnFixedUpdate()
 	{
 		// We only care about input actions coming from the owning object.
-		if ( IsProxy )
+		if ( !Weapon.PlayerController.IsLocallyControlled )
 			return;
 
 		bool matched = false;

@@ -1,21 +1,29 @@
 @namespace Gunfight.UI
 @inherits Panel
-
-<style>
-    WeaponInfoComponent
-    {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 256px;
-        height: 64px;
-
-        background-color: white;
-    }
-</style>
+@attribute [StyleSheet]
 
 <root class="hud with-deadzone">
+    <div class="background" />
 
+    @if ( Weapon.IsValid() )
+    {
+        <div class="weapon-viewer">
+            <WeaponViewer WeaponResource=@Weapon.Resource />
+        </div>
+
+        <div class="info">
+            <div class="row">
+                <label class="currentammo">30</label>
+                <label class="inventory">90</label>
+            </div>
+
+            <div class="row">
+                <label class="gunname">@Weapon.Resource.Name</label>
+            </div>
+        </div>
+
+        <InputHint Action="SwitchWeapon" />
+    }
 </root>
 
 @code

@@ -30,6 +30,12 @@ public partial class WeaponDataResource : GameResource
 	[Category( "Stats" )]
 	public WeaponStatsResource StatsResource { get; set; }
 
+	/// <summary>
+	/// The weapon's model
+	/// </summary>
+	[Category( "Information" )]
+	public Model WorldModel { get; set; }
+
 	protected override void PostLoad()
 	{
 		if ( All.Contains( this ) )

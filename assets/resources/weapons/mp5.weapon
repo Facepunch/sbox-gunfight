@@ -10,7 +10,10 @@
     "prefab": "prefabs/weapons/mp5/vm_mp5.prefab"
   },
   "StatsResource": "resources/weapons/mp5.wpnstat",
+  "WorldModel": "models/weapons/sbox_smg_mp5/w_mp5.vmdl",
   "ResourceVersion": 0,
   "__version": 0,
-  "__references": []
+  "__references": [
+    "facepunch.w_mp5"
+  ]
 }

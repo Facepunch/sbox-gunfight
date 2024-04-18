@@ -3,9 +3,8 @@ namespace Gunfight;
 public partial class RecoilFunction : WeaponFunction
 {
 	[Property, Category( "Recoil" )] public float RecoilResetTime { get; set; } = 0.3f;
-	[Property, Category( "Recoil" )] public Vector2 HorizontalSpread { get; set; } = 0f;
-	[Property, Category( "Recoil" )] public Vector2 VerticalSpread { get; set; } = 0f;
-
+	[Property, Category( "Recoil" )] public RangedFloat HorizontalSpread { get; set; } = 0f;
+	[Property, Category( "Recoil" )] public RangedFloat VerticalSpread { get; set; } = 0f;
 
 	[Property, Category( "Scaling" )] public float PlayerVelocityLimit { get; set; } = 300f;
 	[Property, Category( "Scaling" )] public float PlayerVelocitySpread { get; set; } = 1f;
@@ -51,8 +50,8 @@ public partial class RecoilFunction : WeaponFunction
 		TimeSinceLastShot = 0;
 
 		var timeDelta = Time.Delta;
-		var point = currentFrame;
-		var newAngles = new Angles( ( -point - ( VerticalSpread.GetBetween() * VerticalScale ) ) * timeDelta, ( point + ( HorizontalSpread.GetBetween() * HorizontalScale ) ) * timeDelta, 0 );
+		var newAngles = new Angles( - (VerticalSpread.GetBetween() * VerticalScale ) * timeDelta, ( HorizontalSpread.GetBetween() * HorizontalScale ) * timeDelta, 0 );
+
 
 		Current = Current + newAngles;
 		currentFrame++;
@@ -70,9 +69,9 @@ public partial class RecoilFunction : WeaponFunction
 	}
 }
 
-public static class Vector2Extensions
+public static class Extensions
 {
-	public static float GetBetween( this Vector2 self )
+	public static float GetBetween( this RangedFloat self )
 	{
 		return Game.Random.Float( self.x, self.y );
 	}

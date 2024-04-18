@@ -12,8 +12,10 @@
     "AimSpeed": 0.5,
     "FireRate": 650,
     "ReloadSpeed": 1.5,
-    "HorizontalSpread": "-0.5,0.5",
-    "VerticalSpread": "0,0.2"
+    "HorizontalSpread": "-0.50,0.50,1",
+    "VerticalSpread": "1.00,5.00,1"
   },
+  "ResourceVersion": 0,
+  "__version": 0,
   "__references": []
 }

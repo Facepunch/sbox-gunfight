@@ -1,42 +1,5 @@
 namespace Gunfight;
 
-/// <summary>
-/// A bunch of weapon stats. Add more at the bottom - do not add more inbetween otherwise 
-/// you will break all all weapon stats.
-/// </summary>
-public enum WeaponStat
-{
-	/// <summary>
-	/// The base damage for any weapon.
-	/// </summary>
-	BaseDamage,
-	/// <summary>
-	/// The aim down sights speed.
-	/// </summary>
-	[Title( "Aim Down Sights Speed" )]
-	ADSSpeed,
-	/// <summary>
-	/// The fire rate for this weapon. (in RPM)
-	/// </summary>
-	FireRate,
-	/// <summary>
-	/// How long (in seconds) it takes to reload.
-	/// </summary>
-	ReloadSpeed,
-	/// <summary>
-	/// The horizontal recoil.
-	/// </summary>
-	HorizontalRecoil,
-	/// <summary>
-	/// The vertical recoil.
-	/// </summary>
-	VerticalRecoil,
-	/// <summary>
-	/// How much spread. (random in sphere)
-	/// </summary>
-	Spread
-}
-
 public struct WeaponStats
 {
 	[Category( "Damage" )]
@@ -55,10 +18,10 @@ public struct WeaponStats
 	public float ReloadSpeed { get; set; }
 
 	[Category( "Recoil" )]
-	public Vector2 HorizontalSpread { get; set; }
+	public RangedFloat HorizontalSpread { get; set; }
 
 	[Category( "Recoil" )]
-	public Vector2 VerticalSpread { get; set; }
+	public RangedFloat VerticalSpread { get; set; }
 
 	/// <summary>
 	/// Combines one WeaponStats resource with another.
@@ -69,14 +32,17 @@ public struct WeaponStats
 	{
 		var a = this;
 
+		var hSpreadVec2 = a.HorizontalSpread.RangeValue + b.HorizontalSpread.RangeValue;
+		var vSpreadVec2 = a.VerticalSpread.RangeValue + b.VerticalSpread.RangeValue;
+
 		var newStats = new WeaponStats()
 		{
 			BaseDamage = a.BaseDamage + b.BaseDamage,
 			AimSpeed = a.AimSpeed + b.AimSpeed,
 			FireRate = a.FireRate + b.FireRate,
 			ReloadSpeed = a.ReloadSpeed + b.ReloadSpeed,
-			HorizontalSpread = a.HorizontalSpread + b.HorizontalSpread,
-			VerticalSpread = a.VerticalSpread + b.VerticalSpread
+			HorizontalSpread = new RangedFloat( hSpreadVec2.x, hSpreadVec2.y ),
+			VerticalSpread = new RangedFloat( vSpreadVec2.x, vSpreadVec2.y )
 		};
 
 		// todo: figure out falloff combo

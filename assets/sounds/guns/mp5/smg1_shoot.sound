@@ -5,11 +5,17 @@
   "Decibels": 140,
   "SelectionMode": "Random",
   "Sounds": [
-    "assets/sounds/guns/mp5/smg1_shoot1.vsnd",
-    "assets/sounds/guns/mp5/smg1_shoot2.vsnd",
-    "assets/sounds/guns/mp5/smg1_shoot3.vsnd"
+    "sounds/guns/mp5/smg1_shoot1.vsnd",
+    "sounds/guns/mp5/smg1_shoot2.vsnd",
+    "sounds/guns/mp5/smg1_shoot3.vsnd"
   ],
-  "MaximumDistance": 4479.734,
-  "MinimumDistance": 223.9867,
+  "Occlusion": true,
+  "Reflections": true,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "ResourceVersion": 0,
+  "__version": 0,
   "__references": []
 }

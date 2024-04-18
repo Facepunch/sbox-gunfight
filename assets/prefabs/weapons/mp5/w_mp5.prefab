@@ -70,7 +70,7 @@
             ],
             "BulletSize": 1,
             "DryFireDelay": 1,
-            "DryFireSound": "assets/sounds/guns/gun_dryfire.sound",
+            "DryFireSound": "sounds/guns/gun_dryfire.sound",
             "FireRate": 0.2,
             "InputActions": [
               "Attack1"
@@ -79,9 +79,9 @@
             "MaxRange": 1024000,
             "RequiresAllInputActions": false,
             "RequiresAmmoContainer": false,
-            "ShootSound": "assets/sounds/guns/mp5/smg1_shoot.sound",
+            "ShootSound": "sounds/guns/mp5/smg1_shoot.sound",
             "TimeSinceShoot": {
-              "Relative": 1452.1729
+              "Relative": 2201.726
             }
           },
           {
@@ -103,11 +103,11 @@
           {
             "__type": "Gunfight.RecoilFunction",
             "__guid": "3474b0f3-df6a-4983-8d9b-1f82f2ed2166",
-            "HorizontalSpread": "0,0",
+            "HorizontalSpread": "-0.2,0.2",
             "PlayerVelocityLimit": 200,
             "PlayerVelocitySpread": 6,
             "RecoilResetTime": 0.3,
-            "VerticalSpread": "0,0"
+            "VerticalSpread": "-0.2,0.2"
           }
         ]
       }

@@ -126,8 +126,6 @@ public partial class PlayerController : Component
 
 			cameraGameObject.Transform.LocalPosition = Vector3.Zero.WithZ( SmoothEyeHeight );
 
-
-
 			EyeAngles += Input.AnalogLook;
 
 			// we're a shooter game!

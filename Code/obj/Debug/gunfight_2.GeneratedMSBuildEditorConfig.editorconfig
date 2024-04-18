@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Gunfight
-build_property.ProjectDir = C:\git\sbox-gunfight\code\Editor\
+build_property.ProjectDir = D:\git\sbox-gunfight\Code\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

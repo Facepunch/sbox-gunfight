@@ -78,10 +78,10 @@
             "InputType": "Down",
             "MaxRange": 1024000,
             "RequiresAllInputActions": false,
-            "RequiresAmmoContainer": false,
+            "RequiresAmmoContainer": true,
             "ShootSound": "sounds/guns/mp5/smg1_shoot.sound",
             "TimeSinceShoot": {
-              "Relative": 2201.726
+              "Relative": 4707.4697
             }
           },
           {
@@ -103,11 +103,11 @@
           {
             "__type": "Gunfight.RecoilFunction",
             "__guid": "3474b0f3-df6a-4983-8d9b-1f82f2ed2166",
-            "HorizontalSpread": "-0.2,0.2",
+            "HorizontalSpread": "0.00,0.00,0",
             "PlayerVelocityLimit": 200,
             "PlayerVelocitySpread": 6,
             "RecoilResetTime": 0.3,
-            "VerticalSpread": "-0.2,0.2"
+            "VerticalSpread": "0.00,0.00,0"
           }
         ]
       }

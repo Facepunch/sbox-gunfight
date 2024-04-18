@@ -126,9 +126,9 @@ public partial class PlayerController : Component
 
 			cameraGameObject.Transform.LocalPosition = Vector3.Zero.WithZ( SmoothEyeHeight );
 
-			EyeAngles.pitch += Input.MouseDelta.y * 0.1f;
-			EyeAngles.yaw -= Input.MouseDelta.x * 0.1f;
-			EyeAngles.roll = 0;
+
+
+			EyeAngles += Input.AnalogLook;
 
 			// we're a shooter game!
 			EyeAngles.pitch = EyeAngles.pitch.Clamp( -90, 90 );
@@ -283,11 +283,7 @@ public partial class PlayerController : Component
 	public void BuildWishInput()
 	{
 		WishMove = 0;
-
-		if ( Input.Down( "forward", false ) ) WishMove += Vector3.Forward;
-		if ( Input.Down( "backward", false ) ) WishMove += Vector3.Backward;
-		if ( Input.Down( "left", false ) ) WishMove += Vector3.Left;
-		if ( Input.Down( "right", false ) ) WishMove += Vector3.Right;
+		WishMove += Input.AnalogMove;
 	}
 
 	public void BuildWishVelocity()

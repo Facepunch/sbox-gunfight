@@ -37,5 +37,11 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 		cl.Setup( channel );
 
 		player.NetworkSpawn();
+
+
+		if ( !player.IsProxy )
+		{
+			player.Components.Get<IPawn>()?.Possess();
+		}
 	}
 }

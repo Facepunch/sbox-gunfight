@@ -121,14 +121,21 @@ public class WeaponViewer : ScenePanel
 
 	internal void SetModel( Model model )
 	{
-		if ( WeaponModel != null )
+		try
 		{
-			WeaponModel.Delete();
-			WeaponModel = null;
-		}
+			if ( WeaponModel != null )
+			{
+				WeaponModel.Delete();
+				WeaponModel = null;
+			}
 
-		WeaponModel = new SceneModel( World, model, Transform.Zero.WithRotation( Rotation.From( 0, 90, 0 ) ) );
-		WeaponModel.Update( 0.1f );
+			WeaponModel = new SceneModel( World, model, Transform.Zero.WithRotation( Rotation.From( 0, 90, 0 ) ) );
+			WeaponModel.Update( 0.1f );
+		}
+		catch ( Exception e )
+		{
+			Log.Warning( e );
+		}
 	}
 
 	internal void SetModel( string modelName ) => SetModel( Model.Load( modelName ) );

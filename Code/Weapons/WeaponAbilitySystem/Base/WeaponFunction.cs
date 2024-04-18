@@ -32,7 +32,7 @@ public abstract class WeaponFunction : Component
 		// Call the weapon to update its stats 
 		if ( StatsResource is not null )
 		{
-			Weapon.UpdateStats();
+			Weapon?.UpdateStats();
 		}
 		else
 		{

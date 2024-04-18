@@ -39,7 +39,7 @@
     /// <summary>
     /// The player's weapon.
     /// </summary>
-    public Weapon Weapon => Player.Weapon;
+    public Weapon Weapon => Player.CurrentWeapon;
 
     private AmmoContainer AmmoContainer => Weapon.Components.Get<AmmoContainer>( FindMode.EnabledInSelfAndDescendants );
 

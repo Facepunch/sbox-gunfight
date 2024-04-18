@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Gunfight;
 
-public partial class PlayerController : Component
+public partial class PlayerController : Component, IPawn
 {
 	/// <summary>
 	/// A reference to the player's body (the GameObject)
@@ -50,12 +50,6 @@ public partial class PlayerController : Component
 	public GameObject CameraGameObject => CameraController.Camera.GameObject;
 
 	/// <summary>
-	/// Finds the first enabled weapon on our player.
-	/// Make this quicker and not fetching components every time.
-	/// </summary>
-	public Weapon Weapon => Components.Get<Weapon>( FindMode.EnabledInSelfAndDescendants );
-
-	/// <summary>
 	/// Finds the first <see cref="SkinnedModelRenderer"/> on <see cref="Body"/>
 	/// </summary>
 	public SkinnedModelRenderer BodyRenderer => Body.Components.Get<SkinnedModelRenderer>();
@@ -80,6 +74,40 @@ public partial class PlayerController : Component
 	/// Called when the player jumps.
 	/// </summary>
 	[Property] public Action OnJump { get; set; }
+
+	private Weapon currentWeapon;
+	/// <summary>
+	/// What weapon are we using?
+	/// </summary>
+	public Weapon CurrentWeapon
+	{
+		get => currentWeapon;
+		set
+		{
+			currentWeapon = value;
+
+			if ( ( this as IPawn ).IsPossessed )
+			{
+				CreateViewModel();
+			}
+		}
+	}
+
+	private void ClearViewModel()
+	{
+		if ( CurrentWeapon.IsValid() )
+		{
+			CurrentWeapon?.ClearViewModel( this );
+		}
+	}
+
+	private void CreateViewModel()
+	{
+		if ( CurrentWeapon.IsValid() )
+		{
+			CurrentWeapon.CreateViewModel( this );
+		}
+	}
 
 	// Properties used only in this component.
 	Vector3 WishVelocity;
@@ -110,9 +138,9 @@ public partial class PlayerController : Component
 	{
 		var cc = CharacterController;
 
-		if ( Weapon.IsValid() )
+		if ( CurrentWeapon.IsValid() )
 		{
-			CurrentHoldType = Weapon.GetHoldType();
+			CurrentHoldType = CurrentWeapon.GetHoldType();
 		}
 
 		// Eye input

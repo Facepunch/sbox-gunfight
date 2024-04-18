@@ -1,4 +1,6 @@
 
+using System.Diagnostics;
+
 namespace Gunfight;
 
 /// <summary>
@@ -18,7 +20,7 @@ public partial class Weapon : Component
 	{
 		get
 		{
-			var stats = Resource.StatsResource.Stats;
+			var stats = Resource?.StatsResource?.Stats ?? default;
 			var functions = Components.GetAll<WeaponFunction>( FindMode.EverythingInSelfAndDescendants );
 
 			// First up, go and calculate all the stats.
@@ -147,19 +149,24 @@ public partial class Weapon : Component
 	protected override void OnUpdate()
 	{
 	}
+
+	public void ClearViewModel( PlayerController player )
+	{
+		foreach ( var child in player.ViewModelGameObject.Children )
+		{
+			child.DestroyImmediate();
+		}
+	}
 	
 	/// <summary>
 	/// Creates a viewmodel for the player to use.
 	/// </summary>
 	/// <param name="player"></param>
-	private void CreateViewModel( PlayerController player )
+	public void CreateViewModel( PlayerController player )
 	{
 		var res = Resource;
 
-		foreach ( var child in player.ViewModelGameObject.Children )
-		{
-			child.DestroyImmediate();
-		}
+		ClearViewModel( player );
 
 		if ( res.ViewModelPrefab != null )
 		{

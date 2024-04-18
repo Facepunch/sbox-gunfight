@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("gunfight_2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a326498c716148d70b557a477218b5c26c9d57b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6efff5d4d833bcac39fbbd1fa1b8e8ba5e509ec")]
 [assembly: System.Reflection.AssemblyProductAttribute("gunfight_2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("gunfight_2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

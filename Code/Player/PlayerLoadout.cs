@@ -46,6 +46,6 @@ public sealed class PlayerLoadout : Component
 		} );
 		var weaponComponent = weaponGameObject.Components.Get<Weapon>();
 
-		weaponComponent.OnEquip( Player );
+		Player.CurrentWeapon = weaponComponent;
 	}
 }

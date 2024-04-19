@@ -4,9 +4,18 @@ public partial class PlayerController
 {
 	public void OnPossess()
 	{
-		// When possessing a player, we want to make the viewmodel, if possible.
 		CreateViewModel();
 		SetupCamera();
+	}
+
+	[Broadcast]
+	public void NetPossess()
+	{
+		// Don't own? Go away
+		if ( IsProxy )
+			return;
+
+		(this as IPawn ).Possess();
 	}
 
 	void SetupCamera()

@@ -7,16 +7,17 @@
 *.csproj
 obj/*
 Properties/*
-code/obj/*
-code/Properties/*
+Code/obj/*
+Code/obj/Debug/*
+Code/Properties/*
 *.sln
 
 # Editor Projects
-code/Editor/obj/*
-code/Editor/Properties/*
-code/Editor/*.sln
-code/Editor/.vs/*
-code/Editor/.vscode/*
+Code/Editor/obj/*
+Code/Editor/Properties/*
+Code/Editor/*.sln
+Code/Editor/.vs/*
+Code/Editor/.vscode/*
 
 # Auto-generated asset related files
 *.generated.*

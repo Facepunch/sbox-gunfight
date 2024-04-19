@@ -26,6 +26,7 @@
         {
           "__type": "Gunfight.GameNetworkManager",
           "__guid": "b7996461-15c3-4a17-97fa-ad71cef223d7",
+          "IsDebugging": true,
           "IsMultiplayer": true,
           "PlayerPrefab": {
             "_type": "gameobject",
@@ -53,6 +54,34 @@
         }
       ],
       "Children": []
+    },
+    {
+      "__guid": "19ba4d84-a6ad-494a-836a-8cad756265b6",
+      "Name": "Camera",
+      "Position": "-157.862,-284.6826,164.5678",
+      "Rotation": "-0.2044792,0.09578436,0.8821822,0.4132412",
+      "Tags": "maincamera",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "Components": [
+        {
+          "__type": "Sandbox.CameraComponent",
+          "__guid": "cb8194bb-9c8f-4078-871a-5db54b2e46e7",
+          "BackgroundColor": "0.33333,0.46275,0.52157,1",
+          "ClearFlags": "All",
+          "FieldOfView": 60,
+          "IsMainCamera": true,
+          "Orthographic": false,
+          "OrthographicHeight": 1204,
+          "Priority": 1,
+          "RenderExcludeTags": "",
+          "RenderTags": "",
+          "TargetEye": "None",
+          "Viewport": "0,0,1,1",
+          "ZFar": 10000,
+          "ZNear": 10
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -78,7 +107,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-04-18T21:08:28.2551066\u002B01:00",
+  "LastSaved": "2024-04-19T10:02:58.9895683\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

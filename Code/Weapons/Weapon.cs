@@ -152,7 +152,8 @@ public partial class Weapon : Component
 
 	public void ClearViewModel( PlayerController player )
 	{
-		foreach ( var child in player.ViewModelGameObject.Children )
+		var children = new List<GameObject>( player?.ViewModelGameObject?.Children );
+		foreach ( var child in children )
 		{
 			child.DestroyImmediate();
 		}

@@ -12,3 +12,4 @@ D:\git\sbox-gunfight\code\obj\Debug\gunfight_2.dll
 D:\git\sbox-gunfight\code\obj\Debug\refint\gunfight_2.dll
 D:\git\sbox-gunfight\code\obj\Debug\gunfight_2.pdb
 D:\git\sbox-gunfight\code\obj\Debug\ref\gunfight_2.dll
+D:\git\sbox-gunfight\Code\obj\Debug\gunfight_2.sourcelink.json

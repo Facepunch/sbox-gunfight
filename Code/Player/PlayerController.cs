@@ -179,6 +179,10 @@ public partial class PlayerController : Component, IPawn
 
 			IsAiming = Input.Down( "Attack2" );
 		}
+		else
+		{
+			CameraController.SetActive( false );
+		}
 
 		float rotateDifference = 0;
 

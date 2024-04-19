@@ -19,7 +19,6 @@
           "_type": "gameobject",
           "go": "1e52f58b-94d1-4ddf-8ebd-795985665877"
         },
-        "CurrentHoldType": "None",
         "Gravity": "0,0,800",
         "Head": {
           "_type": "gameobject",
@@ -29,8 +28,6 @@
           "_type": "gameobject",
           "go": "38d8d877-952d-4a5b-959f-c0772152380f"
         },
-        "IsAiming": false,
-        "PossessedConnectionId": 0,
         "ViewModelCamera": {
           "_type": "component",
           "component_id": "be7b7094-a1f6-41be-ab85-0efb5b0c5461",
@@ -397,7 +394,6 @@
           {
             "__type": "Gunfight.CrouchMechanic",
             "__guid": "d837a431-f4e3-439f-a4fd-7204f109af61",
-            "IsActive": false,
             "PlayerController": {
               "_type": "component",
               "component_id": "e4ff4924-3afb-46a4-b6ec-07480c9ede6c",
@@ -406,13 +402,12 @@
             },
             "Priority": 0,
             "TimeSinceActiveChanged": {
-              "Relative": 282.4408
+              "Relative": 1779.355
             }
           },
           {
             "__type": "Gunfight.SprintMechanic",
             "__guid": "0dcb95f2-a2cb-4f92-8fce-a3a7ac5ba1a5",
-            "IsActive": false,
             "PlayerController": {
               "_type": "component",
               "component_id": "e4ff4924-3afb-46a4-b6ec-07480c9ede6c",
@@ -421,14 +416,13 @@
             },
             "Priority": 1,
             "TimeSinceActiveChanged": {
-              "Relative": 282.4408
+              "Relative": 1779.355
             }
           },
           {
             "__type": "Gunfight.SlideMechanic",
             "__guid": "dad82362-b060-494d-8531-2f53ca85590e",
             "EyeHeight": -20,
-            "IsActive": false,
             "MinimumSlideLength": 1,
             "NextSlideCooldown": 0.5,
             "PlayerController": {
@@ -441,7 +435,7 @@
             "SlideFriction": 0.01,
             "SlideSpeed": 300,
             "TimeSinceActiveChanged": {
-              "Relative": 282.4408
+              "Relative": 1779.355
             },
             "WishDirectionScale": 0.4
           }

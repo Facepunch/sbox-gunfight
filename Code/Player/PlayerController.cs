@@ -137,16 +137,6 @@ public partial class PlayerController : Component, IPawn
 	protected override void OnAwake()
 	{
 		baseAcceleration = CharacterController.Acceleration;
-
-		// If we're the local connection, turn the HUD on
-		if ( ( this as IPawn).IsPossessed )
-		{
-			HUDGameObject.Enabled = true;
-		}
-		else
-		{
-			HUDGameObject.Enabled = false;
-		}
 	}
 
 	protected override void OnUpdate()

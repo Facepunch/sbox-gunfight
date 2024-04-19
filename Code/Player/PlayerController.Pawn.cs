@@ -6,6 +6,8 @@ public partial class PlayerController
 	{
 		CreateViewModel();
 		SetupCamera();
+
+		HUDGameObject.Enabled = true;
 	}
 
 	[Broadcast]
@@ -27,5 +29,6 @@ public partial class PlayerController
 	{
 		CameraController.SetActive( false );
 		ClearViewModel();
+		HUDGameObject.Enabled = false;
 	}
 }

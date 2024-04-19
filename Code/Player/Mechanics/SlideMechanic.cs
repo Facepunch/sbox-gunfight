@@ -31,6 +31,7 @@ public partial class SlideMechanic : BasePlayerControllerMechanic
 	public override IEnumerable<string> GetTags()
 	{
 		yield return "slide";
+		yield return "no_aiming";
 	}
 
 	public override void BuildWishInput( ref Vector3 wish ) => wish.y *= WishDirectionScale;

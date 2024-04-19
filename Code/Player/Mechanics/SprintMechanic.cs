@@ -26,6 +26,7 @@ public partial class SprintMechanic : BasePlayerControllerMechanic
 	public override IEnumerable<string> GetTags()
 	{
 		yield return "sprint";
+		yield return "no_aiming";
 	}
 
 	public override void BuildWishInput( ref Vector3 wish )

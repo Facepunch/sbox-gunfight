@@ -91,4 +91,14 @@ public partial class PlayerController
 
 		tags = currentTags.ToImmutableArray();
 	}
+
+	/// <summary>
+	/// Get a mechanic
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	public T GetMechanic<T>() where T : BasePlayerControllerMechanic
+	{
+		return Mechanics.OfType<T>().FirstOrDefault();
+	}
 }

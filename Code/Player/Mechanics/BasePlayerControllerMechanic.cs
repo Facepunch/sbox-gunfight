@@ -22,7 +22,7 @@ public abstract partial class BasePlayerControllerMechanic : Component
 	/// <summary>
 	/// Is this mechanic active?
 	/// </summary>
-	[Property, Category( "Base" ), ReadOnly] public bool IsActive
+	[Sync( Query = true )] public bool IsActive
 	{
 		get => isActive;
 		set

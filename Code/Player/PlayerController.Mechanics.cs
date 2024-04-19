@@ -17,6 +17,23 @@ public partial class PlayerController
 	BasePlayerControllerMechanic[] ActiveMechanics;
 
 	/// <summary>
+	/// On proxy clients, we'll want to see if mechanics are active, and set some tags that we can use in other systems.
+	/// Without doing all the expensive computing.
+	/// </summary>
+	protected void ProxyUpdateMechanics()
+	{
+		var activeMechanics = Mechanics.Where( x => x.IsActive );
+		var currentTags = new List<string>();
+
+		foreach ( var mechanic in activeMechanics )
+		{
+			currentTags.AddRange( mechanic.GetTags() );
+		}
+
+		tags = currentTags.ToImmutableArray();
+	}
+
+	/// <summary>
 	/// Called on <see cref="OnUpdate"/>.
 	/// </summary>
 	protected void OnUpdateMechanics()

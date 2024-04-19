@@ -16,8 +16,6 @@ public sealed class CameraController : Component
 
 	public void SetActive( bool isActive )
 	{
-		if ( Camera.GameObject.Enabled == isActive ) return;
-
 		Camera.GameObject.Enabled = isActive;
 		ShowBodyParts( !isActive );
 	}

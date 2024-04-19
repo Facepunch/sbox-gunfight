@@ -60,10 +60,10 @@ public partial class PlayerController : Component, IPawn
 	public Ray AimRay => CameraController.AimRay;
 
 	// TODO: move this into something that isn't on the player, this should be on an animator being fed info like the weapon
-	[Property] AnimationHelper.HoldTypes CurrentHoldType { get; set; } = AnimationHelper.HoldTypes.None;
+	[Sync] AnimationHelper.HoldTypes CurrentHoldType { get; set; } = AnimationHelper.HoldTypes.None;
 
 	// TODO: move this into something that isn't on the player, this is shit
-	[Property, ReadOnly, JsonIgnore] public bool IsAiming { get; private set; }
+	[Sync] public bool IsAiming { get; private set; }
 
 	/// <summary>
 	/// GameObject with the player's HUD. We'll only turn it on if we're the local connection.
@@ -263,19 +263,19 @@ public partial class PlayerController : Component, IPawn
 
 	protected override void OnFixedUpdate()
 	{
-		if ( IsProxy )
-			return;
-
 		var cc = CharacterController;
 		if ( cc == null )
 			return;
-
 
 		if ( IsLocallyControlled )
 		{
 			BuildWishInput();
 			OnUpdateMechanics();
 			BuildWishVelocity();
+		}
+		else
+		{
+			ProxyUpdateMechanics();
 		}
 
 		if ( cc.IsOnGround && IsLocallyControlled && Input.Down( "Jump" ) )

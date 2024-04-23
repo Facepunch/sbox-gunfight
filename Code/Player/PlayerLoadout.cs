@@ -45,6 +45,8 @@ public sealed class PlayerLoadout : Component
 			StartEnabled = true,
 		} );
 		var weaponComponent = weaponGameObject.Components.Get<Weapon>();
+		
+		weaponGameObject.NetworkSpawn();
 
 		Player.CurrentWeapon = weaponComponent;
 	}

@@ -1,13 +1,11 @@
-using System.Text.Json.Serialization;
-
 namespace Gunfight;
 
 public partial class PlayerController : Component, IPawn
 {
 	/// <summary>
-	/// A reference to the player's body (the GameObject)
+	/// The player's body
 	/// </summary>
-	[Property] public GameObject Body { get; set; }
+	[Property] public PlayerBody Body { get; set; }
 
 	/// <summary>
 	/// A reference to the player's head (the GameObject)
@@ -103,6 +101,9 @@ public partial class PlayerController : Component, IPawn
 			{
 				CreateViewModel();
 			}
+
+			// Move the weapon to the hand
+			Body.MoveWeapon( currentWeapon );
 		}
 	}
 

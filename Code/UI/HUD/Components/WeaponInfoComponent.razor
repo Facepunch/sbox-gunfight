@@ -41,7 +41,7 @@
     /// </summary>
     public Weapon Weapon => Player.CurrentWeapon;
 
-    private AmmoContainer AmmoContainer => Weapon.Components.Get<AmmoContainer>( FindMode.EnabledInSelfAndDescendants );
+    private AmmoContainer AmmoContainer => Weapon?.Components.Get<AmmoContainer>( FindMode.EnabledInSelfAndDescendants );
 
     protected override int BuildHash()
     {

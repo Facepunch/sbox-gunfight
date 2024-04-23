@@ -45,7 +45,7 @@ public sealed class CameraController : Component
 			return;
 		}
 
-		if ( Player.CurrentWeapon.GetFunction<RecoilFunction>() is var fn )
+		if ( Player.CurrentWeapon.IsValid() && Player.CurrentWeapon.GetFunction<RecoilFunction>() is var fn )
 		{
 			Player.EyeAngles += fn.Current;
 		}

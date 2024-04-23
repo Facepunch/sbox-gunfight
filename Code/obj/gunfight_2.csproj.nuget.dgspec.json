@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj": {}
+    "C:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj": {}
   },
   "projects": {
-    "D:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj": {
+    "C:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj",
+        "projectUniqueName": "C:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj",
         "projectName": "gunfight_2",
-        "projectPath": "D:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj",
-        "packagesPath": "C:\\Users\\Tony\\.nuget\\packages\\",
-        "outputPath": "D:\\git\\sbox-gunfight\\Code\\obj\\",
+        "projectPath": "C:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj",
+        "packagesPath": "C:\\Users\\devul\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\sbox-gunfight\\Code\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tony\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devul\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj": {
-                "projectPath": "D:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj"
+              "C:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj": {
+                "projectPath": "C:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj"
               }
             }
           }
@@ -58,17 +58,17 @@
         }
       }
     },
-    "D:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj": {
+    "C:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj",
+        "projectUniqueName": "C:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj",
         "projectName": "Base Library",
-        "projectPath": "D:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj",
-        "packagesPath": "C:\\Users\\Tony\\.nuget\\packages\\",
-        "outputPath": "D:\\git\\sbox\\game\\addons\\base\\Code\\obj\\",
+        "projectPath": "C:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj",
+        "packagesPath": "C:\\Users\\devul\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\sbox\\game\\addons\\base\\Code\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tony\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devul\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

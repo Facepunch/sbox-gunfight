@@ -27,19 +27,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tony\\.nuget\\packages\\": {}
+    "C:\\Users\\devul\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj",
+      "projectUniqueName": "C:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj",
       "projectName": "gunfight_2",
-      "projectPath": "D:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj",
-      "packagesPath": "C:\\Users\\Tony\\.nuget\\packages\\",
-      "outputPath": "D:\\git\\sbox-gunfight\\Code\\obj\\",
+      "projectPath": "C:\\git\\sbox-gunfight\\Code\\gunfight_2.csproj",
+      "packagesPath": "C:\\Users\\devul\\.nuget\\packages\\",
+      "outputPath": "C:\\git\\sbox-gunfight\\Code\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Tony\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\devul\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -53,8 +53,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj": {
-              "projectPath": "D:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj"
+            "C:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj": {
+              "projectPath": "C:\\git\\sbox\\game\\addons\\base\\Code\\Base Library.csproj"
             }
           }
         }

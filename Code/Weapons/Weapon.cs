@@ -63,7 +63,7 @@ public partial class Weapon : Component
 	/// <summary>
 	/// A reference to the weapon's <see cref="Gunfight.ViewModel"/> if it has one.
 	/// </summary>
-	[Property] public ViewModel ViewModel
+	public ViewModel ViewModel
 	{
 		get => viewModel;
 		set

@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Gunfight;
 
 public partial class PlayerController : Component, IPawn
@@ -90,43 +92,62 @@ public partial class PlayerController : Component, IPawn
 	/// <summary>
 	/// What weapon are we using?
 	/// </summary>
-	public Weapon CurrentWeapon
+	[Property, JsonIgnore, ReadOnly] public Weapon CurrentWeapon
 	{
 		get => currentWeapon;
 		set
 		{
+			var prev = currentWeapon;
+
 			currentWeapon = value;
-			OnWeaponEquipped( currentWeapon );
+			WeaponChanged( prev, currentWeapon );
 		}
 	}
 
-	private void ClearViewModel()
+	private void ClearViewModel( Weapon weapon = null )
 	{
-		if ( CurrentWeapon.IsValid() )
+		if ( weapon.IsValid() )
 		{
-			CurrentWeapon?.ClearViewModel( this );
+			weapon?.ClearViewModel( this );
 		}
 	}
 
-	private void CreateViewModel()
+	private void CreateViewModel( Weapon weapon = null )
 	{
-		if ( CurrentWeapon.IsValid() )
+		if ( weapon.IsValid() )
 		{
-			CurrentWeapon.CreateViewModel( this );
+			weapon.CreateViewModel( this );
 		}
 	}
 
-	public void OnWeaponEquipped( Weapon newWeapon )
+	public void WeaponChanged( Weapon oldWeapon, Weapon newWeapon )
 	{
-		// Move the weapon to the hand
-		Body.MoveWeapon( newWeapon );
+		if ( oldWeapon.IsValid() )
+		{
+			// Set old weapon as inactive
+			oldWeapon.GameObject.Enabled = false;
+
+			ClearViewModel( oldWeapon );
+		}
+
+		if ( !newWeapon.IsValid() )
+			return;
+
+		// Set new weapon as active
+		newWeapon.GameObject.Enabled = true;
+
+		if ( newWeapon.IsValid() )
+		{
+			// Move the weapon to the hand
+			Body.MoveWeapon( newWeapon );
+		}
 
 		if ( IsLocallyControlled )
 		{
-			ClearViewModel();
+			ClearViewModel( oldWeapon );
 
 			if ( newWeapon.IsValid() )
-				CreateViewModel();
+				CreateViewModel( newWeapon );
 		}
 	}
 

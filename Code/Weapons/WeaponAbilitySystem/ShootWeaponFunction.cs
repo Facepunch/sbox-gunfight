@@ -177,12 +177,12 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 
 	protected void DoTracer( Vector3 startPosition, Vector3 endPosition, float distance, int count )
 	{
-		var effectPath = "assets/particles/gameplay/guns/trail/trail_smoke.vpcf";
+		var effectPath = "particles/gameplay/guns/trail/trail_smoke.vpcf";
 
 		// For when we have bullet penetration implemented.
 		if ( count > 0 )
 		{
-			effectPath = "assets/particles/gameplay/guns/trail/rico_trail_smoke.vpcf";
+			effectPath = "particles/gameplay/guns/trail/rico_trail_smoke.vpcf";
 
 			// Project backward
 			Vector3 dir = (startPosition - endPosition).Normal;

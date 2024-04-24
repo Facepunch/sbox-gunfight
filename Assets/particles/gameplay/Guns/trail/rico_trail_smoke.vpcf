@@ -902,14 +902,14 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"assets/particles/gameplay/guns/trail/rico_trail_impact_spark.vpcf"
+			m_ChildRef = resource:"particles/gameplay/guns/trail/rico_trail_impact_spark.vpcf"
 		},
 		{
-			m_ChildRef = resource:"assets/particles/gameplay/guns/trail/trail_bullet.vpcf"
+			m_ChildRef = resource:"particles/gameplay/guns/trail/trail_bullet.vpcf"
 			m_bDisableChild = true
 		},
 		{
-			m_ChildRef = resource:"assets/particles/gameplay/guns/trail/trail_smoke.vpcf"
+			m_ChildRef = resource:"particles/gameplay/guns/trail/trail_smoke.vpcf"
 		},
 	]
 }

@@ -129,7 +129,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 			decalRenderer.Size = new( decal.Width.GetValue(), decal.Height.GetValue(), decal.Depth.GetValue() );
 
 			// Creates a destruction component to destroy the gameobject after a while
-			gameObject.DestroyAsync( 30f );
+			gameObject.DestroyAsync( 3f );
 		}
 
 		if ( !string.IsNullOrEmpty( surface.Sounds.Bullet ) )
@@ -205,7 +205,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 			new() { StringCP = "0", Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = origin },
 			new() { StringCP = "1", Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = endPosition },
 			new() { StringCP = "2", Value = ParticleControlPoint.ControlPointValueInput.Float, FloatValue = distance }
-		}, 50f );
+		}, 3f );
 	}
 
 	protected void DryShoot()

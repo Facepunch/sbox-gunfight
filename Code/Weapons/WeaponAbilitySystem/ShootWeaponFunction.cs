@@ -170,7 +170,6 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 			// Inflict damage on whatever we find.
 			var damageInfo = DamageInfo.Bullet( BaseDamage, Weapon.PlayerController.GameObject, Weapon.GameObject );
 			tr.GameObject.TakeDamage( ref damageInfo );
-
 			Log.Trace( $"ShootWeaponFunction: We hit {tr.GameObject}!" );
 			count++;
 		}
@@ -239,7 +238,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 	{
 		var tr = Scene.Trace.Ray( WeaponRay, MaxRange )
 			.Size( BulletSize )
-			.WithAnyTags( "solid" )
+			.WithoutTags( "trigger" )
 			.UseHitboxes()
 			.Run();
 

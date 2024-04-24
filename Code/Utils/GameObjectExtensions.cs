@@ -9,7 +9,7 @@ public static partial class GameObjectExtensions
 	/// <param name="info"></param>
 	public static void TakeDamage( this GameObject go, ref DamageInfo info )
 	{
-		foreach ( var damageable in go.Components.GetAll<Component.IDamageable>( FindMode.EnabledInSelfAndDescendants ) )
+		foreach ( var damageable in go.Root.Components.GetAll<Component.IDamageable>( FindMode.EnabledInSelfAndDescendants ) )
 		{
 			damageable.OnDamage( info );
 		}

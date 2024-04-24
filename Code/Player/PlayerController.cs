@@ -123,6 +123,14 @@ public partial class PlayerController : Component, IPawn
 		}
 	}
 
+	protected override void OnEnabled()
+	{
+		base.OnEnabled();
+
+		// Turn off the HUD by default, we'll opt in
+		HUDGameObject.Enabled = false;
+	}
+
 	// Properties used only in this component.
 	Vector3 WishVelocity;
 	[Sync] public Angles EyeAngles { get; set; }

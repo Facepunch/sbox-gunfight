@@ -58,6 +58,23 @@ public partial class Weapon : Component
 	/// </summary>
 	[Property] protected AnimationHelper.HoldTypes HoldType { get; set; } = AnimationHelper.HoldTypes.Rifle;
 
+
+	/// <summary>
+	/// Updates the render mode, if we're locally controlling a player, we want to hide the world model.
+	/// </summary>
+	protected void UpdateRenderMode()
+	{
+		Log.Info( "Hello" );
+		if ( PlayerController.IsLocallyControlled )
+		{
+			ModelRenderer.RenderType = Sandbox.ModelRenderer.ShadowRenderType.ShadowsOnly;
+		}
+		else
+		{
+			ModelRenderer.RenderType = Sandbox.ModelRenderer.ShadowRenderType.On;
+		}
+	}
+
 	private ViewModel viewModel;
 
 	/// <summary>
@@ -169,6 +186,8 @@ public partial class Weapon : Component
 
 		ClearViewModel( player );
 
+		UpdateRenderMode();
+
 		if ( res.ViewModelPrefab != null )
 		{
 			// Create the weapon prefab and put it on the weapon gameobject.
@@ -184,19 +203,5 @@ public partial class Weapon : Component
 			// Weapon needs to know about the ViewModel
 			ViewModel = viewModelComponent;
 		}
-	}
-
-	/// <summary>
-	/// Called when we're equipping a weapon from PlayerLoadout
-	/// </summary>
-	/// <param name="player"></param>
-	internal void OnEquip( PlayerController player )
-	{
-		if ( IsProxy )
-		{
-			return;
-		}
-
-		CreateViewModel( player );
 	}
 }

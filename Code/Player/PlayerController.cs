@@ -96,14 +96,7 @@ public partial class PlayerController : Component, IPawn
 		set
 		{
 			currentWeapon = value;
-
-			if ( ( this as IPawn ).IsPossessed )
-			{
-				CreateViewModel();
-			}
-
-			// Move the weapon to the hand
-			Body.MoveWeapon( currentWeapon );
+			OnWeaponEquipped( currentWeapon );
 		}
 	}
 
@@ -120,6 +113,20 @@ public partial class PlayerController : Component, IPawn
 		if ( CurrentWeapon.IsValid() )
 		{
 			CurrentWeapon.CreateViewModel( this );
+		}
+	}
+
+	public void OnWeaponEquipped( Weapon newWeapon )
+	{
+		// Move the weapon to the hand
+		Body.MoveWeapon( newWeapon );
+
+		if ( IsLocallyControlled )
+		{
+			ClearViewModel();
+
+			if ( newWeapon.IsValid() )
+				CreateViewModel();
 		}
 	}
 

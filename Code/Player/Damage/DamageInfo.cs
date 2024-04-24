@@ -5,28 +5,13 @@ namespace Gunfight;
 /// <summary>
 /// A damage info struct. When inflicting damage on GameObjects, this is what we'll pass around.
 /// </summary>
-public partial struct DamageInfo
+public partial class DamageInfo : Sandbox.DamageInfo
 {
-	/// <summary>
-	/// The attacker. This could be anything.
-	/// </summary>
-	public GameObject Attacker { get; set; }
-
-	/// <summary>
-	/// The victim. This could be anything.
-	/// </summary>
-	public GameObject Victim { get; set; }
-
 	/// <summary>
 	/// The inflictor. This is normally the same as the attacker,
 	/// though it lets us pass another responsible GameObject, such as a weapon, or a projectile.
 	/// </summary>
 	public GameObject Inflictor { get; set; }
-
-	/// <summary>
-	/// The damage taken.
-	/// </summary>
-	public float Damage { get; set; }
 
 	/// <summary>
 	/// A list of tags that we can parse when taking damage.

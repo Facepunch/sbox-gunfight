@@ -1,6 +1,6 @@
 namespace Gunfight;
 
-public partial struct DamageInfo
+public partial class DamageInfo
 {
 	/// <summary>
 	/// Creates a generic DamageInfo struct.

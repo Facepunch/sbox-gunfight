@@ -2,10 +2,11 @@
 @inherits PanelComponent
 
 <root>
-    <WeaponInfoComponent Player=@Player />
+    <WeaponInfoComponent Inventory=@Inventory />
 </root>
 
 @code
 {
     [Property] public PlayerController Player { get; set; }
+    [Property] public PlayerInventory Inventory { get; set; }
 }

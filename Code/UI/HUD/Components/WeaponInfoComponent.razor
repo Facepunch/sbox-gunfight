@@ -2,49 +2,33 @@
 @inherits Panel
 @attribute [StyleSheet]
 
-<root class="hud with-deadzone">
-    <div class="background" />
+<root class="hud with-deadzone column">
+    <WeaponRow Weapon=@CurrentWeapon Slot=@GetSlot( CurrentWeapon ) />
 
-    @if ( Weapon.IsValid() )
+    @for ( int i = 0; i < Inventory.Weapons.Count; i++ )
     {
-        <div class="weapon-viewer">
-            <WeaponViewer WeaponResource=@Weapon.Resource />
-        </div>
+        @if (Inventory.Weapons[i] == CurrentWeapon) continue;
 
-        <div class="info">
-            @if ( AmmoContainer.IsValid() )
-            {
-                <div class="row">
-                    <label class="currentammo">@AmmoContainer.Ammo</label>
-                    <label class="inventory">@AmmoContainer.MaxAmmo</label>
-                </div>
-            }
-
-            <div class="row">
-                <label class="gunname">@Weapon.Resource.Name</label>
-            </div>
-        </div>
-
-        <InputHint Action="SwitchWeapon" />
+        <WeaponRow Weapon=@Inventory.Weapons[i] Slot=@i />
     }
 </root>
 
 @code
 {
     /// <summary>
-    /// The player.
+    /// The player's inventory
     /// </summary>
-    public PlayerController Player { get; set; }
+    public PlayerInventory Inventory { get; set; }
 
-    /// <summary>
-    /// The player's weapon.
-    /// </summary>
-    public Weapon Weapon => Player.CurrentWeapon;
+    /// The player
+    public PlayerController Player => Inventory.Components.Get<PlayerController>();
 
-    private AmmoContainer AmmoContainer => Weapon?.Components.Get<AmmoContainer>( FindMode.EnabledInSelfAndDescendants );
+    public Weapon CurrentWeapon => Player?.CurrentWeapon;
+
+    public int GetSlot( Weapon weapon ) => Inventory.Weapons.IndexOf( weapon );
 
     protected override int BuildHash()
     {
-        return HashCode.Combine( Weapon, AmmoContainer?.Ammo );
+        return HashCode.Combine( Inventory.Weapons.Count, CurrentWeapon );
     }
 }

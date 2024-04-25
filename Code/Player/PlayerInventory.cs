@@ -18,9 +18,9 @@ public partial class PlayerInventory : Component
 	[Property] public GameObject WeaponGameObject { get; set; }
 
 	/// <summary>
-	/// Temporary: A weapon that we'll give the player by default.
+	/// Temporary: A weapon set that we'll give the player by default.
 	/// </summary>
-	[Property] public WeaponDataResource DefaultWeapon { get; set; }
+	[Property] public List<WeaponDataResource> DefaultWeapons { get; set; }
 
 	/// <summary>
 	/// Gets the player's current weapon.
@@ -94,18 +94,23 @@ public partial class PlayerInventory : Component
 		{
 			Transform = new Transform(),
 			Parent = WeaponGameObject,
-			StartEnabled = true,
+			StartEnabled = false,
 		} );
-		var weaponComponent = weaponGameObject.Components.Get<Weapon>();
+		var weaponComponent = weaponGameObject.Components.Get<Weapon>( FindMode.EverythingInSelfAndDescendants );
 		weaponGameObject.NetworkSpawn();
+
+		weaponGameObject.Enabled = false;
 
 		Weapons.Add( weaponComponent );
 
-		Player.CurrentWeapon = weaponComponent;
+		if ( makeActive ) Player.CurrentWeapon = weaponComponent;
 	}
 
 	protected override void OnStart()
 	{
-		GiveWeapon( DefaultWeapon, true );
+		for ( int i = 0; i < DefaultWeapons.Count; i++ )
+		{
+			GiveWeapon( DefaultWeapons[i], i == 0 );
+		}
 	}
 }

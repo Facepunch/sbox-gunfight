@@ -5,11 +5,40 @@ WeaponInfoComponent
     position: absolute;
     right: 0;
     bottom: 0;
-    height: 128px;
-    gap: 8px;
+    gap: 32px;
+    flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
-    padding: 8px;
+
+    WeaponViewer
+    {
+        opacity: 0.75;
+    }
+}
+
+WeaponViewer
+{
+    width: 128px;
+    height: 64px;
+    filter: saturate(0);
+    filter: invert(1);
+}
+
+
+WeaponRow
+{
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    opacity: 0.5;
+    transform: scale( 0.9 );
+
+    &.is-active
+    {
+        opacity: 1;
+        transform: scale( 1 );
+    }
 
     > .background
     {
@@ -19,7 +48,6 @@ WeaponInfoComponent
         height: 128px;
         background-image: radial-gradient( rgba( black, 0.5 ), rgba( black, 0.3 ), rgba( black, 0 ), rgba( black, 0 ), rgba( black, 0 ) );
     }
-
 
     .info
     {
@@ -58,17 +86,4 @@ WeaponInfoComponent
             opacity: 1;
         }
     }
-
-    WeaponViewer
-    {
-        opacity: 0.75;
-    }
-}
-
-WeaponViewer
-{
-    width: 128px;
-    height: 64px;
-    filter: saturate(0);
-    filter: invert(1);
 }

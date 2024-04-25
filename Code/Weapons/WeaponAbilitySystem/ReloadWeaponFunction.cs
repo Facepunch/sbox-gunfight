@@ -1,3 +1,4 @@
+
 namespace Gunfight;
 
 public partial class ReloadWeaponFunction : InputActionWeaponFunction
@@ -38,6 +39,12 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 
 		// Tags will be better so we can just react to stimuli.
 		Weapon.ViewModel?.ModelRenderer.Set( "b_reload", true );
+	}
+
+	public override IEnumerable<string> GetTags()
+	{
+		if ( IsReloading )
+			yield return "reloading";
 	}
 
 	void EndReload()

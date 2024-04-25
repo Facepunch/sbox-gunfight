@@ -19,7 +19,7 @@ public partial class ViewModel : Component
 	/// <summary>
 	/// Look up the tree to find the camera.
 	/// </summary>
-	CameraController CameraController => Components.Get<CameraController>( FindMode.InAncestors );
+	CameraController CameraController => PlayerController.CameraController;
 
 	/// <summary>
 	/// Looks up the tree to find the player controller.
@@ -79,12 +79,30 @@ public partial class ViewModel : Component
 		ModelRenderer.Set( "move_groundspeed", moveLen );
 	}
 
+	private float FieldOfViewOffset = 0f;
+	private float TargetFieldOfView = 90f;
+
+	void AddFieldOfViewOffset( float degrees )
+	{
+		FieldOfViewOffset -= degrees;
+	}
+
 	void ApplyStates()
 	{
 		if ( PlayerController.HasTag( "slide" ) )
 		{
 			localPosition += Vector3.Backward * 2f;
 			localRotation *= Rotation.From( 10, 25, -5 );
+		}
+
+		if ( PlayerController.IsAiming && !Weapon.HasTag( "reloading" ) )
+		{
+			// This should be configurable on the gun really
+			localPosition += Vector3.Up * -0.75f;
+			//localPosition += Vector3.Forward * -5f;
+
+			CameraController.AddFieldOfViewOffset( 5 );
+			AddFieldOfViewOffset( 40 );
 		}
 	}
 
@@ -95,7 +113,10 @@ public partial class ViewModel : Component
 
 		// Ironsights
 		ModelRenderer.Set( "ironsights", PlayerController.IsAiming ? 2 : 0 );
-		ModelRenderer.Set( "ironsights_fire_scale", PlayerController.IsAiming ? 0.3f : 0f );
+		ModelRenderer.Set( "ironsights_fire_scale", PlayerController.IsAiming ? 0.2f : 0f );
+
+		// Handedness
+		ModelRenderer.Set( "b_twohanded", true );
 
 		// Weapon state
 		ModelRenderer.Set( "b_empty", !Weapon.Components.Get<AmmoContainer>( FindMode.EnabledInSelfAndDescendants )?.HasAmmo ?? false );
@@ -111,6 +132,12 @@ public partial class ViewModel : Component
 		ApplyStates();
 		ApplyAnimationParameters();
 		ApplyAnimationTransform();
+
+		var baseFov = Preferences.FieldOfView;
+
+		TargetFieldOfView = TargetFieldOfView.LerpTo( baseFov + FieldOfViewOffset, Time.Delta * 10f );
+		FieldOfViewOffset = 0;
+		ViewModelCamera.FieldOfView = TargetFieldOfView;
 
 		lerpedlocalRotation = Rotation.Lerp( lerpedlocalRotation, localRotation, Time.Delta * 10f );
 		lerpedLocalPosition = lerpedLocalPosition.LerpTo( localPosition, Time.Delta * 10f );

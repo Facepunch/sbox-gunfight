@@ -1,3 +1,5 @@
+using Sandbox;
+
 namespace Gunfight;
 
 public sealed class CameraController : Component
@@ -13,6 +15,14 @@ public sealed class CameraController : Component
 	/// Constructs a ray using the camera's GameObject
 	/// </summary>
 	public Ray AimRay => new Ray( Camera.Transform.Position + Camera.Transform.Rotation.Forward * 25f, Camera.Transform.Rotation.Forward );
+
+	private float FieldOfViewOffset = 0f;
+	private float TargetFieldOfView = 90f;
+
+	public void AddFieldOfViewOffset( float degrees )
+	{
+		FieldOfViewOffset -= degrees;
+	}
 
 	public void SetActive( bool isActive )
 	{
@@ -35,6 +45,12 @@ public sealed class CameraController : Component
 
 	protected override void OnUpdate()
 	{
+		var baseFov = Preferences.FieldOfView;
+
+		TargetFieldOfView = TargetFieldOfView.LerpTo( baseFov + FieldOfViewOffset, Time.Delta * 5f );
+		FieldOfViewOffset = 0;
+		Camera.FieldOfView = TargetFieldOfView;
+
 		ApplyRecoil();
 	}
 

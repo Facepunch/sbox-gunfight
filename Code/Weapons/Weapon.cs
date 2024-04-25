@@ -100,7 +100,17 @@ public partial class Weapon : Component
 	/// <returns></returns>
 	public T GetFunction<T>() where T : WeaponFunction
 	{
-		return Components.Get<T>( FindMode.EnabledInSelfAndDescendants );
+		return Components.Get<T>( FindMode.EnabledInSelfAndChildren );
+	}
+
+	/// <summary>
+	/// Access any amount of functions.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	public IEnumerable<T> GetFunctions<T>() where T : WeaponFunction
+	{
+		return Components.GetAll<T>( FindMode.EnabledInSelfAndChildren );
 	}
 
 	/// <summary>
@@ -165,6 +175,7 @@ public partial class Weapon : Component
 
 	protected override void OnUpdate()
 	{
+		UpdateTags();
 	}
 
 	public void ClearViewModel( PlayerController player )

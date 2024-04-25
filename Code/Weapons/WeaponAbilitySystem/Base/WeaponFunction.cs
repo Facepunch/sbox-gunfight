@@ -39,4 +39,13 @@ public abstract class WeaponFunction : Component
 			UpdateStats();
 		}
 	}
+
+	/// <summary>
+	/// Return a list of tags to be used by the player controller / other systems.
+	/// </summary>
+	/// <returns></returns>
+	public virtual IEnumerable<string> GetTags()
+	{
+		return Enumerable.Empty<string>();
+	}
 }

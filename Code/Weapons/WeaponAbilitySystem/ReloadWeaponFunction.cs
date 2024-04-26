@@ -1,4 +1,3 @@
-
 namespace Gunfight;
 
 public partial class ReloadWeaponFunction : InputActionWeaponFunction
@@ -8,6 +7,11 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 
 	bool IsReloading;
 	TimeUntil TimeUntilReload;
+
+	protected override void OnEnabled()
+	{
+		BindTag( "reloading", () => IsReloading );
+	}
 
 	protected override void OnFunctionExecute()
 	{
@@ -39,12 +43,6 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 
 		// Tags will be better so we can just react to stimuli.
 		Weapon.ViewModel?.ModelRenderer.Set( "b_reload", true );
-	}
-
-	public override IEnumerable<string> GetTags()
-	{
-		if ( IsReloading )
-			yield return "reloading";
 	}
 
 	void EndReload()

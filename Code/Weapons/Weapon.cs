@@ -1,6 +1,3 @@
-
-using System.Diagnostics;
-
 namespace Gunfight;
 
 /// <summary>
@@ -12,6 +9,18 @@ public partial class Weapon : Component
 	/// A reference to the weapon's <see cref="WeaponDataResource"/>.
 	/// </summary>
 	[Property] public WeaponDataResource Resource { get; set; }
+
+	/// <summary>
+	/// A tag binder for this weapon.
+	/// </summary>
+	[RequireComponent] public TagBinder TagBinder { get; set; }
+
+	/// <summary>
+	/// Shorthand to bind a tag.
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <param name="predicate"></param>
+	internal void BindTag( string tag, Func<bool> predicate ) => TagBinder.BindTag( tag, predicate );
 
 	/// <summary>
 	/// A list of stats for this weapon. The <see cref="Resource"/> will set this when instantiated.
@@ -175,7 +184,6 @@ public partial class Weapon : Component
 
 	protected override void OnUpdate()
 	{
-		UpdateTags();
 	}
 
 	public void ClearViewModel( PlayerController player )

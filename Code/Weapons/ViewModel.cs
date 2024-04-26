@@ -89,13 +89,13 @@ public partial class ViewModel : Component
 
 	void ApplyStates()
 	{
-		if ( PlayerController.HasTag( "slide" ) )
+		if ( PlayerController.Tags.Has( "slide" ) )
 		{
 			localPosition += Vector3.Backward * 2f;
 			localRotation *= Rotation.From( 10, 25, -5 );
 		}
 
-		if ( PlayerController.IsAiming && !Weapon.HasTag( "reloading" ) )
+		if ( PlayerController.IsAiming && !Weapon.Tags.Has( "reloading" ) )
 		{
 			// This should be configurable on the gun really
 			localPosition += Vector3.Up * -0.75f;

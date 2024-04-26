@@ -256,7 +256,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 	/// <returns></returns>
 	public bool CanShoot()
 	{
-		if ( Weapon.HasTag( "reloading" ) || Weapon.HasTag( "no_shooting" ) )
+		if ( Weapon.Tags.Has( "reloading" ) || Weapon.Tags.Has( "no_shooting" ) )
 		{
 			return false;
 		}

@@ -2,7 +2,19 @@ namespace Gunfight;
 
 public partial class ReloadWeaponFunction : InputActionWeaponFunction
 {
+	/// <summary>
+	/// How long does it take to reload?
+	/// </summary>
 	[Property] public float ReloadTime { get; set; } = 1.0f;
+
+	/// <summary>
+	/// How long does it take to reload while empty?
+	/// </summary>
+	[Property] public float EmptyReloadTime { get; set; } = 2.0f;
+
+	/// <summary>
+	/// This is really just the magazine for the weapon. 
+	/// </summary>
 	[Property] public AmmoContainer AmmoContainer { get; set; }
 
 	bool IsReloading;
@@ -36,10 +48,16 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 		return !IsReloading && AmmoContainer.IsValid();
 	}
 
+	float GetReloadTime()
+	{
+		if ( !AmmoContainer.HasAmmo ) return EmptyReloadTime;
+		return ReloadTime;
+	}
+
 	void StartReload()
 	{
 		IsReloading = true;
-		TimeUntilReload = ReloadTime;
+		TimeUntilReload = GetReloadTime();
 
 		// Tags will be better so we can just react to stimuli.
 		Weapon.ViewModel?.ModelRenderer.Set( "b_reload", true );
@@ -54,11 +72,5 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 
 		// Tags will be better so we can just react to stimuli.
 		Weapon.ViewModel?.ModelRenderer.Set( "b_reload", false );
-	}
-
-	internal override void UpdateStats()
-	{
-		// Try to fetch relevant stats from the weapon 
-		ReloadTime = Stats.ReloadSpeed;
 	}
 }

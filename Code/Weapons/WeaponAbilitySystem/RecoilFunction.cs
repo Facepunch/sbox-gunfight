@@ -61,12 +61,6 @@ public partial class RecoilFunction : WeaponFunction
 	{
 		Current = Current.LerpTo( Angles.Zero, Time.Delta * 10f );
 	}
-
-	internal override void UpdateStats()
-	{
-		HorizontalSpread = Stats.HorizontalSpread;
-		VerticalSpread = Stats.VerticalSpread;
-	}
 }
 
 public static class Extensions

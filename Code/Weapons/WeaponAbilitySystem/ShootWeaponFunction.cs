@@ -284,19 +284,14 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 		}
 		else
 		{
-			if ( TimeSinceShoot < DryFireDelay )
+			// Dry fire
+			if ( !AmmoContainer.HasAmmo )
 			{
-				return;
+				if ( TimeSinceShoot < DryFireDelay )
+					return;
+
+				DryShoot();
 			}
-
-			DryShoot();
 		}
-	}
-
-	internal override void UpdateStats()
-	{
-		// Try to fetch relevant stats from the weapon 
-		BaseDamage = Stats.BaseDamage;
-		FireRate = Stats.FireRate;
 	}
 }

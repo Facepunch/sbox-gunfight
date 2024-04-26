@@ -25,12 +25,6 @@ public partial class WeaponDataResource : GameResource
 	public GameObject ViewModelPrefab { get; set; }
 
 	/// <summary>
-	/// A stats resource for this weapon. Will get passed to the gun.
-	/// </summary>
-	[Category( "Stats" )]
-	public WeaponStatsResource StatsResource { get; set; }
-
-	/// <summary>
 	/// The weapon's model
 	/// </summary>
 	[Category( "Information" )]

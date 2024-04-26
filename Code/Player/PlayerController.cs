@@ -62,11 +62,6 @@ public partial class PlayerController : Component, IPawn
 	// TODO: move this into something that isn't on the player, this should be on an animator being fed info like the weapon
 	[Sync] AnimationHelper.HoldTypes CurrentHoldType { get; set; } = AnimationHelper.HoldTypes.None;
 
-	// TODO: move this into something that isn't on the player, this is shit
-	[Sync] public bool IsAiming { get; private set; }
-
-	public bool WishAim { get; private set; }
-
 	/// <summary>
 	/// GameObject with the player's HUD. We'll only turn it on if we're the local connection.
 	/// </summary>
@@ -205,9 +200,6 @@ public partial class PlayerController : Component, IPawn
 			var lookDir = EyeAngles.ToRotation();
 
 			cam.Transform.Rotation = lookDir;
-
-			WishAim = Input.Down( "Attack2" );
-			IsAiming = WishAim && CanAim();
 		}
 		else
 		{
@@ -249,12 +241,6 @@ public partial class PlayerController : Component, IPawn
 			AnimationHelper.HoldType = CurrentHoldType;
 			AnimationHelper.SkidAmount = HasTag( "slide" ) ? 1 : 0;
 		}
-	}
-
-	private bool CanAim()
-	{
-		if ( HasTag( "no_aiming" ) ) return false;
-		return true;
 	}
 
 	private void GroundedChanged()

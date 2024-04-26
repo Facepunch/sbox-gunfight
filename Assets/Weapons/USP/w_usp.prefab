@@ -86,7 +86,7 @@
             "RequiresAmmoContainer": true,
             "ShootSound": "sounds/guns/m1911/pistol_shoot.sound",
             "TimeSinceShoot": {
-              "Relative": 2650.8599
+              "Relative": 3192.7666
             }
           },
           {
@@ -109,11 +109,11 @@
           {
             "__type": "Gunfight.RecoilFunction",
             "__guid": "c4627135-e865-4b07-a6f7-2ee484d1c175",
-            "HorizontalSpread": "0.00,0.00,0",
+            "HorizontalSpread": "4.00,-4.00,1",
             "PlayerVelocityLimit": 200,
             "PlayerVelocitySpread": 6,
             "RecoilResetTime": 0.3,
-            "VerticalSpread": "0.00,0.00,0"
+            "VerticalSpread": "8.00,0.00,0"
           }
         ]
       }

@@ -1,5 +1,5 @@
 {
-  "__guid": "50660687-2499-4d51-9e0e-270cda2d2d98",
+  "__guid": "3540a6d8-df71-484d-8d73-a291e5c78e06",
   "GameObjects": [
     {
       "__guid": "00344a8c-fa5e-45ae-b12a-10bb781a1dc3",
@@ -82,6 +82,36 @@
           "ZNear": 10
         }
       ]
+    },
+    {
+      "__guid": "fa86f29a-05d7-4c74-bf11-5630f2876369",
+      "Name": "player",
+      "Position": "-284.4613,198.1541,28.73872",
+      "Tags": "player",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "__Prefab": "prefabs/player/player.prefab"
+    },
+    {
+      "__guid": "642d043e-7d15-42ce-87c9-e987a07d1582",
+      "Name": "Cubemap Fog",
+      "Position": "-292.3575,193.2145,79.91572",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "Components": [
+        {
+          "__type": "Sandbox.CubemapFog",
+          "__guid": "174331b5-c392-4cf4-8e53-cf120c74ef8b",
+          "Blur": 0.93,
+          "EndDistance": 2048,
+          "FalloffExponent": 5,
+          "HeightExponent": 5,
+          "HeightStart": 2000,
+          "HeightWidth": 0,
+          "Sky": "materials/dev/default_sky.vmat",
+          "StartDistance": 256
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -107,7 +137,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-04-19T10:02:58.9895683\u002B01:00",
+  "LastSaved": "2024-04-26T17:23:31.4091551\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

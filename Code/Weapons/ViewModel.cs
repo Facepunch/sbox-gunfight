@@ -69,7 +69,7 @@ public partial class ViewModel : Component
 		if ( PlayerController.HasTag( "slide" ) ) moveLen = 0;
 
 		var wishLook = PlayerController.WishMove.Normal * 1f;
-		if ( PlayerController.IsAiming ) wishLook = 0;
+		if ( Weapon?.Tags.Has( "aiming" ) ?? false ) wishLook = 0;
 
 		lerpedWishLook = lerpedWishLook.LerpTo( wishLook, Time.Delta * 5.0f );
 
@@ -89,13 +89,13 @@ public partial class ViewModel : Component
 
 	void ApplyStates()
 	{
-		if ( PlayerController.Tags.Has( "slide" ) )
+		if ( PlayerController.HasTag( "slide" ) )
 		{
 			localPosition += Vector3.Backward * 2f;
 			localRotation *= Rotation.From( 10, 25, -5 );
 		}
 
-		if ( PlayerController.IsAiming && !Weapon.Tags.Has( "reloading" ) )
+		if ( Weapon.Tags.Has( "aiming" ) )
 		{
 			// This should be configurable on the gun really
 			localPosition += Vector3.Up * -0.75f;
@@ -112,8 +112,8 @@ public partial class ViewModel : Component
 		ModelRenderer.Set( "b_grounded", PlayerController.IsGrounded );
 
 		// Ironsights
-		ModelRenderer.Set( "ironsights", PlayerController.IsAiming ? 2 : 0 );
-		ModelRenderer.Set( "ironsights_fire_scale", PlayerController.IsAiming ? 0.2f : 0f );
+		ModelRenderer.Set( "ironsights", Weapon.Tags.Has( "aiming" ) ? 2 : 0 );
+		ModelRenderer.Set( "ironsights_fire_scale", Weapon.Tags.Has( "aiming" ) ? 0.2f : 0f );
 
 		// Handedness
 		ModelRenderer.Set( "b_twohanded", true );

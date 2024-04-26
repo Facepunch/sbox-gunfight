@@ -256,10 +256,13 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 	/// <returns></returns>
 	public bool CanShoot()
 	{
-		if ( Weapon.Tags.Has( "reloading" ) || Weapon.Tags.Has( "no_shooting" ) )
-		{
+		// Player
+		if ( Weapon.PlayerController.HasTag( "sprint" )  )
 			return false;
-		}
+
+		// Weapon
+		if ( Weapon.Tags.Has( "reloading" ) || Weapon.Tags.Has( "no_shooting" ) )
+			return false;
 
 		// Delay checks
 		if ( TimeSinceShoot < RPMToSeconds() )

@@ -32,7 +32,6 @@ public partial class Weapon : Component
 	/// </summary>
 	[Property] protected AnimationHelper.HoldTypes HoldType { get; set; } = AnimationHelper.HoldTypes.Rifle;
 
-
 	/// <summary>
 	/// Updates the render mode, if we're locally controlling a player, we want to hide the world model.
 	/// </summary>

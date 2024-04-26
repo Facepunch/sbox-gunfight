@@ -48,10 +48,30 @@ public abstract class InputActionWeaponFunction : WeaponFunction
 		return Input.Released( action );
 	}
 
+	bool isDown = false;
+
+	protected bool IsDown() => isDown;
+
 	/// <summary>
 	/// Called when the input method succeeds.
 	/// </summary>
 	protected virtual void OnFunctionExecute()
+	{
+		//
+	}
+
+	/// <summary>
+	/// When the button is up
+	/// </summary>
+	protected virtual void OnFunctionUp()
+	{
+		//
+	}
+
+	/// <summary>
+	/// When the button is down
+	/// </summary>
+	protected virtual void OnFunctionDown()
 	{
 		//
 	}
@@ -83,6 +103,20 @@ public abstract class InputActionWeaponFunction : WeaponFunction
 		{
 			OnFunctionExecute();
 			OnFunctionExecuteAction?.Invoke( this );
+
+			if ( !isDown )
+			{
+				OnFunctionDown();
+				isDown = true;
+			}
+		}
+		else
+		{
+			if ( isDown )
+			{
+				OnFunctionUp();
+				isDown = false;
+			}
 		}
 	}
 }

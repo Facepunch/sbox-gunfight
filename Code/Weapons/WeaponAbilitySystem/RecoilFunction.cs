@@ -52,7 +52,6 @@ public partial class RecoilFunction : WeaponFunction
 		var timeDelta = Time.Delta;
 		var newAngles = new Angles( - (VerticalSpread.GetBetween() * VerticalScale ) * timeDelta, ( HorizontalSpread.GetBetween() * HorizontalScale ) * timeDelta, 0 );
 
-
 		Current = Current + newAngles;
 		currentFrame++;
 	}

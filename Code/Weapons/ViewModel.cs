@@ -97,8 +97,11 @@ public partial class ViewModel : Component
 
 		if ( Weapon.Tags.Has( "aiming" ) )
 		{
+			var aimFunction = Weapon.GetFunction<AimWeaponFunction>();
+
 			// This should be configurable on the gun really
-			localPosition += Vector3.Up * -0.75f;
+			localPosition += aimFunction.AimOffset;
+			localRotation *= aimFunction.AimAngles.ToRotation();
 			//localPosition += Vector3.Forward * -5f;
 
 			CameraController.AddFieldOfViewOffset( 5 );

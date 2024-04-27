@@ -4,6 +4,9 @@ public partial class AimWeaponFunction : InputActionWeaponFunction
 {
 	public bool IsAiming { get; set; }
 
+	[Property] public Vector3 AimOffset { get; set; }
+	[Property] public Angles AimAngles { get; set; }
+
 	protected override void OnEnabled()
 	{
 		BindTag( "aiming", () => IsAiming );

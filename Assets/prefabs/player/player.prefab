@@ -91,6 +91,12 @@
       {
         "__type": "Gunfight.PlayerFootsteps",
         "__guid": "9559bded-821c-41f0-bf51-bcebfa2d9706",
+        "Player": {
+          "_type": "component",
+          "component_id": "13654c39-0429-4fb6-ae09-6cf8afb3aa21",
+          "go": "c81d9058-e8b0-42bb-8739-16472a51384e",
+          "component_type": "PlayerController"
+        },
         "Source": {
           "_type": "component",
           "component_id": "c11dd64d-8030-4064-b404-64de6a610710",
@@ -1259,7 +1265,7 @@
             },
             "Priority": 0,
             "TimeSinceActiveChanged": {
-              "Relative": 3018.4602
+              "Relative": 3137.7026
             }
           },
           {
@@ -1273,7 +1279,7 @@
             },
             "Priority": 1,
             "TimeSinceActiveChanged": {
-              "Relative": 3018.4602
+              "Relative": 3137.7026
             }
           },
           {
@@ -1292,7 +1298,7 @@
             "SlideFriction": 0.01,
             "SlideSpeed": 300,
             "TimeSinceActiveChanged": {
-              "Relative": 3018.4602
+              "Relative": 3137.7026
             },
             "WishDirectionScale": 0.4
           }

@@ -2,6 +2,7 @@ namespace Gunfight;
 
 public sealed class PlayerFootsteps : Component
 {
+	[Property] public PlayerController Player { get; set; }
 	[Property] SkinnedModelRenderer Source { get; set; }
 
 	protected override void OnEnabled()
@@ -25,6 +26,9 @@ public sealed class PlayerFootsteps : Component
 	private void OnEvent( SceneModel.FootstepEvent e )
 	{
 		if ( timeSinceStep < 0.2f )
+			return;
+
+		if ( Player.HasTag( "slide" ) ) 
 			return;
 
 		var tr = Scene.Trace

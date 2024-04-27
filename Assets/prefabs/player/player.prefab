@@ -87,6 +87,16 @@
           "go": "d2bbb71f-137b-4c6a-ba33-7abf59d71b2b"
         },
         "Weapons": []
+      },
+      {
+        "__type": "Gunfight.PlayerFootsteps",
+        "__guid": "9559bded-821c-41f0-bf51-bcebfa2d9706",
+        "Source": {
+          "_type": "component",
+          "component_id": "c11dd64d-8030-4064-b404-64de6a610710",
+          "go": "41c78998-0dd6-45c7-ba1a-804776241d0b",
+          "component_type": "SkinnedModelRenderer"
+        }
       }
     ],
     "Children": [
@@ -1249,7 +1259,7 @@
             },
             "Priority": 0,
             "TimeSinceActiveChanged": {
-              "Relative": 1585.5565
+              "Relative": 3018.4602
             }
           },
           {
@@ -1263,7 +1273,7 @@
             },
             "Priority": 1,
             "TimeSinceActiveChanged": {
-              "Relative": 1585.5565
+              "Relative": 3018.4602
             }
           },
           {
@@ -1282,7 +1292,7 @@
             "SlideFriction": 0.01,
             "SlideSpeed": 300,
             "TimeSinceActiveChanged": {
-              "Relative": 1585.5565
+              "Relative": 3018.4602
             },
             "WishDirectionScale": 0.4
           }

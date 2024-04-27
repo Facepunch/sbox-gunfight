@@ -152,29 +152,6 @@
                     "ZNear": 0.1
                   }
                 ]
-              },
-              {
-                "__guid": "c996bfd7-3181-447b-b6ce-ab8a578fc21a",
-                "Name": "Spot Light",
-                "Position": "13.37625,0,6.163315",
-                "Tags": "light_spot,light",
-                "Enabled": true,
-                "NetworkMode": 2,
-                "Components": [
-                  {
-                    "__type": "Sandbox.SpotLight",
-                    "__guid": "706be6b0-dc4c-4978-8792-86685fad45d5",
-                    "Attenuation": 1,
-                    "ConeInner": 25,
-                    "ConeOuter": 45,
-                    "Cookie": "materials/effects/lightcookie.vtex",
-                    "FogMode": "Enabled",
-                    "FogStrength": 1,
-                    "LightColor": "0.91373,0.98039,1,1",
-                    "Radius": 2048,
-                    "Shadows": false
-                  }
-                ]
               }
             ]
           }
@@ -1271,7 +1248,7 @@
             },
             "Priority": 0,
             "TimeSinceActiveChanged": {
-              "Relative": 3505.2292
+              "Relative": 4435.086
             }
           },
           {
@@ -1285,7 +1262,7 @@
             },
             "Priority": 1,
             "TimeSinceActiveChanged": {
-              "Relative": 3505.2292
+              "Relative": 4435.086
             }
           },
           {
@@ -1304,7 +1281,7 @@
             "SlideFriction": 0.01,
             "SlideSpeed": 300,
             "TimeSinceActiveChanged": {
-              "Relative": 3505.2292
+              "Relative": 4435.086
             },
             "WishDirectionScale": 0.4
           }

@@ -20,15 +20,23 @@ public partial class PlayerController
 		(this as IPawn ).Possess();
 	}
 
+	[Broadcast]
+	public void NetDePossess()
+	{
+		if ( !IsLocallyControlled ) return;
+
+		(this as IPawn).DePossess();
+	}
+
 	void SetupCamera()
 	{
 		CameraController.SetActive( true );
 	}
 
-	public void OnUnPossess()
+	public void OnDePossess()
 	{
+		HUDGameObject.Enabled = false;
 		CameraController.SetActive( false );
 		ClearViewModel();
-		HUDGameObject.Enabled = false;
 	}
 }

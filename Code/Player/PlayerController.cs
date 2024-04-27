@@ -1,8 +1,9 @@
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 
 namespace Gunfight;
 
-public partial class PlayerController : Component, IPawn
+public partial class PlayerController : Component, IPawn, IRespawnable
 {
 	/// <summary>
 	/// The player's body
@@ -200,6 +201,21 @@ public partial class PlayerController : Component, IPawn
 			var lookDir = EyeAngles.ToRotation();
 
 			cam.Transform.Rotation = lookDir;
+
+			// TEST CODE: POSSESSION
+			if ( Input.Pressed( "Mount" ) )
+			{
+				var tr = Scene.Trace.Ray( CameraController.Camera.Transform.Position, CameraController.Camera.Transform.Rotation.Forward * 1000000 )
+				.WithoutTags( "trigger" )
+				.IgnoreGameObjectHierarchy( GameObject )
+				.UseHitboxes()
+				.Run();
+
+				if ( tr.Hit && tr.GameObject.Root.Components.Get<PlayerController>( FindMode.EnabledInSelfAndDescendants ) is { } player )
+				{
+					player.NetPossess();
+				}
+			}
 		}
 		else
 		{

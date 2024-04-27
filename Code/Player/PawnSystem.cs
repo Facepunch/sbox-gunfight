@@ -3,7 +3,7 @@ namespace Gunfight;
 public interface IPawn
 {
 	public void OnPossess();
-	public void OnUnPossess();
+	public void OnDePossess();
 
 	/// <summary>
 	/// Are we possessing this pawn right now? (Clientside)
@@ -25,6 +25,15 @@ public interface IPawn
 		Game.ActiveScene.GetSystem<PawnSystem>()
 			.Possess( this );
 	}
+
+	/// <summary>
+	/// De possesses the pawn.
+	/// </summary>
+	public void DePossess()
+	{
+		Game.ActiveScene.GetSystem<PawnSystem>()
+			.DePossess( this );
+	}
 }
 
 public partial class PawnSystem : GameObjectSystem
@@ -36,10 +45,16 @@ public partial class PawnSystem : GameObjectSystem
 	/// </summary>
 	public void Possess( IPawn pawn )
 	{
-		Viewer?.OnUnPossess();
+		DePossess( Viewer );
 		Viewer = pawn;
 
 		pawn?.OnPossess();
+	}
+
+	public void DePossess( IPawn pawn )
+	{
+		pawn?.OnDePossess();
+		Viewer = null;
 	}
 
 	public PawnSystem( Scene scene ) : base( scene )

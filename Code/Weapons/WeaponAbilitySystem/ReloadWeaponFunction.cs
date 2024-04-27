@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Gunfight;
 
 public partial class ReloadWeaponFunction : InputActionWeaponFunction
@@ -54,6 +56,12 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 		return ReloadTime;
 	}
 
+	Dictionary<float, SoundEvent> GetReloadSounds()
+	{
+		if ( !AmmoContainer.HasAmmo ) return EmptyReloadSounds;
+		return TimedReloadSounds;
+	}
+
 	void StartReload()
 	{
 		IsReloading = true;
@@ -61,6 +69,11 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 
 		// Tags will be better so we can just react to stimuli.
 		Weapon.ViewModel?.ModelRenderer.Set( "b_reload", true );
+
+		foreach ( var kv in GetReloadSounds() )
+		{
+			PlayAsyncSound( kv.Key, kv.Value );
+		}
 	}
 
 	void EndReload()
@@ -72,5 +85,14 @@ public partial class ReloadWeaponFunction : InputActionWeaponFunction
 
 		// Tags will be better so we can just react to stimuli.
 		Weapon.ViewModel?.ModelRenderer.Set( "b_reload", false );
+	}
+
+	[Property] public Dictionary<float, SoundEvent> TimedReloadSounds { get; set; } = new();
+	[Property] public Dictionary<float, SoundEvent> EmptyReloadSounds { get; set; } = new();
+
+	async void PlayAsyncSound( float delay, SoundEvent snd )
+	{
+		await GameTask.DelaySeconds( delay );
+		GameObject.PlaySound( snd );
 	}
 }

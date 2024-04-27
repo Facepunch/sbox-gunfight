@@ -1,11 +1,9 @@
-using System.Runtime.Intrinsics.X86;
-
 namespace Gunfight;
 
 /// <summary>
 /// A health component for any kind of GameObject.
 /// </summary>
-public partial class HealthComponent : Component, Component.IDamageable
+public partial class HealthComponent : Component, Component.IDamageable, IRespawnable
 {
 	private float health = 100f;
 	private LifeState state = LifeState.Alive;
@@ -19,6 +17,21 @@ public partial class HealthComponent : Component, Component.IDamageable
 	/// An action to respond to when a GameObject's life state changes.
 	/// </summary>
 	[Property] public Action<LifeState, LifeState> OnLifeStateChanged { get; set; }
+
+	/// <summary>
+	/// Called when dead.
+	/// </summary>
+	[Property] public Func<Sandbox.DamageInfo, LifeState?> OnKilled { get; set; }
+
+	/// <summary>
+	/// How long does it take to respawn this object?
+	/// </summary>
+	[Property] public float RespawnTime { get; set; } = 2f;
+
+	/// <summary>
+	/// How long has it been since life state changed?
+	/// </summary>
+	TimeSince TimeSinceLifeStateChanged = 1;
 
 	/// <summary>
 	/// What's our health?
@@ -50,6 +63,7 @@ public partial class HealthComponent : Component, Component.IDamageable
 			if ( old == value ) return;
 
 			state = value;
+			TimeSinceLifeStateChanged = 0;
 			LifeStateChanged( old, state );
 		}
 	}
@@ -65,9 +79,22 @@ public partial class HealthComponent : Component, Component.IDamageable
 		OnHealthChanged?.Invoke( oldValue, newValue );
 	}
 
+	protected IEnumerable<IRespawnable> Respawnables => GameObject.Root.Components.GetAll<IRespawnable>( FindMode.EnabledInSelfAndDescendants );
+
 	protected void LifeStateChanged( LifeState oldValue, LifeState newValue )
 	{
 		OnLifeStateChanged?.Invoke( oldValue, newValue );
+
+		if ( newValue == LifeState.Alive )
+		{
+			Respawnables.ToList()
+				.ForEach( x => x.Respawn() );
+		}
+		if ( ( newValue == LifeState.Dead || newValue == LifeState.Respawning ) && oldValue == LifeState.Alive )
+		{
+			Respawnables.ToList()
+				.ForEach( x => x.Kill() );
+		}
 	}
 
 	/// <summary>
@@ -77,15 +104,49 @@ public partial class HealthComponent : Component, Component.IDamageable
 	public void OnDamage( in Sandbox.DamageInfo info )
 	{
 		Health -= info.Damage;
+
+		if ( Health <= 0 )
+		{
+			Killed( info );
+		}
 	}
 
-	/// <summary>
-	/// The component's life state.
-	/// </summary>
-	public enum LifeState
+	protected void Killed( Sandbox.DamageInfo info )
 	{
-		Alive,
-		Respawning,
-		Dead
+		LifeState newState = LifeState.Dead;
+
+		var returnedState = OnKilled?.Invoke( info );
+		if ( returnedState.HasValue )
+			newState = returnedState.Value;
+
+		State = newState;
 	}
+
+	protected override void OnUpdate()
+	{
+		if ( State == LifeState.Respawning && TimeSinceLifeStateChanged > RespawnTime )
+		{
+			State = LifeState.Alive;
+		}
+	}
+}
+
+
+/// <summary>
+/// The component's life state.
+/// </summary>
+public enum LifeState
+{
+	Alive,
+	Respawning,
+	Dead
+}
+
+/// <summary>
+/// A respawnable object.
+/// </summary>
+public interface IRespawnable
+{
+	public void Respawn() { }
+	public void Kill() { }
 }

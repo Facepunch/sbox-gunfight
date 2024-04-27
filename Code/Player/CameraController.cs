@@ -43,6 +43,59 @@ public sealed class CameraController : Component
 		}
 	}
 
+	/// <summary>
+	/// Updates the camera's position, from player code
+	/// </summary>
+	/// <param name="eyeHeight"></param>
+	internal void UpdateFromEyes( float eyeHeight )
+	{
+		Camera.Transform.Rotation = Player.EyeAngles.ToRotation();
+		Camera.Transform.LocalPosition = Vector3.Zero.WithZ( eyeHeight );
+		ViewBob();
+	}
+
+	float walkBob = 0;
+
+	Rotation lerpedRotation = Rotation.Identity;
+	Vector3 lerpedPosition = Vector3.Zero;
+
+	/// <summary>
+	/// Bob the view!
+	/// This could be better, but it doesn't matter really.
+	/// </summary>
+	void ViewBob()
+	{
+		var targetRotation = Rotation.Identity;
+		var targetPosition = Vector3.Zero;
+
+		var bobSpeed = Player.CharacterController.Velocity.Length.LerpInverse( 0, 300 );
+		if ( !Player.IsGrounded ) bobSpeed *= 0.1f;
+		if ( Player.HasTag( "slide" ) )
+		{
+			// Slide the camera
+			targetRotation *= Rotation.FromPitch( 2f );
+			targetRotation *= Rotation.FromRoll( -2f );
+			targetPosition += Vector3.Right * 5f;
+			targetPosition += Vector3.Down * 5f;
+
+			bobSpeed *= 0.1f;
+		}
+
+		walkBob += Time.Delta * 10.0f * bobSpeed;
+
+		var yaw = MathF.Sin( walkBob ) * 0.5f;
+		var pitch = MathF.Cos( -walkBob * 2f ) * 0.5f;
+
+		Camera.Transform.LocalRotation *= Rotation.FromYaw( -yaw * bobSpeed );
+		Camera.Transform.LocalRotation *= Rotation.FromPitch( -pitch * bobSpeed * 0.5f );
+
+		lerpedRotation = Rotation.Lerp( lerpedRotation, targetRotation, Time.Delta * 5f );
+		lerpedPosition = lerpedPosition.LerpTo( targetPosition, Time.Delta * 5f );
+
+		Camera.Transform.LocalRotation *= lerpedRotation;
+		Camera.Transform.LocalPosition += lerpedPosition;
+	}
+
 	protected override void OnUpdate()
 	{
 		var baseFov = Preferences.FieldOfView;

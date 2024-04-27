@@ -186,21 +186,14 @@ public partial class PlayerController : Component, IPawn, IRespawnable
 		// Eye input
 		if ( IsLocallyControlled && cc != null )
 		{
-			var cameraGameObject = CameraController.Camera.GameObject;
-
+			// TODO: Move this eye height stuff to the camera? Not sure.
 			var eyeHeightOffset = GetEyeHeightOffset();
-
 			SmoothEyeHeight = SmoothEyeHeight.LerpTo( eyeHeightOffset, Time.Delta * 10f );
-
-			cameraGameObject.Transform.LocalPosition = Vector3.Zero.WithZ( SmoothEyeHeight );
 
 			EyeAngles += Input.AnalogLook;
 			EyeAngles = EyeAngles.WithPitch( EyeAngles.pitch.Clamp( -90, 90 ) );
 
-			var cam = CameraController.Camera;
-			var lookDir = EyeAngles.ToRotation();
-
-			cam.Transform.Rotation = lookDir;
+			CameraController.UpdateFromEyes( SmoothEyeHeight );
 
 			// TEST CODE: POSSESSION
 			if ( Input.Pressed( "Mount" ) )
@@ -376,6 +369,7 @@ public partial class PlayerController : Component, IPawn, IRespawnable
 		WishVelocity = 0;
 		
 		var rot = EyeAngles.WithPitch( 0f ).ToRotation();
+
 		var wishDirection = WishMove * rot;
 		wishDirection = wishDirection.WithZ( 0 );
 

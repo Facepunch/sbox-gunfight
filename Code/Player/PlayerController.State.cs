@@ -10,6 +10,14 @@ public partial class PlayerController
 
 		// TODO: Turn off the body (or a death anim)
 		// Kill player inventory
+
+		SetBodyVisible( false );
+		HealthComponent.State = LifeState.Respawning;
+	}
+
+	public void SetBodyVisible( bool visible )
+	{
+		Body.GameObject.Enabled = visible;
 	}
 
 	public void Respawn()
@@ -17,5 +25,8 @@ public partial class PlayerController
 		// TODO: Turn on the body
 		// Set up player inventory
 		// Move to spawnpoint
+
+		HealthComponent.Health = 100;
+		SetBodyVisible( true );
 	}
 }

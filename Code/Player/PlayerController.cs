@@ -182,6 +182,10 @@ public partial class PlayerController : Component, IPawn, IRespawnable
 		{
 			CurrentHoldType = CurrentWeapon.GetHoldType();
 		}
+		else
+		{
+			CurrentHoldType = AnimationHelper.HoldTypes.None;
+		}
 
 		// Eye input
 		if ( IsLocallyControlled && cc != null )

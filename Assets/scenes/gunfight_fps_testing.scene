@@ -36,6 +36,18 @@
             "_type": "gameobject",
             "go": "0f04ee6a-6956-44a5-851e-aa6b5151fa34"
           }
+        },
+        {
+          "__type": "Gunfight.UI.DeveloperMenu",
+          "__guid": "eb2f0055-27af-429c-a9a1-959bacbdd5b9"
+        },
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "29356c88-67c7-4776-a89b-c0820105182b",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
         }
       ]
     },
@@ -1397,7 +1409,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-04-27T13:53:10.2883395\u002B01:00",
+  "LastSaved": "2024-04-27T19:30:59.0357838\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

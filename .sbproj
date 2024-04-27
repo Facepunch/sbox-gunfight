@@ -184,6 +184,7 @@
         {
           "Name": "Jump",
           "KeyboardCode": "space",
+          "GamepadCode": "None",
           "GroupName": "Movement"
         },
         {
@@ -311,6 +312,12 @@
           "KeyboardCode": "2",
           "GamepadCode": "None",
           "GroupName": "Inventory"
+        },
+        {
+          "Name": "DeveloperMenu",
+          "KeyboardCode": "[",
+          "GamepadCode": "None",
+          "GroupName": "Development"
         }
       ],
       "__guid": "bcccc875-ac58-4719-a08e-4d5b3875734a"

@@ -194,21 +194,6 @@ public partial class PlayerController : Component, IPawn, IRespawnable
 			EyeAngles = EyeAngles.WithPitch( EyeAngles.pitch.Clamp( -90, 90 ) );
 
 			CameraController.UpdateFromEyes( SmoothEyeHeight );
-
-			// TEST CODE: POSSESSION
-			if ( Input.Pressed( "Mount" ) )
-			{
-				var tr = Scene.Trace.Ray( CameraController.Camera.Transform.Position, CameraController.Camera.Transform.Rotation.Forward * 1000000 )
-				.WithoutTags( "trigger" )
-				.IgnoreGameObjectHierarchy( GameObject )
-				.UseHitboxes()
-				.Run();
-
-				if ( tr.Hit && tr.GameObject.Root.Components.Get<PlayerController>( FindMode.EnabledInSelfAndDescendants ) is { } player )
-				{
-					player.NetPossess();
-				}
-			}
 		}
 		else
 		{

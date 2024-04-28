@@ -27,6 +27,24 @@ public partial class PlayerInventory : Component
 	/// </summary>
 	public Weapon CurrentWeapon => Player.CurrentWeapon;
 
+	public void Clear()
+	{
+		foreach ( var wpn in Weapons )
+		{
+			wpn.GameObject.Destroy();
+		}
+
+		Weapons.Clear();
+	}
+
+	public void Setup()
+	{
+		for ( int i = 0; i < DefaultWeapons.Count; i++ )
+		{
+			GiveWeapon( DefaultWeapons[i], i == 0 );
+		}
+	}
+
 	protected override void OnUpdate()
 	{
 		if ( !Player.IsLocallyControlled )
@@ -108,9 +126,6 @@ public partial class PlayerInventory : Component
 
 	protected override void OnStart()
 	{
-		for ( int i = 0; i < DefaultWeapons.Count; i++ )
-		{
-			GiveWeapon( DefaultWeapons[i], i == 0 );
-		}
+		Setup();
 	}
 }

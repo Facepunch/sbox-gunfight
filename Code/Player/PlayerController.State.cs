@@ -3,6 +3,7 @@ namespace Gunfight;
 public partial class PlayerController
 {
 	[RequireComponent] HealthComponent HealthComponent { get; set; }
+	[RequireComponent] PlayerInventory Inventory { get; set; }
 
 	public void Kill()
 	{
@@ -22,11 +23,19 @@ public partial class PlayerController
 
 	public void Respawn()
 	{
-		// TODO: Turn on the body
-		// Set up player inventory
-		// Move to spawnpoint
-
 		HealthComponent.Health = 100;
+
+		Inventory.Clear();
+		Inventory.Setup();
+
 		SetBodyVisible( true );
+
+		var spawn = GameUtils.GetSpawnPoints()
+			.FirstOrDefault();
+
+		if ( spawn.IsValid() )
+		{
+			Transform.Position = spawn.Transform.Position;
+		}
 	}
 }

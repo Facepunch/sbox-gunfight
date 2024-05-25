@@ -1,5 +1,5 @@
 $main-font: Oxanium;
-$main-color: #4a5375;
+$main-color: #ffc300;
 $main-color-dark: #393d4c;
 $theme-color: #D7D9D7;
 
@@ -8,3 +8,5 @@ $theme-color: #D7D9D7;
 @import "Buttons.scss";
 @import "Containers.scss";
 @import "Hud.scss";
+@import "Hints.scss";
+@import "InputHints.scss";

@@ -4,9 +4,16 @@
 
 <root class="@(IsActive ? "is-active" : "")">
     <div class="background" />
+    <div class="grow" />
 
     @if ( Weapon.IsValid() )
     {
+        @if ( IsActive )
+        {
+            <InputHint Action="Attack1" class="small" />
+            <InputHint Action="Attack2" class="small" />
+        }
+
         <div class="weapon-viewer">
             <WeaponViewer WeaponResource=@Weapon.Resource />
         </div>

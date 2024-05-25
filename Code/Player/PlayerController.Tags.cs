@@ -2,6 +2,10 @@ using System.Collections.Immutable;
 
 namespace Gunfight;
 
+/// <summary>
+/// We hold a separate list of tags for the player.
+/// This might be absolutely useless, and we should just use regular tags.
+/// </summary>
 public partial class PlayerController
 {
 	private ImmutableArray<string> tags = ImmutableArray.Create<string>();

@@ -1,19 +1,24 @@
 using Sandbox.Network;
-using System.Threading.Channels;
 
 namespace Gunfight;
 
 public sealed class GameNetworkManager : Component, Component.INetworkListener
 {
+	/// <summary>
+	/// Which player prefab should we spawn?
+	/// </summary>
 	[Property] public GameObject PlayerPrefab { get; set; }
+
+	/// <summary>
+	/// Where should we put the player?
+	/// TODO: gamemode / game state should control this
+	/// </summary>
 	[Property] public GameObject SpawnPoint { get; set; }
 
 	/// <summary>
-	/// Is this game multiplayer?
+	/// Is this game multiplayer? If not, we won't create a lobby.
 	/// </summary>
 	[Property] public bool IsMultiplayer { get; set; } = true;
-
-	[Property] public bool IsDebugging { get; set; } = true;
 
 	protected override void OnStart()
 	{
@@ -28,6 +33,10 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 		}
 	}
 
+	/// <summary>
+	/// Called when a network connection becomes active
+	/// </summary>
+	/// <param name="channel"></param>
 	public void OnActive( Connection channel )
 	{
 		if ( !IsMultiplayer ) return;

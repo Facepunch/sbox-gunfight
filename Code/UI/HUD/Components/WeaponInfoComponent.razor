@@ -3,7 +3,10 @@
 @attribute [StyleSheet]
 
 <root class="hud with-deadzone column">
-    <WeaponRow Weapon=@CurrentWeapon Slot=@GetSlot( CurrentWeapon ) />
+    @if ( CurrentWeapon.IsValid() )
+    {
+        <WeaponRow Weapon=@CurrentWeapon Slot=@GetSlot( CurrentWeapon ) />
+    }
 
     @for ( int i = 0; i < Inventory.Weapons.Count; i++ )
     {

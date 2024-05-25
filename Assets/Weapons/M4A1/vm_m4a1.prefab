@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "4e28e50a-9b73-485b-8b66-9ba3e4b9ba25",
+    "__guid": "c4a3373a-75b1-4ea0-9075-4994d8998f1a",
     "Flags": 0,
     "Name": "vm_m4a1",
     "Tags": "player,viewmodel",
@@ -10,23 +10,23 @@
     "Components": [
       {
         "__type": "Gunfight.ViewModel",
-        "__guid": "2e9da8ae-cfcc-4e36-bc56-952151c1c924",
+        "__guid": "41850748-2e5a-4a11-bd7c-c8e4b18f809c",
         "Arms": {
           "_type": "component",
-          "component_id": "8a68b8f9-7b16-4a31-8cf1-d635c3a52296",
-          "go": "7d875830-8701-4f32-a5a1-63db634211d1",
+          "component_id": "9af8d22d-1d5a-45a0-8e6a-81c6710dd81b",
+          "go": "130c1d5e-750d-450b-82c4-cbac517ffcba",
           "component_type": "SkinnedModelRenderer"
         },
         "ModelRenderer": {
           "_type": "component",
-          "component_id": "720f0680-462b-40d0-af92-659cdb7702ae",
-          "go": "4e28e50a-9b73-485b-8b66-9ba3e4b9ba25",
+          "component_id": "ce48992d-ecde-49c6-aa82-72f5796a0a5e",
+          "go": "c4a3373a-75b1-4ea0-9075-4994d8998f1a",
           "component_type": "SkinnedModelRenderer"
         }
       },
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "720f0680-462b-40d0-af92-659cdb7702ae",
+        "__guid": "ce48992d-ecde-49c6-aa82-72f5796a0a5e",
         "BodyGroups": 5203,
         "CreateBoneObjects": false,
         "Model": "models/weapons/sbox_assault_m4a1/v_m4a1.vmdl",
@@ -36,7 +36,7 @@
     ],
     "Children": [
       {
-        "__guid": "7d875830-8701-4f32-a5a1-63db634211d1",
+        "__guid": "130c1d5e-750d-450b-82c4-cbac517ffcba",
         "Flags": 0,
         "Name": "Object",
         "Enabled": true,
@@ -45,12 +45,12 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "8a68b8f9-7b16-4a31-8cf1-d635c3a52296",
+            "__guid": "9af8d22d-1d5a-45a0-8e6a-81c6710dd81b",
             "BodyGroups": 18446744073709551511,
             "BoneMergeTarget": {
               "_type": "component",
-              "component_id": "720f0680-462b-40d0-af92-659cdb7702ae",
-              "go": "4e28e50a-9b73-485b-8b66-9ba3e4b9ba25",
+              "component_id": "ce48992d-ecde-49c6-aa82-72f5796a0a5e",
+              "go": "c4a3373a-75b1-4ea0-9075-4994d8998f1a",
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,

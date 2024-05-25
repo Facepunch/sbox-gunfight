@@ -2,31 +2,6 @@
 @using Sandbox;
 @using Sandbox.UI;
 
-<style>
-    InputHint
-    {
-        justify-content: center;
-        align-items: center;
-        
-        gap: 32px;
-
-        img
-        {
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-tint: rgb( 255, 255, 255, 1 );
-        }
-
-        label
-        {
-            font-family: Oxanium;
-            color: white;
-            font-size: 24px;
-            text-transform: uppercase;
-        }
-    }
-</style>
-
 <root>
     <img @ref=Glyph />
 </root>
@@ -36,7 +11,9 @@
     // @ref
     public Image Glyph { get; set; }
     public string Action { get; set; } = "Use";
-    public InputGlyphSize Size { get; set; } = InputGlyphSize.Small;
+    public InputGlyphSize Size { get; set; } = InputGlyphSize.Medium;
+
+    bool IsActionDown => Input.Down( Action );
 
     /// <summary>
     /// Checks the current button and updates the glyph.
@@ -54,6 +31,7 @@
         UpdateTexture();
 
         SetClass( "keyboard", !Input.UsingController );
+        BindClass( "is-down", () => IsActionDown );
     }
 
     protected override int BuildHash()

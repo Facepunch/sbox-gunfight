@@ -8,7 +8,6 @@ WeaponInfoComponent
     gap: 32px;
     flex-direction: column-reverse;
     justify-content: center;
-    align-items: center;
 
     WeaponViewer
     {
@@ -24,29 +23,39 @@ WeaponViewer
     filter: invert(1);
 }
 
-
 WeaponRow
 {
     justify-content: center;
     align-items: center;
     gap: 8px;
-
     opacity: 0.5;
     transform: scale( 0.9 );
+    min-height: 80px;
 
-    &.is-active
+    .grow
     {
-        opacity: 1;
-        transform: scale( 1 );
+        flex-grow: 1;
+        background-color: red;
     }
 
     > .background
     {
         position: absolute;
         width: 1024px;
-        left: -128px;
-        height: 128px;
-        background-image: radial-gradient( rgba( black, 0.5 ), rgba( black, 0.3 ), rgba( black, 0 ), rgba( black, 0 ), rgba( black, 0 ) );
+        height: 160px;
+        background-image: radial-gradient( rgba( black, 0.8 ), rgba( black, 0.5 ), rgba( black, 0 ), rgba( black, 0 ), rgba( black, 0 ) );
+        opacity: 0;
+    }
+
+    &.is-active
+    {
+        opacity: 1;
+        transform: scale( 1 );
+
+        > .background
+        {
+            opacity: 1;
+        }
     }
 
     .info
@@ -84,6 +93,7 @@ WeaponRow
             font-size: 20px;
             color: white;
             opacity: 1;
+            min-width: 55px;
         }
     }
 }

@@ -36,6 +36,10 @@ public interface IPawn
 	}
 }
 
+/// <summary>
+/// The system that holds data about what pawn we're looking through the eyes of.
+/// If we don't have network authority, we'll try to spectate that pawn.
+/// </summary>
 public partial class PawnSystem : GameObjectSystem
 {
 	public IPawn Viewer { get; private set; }

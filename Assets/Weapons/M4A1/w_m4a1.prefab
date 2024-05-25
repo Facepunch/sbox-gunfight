@@ -38,7 +38,7 @@
           {
             "__type": "Sandbox.SkinnedModelRenderer",
             "__guid": "611c4b89-e79d-4797-a24b-1a82557e06a8",
-            "BodyGroups": 171,
+            "BodyGroups": 427,
             "CreateBoneObjects": false,
             "Model": "models/weapons/sbox_assault_m4a1/w_m4a1.vmdl",
             "RenderType": "On",
@@ -92,7 +92,7 @@
             "RequiresAmmoContainer": true,
             "ShootSound": "sounds/guns/mp5/smg1_shoot.sound",
             "TimeSinceShoot": {
-              "Relative": 252.384
+              "Relative": 346.3952
             }
           },
           {

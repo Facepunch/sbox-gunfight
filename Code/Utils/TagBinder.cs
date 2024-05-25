@@ -1,5 +1,9 @@
 namespace Gunfight;
 
+/// <summary>
+/// A utility component that lets you have tags update based on conditions,
+/// similarly to how we have Panel.BindClass
+/// </summary>
 public partial class TagBinder : Component
 {
 	/// <summary>
@@ -27,6 +31,12 @@ public partial class TagBinder : Component
 		return binds.ContainsKey( tag );
 	}
 
+	/// <summary>
+	/// Bind a tag to a specific condition. Must not exist.
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <param name="predicate"></param>
+	/// <returns></returns>
 	public bool BindTag( string tag, Func<bool> predicate )
 	{
 		if ( HasExistingBind( tag ) )

@@ -315,7 +315,7 @@
         },
         {
           "Name": "DeveloperMenu",
-          "KeyboardCode": "[",
+          "KeyboardCode": "Q",
           "GamepadCode": "None",
           "GroupName": "Development"
         }

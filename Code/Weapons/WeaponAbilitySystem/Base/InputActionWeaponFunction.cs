@@ -1,5 +1,8 @@
 namespace Gunfight;
 
+/// <summary>
+/// A weapon function that reacts to input actions.
+/// </summary>
 public abstract class InputActionWeaponFunction : WeaponFunction
 {
 	public enum InputListenerType

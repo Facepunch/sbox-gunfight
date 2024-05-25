@@ -2,7 +2,14 @@ namespace Gunfight;
 
 public partial class PlayerController
 {
+	/// <summary>
+	/// The player's health component
+	/// </summary>
 	[RequireComponent] HealthComponent HealthComponent { get; set; }
+
+	/// <summary>
+	/// The player's inventory, items, etc.
+	/// </summary>
 	[RequireComponent] PlayerInventory Inventory { get; set; }
 
 	public void Kill()

@@ -1,4 +1,25 @@
-Something
+.container
 {
+    padding: 8px;
+    align-items: center;
 
+    &.with-gap
+    {
+        gap: 16px;
+    }
+
+    &.with-small-gap
+    {
+        gap: 6px;
+    }
+
+    &.grow
+    {
+        flex-grow: 1;
+    }
+
+    &.column
+    {
+        flex-direction: column;
+    }
 }

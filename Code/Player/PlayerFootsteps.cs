@@ -1,5 +1,8 @@
 namespace Gunfight;
 
+/// <summary>
+/// Produces footstep sounds for the player.
+/// </summary>
 public sealed class PlayerFootsteps : Component
 {
 	[Property] public PlayerController Player { get; set; }
@@ -28,6 +31,7 @@ public sealed class PlayerFootsteps : Component
 		if ( timeSinceStep < 0.2f )
 			return;
 
+		// Don't make footsteps if we're sliding
 		if ( Player.HasTag( "slide" ) ) 
 			return;
 

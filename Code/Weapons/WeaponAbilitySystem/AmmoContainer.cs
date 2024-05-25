@@ -1,7 +1,7 @@
 namespace Gunfight;
 
 /// <summary>
-/// An ammo container.
+/// An ammo container. It holds ammo for a weapon.
 /// </summary>
 public partial class AmmoContainer : Component
 {

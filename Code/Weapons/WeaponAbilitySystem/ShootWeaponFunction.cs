@@ -5,8 +5,6 @@ namespace Gunfight;
 [Icon( "track_changes" )]
 public partial class ShootWeaponFunction : InputActionWeaponFunction
 {
-	public override string Name => "Shoot";
-
 	[Property, Category( "Bullet" )] public float BaseDamage { get; set; } = 25.0f;
 	[Property, Category( "Bullet" )] public float FireRate { get; set; } = 0.2f;
 	[Property, Category( "Bullet" )] public float DryFireDelay { get; set; } = 1f;
@@ -14,16 +12,20 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 	[Property, Category( "Bullet" )] public Curve BaseDamageFalloff { get; set; } = new( new List<Curve.Frame>() { new( 0, 1 ), new( 1, 0 ) } );
 	[Property, Category( "Bullet" )] public float BulletSize { get; set; } = 1.0f;
 
+	// Effects
 	[Property, Category( "Effects" )] public GameObject MuzzleFlash { get; set; }
 	[Property, Category( "Effects" )] public GameObject BulletTrail { get; set; }
 	[Property, Category( "Effects" )] public SoundEvent ShootSound { get; set; }
 	[Property, Category( "Effects" )] public SoundEvent DryFireSound { get; set; }
 
-
-	// Functionality
-	[Property, Sandbox.ReadOnly, Category( "Data" )] public TimeSince TimeSinceShoot { get; set; }
-
+	/// <summary>
+	/// The current weapon's ammo container.
+	/// </summary>
 	[Property, Category( "Ammo" )] public AmmoContainer AmmoContainer { get; set; }
+
+	/// <summary>
+	/// Does this weapon require an ammo container to fire its bullets?
+	/// </summary>
 	[Property, Category( "Ammo" )] public bool RequiresAmmoContainer { get; set; } = false;
 
 	/// <summary>
@@ -41,6 +43,8 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 			return Weapon.ViewModel.ModelRenderer;
 		}
 	}
+
+	public TimeSince TimeSinceShoot { get; private set; }
 
 	/// <summary>
 	/// Do shoot effects
@@ -175,6 +179,14 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 		}
 	}
 
+	/// <summary>
+	/// Makes some tracers using legacy particle effects.
+	/// TODO: replace these with our new cool particle system.
+	/// </summary>
+	/// <param name="startPosition"></param>
+	/// <param name="endPosition"></param>
+	/// <param name="distance"></param>
+	/// <param name="count"></param>
 	protected void DoTracer( Vector3 startPosition, Vector3 endPosition, float distance, int count )
 	{
 		var effectPath = "particles/gameplay/guns/trail/trail_smoke.vpcf";

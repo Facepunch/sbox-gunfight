@@ -19,6 +19,18 @@
 
     public MarkerFrame Frame => Object.MarkerFrame;
 
+    public bool ClampToScreen { get; set; } = false;
+
+    /// <summary>
+    /// Are we off screen?
+    /// </summary>
+    public bool IsOffScreen;
+
+    /// <summary>
+    /// Is this marker entirely behind the screen?
+    /// </summary>
+    public bool IsBehind;
+
     protected override void OnAfterTreeRender( bool firstTime )
     {
         if ( firstTime )
@@ -38,15 +50,22 @@
         }
     }
 
+    private static Vector2 ScreenSafezone = new( 0.05f, 0.95f );
 
     public override void Tick()
     {
-        var toScreen = Scene.Camera.PointToScreenNormal( Frame.Position, out var isBehind );
+        var toScreen = Scene.Camera.PointToScreenNormal( Frame.Position, out IsBehind );
 
-        SetClass( "is-behind", isBehind );
+        SetClass( "is-behind", IsBehind );
 
-        if ( isBehind )
+        if ( IsBehind && !ClampToScreen )
             return;
+
+        // Are we off the screen?
+        IsOffScreen = toScreen.x > 1.0f || toScreen.x < 0.0f || toScreen.y > 1.0f || toScreen.y < 0.0f;
+
+        if ( ClampToScreen )
+           toScreen = new( toScreen.x.Clamp( ScreenSafezone.x, ScreenSafezone.y ),  toScreen.y.Clamp( ScreenSafezone.x, ScreenSafezone.y ) );
 
         Style.Left = Length.Fraction( toScreen.x );
         Style.Top = Length.Fraction( toScreen.y );

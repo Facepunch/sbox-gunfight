@@ -24,3 +24,13 @@ Marker
         text-transform: uppercase;
     }
 }
+
+BaseMarkerPanel 
+{
+    opacity: 1;
+
+    &.is-behind
+    {
+        opacity: 0;
+    }
+}

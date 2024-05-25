@@ -27,10 +27,4 @@ Marker
 
 BaseMarkerPanel 
 {
-    opacity: 1;
-
-    &.is-behind
-    {
-        opacity: 0;
-    }
 }

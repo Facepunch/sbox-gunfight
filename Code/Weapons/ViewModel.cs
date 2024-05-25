@@ -28,6 +28,14 @@ public partial class ViewModel : Component
 
 	[Property] public SkinnedModelRenderer ModelRenderer { get; set; }
 
+	private float YawInertiaScale => 750f;
+	private float PitchInertiaScale => 1500f;
+	private bool activateInertia = false;
+	private float lastPitch;
+	private float lastYaw;
+	private float YawInertia;
+	private float PitchInertia;
+
 	/// <summary>
 	/// The View Model camera 
 	/// </summary>
@@ -52,6 +60,34 @@ public partial class ViewModel : Component
 		var camera = Weapon.PlayerController.CameraGameObject;
 		camera.Transform.LocalPosition += bone.Position;
 		camera.Transform.LocalRotation *= bone.Rotation;
+	}
+
+	void ApplyInertia()
+	{
+		var camera = Weapon.PlayerController.CameraGameObject;
+		var inRot = camera.Transform.Rotation;
+
+		// Need to fetch data from the camera for the first frame
+		if ( !activateInertia )
+		{
+			lastPitch = inRot.Pitch();
+			lastYaw = inRot.Yaw();
+			YawInertia = 0;
+			PitchInertia = 0;
+			activateInertia = true;
+		}
+
+		var newPitch = camera.Transform.Rotation.Pitch();
+		var newYaw = camera.Transform.Rotation.Yaw();
+
+		PitchInertia = Angles.NormalizeAngle( newPitch - lastPitch );
+		YawInertia = Angles.NormalizeAngle( lastYaw - newYaw );
+
+		lastPitch = newPitch;
+		lastYaw = newYaw;
+
+		ModelRenderer.Set( "aim_yaw_inertia", YawInertia * YawInertiaScale * Time.Delta );
+		ModelRenderer.Set( "aim_pitch_inertia", PitchInertia * PitchInertiaScale * Time.Delta );
 	}
 
 	private Vector3 lerpedWishLook;
@@ -143,6 +179,7 @@ public partial class ViewModel : Component
 		ApplyStates();
 		ApplyAnimationParameters();
 		ApplyAnimationTransform();
+		ApplyInertia();
 
 		var baseFov = Preferences.FieldOfView;
 

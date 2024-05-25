@@ -6,6 +6,11 @@ namespace Gunfight;
 public partial class PlayerController : Component, IPawn, IRespawnable
 {
 	/// <summary>
+	/// Sync the player's steamid
+	/// </summary>
+	[Sync] public ulong SteamId { get; set; }
+
+	/// <summary>
 	/// The player's body
 	/// </summary>
 	[Property] public PlayerBody Body { get; set; }

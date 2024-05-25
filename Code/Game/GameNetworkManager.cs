@@ -4,6 +4,8 @@ namespace Gunfight;
 
 public sealed class GameNetworkManager : Component, Component.INetworkListener
 {
+	public static GameNetworkManager Instance { get; private set; }
+
 	/// <summary>
 	/// Which player prefab should we spawn?
 	/// </summary>
@@ -22,6 +24,8 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 
 	protected override void OnStart()
 	{
+		Instance = this;
+
 		if ( !IsMultiplayer ) return;
 
 		//
@@ -31,6 +35,13 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 		{
 			GameNetworkSystem.CreateLobby();
 		}
+	}
+
+	[DeveloperCommand( "Add Bot" )]
+	private static void Command_Add_Bot()
+	{
+		var player = Instance.PlayerPrefab.Clone( Instance.SpawnPoint.Transform.World );
+		player.NetworkSpawn();
 	}
 
 	/// <summary>

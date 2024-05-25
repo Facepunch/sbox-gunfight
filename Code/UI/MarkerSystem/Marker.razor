@@ -1,0 +1,59 @@
+@namespace Gunfight.UI
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+    @if ( CustomPanel is not null )
+        return;
+
+    <label>
+        @Frame.DisplayText
+    </label>
+</root>
+
+@code
+{
+    public IMarkerObject Object { get; set; }
+
+    BaseMarkerPanel CustomPanel { get; set; }
+
+    public MarkerFrame Frame => Object.MarkerFrame;
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        if ( firstTime )
+        {
+            if ( Object.MarkerPanelTypeOverride is not null )
+            {
+                var desc = TypeLibrary.GetType( Object.MarkerPanelTypeOverride );
+
+                if ( desc is not null )
+                {
+                    var inst = desc.Create<BaseMarkerPanel>();
+                    inst.Marker = this;
+                    CustomPanel = inst;
+                    CustomPanel.Parent = this;
+                }
+            }
+        }
+    }
+
+
+    public override void Tick()
+    {
+        var toScreen = Scene.Camera.PointToScreenNormal( Frame.Position, out var isBehind );
+
+        SetClass( "is-behind", isBehind );
+
+        if ( isBehind )
+            return;
+
+        Style.Left = Length.Fraction( toScreen.x );
+        Style.Top = Length.Fraction( toScreen.y );
+    }
+
+    protected override int BuildHash()
+    {
+        return System.HashCode.Combine( CustomPanel );
+    }
+}

@@ -1,9 +1,16 @@
 namespace Gunfight;
 
-public interface IPawn
+public interface IPawn : IValid
 {
 	public void OnPossess();
 	public void OnDePossess();
+
+	public ulong SteamId { get; set; }
+
+	/// <summary>
+	/// Do we have network rights over this pawn?
+	/// </summary>
+	public bool IsProxy { get; }
 
 	/// <summary>
 	/// Are we possessing this pawn right now? (Clientside)
@@ -51,13 +58,25 @@ public partial class PawnSystem : GameObjectSystem
 	{
 		DePossess( Viewer );
 		Viewer = pawn;
-
 		pawn?.OnPossess();
+
+		// Valid and we own it?
+		if ( pawn.IsValid() && !pawn.IsProxy )
+		{
+			pawn.SteamId = Connection.Local.SteamId;
+		}
 	}
 
 	public void DePossess( IPawn pawn )
 	{
 		pawn?.OnDePossess();
+
+		// Valid and we own it?
+		if ( pawn.IsValid() && !pawn.IsProxy )
+		{
+			pawn.SteamId = 0;
+		}
+
 		Viewer = null;
 	}
 

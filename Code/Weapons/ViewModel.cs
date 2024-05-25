@@ -97,15 +97,23 @@ public partial class ViewModel : Component
 
 		if ( Weapon.Tags.Has( "aiming" ) )
 		{
-			var aimFunction = Weapon.GetFunction<AimWeaponFunction>();
-
-			// This should be configurable on the gun really
-			localPosition += aimFunction.AimOffset;
-			localRotation *= aimFunction.AimAngles.ToRotation();
-			//localPosition += Vector3.Forward * -5f;
+			var aimFn = Weapon.GetFunction<AimWeaponFunction>();
+			localPosition += aimFn.AimOffset;
+			localRotation *= aimFn.AimAngles.ToRotation();
 
 			CameraController.AddFieldOfViewOffset( 5 );
 			AddFieldOfViewOffset( 40 );
+		}
+		else // While not aiming
+		{
+			var shootFn = Weapon.GetFunction<ShootWeaponFunction>();
+
+			if ( PlayerController.HasTag( "crouch" ) && shootFn.TimeSinceShoot > 0.25f )
+			{
+				localPosition += Vector3.Right * -2f;
+				localPosition += Vector3.Up * -1f;
+				localRotation *= Rotation.From( 0, -2, -18 );
+			}
 		}
 	}
 
@@ -142,8 +150,8 @@ public partial class ViewModel : Component
 		FieldOfViewOffset = 0;
 		ViewModelCamera.FieldOfView = TargetFieldOfView;
 
-		lerpedlocalRotation = Rotation.Lerp( lerpedlocalRotation, localRotation, Time.Delta * 10f );
-		lerpedLocalPosition = lerpedLocalPosition.LerpTo( localPosition, Time.Delta * 10f );
+		lerpedlocalRotation = Rotation.Lerp( lerpedlocalRotation, localRotation, Time.Delta * 5f );
+		lerpedLocalPosition = lerpedLocalPosition.LerpTo( localPosition, Time.Delta * 7f );
 
 		Transform.LocalRotation = lerpedlocalRotation;
 		Transform.LocalPosition = lerpedLocalPosition;

@@ -318,6 +318,12 @@
           "KeyboardCode": "Q",
           "GamepadCode": "None",
           "GroupName": "Development"
+        },
+        {
+          "Name": "Slot3",
+          "KeyboardCode": "3",
+          "GamepadCode": "None",
+          "GroupName": "Other"
         }
       ],
       "__guid": "bcccc875-ac58-4719-a08e-4d5b3875734a"

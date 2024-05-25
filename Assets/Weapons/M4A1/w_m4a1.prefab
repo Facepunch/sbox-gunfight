@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "4ad721d3-3401-4f48-9e26-e9fbf72cf960",
+    "__guid": "fff3160f-a9ed-415f-b8f8-4460dbdfed27",
     "Flags": 0,
     "Name": "w_m4a1",
     "Tags": "player",
@@ -10,24 +10,24 @@
     "Components": [
       {
         "__type": "Gunfight.Weapon",
-        "__guid": "f9157d1c-c774-4c9d-aec5-bb24b2ab9286",
+        "__guid": "6958e0b0-79b4-459d-9281-a060a9a15fd6",
         "HoldType": "Rifle",
         "ModelRenderer": {
           "_type": "component",
-          "component_id": "611c4b89-e79d-4797-a24b-1a82557e06a8",
-          "go": "0f990294-ebf2-47e9-bf9c-2e077e3c66b0",
+          "component_id": "13a59de2-5f66-4a2b-b13e-abc31a946076",
+          "go": "cdc88abc-60aa-43ba-b4b2-fb980431ea54",
           "component_type": "SkinnedModelRenderer"
         },
         "Resource": "weapons/m4a1/m4a1.weapon"
       },
       {
         "__type": "Gunfight.TagBinder",
-        "__guid": "be7b160c-ba71-4136-9a05-5dc5679763a2"
+        "__guid": "fb7e2832-2f55-486e-abc2-410122cc6f44"
       }
     ],
     "Children": [
       {
-        "__guid": "0f990294-ebf2-47e9-bf9c-2e077e3c66b0",
+        "__guid": "cdc88abc-60aa-43ba-b4b2-fb980431ea54",
         "Flags": 0,
         "Name": "Model",
         "Position": "3.535849,0,-5.571055",
@@ -37,7 +37,7 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "611c4b89-e79d-4797-a24b-1a82557e06a8",
+            "__guid": "13a59de2-5f66-4a2b-b13e-abc31a946076",
             "BodyGroups": 427,
             "CreateBoneObjects": false,
             "Model": "models/weapons/sbox_assault_m4a1/w_m4a1.vmdl",
@@ -47,7 +47,7 @@
         ]
       },
       {
-        "__guid": "99e8a484-81d3-49c7-bc84-b7da2d6d8bca",
+        "__guid": "dc6687d9-9ad5-4f9c-9b3b-919497fda21d",
         "Flags": 0,
         "Name": "Functions",
         "Enabled": true,
@@ -56,18 +56,18 @@
         "Components": [
           {
             "__type": "Gunfight.AmmoContainer",
-            "__guid": "2ea44102-d89b-44b0-98b7-76f90698d419",
+            "__guid": "a4dbe1ee-c8a3-473e-9d34-ff8e40acc130",
             "Ammo": 30,
             "HasAmmo": true,
             "MaxAmmo": 30
           },
           {
             "__type": "Gunfight.ShootWeaponFunction",
-            "__guid": "fe29715a-ea7c-41db-b021-40d9c9e5fa78",
+            "__guid": "5c98daa5-1bbc-47be-a8a6-3f928fc6ea5a",
             "AmmoContainer": {
               "_type": "component",
-              "component_id": "2ea44102-d89b-44b0-98b7-76f90698d419",
-              "go": "99e8a484-81d3-49c7-bc84-b7da2d6d8bca",
+              "component_id": "a4dbe1ee-c8a3-473e-9d34-ff8e40acc130",
+              "go": "dc6687d9-9ad5-4f9c-9b3b-919497fda21d",
               "component_type": "AmmoContainer"
             },
             "BaseDamage": 25,
@@ -90,18 +90,15 @@
             "MaxRange": 1024000,
             "RequiresAllInputActions": false,
             "RequiresAmmoContainer": true,
-            "ShootSound": "sounds/guns/mp5/smg1_shoot.sound",
-            "TimeSinceShoot": {
-              "Relative": 346.3952
-            }
+            "ShootSound": "sounds/weapons/m4a1/m4_shot.sound"
           },
           {
             "__type": "Gunfight.ReloadWeaponFunction",
-            "__guid": "76a99cec-a9da-4ca1-b9cd-98373b503f5b",
+            "__guid": "0bd3fe45-6c77-431b-bcc3-3a3af7ed0a99",
             "AmmoContainer": {
               "_type": "component",
-              "component_id": "2ea44102-d89b-44b0-98b7-76f90698d419",
-              "go": "99e8a484-81d3-49c7-bc84-b7da2d6d8bca",
+              "component_id": "a4dbe1ee-c8a3-473e-9d34-ff8e40acc130",
+              "go": "dc6687d9-9ad5-4f9c-9b3b-919497fda21d",
               "component_type": "AmmoContainer"
             },
             "EmptyReloadSounds": {
@@ -125,7 +122,7 @@
           },
           {
             "__type": "Gunfight.RecoilFunction",
-            "__guid": "09f9bf8b-1e66-48a0-9cd5-602d52fad001",
+            "__guid": "a9ee4bfd-8567-4191-a804-e3b577b7b103",
             "HorizontalSpread": "2.00,-2.00,1",
             "PlayerVelocityLimit": 200,
             "PlayerVelocitySpread": 6,
@@ -134,7 +131,7 @@
           },
           {
             "__type": "Gunfight.AimWeaponFunction",
-            "__guid": "fe8e2429-d1cb-4e60-b6d5-eec6190b952d",
+            "__guid": "e4143547-a888-46c0-a95e-fc6188935a99",
             "AimAngles": "1,0,0",
             "AimOffset": "0,0,1.55",
             "InputActions": [

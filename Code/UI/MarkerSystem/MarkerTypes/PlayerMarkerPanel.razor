@@ -31,6 +31,8 @@
     @if ( !Player.IsValid() )
         return;
 
+    @if ( Marker.IsBehind ) return;
+
     @if ( Marker.IsOffScreen )
     {
         <label class="chevron" style="transform: rotateZ(@(ChevronAngle)deg);">></label>

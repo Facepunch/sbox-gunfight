@@ -138,7 +138,7 @@ public partial class ViewModel : Component
 			localRotation *= aimFn.AimAngles.ToRotation();
 
 			CameraController.AddFieldOfViewOffset( 5 );
-			AddFieldOfViewOffset( 40 );
+			AddFieldOfViewOffset( 15 );
 		}
 		else // While not aiming
 		{

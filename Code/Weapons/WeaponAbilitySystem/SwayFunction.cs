@@ -19,7 +19,7 @@ public partial class SwayFunction : WeaponFunction
 
 	protected override void OnUpdate()
 	{
-		if ( Weapon.GetFunction<AimWeaponFunction>()?.IsAiming ?? false )
+		if ( Weapon.Tags.Has( "aiming" ) )
 		{
 			var horizontalSway = MathF.Sin( Time.Now * SwayScale ) * SwayScale * Time.Delta;
 			var verticalSway = MathF.Cos( Time.Now + 0.5f * SwayScale ) * SwayScale * Time.Delta;

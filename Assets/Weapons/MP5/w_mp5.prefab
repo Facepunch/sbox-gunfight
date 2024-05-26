@@ -133,7 +133,7 @@
             "__type": "Gunfight.AimWeaponFunction",
             "__guid": "4cba4730-df4f-43ca-91b4-26385485b383",
             "AimAngles": "0,0,0",
-            "AimOffset": "10,0,0",
+            "AimOffset": "2.5,0,0",
             "InputActions": [
               "Attack2"
             ],

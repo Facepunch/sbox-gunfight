@@ -116,8 +116,8 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 		var decalPath = Game.Random.FromList( surface.ImpactEffects.BulletDecal, "decals/bullethole.decal" );
 		if ( ResourceLibrary.TryGet<DecalDefinition>( decalPath, out var decalResource ) )
 		{
-			var ps = CreateParticleSystem( Game.Random.FromList( surface.ImpactEffects.Bullet ), pos, Rotation.LookAt( -normal ) );
-			ps.SceneObject.SetControlPoint( 0, pos );
+			//var ps = CreateParticleSystem( Game.Random.FromList( surface.ImpactEffects.Bullet ), pos, Rotation.LookAt( -normal ) );
+			//ps.SceneObject.SetControlPoint( 0, pos );
 
 			var decal = Game.Random.FromList( decalResource.Decals );
 

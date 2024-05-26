@@ -13,7 +13,6 @@ Crosshair
         height: 4px;
         background-color: white;
         border-radius: 100px;
-
         transition: background-color 0.2s ease, opacity 0.2s ease;
 
         &.enemy
@@ -23,8 +22,31 @@ Crosshair
             background-color: rgb( 219, 83, 83 );
         }
 
-        &.aiming {
+        &.aiming
+        {
             opacity: 0;
+        }
+    }
+
+    .hitmarker
+    {
+        position: absolute;
+        background-image: url( ui/hit/hit_marker.png );
+        width: 48px;
+        height: 48px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        opacity: 0;
+
+        &.is-visible
+        {
+            opacity: 1;
+        }
+
+        &.is-kill
+        {
+            background-image: url( ui/hit/kill_marker.png );
         }
     }
 }

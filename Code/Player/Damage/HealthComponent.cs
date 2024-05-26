@@ -104,6 +104,7 @@ public partial class HealthComponent : Component, Component.IDamageable, IRespaw
 	public void OnDamage( in Sandbox.DamageInfo info )
 	{
 		Health -= info.Damage;
+		info.Damage = Health;
 
 		if ( Health <= 0 )
 		{

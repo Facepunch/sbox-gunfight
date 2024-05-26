@@ -4,15 +4,50 @@
 
 <root>
     <div @ref="Reticle" class="reticle" />
+    <div @ref="Hitmarker" class="hitmarker @HitmarkerClasses" />
 </root>
 
 @code
 {
     public PlayerController Player { get; set; }
     public Panel Reticle { get; set; }
+    public Panel Hitmarker { get; set; }
 
     Weapon Weapon => Player.CurrentWeapon;
     Vector2 lerpedPosition = new( 0.5f, 0.5f );
+
+    private TimeUntil TimeUntilHitmarkerRemove = 0f;
+    private float HitMarkerDuration => 0.1f;
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        if ( firstTime )
+        {
+            var sys = Scene.GetSystem<GameEventSystem>();
+            sys.OnDamageGivenEvent += OnDamageGiven;
+        }
+    }
+
+    string HitmarkerClasses
+    {
+        get
+        {
+            var str = "";
+            if ( !TimeUntilHitmarkerRemove ) return "is-visible";
+            return str;
+        }
+    }
+
+    private DamageInfo LastDamage = null;
+
+    private void OnDamageGiven( GameObject go, DamageInfo damage )
+    {
+        if (go.Components.Get<IPawn>( FindMode.EverythingInSelfAndAncestors ) is null) return;
+
+        var isKill = damage.Damage <= 0f;
+        TimeUntilHitmarkerRemove = isKill ? 0.5f : 0.2f;
+        Hitmarker.SetClass( "is-kill", isKill );
+    }
 
     public override void Tick()
     {
@@ -47,5 +82,10 @@
 
         Style.Left = Length.Fraction( lerpedPosition.x );
         Style.Top = Length.Fraction( lerpedPosition.y );
+    }
+
+    protected override int BuildHash()
+    {
+        return System.HashCode.Combine( Time.Now );
     }
 }

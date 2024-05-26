@@ -31,6 +31,9 @@
     @if ( !Player.IsValid() )
         return;
 
+    @if ( Player.HealthComponent.State != LifeState.Alive )
+        return;
+
     @if ( Marker.IsBehind ) return;
 
     @if ( Marker.IsOffScreen )

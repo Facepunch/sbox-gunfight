@@ -13,5 +13,7 @@ public static partial class GameObjectExtensions
 		{
 			damageable.OnDamage( info );
 		}
+
+		go.Scene.GetSystem<GameEventSystem>().OnDamageGivenEvent?.Invoke( go, info );
 	}
 }

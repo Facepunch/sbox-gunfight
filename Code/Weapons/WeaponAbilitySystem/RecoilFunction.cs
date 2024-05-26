@@ -7,7 +7,7 @@ public partial class RecoilFunction : WeaponFunction
 	[Property, Category( "Recoil" )] public RangedFloat VerticalSpread { get; set; } = 0f;
 
 	[Property, Category( "Scaling" )] public float PlayerVelocityLimit { get; set; } = 300f;
-	[Property, Category( "Scaling" )] public float PlayerVelocitySpread { get; set; } = 1f;
+	[Property, Category( "Scaling" )] public float VelocitySpreadScale { get; set; } = 0.25f;
 
 	internal Angles Current { get; private set; }
 
@@ -21,7 +21,7 @@ public partial class RecoilFunction : WeaponFunction
 			var scale = 1f;
 			// TODO: better accessor for stuff like this, this is mega shit
 			var velLen = Weapon.PlayerController.CharacterController.Velocity.Length;
-			scale += velLen.Remap( 0, PlayerVelocityLimit, 0, 1, true ) * PlayerVelocitySpread;
+			scale += velLen.Remap( 0, PlayerVelocityLimit, 0, 1, true ) * VelocitySpreadScale;
 
 			return scale;
 		}
@@ -34,7 +34,7 @@ public partial class RecoilFunction : WeaponFunction
 			var scale = 1f;
 			// TODO: better accessor for stuff like this, this is mega shit
 			var velLen = Weapon.PlayerController.CharacterController.Velocity.Length;
-			scale += velLen.Remap( 0, PlayerVelocityLimit, 0, 1, true ) * PlayerVelocitySpread;
+			scale += velLen.Remap( 0, PlayerVelocityLimit, 0, 1, true ) * VelocitySpreadScale;
 
 			return scale;
 		}

@@ -14,13 +14,17 @@ Crosshair
         background-color: white;
         border-radius: 100px;
 
-        transition: background-color 0.2s ease;
+        transition: background-color 0.2s ease, opacity 0.2s ease;
 
         &.enemy
         {
             width: 5px;
             height: 5px;
             background-color: rgb( 219, 83, 83 );
+        }
+
+        &.aiming {
+            opacity: 0;
         }
     }
 }

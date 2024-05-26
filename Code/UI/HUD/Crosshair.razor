@@ -27,6 +27,8 @@
             .UseHitboxes()
             .Run();
 
+        Reticle.SetClass( "aiming", Weapon?.GetFunction<AimWeaponFunction>()?.IsAiming ?? false );
+
         const float lerpSpeed = 10f;
         if ( currentTrace.Hit )
         {

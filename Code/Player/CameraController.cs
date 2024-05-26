@@ -118,5 +118,10 @@ public sealed class CameraController : Component
 		{
 			Player.EyeAngles += fn.Current;
 		}
+
+		if ( Player.CurrentWeapon.IsValid() && Player.CurrentWeapon?.GetFunction<SwayFunction>() is { } sFn )
+		{
+			Player.EyeAngles += sFn.Current;
+		}
 	}
 }

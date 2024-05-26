@@ -93,7 +93,7 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 		return tr.Surface;
 	}
 
-	private LegacyParticleSystem CreateParticleSystem( string particle, Vector3 pos, Rotation rot, List<ParticleControlPoint> cps = null, float decay = 5f )
+	private LegacyParticleSystem CreateParticleSystem( string particle, Vector3 pos, Rotation rot, float decay = 5f )
 	{
 		var gameObject = Scene.CreateObject();
 		gameObject.Transform.Position = pos;
@@ -101,10 +101,9 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 
 		var p = gameObject.Components.Create<LegacyParticleSystem>();
 		p.Particles = ParticleSystem.Load( particle );
-		p.ControlPoints = cps ?? new()
-		{
-			new() { Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = pos }
-		};
+
+		// ?
+		gameObject.Transform.ClearInterpolation();
 
 		// Clear off in a suitable amount of time.
 		gameObject.DestroyAsync( decay );
@@ -117,8 +116,9 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 		var decalPath = Game.Random.FromList( surface.ImpactEffects.BulletDecal, "decals/bullethole.decal" );
 		if ( ResourceLibrary.TryGet<DecalDefinition>( decalPath, out var decalResource ) )
 		{
-			CreateParticleSystem( Game.Random.FromList( surface.ImpactEffects.Bullet ), pos, Rotation.LookAt( -normal ) );
-			
+			var ps = CreateParticleSystem( Game.Random.FromList( surface.ImpactEffects.Bullet ), pos, Rotation.LookAt( -normal ) );
+			ps.SceneObject.SetControlPoint( 0, pos );
+
 			var decal = Game.Random.FromList( decalResource.Decals );
 
 			var gameObject = Scene.CreateObject();
@@ -211,13 +211,10 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 
 		var origin = count == 0 ? EffectsRenderer.GetAttachment( "muzzle" )?.Position ?? startPosition : startPosition;
 
-		// What in tarnation is this 
-		CreateParticleSystem( effectPath, startPosition, Rotation.Identity, new()
-		{
-			new() { StringCP = "0", Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = origin },
-			new() { StringCP = "1", Value = ParticleControlPoint.ControlPointValueInput.Vector3, VectorValue = endPosition },
-			new() { StringCP = "2", Value = ParticleControlPoint.ControlPointValueInput.Float, FloatValue = distance }
-		}, 3f );
+		var ps = CreateParticleSystem( effectPath, origin, Rotation.Identity, 3f );
+		ps.SceneObject.SetControlPoint( 0, origin );
+		ps.SceneObject.SetControlPoint( 1, endPosition );
+		ps.SceneObject.SetControlPoint( 2, distance );
 	}
 
 	protected void DryShoot()

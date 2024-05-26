@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Gunfight;
 
@@ -240,18 +241,110 @@ public partial class ShootWeaponFunction : InputActionWeaponFunction
 	protected virtual Ray WeaponRay => Weapon.PlayerController.AimRay;
 
 	/// <summary>
+	/// How many ricochet hits until we stop traversing
+	/// </summary>
+	protected virtual float MaxAmtOfHits => 2f;
+
+	/// <summary>
+	/// Maximum angle in degrees for ricochet to be possible
+	/// </summary>
+	protected virtual float MaxRicochetAngle => 45f;
+
+	protected float PenetrationIncrementAmount => 15f;
+	protected int PenetrationMaxSteps => 2;
+
+	protected SceneTraceResult DoTraceBullet( Vector3 start, Vector3 end, float radius )
+	{
+		return Scene.Trace.Ray( start, end )
+			.UseHitboxes()
+			.IgnoreGameObject( GameObject.Root )
+			.WithoutTags( "trigger", "player" )
+			.Size( radius )
+			.Run();
+	}
+
+	protected virtual Vector3 CalculateRicochetDirection( SceneTraceResult tr, ref float hits )
+	{
+		if ( tr.GameObject?.Tags.Has( "glass" ) ?? false )
+		{
+			// Allow us to do another hit
+			hits--;
+			return tr.Direction;
+		}
+
+		return Vector3.Reflect( tr.Direction, tr.Normal ).Normal;
+	}
+
+	/// <summary>
 	/// Runs a trace with all the data we have supplied it, and returns the result
 	/// </summary>
 	/// <returns></returns>
 	protected virtual IEnumerable<SceneTraceResult> GetShootTrace()
 	{
-		var tr = Scene.Trace.Ray( WeaponRay, MaxRange )
-			.Size( BulletSize )
-			.WithoutTags( "trigger" )
-			.UseHitboxes()
-			.Run();
+		float curHits = 0;
+		var hits = new List<SceneTraceResult>();
 
-		yield return tr;
+		var start = WeaponRay.Position;
+		var end = WeaponRay.Position + WeaponRay.Forward * MaxRange;
+
+		while ( curHits < MaxAmtOfHits )
+		{
+			curHits++;
+
+			var tr = DoTraceBullet( start, end, BulletSize );
+
+			if ( tr.Hit )
+			{
+				hits.Add( tr );
+			}
+
+			var reflectDir = CalculateRicochetDirection( tr, ref curHits );
+			var angle = reflectDir.Angle( tr.Direction );
+			var dist = tr.Distance.Remap( 0, MaxRange, 1, 0.5f ).Clamp( 0.5f, 1f );
+
+			start = tr.EndPosition;
+			end = tr.EndPosition + (reflectDir * MaxRange);
+
+			var didPenetrate = false;
+			if ( true )
+			{
+				// Look for penetration
+				var forwardStep = 0f;
+
+				while ( forwardStep < PenetrationMaxSteps )
+				{
+					forwardStep++;
+
+					var penStart = tr.EndPosition + tr.Direction * (forwardStep * PenetrationIncrementAmount);
+					var penEnd = tr.EndPosition + tr.Direction * (forwardStep + 1 * PenetrationIncrementAmount);
+
+					var penTrace = DoTraceBullet( penStart, penEnd, BulletSize );
+					if ( !penTrace.StartedSolid )
+					{
+						var newStart = penTrace.EndPosition;
+						var newTrace = DoTraceBullet( newStart, newStart + tr.Direction * MaxRange, BulletSize );
+						hits.Add( newTrace );
+						didPenetrate = true;
+						break;
+					}
+				}
+			}
+
+			if ( didPenetrate || !ShouldBulletContinue( tr, angle ) )
+				break;
+		}
+
+		return hits;
+	}
+
+	protected virtual bool ShouldBulletContinue( SceneTraceResult tr, float angle )
+	{
+		float maxAngle = MaxRicochetAngle;
+
+		if ( angle > maxAngle )
+			return false;
+
+		return true;
 	}
 
 	protected float RPMToSeconds()

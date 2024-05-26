@@ -1833,6 +1833,92 @@
           "VerticalFalloffExponent": 2
         }
       ]
+    },
+    {
+      "__guid": "0e1a15ef-e61e-40ff-bbb1-26b3a60bd4df",
+      "Flags": 0,
+      "Name": "Cube (1)",
+      "Position": "246.5161,-41.15601,352",
+      "Scale": "5,5,5",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "c5d2f22f-e566-4a1b-9ba9-27933e484afa",
+          "BodyGroups": 18446744073709551615,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "Sandbox.BoxCollider",
+          "__guid": "b0093fef-b05b-4b51-b2c0-0acf7a3e741e",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false
+        }
+      ]
+    },
+    {
+      "__guid": "2d367de4-cd66-4de5-97a8-d0116b97fee2",
+      "Flags": 0,
+      "Name": "Cube (2)",
+      "Position": "246.5161,-41.15601,-32.00001",
+      "Rotation": "0.8957121,0.2427505,0.09744334,0.3595509",
+      "Scale": "5,5,5",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "8c97fa9f-839b-4f09-b56e-195cb86c9b5a",
+          "BodyGroups": 18446744073709551615,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "Sandbox.BoxCollider",
+          "__guid": "3bd112ba-2d18-4c92-9d21-bfa89c7127bc",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false
+        }
+      ]
+    },
+    {
+      "__guid": "400de126-c6b4-43d5-ab15-ac0f037d5c14",
+      "Flags": 0,
+      "Name": "Cube",
+      "Position": "255.3559,260.602,123.1478",
+      "Rotation": "0,0,0.2615779,0.9651824",
+      "Scale": "5,5,5",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "dd74004a-f7f8-49de-99b3-bbeabccb132f",
+          "BodyGroups": 18446744073709551615,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "Sandbox.BoxCollider",
+          "__guid": "ec1f4bd9-1d30-4e6d-9f92-6b50504494e5",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -1858,7 +1944,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-25T21:14:20.9927574\u002B01:00",
+  "LastSaved": "2024-05-26T11:16:23.6414175\u002B01:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1
